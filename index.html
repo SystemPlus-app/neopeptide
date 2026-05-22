@@ -24,7 +24,7 @@
       --glp1-a:  #2E6B4A; --glp1-b: #5FAD82;
       --long-a:  #2255A0; --long-b: #5B90D8;
       --test-a:  #8B3232; --test-b: #C46868;
-      --micro-a: #5C3D8F; --micro-b: #9B7ED6;
+      --micro-a: #2E7A4A; --micro-b: #6DC48A;
       --dark:    #0A0A10;
       --dark2:   #12121A;
       --dk-text: #E8E8F0;
@@ -119,26 +119,26 @@
       content: ''; position: absolute; inset: 0; border-radius: 16px;
       opacity: 0; transition: opacity 0.4s;
     }
-    .bundle-card.glp1::before  { background: linear-gradient(90deg, var(--glp1-a) 0%, var(--glp1-b) 55%, rgba(245,240,235,0.12) 100%); }
-    .bundle-card.glp1::after   { background: linear-gradient(270deg, var(--glp1-a) 0%, var(--glp1-b) 55%, rgba(245,240,235,0.12) 100%); }
-    .bundle-card.longevity::before  { background: linear-gradient(90deg, var(--long-a) 0%, var(--long-b) 55%, rgba(245,240,235,0.12) 100%); }
-    .bundle-card.longevity::after   { background: linear-gradient(270deg, var(--long-a) 0%, var(--long-b) 55%, rgba(245,240,235,0.12) 100%); }
-    .bundle-card.testosterone::before  { background: linear-gradient(90deg, var(--test-a) 0%, var(--test-b) 55%, rgba(245,240,235,0.12) 100%); }
-    .bundle-card.testosterone::after   { background: linear-gradient(270deg, var(--test-a) 0%, var(--test-b) 55%, rgba(245,240,235,0.12) 100%); }
-    .bundle-card.microdose::before  { background: linear-gradient(90deg, var(--micro-a) 0%, var(--micro-b) 55%, rgba(245,240,235,0.12) 100%); }
-    .bundle-card.microdose::after   { background: linear-gradient(270deg, var(--micro-a) 0%, var(--micro-b) 55%, rgba(245,240,235,0.12) 100%); }
+    .bundle-card.glp1::before  { background: linear-gradient(90deg, #F5F0EB 0%, var(--glp1-b) 55%, var(--glp1-a) 100%); }
+    .bundle-card.glp1::after   { background: linear-gradient(270deg, #F5F0EB 0%, var(--glp1-b) 55%, var(--glp1-a) 100%); }
+    .bundle-card.longevity::before  { background: linear-gradient(90deg, #F5F0EB 0%, var(--long-b) 55%, var(--long-a) 100%); }
+    .bundle-card.longevity::after   { background: linear-gradient(270deg, #F5F0EB 0%, var(--long-b) 55%, var(--long-a) 100%); }
+    .bundle-card.testosterone::before  { background: linear-gradient(90deg, #F5F0EB 0%, var(--test-b) 55%, var(--test-a) 100%); }
+    .bundle-card.testosterone::after   { background: linear-gradient(270deg, #F5F0EB 0%, var(--test-b) 55%, var(--test-a) 100%); }
+    .bundle-card.microdose::before  { background: linear-gradient(90deg, #F5F0EB 0%, var(--micro-b) 55%, var(--micro-a) 100%); }
+    .bundle-card.microdose::after   { background: linear-gradient(270deg, #F5F0EB 0%, var(--micro-b) 55%, var(--micro-a) 100%); }
     .bundle-card:hover::before { opacity: 0; }
     .bundle-card:hover::after  { opacity: 1; }
 
     .bundle-inner { position: relative; z-index: 2; display: flex; align-items: center; width: 100%; padding: 0 28px; gap: 0; }
     .bundle-text { flex: 1; }
-    .bundle-name { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 18px; font-weight: 800; color: #fff; line-height: 1.2; }
-    .bundle-promise { font-size: 11px; color: rgba(255,255,255,0.6); margin-top: 5px; }
+    .bundle-name { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 18px; font-weight: 800; color: #111; line-height: 1.2; }
+    .bundle-promise { font-size: 11px; color: rgba(0,0,0,0.5); margin-top: 5px; }
     .bundle-bottle-wrap { width: 72px; height: 68px; overflow: hidden; flex-shrink: 0; display: flex; align-items: flex-end; justify-content: center; }
     .bundle-bottle { width: 72px; height: 130px; object-fit: contain; object-position: bottom center; filter: drop-shadow(0 6px 18px rgba(0,0,0,0.4)); transform: perspective(300px) rotateY(-18deg) rotateX(4deg) translateY(10px); transition: transform 0.35s; }
     .bundle-card:hover .bundle-bottle { transform: perspective(300px) rotateY(-10deg) rotateX(2deg) translateY(4px) scale(1.06); }
-    .bundle-arrow { width: 36px; height: 36px; border-radius: 50%; background: rgba(255,255,255,0.15); display: flex; align-items: center; justify-content: center; color: #fff; flex-shrink: 0; margin-left: 20px; transition: background 0.2s, transform 0.2s; }
-    .bundle-card:hover .bundle-arrow { background: rgba(255,255,255,0.28); transform: translateX(3px); }
+    .bundle-arrow { width: 36px; height: 36px; border-radius: 50%; background: rgba(0,0,0,0.1); display: flex; align-items: center; justify-content: center; color: #111; flex-shrink: 0; margin-left: 20px; transition: background 0.2s, transform 0.2s; }
+    .bundle-card:hover .bundle-arrow { background: rgba(0,0,0,0.18); transform: translateX(3px); }
 
     /* BEFORE / AFTER */
     .before-after { background: var(--white); padding: 100px 48px; }
