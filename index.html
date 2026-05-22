@@ -1,0 +1,3243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NEO PEPTIDE — Precision Research Compounds</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-deep:     #06060F;
+      --bg-primary:  #080812;
+      --bg-card:     #0E0E1E;
+      --bg-card2:    #121228;
+      --cyan:        #00D4FF;
+      --cyan-glow:   rgba(0,212,255,0.18);
+      --cyan-dim:    rgba(0,212,255,0.08);
+      --gold:        #C9A84C;
+      --gold-light:  #E8C96A;
+      --gold-dim:    rgba(201,168,76,0.12);
+      --text:        #EEF2FF;
+      --text-muted:  #6B7A99;
+      --text-dim:    #3D4A66;
+      --border:      rgba(0,212,255,0.1);
+      --border-gold: rgba(201,168,76,0.2);
+      --radius:      12px;
+      --radius-lg:   20px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; font-size: 16px; }
+
+    body {
+      background: var(--bg-deep);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── ANNOUNCEMENT BAR ── */
+    .announce-bar {
+      background: linear-gradient(90deg, #050510 0%, #0a0a25 50%, #050510 100%);
+      border-bottom: 1px solid var(--border);
+      padding: 10px 0;
+      overflow: hidden;
+      position: relative;
+    }
+    .announce-bar::before,
+    .announce-bar::after {
+      content: '';
+      position: absolute;
+      top: 0; bottom: 0;
+      width: 80px;
+      z-index: 2;
+    }
+    .announce-bar::before { left: 0; background: linear-gradient(90deg, #050510, transparent); }
+    .announce-bar::after  { right: 0; background: linear-gradient(-90deg, #050510, transparent); }
+    .announce-track {
+      display: flex;
+      gap: 60px;
+      white-space: nowrap;
+      animation: ticker 28s linear infinite;
+      width: max-content;
+    }
+    .announce-track span {
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+    .announce-track span strong { color: var(--cyan); }
+    .announce-track span.gold  { color: var(--gold); }
+    @keyframes ticker { from { transform: translateX(0) } to { transform: translateX(-50%) } }
+
+    /* ── HEADER ── */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(6,6,15,0.85);
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      border-bottom: 1px solid var(--border);
+      transition: box-shadow 0.3s;
+    }
+    header.scrolled { box-shadow: 0 0 40px rgba(0,212,255,0.06); }
+    .header-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 24px;
+      height: 72px;
+      display: flex;
+      align-items: center;
+      gap: 40px;
+    }
+    .logo {
+      display: flex;
+      flex-direction: column;
+      text-decoration: none;
+      flex-shrink: 0;
+    }
+    .logo-wordmark {
+      display: flex;
+      align-items: center;
+      gap: 0;
+    }
+    .logo-ne {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--text);
+      letter-spacing: -1px;
+      line-height: 1;
+    }
+    .logo-o-wrap {
+      position: relative;
+      width: 28px;
+      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .logo-o {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--cyan);
+      letter-spacing: -1px;
+      line-height: 1;
+      text-shadow: 0 0 20px var(--cyan);
+    }
+    .logo-bars {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      margin-left: 2px;
+      margin-bottom: 2px;
+    }
+    .logo-bar {
+      height: 3px;
+      border-radius: 2px;
+      background: var(--cyan);
+      box-shadow: 0 0 6px var(--cyan);
+    }
+    .logo-bar:nth-child(1) { width: 18px; }
+    .logo-bar:nth-child(2) { width: 12px; opacity: 0.6; }
+    .logo-sub {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.35em;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      margin-top: 1px;
+    }
+    .logo-tag {
+      font-size: 8px;
+      letter-spacing: 0.2em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-top: 0;
+    }
+
+    nav {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      flex: 1;
+    }
+    nav a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      padding: 6px 14px;
+      border-radius: 8px;
+      transition: color 0.2s, background 0.2s;
+    }
+    nav a:hover { color: var(--text); background: rgba(255,255,255,0.04); }
+
+    .header-actions { display: flex; gap: 8px; align-items: center; margin-left: auto; }
+    .icon-btn {
+      width: 40px; height: 40px;
+      border-radius: 10px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      transition: background 0.2s, border-color 0.2s;
+      color: var(--text-muted);
+      position: relative;
+    }
+    .icon-btn:hover { background: var(--cyan-dim); border-color: var(--cyan); color: var(--cyan); }
+    .cart-badge {
+      position: absolute;
+      top: -6px; right: -6px;
+      width: 18px; height: 18px;
+      border-radius: 50%;
+      background: var(--gold);
+      color: #000;
+      font-size: 10px;
+      font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+      transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1);
+    }
+    .cart-badge.pop { animation: cartPop 0.4s cubic-bezier(0.34,1.56,0.64,1); }
+    @keyframes cartPop { 0%,100%{transform:scale(1)} 50%{transform:scale(1.5)} }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      min-height: 90vh;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      background-image: url('fotos/fundo/fundo.png');
+      background-size: cover;
+      background-position: center center;
+      background-repeat: no-repeat;
+    }
+    .hero-bg-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        105deg,
+        rgba(6,6,15,0.92) 0%,
+        rgba(6,6,15,0.80) 45%,
+        rgba(6,6,15,0.55) 100%
+      );
+      z-index: 0;
+    }
+    #hero-canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%; height: 100%;
+      z-index: 1;
+      opacity: 0.4;
+    }
+    .hero-glow-1 {
+      position: absolute;
+      width: 600px; height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(0,212,255,0.1) 0%, transparent 70%);
+      top: -100px; left: -100px;
+      pointer-events: none;
+      z-index: 1;
+    }
+    .hero-glow-2 {
+      position: absolute;
+      width: 500px; height: 500px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(201,168,76,0.06) 0%, transparent 70%);
+      bottom: -50px; right: 10%;
+      pointer-events: none;
+      z-index: 1;
+    }
+    .hero-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 80px 24px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+      position: relative;
+      z-index: 2;
+    }
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--cyan-dim);
+      border: 1px solid rgba(0,212,255,0.25);
+      border-radius: 100px;
+      padding: 6px 16px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--cyan);
+      margin-bottom: 24px;
+    }
+    .hero-tag .dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--cyan);
+      box-shadow: 0 0 8px var(--cyan);
+      animation: pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(0.8)} }
+
+    .hero-headline {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(38px, 5vw, 64px);
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -2px;
+      margin-bottom: 24px;
+    }
+    .hero-headline em {
+      font-style: normal;
+      background: linear-gradient(135deg, var(--cyan) 0%, #7B9FFF 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero-headline .gold-word {
+      background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero-sub {
+      font-size: 16px;
+      line-height: 1.7;
+      color: var(--text-muted);
+      max-width: 480px;
+      margin-bottom: 36px;
+    }
+    .hero-actions {
+      display: flex;
+      gap: 14px;
+      align-items: center;
+      flex-wrap: wrap;
+      margin-bottom: 48px;
+    }
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: linear-gradient(135deg, var(--cyan) 0%, #0099CC 100%);
+      color: #000;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 14px 28px;
+      border-radius: 10px;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 0 30px rgba(0,212,255,0.35);
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 50px rgba(0,212,255,0.55);
+    }
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: transparent;
+      color: var(--text);
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      padding: 13px 24px;
+      border-radius: 10px;
+      border: 1px solid rgba(255,255,255,0.12);
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .btn-secondary:hover { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.2); }
+
+    .hero-trust {
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+    .hero-trust-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+    .hero-trust-item svg { color: var(--cyan); flex-shrink: 0; }
+
+    /* Hero Product Visual */
+    .hero-visual {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+    .hero-product-ring {
+      position: relative;
+      width: 420px;
+      height: 420px;
+    }
+    .ring-outer {
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      border: 1px solid rgba(0,212,255,0.15);
+      animation: rotateSlow 20s linear infinite;
+    }
+    .ring-outer::before {
+      content: '';
+      position: absolute;
+      width: 8px; height: 8px;
+      background: var(--cyan);
+      box-shadow: 0 0 12px var(--cyan);
+      border-radius: 50%;
+      top: -4px; left: 50%;
+      transform: translateX(-50%);
+    }
+    .ring-inner {
+      position: absolute;
+      inset: 30px;
+      border-radius: 50%;
+      border: 1px solid rgba(201,168,76,0.12);
+      animation: rotateSlow 14s linear infinite reverse;
+    }
+    .ring-inner::before {
+      content: '';
+      position: absolute;
+      width: 6px; height: 6px;
+      background: var(--gold);
+      box-shadow: 0 0 10px var(--gold);
+      border-radius: 50%;
+      bottom: -3px; left: 50%;
+      transform: translateX(-50%);
+    }
+    @keyframes rotateSlow { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
+
+    .hero-product-card {
+      position: absolute;
+      inset: 60px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 40% 35%, #1a1a35 0%, #0a0a18 100%);
+      border: 1px solid rgba(0,212,255,0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      box-shadow: 0 0 80px rgba(0,212,255,0.08), inset 0 0 40px rgba(0,0,0,0.5);
+    }
+    .hero-product-inner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      padding: 20px;
+    }
+    .product-mock-bag {
+      width: 80px;
+      height: 100px;
+      background: linear-gradient(160deg, #1a1a1a 0%, #111 50%, #222 100%);
+      border-radius: 8px 8px 12px 12px;
+      border: 1px solid #333;
+      position: relative;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.05);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .product-mock-bag::before {
+      content: '';
+      position: absolute;
+      top: 8px; left: 8px; right: 8px;
+      height: 40px;
+      background: linear-gradient(135deg, rgba(201,168,76,0.15) 0%, rgba(201,168,76,0.05) 100%);
+      border-radius: 4px;
+      border: 1px solid rgba(201,168,76,0.3);
+    }
+    .hex-logo {
+      width: 26px;
+      height: 26px;
+      position: relative;
+      z-index: 1;
+    }
+    .product-mock-vial {
+      width: 20px;
+      height: 60px;
+      background: linear-gradient(180deg, rgba(0,212,255,0.3) 0%, rgba(0,150,200,0.1) 60%, rgba(0,212,255,0.2) 100%);
+      border-radius: 10px 10px 4px 4px;
+      border: 1px solid rgba(0,212,255,0.4);
+      position: relative;
+      box-shadow: 0 0 15px rgba(0,212,255,0.2), inset 0 0 10px rgba(0,212,255,0.1);
+    }
+    .product-mock-vial::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 12px;
+      background: rgba(201,168,76,0.6);
+      border-radius: 10px 10px 0 0;
+      border-bottom: 2px solid rgba(201,168,76,0.4);
+    }
+    .hero-product-pair {
+      display: flex;
+      align-items: flex-end;
+      gap: 10px;
+    }
+    .hero-product-label {
+      text-align: center;
+    }
+    .hero-product-label strong {
+      display: block;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: 0.1em;
+    }
+    .hero-product-label span {
+      font-size: 11px;
+      color: var(--cyan);
+      letter-spacing: 0.06em;
+    }
+
+    /* Floating badges */
+    .float-badge {
+      position: absolute;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 10px 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      backdrop-filter: blur(10px);
+      animation: floatBadge 3s ease-in-out infinite;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+    }
+    .float-badge:nth-child(2) { animation-delay: 1s; top: 20px; right: -10px; }
+    .float-badge:nth-child(3) { animation-delay: 2s; bottom: 60px; left: -20px; }
+    .float-badge:nth-child(4) { animation-delay: 0.5s; bottom: 20px; right: 0; }
+    @keyframes floatBadge {
+      0%,100%{transform:translateY(0)} 50%{transform:translateY(-6px)}
+    }
+    .float-badge .icon { font-size: 18px; }
+    .float-badge .info strong { display:block; font-size:12px; font-weight:600; color:var(--text); }
+    .float-badge .info span  { font-size:10px; color:var(--text-muted); }
+
+    /* ── STATS BAR ── */
+    .stats-bar {
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      background: var(--bg-card);
+      padding: 28px 24px;
+    }
+    .stats-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+    }
+    .stat-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      padding: 16px;
+      border-radius: 10px;
+      background: rgba(0,212,255,0.03);
+      border: 1px solid transparent;
+      transition: border-color 0.3s;
+    }
+    .stat-item:hover { border-color: var(--border); }
+    .stat-num {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 32px;
+      font-weight: 800;
+      background: linear-gradient(135deg, var(--cyan), #7B9FFF);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1;
+    }
+    .stat-label { font-size: 12px; color: var(--text-muted); letter-spacing: 0.06em; text-transform: uppercase; }
+
+    /* ── SECTION COMMONS ── */
+    section { padding: 100px 24px; }
+    .section-inner { max-width: 1280px; margin: 0 auto; }
+    .section-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--cyan);
+      margin-bottom: 16px;
+    }
+    .section-tag::before {
+      content: '';
+      width: 20px; height: 1px;
+      background: var(--cyan);
+    }
+    .section-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(28px, 4vw, 44px);
+      font-weight: 800;
+      letter-spacing: -1.5px;
+      line-height: 1.1;
+      margin-bottom: 14px;
+    }
+    .section-title em {
+      font-style: normal;
+      background: linear-gradient(135deg, var(--cyan), #7B9FFF);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .section-sub {
+      font-size: 15px;
+      color: var(--text-muted);
+      line-height: 1.7;
+      max-width: 520px;
+    }
+    .section-header { margin-bottom: 56px; }
+
+    /* ── PRODUCTS ── */
+    .products-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 48px;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+    .filter-tabs {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .filter-tab {
+      padding: 8px 18px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--text-muted);
+      transition: all 0.2s;
+    }
+    .filter-tab.active, .filter-tab:hover {
+      background: var(--cyan-dim);
+      border-color: rgba(0,212,255,0.4);
+      color: var(--cyan);
+    }
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 20px;
+    }
+    .product-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1), border-color 0.3s, box-shadow 0.3s;
+      cursor: pointer;
+      position: relative;
+    }
+    .product-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(0,212,255,0.35);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 0 30px rgba(0,212,255,0.08);
+    }
+    .product-image-wrap {
+      position: relative;
+      padding: 32px 24px 0;
+      background: linear-gradient(160deg, #0f0f22 0%, #080812 100%);
+      min-height: 200px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .product-image-wrap::before {
+      content: '';
+      position: absolute;
+      bottom: -40px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 120px; height: 120px;
+      background: radial-gradient(circle, rgba(0,212,255,0.12) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+    .product-img-mockup {
+      display: flex;
+      align-items: flex-end;
+      gap: 10px;
+      position: relative;
+      z-index: 1;
+    }
+    .mockup-bag {
+      width: 100px;
+      height: 130px;
+      background: linear-gradient(160deg, #1c1c1c 0%, #0f0f0f 50%, #1a1a1a 100%);
+      border-radius: 8px 8px 14px 14px;
+      border: 1px solid #2a2a2a;
+      position: relative;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.7), inset 0 1px 0 rgba(255,255,255,0.04);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 12px 8px;
+    }
+    .mockup-bag-header {
+      width: 100%;
+      height: 50px;
+      background: linear-gradient(135deg, rgba(201,168,76,0.2) 0%, rgba(201,168,76,0.05) 100%);
+      border-radius: 4px 4px 0 0;
+      border: 1px solid rgba(201,168,76,0.35);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: absolute;
+      top: 8px; left: 8px;
+      right: 8px;
+      width: calc(100% - 16px);
+    }
+    .hex-icon {
+      width: 28px;
+      height: 28px;
+    }
+    .mockup-bag-name {
+      position: absolute;
+      bottom: 16px;
+      left: 0; right: 0;
+      text-align: center;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 8px;
+      font-weight: 700;
+      color: rgba(255,255,255,0.5);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0 8px;
+    }
+    .mockup-vial {
+      width: 28px;
+      height: 75px;
+      background: linear-gradient(180deg, rgba(0,212,255,0.4) 0%, rgba(0,150,200,0.15) 60%, rgba(0,212,255,0.3) 100%);
+      border-radius: 12px 12px 4px 4px;
+      border: 1px solid rgba(0,212,255,0.45);
+      position: relative;
+      box-shadow: 0 0 20px rgba(0,212,255,0.2), inset 0 0 12px rgba(0,212,255,0.1);
+    }
+    .mockup-vial::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 16px;
+      background: rgba(201,168,76,0.7);
+      border-radius: 12px 12px 0 0;
+      border-bottom: 2px solid rgba(201,168,76,0.4);
+    }
+    .mockup-vial::after {
+      content: '';
+      position: absolute;
+      top: 20px; left: 4px; right: 4px;
+      height: 2px;
+      background: rgba(0,212,255,0.4);
+      border-radius: 1px;
+    }
+
+    .product-stock-badge {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      background: rgba(255,60,80,0.15);
+      border: 1px solid rgba(255,60,80,0.35);
+      color: #FF6680;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: 100px;
+    }
+    .product-new-badge {
+      background: var(--cyan-dim);
+      border-color: rgba(0,212,255,0.35);
+      color: var(--cyan);
+    }
+    .product-wish {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      width: 32px; height: 32px;
+      background: rgba(0,0,0,0.4);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      color: var(--text-muted);
+      transition: all 0.2s;
+      backdrop-filter: blur(8px);
+    }
+    .product-wish:hover { color: #FF6680; border-color: rgba(255,100,128,0.4); background: rgba(255,100,128,0.1); }
+    .product-wish.active { color: #FF6680; }
+
+    .product-body { padding: 20px; }
+    .product-name {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 4px;
+      letter-spacing: -0.3px;
+    }
+    .product-dose {
+      font-size: 12px;
+      color: var(--cyan);
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      margin-bottom: 12px;
+    }
+    .product-divider {
+      height: 1px;
+      background: linear-gradient(90deg, var(--gold), transparent);
+      margin-bottom: 14px;
+      opacity: 0.4;
+    }
+    .product-stars {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 14px;
+    }
+    .stars { display: flex; gap: 2px; }
+    .star { color: var(--gold); font-size: 12px; }
+    .star.half { opacity: 0.5; }
+    .review-count { font-size: 11px; color: var(--text-muted); }
+    .product-price-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+    .product-price {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 26px;
+      font-weight: 800;
+      color: var(--gold);
+    }
+    .product-price-old {
+      font-size: 14px;
+      color: var(--text-dim);
+      text-decoration: line-through;
+    }
+    .product-price-save {
+      font-size: 11px;
+      font-weight: 600;
+      color: #4ADE80;
+      background: rgba(74,222,128,0.1);
+      border: 1px solid rgba(74,222,128,0.2);
+      padding: 2px 8px;
+      border-radius: 100px;
+    }
+    .btn-add-cart {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: linear-gradient(135deg, var(--gold) 0%, #A0802A 100%);
+      color: #000;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 13px;
+      border-radius: 10px;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 0 20px rgba(201,168,76,0.25);
+    }
+    .btn-add-cart:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 0 35px rgba(201,168,76,0.45);
+    }
+    .btn-add-cart:active { transform: translateY(0); }
+
+    /* ── HOW IT WORKS ── */
+    .how-section { background: var(--bg-card); }
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      position: relative;
+    }
+    .steps-grid::before {
+      content: '';
+      position: absolute;
+      top: 40px;
+      left: calc(16.6% + 30px);
+      right: calc(16.6% + 30px);
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border), var(--border), transparent);
+    }
+    .step-card {
+      background: var(--bg-primary);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 36px 28px;
+      position: relative;
+      transition: border-color 0.3s;
+    }
+    .step-card:hover { border-color: rgba(0,212,255,0.3); }
+    .step-num {
+      width: 48px; height: 48px;
+      border-radius: 12px;
+      background: var(--cyan-dim);
+      border: 1px solid rgba(0,212,255,0.25);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--cyan);
+      margin-bottom: 20px;
+    }
+    .step-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 10px;
+      letter-spacing: -0.3px;
+    }
+    .step-text { font-size: 14px; line-height: 1.7; color: var(--text-muted); }
+
+    /* ── CERTIFICATIONS ── */
+    .cert-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+    }
+    .cert-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 28px 20px;
+      text-align: center;
+      transition: border-color 0.3s, transform 0.3s;
+    }
+    .cert-card:hover {
+      border-color: rgba(0,212,255,0.25);
+      transform: translateY(-4px);
+    }
+    .cert-icon {
+      width: 52px; height: 52px;
+      border-radius: 14px;
+      background: var(--cyan-dim);
+      border: 1px solid rgba(0,212,255,0.2);
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 16px;
+      color: var(--cyan);
+    }
+    .cert-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+    .cert-sub { font-size: 12px; color: var(--text-muted); line-height: 1.5; }
+
+    /* ── REVIEWS ── */
+    .reviews-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+    .review-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 28px;
+      transition: border-color 0.3s;
+    }
+    .review-card:hover { border-color: rgba(0,212,255,0.2); }
+    .review-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 16px;
+    }
+    .reviewer-avatar {
+      width: 44px; height: 44px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--cyan), #7B9FFF);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+      color: #000;
+      flex-shrink: 0;
+    }
+    .reviewer-info strong { display: block; font-size: 14px; font-weight: 600; margin-bottom: 2px; }
+    .reviewer-info span { font-size: 11px; color: var(--text-muted); }
+    .review-stars { display: flex; gap: 3px; margin-bottom: 12px; }
+    .review-stars .star { color: var(--gold); font-size: 13px; }
+    .review-text { font-size: 14px; line-height: 1.7; color: var(--text-muted); }
+    .review-verified {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 11px;
+      color: #4ADE80;
+      margin-top: 14px;
+    }
+
+    /* ── FAQ ── */
+    .faq-list { max-width: 760px; margin: 0 auto; }
+    .faq-item {
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      margin-bottom: 12px;
+      overflow: hidden;
+      transition: border-color 0.3s;
+    }
+    .faq-item.open { border-color: rgba(0,212,255,0.3); }
+    .faq-question {
+      padding: 20px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      user-select: none;
+      font-size: 15px;
+      font-weight: 600;
+      gap: 16px;
+    }
+    .faq-question:hover { background: rgba(255,255,255,0.02); }
+    .faq-chevron {
+      width: 28px; height: 28px;
+      border-radius: 8px;
+      background: var(--cyan-dim);
+      border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      transition: transform 0.3s, background 0.3s;
+      color: var(--cyan);
+    }
+    .faq-item.open .faq-chevron { transform: rotate(180deg); background: rgba(0,212,255,0.2); }
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease;
+    }
+    .faq-answer-inner {
+      padding: 0 24px 20px;
+      font-size: 14px;
+      line-height: 1.75;
+      color: var(--text-muted);
+      border-top: 1px solid var(--border);
+      padding-top: 16px;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--bg-card);
+      border-top: 1px solid var(--border);
+    }
+    .footer-top {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 64px 24px 48px;
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 48px;
+    }
+    .footer-brand p {
+      font-size: 14px;
+      line-height: 1.7;
+      color: var(--text-muted);
+      margin-top: 16px;
+      max-width: 280px;
+    }
+    .footer-social {
+      display: flex;
+      gap: 10px;
+      margin-top: 20px;
+    }
+    .social-btn {
+      width: 36px; height: 36px;
+      border-radius: 9px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--text-muted);
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-decoration: none;
+    }
+    .social-btn:hover { background: var(--cyan-dim); border-color: var(--border); color: var(--cyan); }
+    .footer-col h4 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text);
+      margin-bottom: 20px;
+    }
+    .footer-col ul { list-style: none; }
+    .footer-col ul li + li { margin-top: 10px; }
+    .footer-col ul li a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 14px;
+      transition: color 0.2s;
+    }
+    .footer-col ul li a:hover { color: var(--cyan); }
+    .footer-bottom {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 20px 24px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .footer-bottom p { font-size: 12px; color: var(--text-dim); }
+    .footer-disclaimer {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 16px 24px 32px;
+      font-size: 11px;
+      line-height: 1.6;
+      color: var(--text-dim);
+      border-top: 1px solid rgba(255,255,255,0.03);
+    }
+
+    /* ── CART SIDEBAR ── */
+    .cart-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.7);
+      backdrop-filter: blur(4px);
+      z-index: 200;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s;
+    }
+    .cart-overlay.open { opacity: 1; pointer-events: all; }
+    .cart-sidebar {
+      position: fixed;
+      top: 0; right: 0; bottom: 0;
+      width: 400px;
+      background: var(--bg-card2);
+      border-left: 1px solid var(--border);
+      z-index: 201;
+      transform: translateX(100%);
+      transition: transform 0.4s cubic-bezier(0.16,1,0.3,1);
+      display: flex;
+      flex-direction: column;
+    }
+    .cart-sidebar.open { transform: translateX(0); }
+    .cart-header {
+      padding: 24px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .cart-header h3 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+    }
+    .cart-close {
+      width: 36px; height: 36px;
+      border-radius: 9px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      color: var(--text-muted);
+    }
+    .cart-close:hover { background: rgba(255,255,255,0.1); color: var(--text); }
+    .cart-items { flex: 1; overflow-y: auto; padding: 20px; }
+    .cart-empty {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      height: 200px;
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+    .cart-item {
+      display: flex;
+      gap: 14px;
+      align-items: center;
+      padding: 14px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      margin-bottom: 10px;
+    }
+    .cart-item-img {
+      width: 50px; height: 60px;
+      background: linear-gradient(160deg, #1c1c1c, #111);
+      border-radius: 8px;
+      border: 1px solid #2a2a2a;
+      flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 20px;
+    }
+    .cart-item-info { flex: 1; }
+    .cart-item-info strong { display: block; font-size: 14px; font-weight: 600; margin-bottom: 2px; }
+    .cart-item-info span { font-size: 12px; color: var(--text-muted); }
+    .cart-item-price { font-family: 'Space Grotesk', sans-serif; font-size: 16px; font-weight: 700; color: var(--gold); }
+    .cart-item-remove { color: var(--text-dim); cursor: pointer; font-size: 16px; padding: 4px; }
+    .cart-item-remove:hover { color: #FF6680; }
+    .cart-footer {
+      padding: 20px 24px;
+      border-top: 1px solid var(--border);
+    }
+    .cart-total {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+    .cart-total span { font-size: 14px; color: var(--text-muted); }
+    .cart-total strong { font-family: 'Space Grotesk', sans-serif; font-size: 22px; font-weight: 800; color: var(--gold); }
+    .btn-checkout {
+      width: 100%;
+      padding: 15px;
+      background: linear-gradient(135deg, var(--cyan), #0099CC);
+      color: #000;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: box-shadow 0.2s;
+      box-shadow: 0 0 30px rgba(0,212,255,0.3);
+    }
+    .btn-checkout:hover { box-shadow: 0 0 50px rgba(0,212,255,0.5); }
+    .cart-shipping {
+      text-align: center;
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 10px;
+    }
+    .cart-shipping strong { color: #4ADE80; }
+
+    /* ── SCROLL REVEAL ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* ── POPULAR BADGE ── */
+    .popular-badge {
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      background: linear-gradient(90deg, rgba(0,212,255,0.15) 0%, rgba(0,212,255,0.05) 100%);
+      border-bottom: 1px solid rgba(0,212,255,0.25);
+      text-align: center;
+      padding: 7px 0;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--cyan);
+    }
+    .popular-badge::before { content: '★ '; }
+    .product-card.is-popular { border-color: rgba(0,212,255,0.25); }
+
+    /* ── TRUST LINE ── */
+    .cart-trust-line {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px solid rgba(255,255,255,0.04);
+    }
+    .cart-trust-line span {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 10px;
+      color: var(--text-dim);
+      letter-spacing: 0.04em;
+    }
+    .cart-trust-line span svg { color: var(--cyan); flex-shrink: 0; }
+
+    /* ── SECTION-END CTA ── */
+    .section-cta {
+      text-align: center;
+      margin-top: 56px;
+    }
+    .section-cta p {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-top: 14px;
+    }
+
+    /* ── WHERE TO START ── */
+    .start-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin-top: 48px;
+    }
+    .start-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 32px 28px;
+      transition: border-color 0.3s, transform 0.3s;
+      cursor: pointer;
+    }
+    .start-card:hover {
+      border-color: rgba(201,168,76,0.3);
+      transform: translateY(-4px);
+    }
+    .start-card-icon {
+      width: 48px; height: 48px;
+      background: var(--gold-dim);
+      border: 1px solid var(--border-gold);
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 20px;
+      color: var(--gold);
+      font-size: 22px;
+    }
+    .start-card h3 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 17px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      letter-spacing: -0.3px;
+    }
+    .start-card p { font-size: 13px; line-height: 1.65; color: var(--text-muted); margin-bottom: 20px; }
+    .start-card-products {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 20px;
+    }
+    .start-pill {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 100px;
+      background: var(--gold-dim);
+      border: 1px solid var(--border-gold);
+      color: var(--gold);
+    }
+    .start-link {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--cyan);
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    /* ── CHAT WIDGET ── */
+    .chat-btn {
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
+      z-index: 150;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--bg-card2);
+      border: 1px solid rgba(0,212,255,0.25);
+      border-radius: 100px;
+      padding: 12px 20px 12px 14px;
+      cursor: pointer;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.5), 0 0 30px rgba(0,212,255,0.08);
+      transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.3s;
+      text-decoration: none;
+    }
+    .chat-btn:hover {
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: 0 12px 50px rgba(0,0,0,0.6), 0 0 40px rgba(0,212,255,0.15);
+    }
+    .chat-btn-icon {
+      width: 36px; height: 36px;
+      background: linear-gradient(135deg, var(--cyan), #0099CC);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      color: #000;
+      flex-shrink: 0;
+    }
+    .chat-btn-dot {
+      position: absolute;
+      top: 8px; right: 8px;
+      width: 9px; height: 9px;
+      background: #4ADE80;
+      border-radius: 50%;
+      border: 2px solid var(--bg-card2);
+      animation: pulse 2s ease-in-out infinite;
+    }
+    .chat-btn-text strong {
+      display: block;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.2;
+    }
+    .chat-btn-text span { font-size: 11px; color: var(--text-muted); }
+
+    /* ── STICKY MOBILE BAR ── */
+    .sticky-bar {
+      display: none;
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      z-index: 140;
+      background: rgba(8,8,18,0.96);
+      backdrop-filter: blur(20px);
+      border-top: 1px solid var(--border);
+      padding: 12px 16px;
+      gap: 10px;
+    }
+    .sticky-bar a, .sticky-bar button {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      padding: 13px;
+      border-radius: 12px;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      cursor: pointer;
+      text-decoration: none;
+      border: none;
+    }
+    .sticky-bar-primary {
+      background: linear-gradient(135deg, var(--gold), #A0802A);
+      color: #000;
+      box-shadow: 0 0 20px rgba(201,168,76,0.3);
+    }
+    .sticky-bar-secondary {
+      background: var(--bg-card);
+      border: 1px solid rgba(0,212,255,0.25) !important;
+      color: var(--cyan);
+    }
+    @media (max-width: 768px) {
+      .sticky-bar { display: flex; }
+      .chat-btn { bottom: 84px; right: 16px; padding: 11px 16px 11px 12px; }
+      .chat-btn-text { display: none; }
+      .chat-btn { border-radius: 50%; width: 52px; height: 52px; padding: 0; justify-content: center; }
+      .chat-btn-icon { width: 28px; height: 28px; }
+      .chat-btn-dot { top: 4px; right: 4px; }
+    }
+
+    /* ── EXIT POPUP ── */
+    .exit-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.8);
+      backdrop-filter: blur(8px);
+      z-index: 300;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s;
+    }
+    .exit-overlay.show { opacity: 1; pointer-events: all; }
+    .exit-modal {
+      background: var(--bg-card2);
+      border: 1px solid rgba(0,212,255,0.2);
+      border-radius: 24px;
+      padding: 48px 40px;
+      max-width: 480px;
+      width: 100%;
+      position: relative;
+      text-align: center;
+      box-shadow: 0 40px 80px rgba(0,0,0,0.7), 0 0 60px rgba(0,212,255,0.06);
+      transform: translateY(20px);
+      transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1);
+    }
+    .exit-overlay.show .exit-modal { transform: translateY(0); }
+    .exit-close {
+      position: absolute;
+      top: 16px; right: 16px;
+      width: 32px; height: 32px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+    .exit-close:hover { color: var(--text); }
+    .exit-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--gold-dim);
+      border: 1px solid var(--border-gold);
+      border-radius: 100px;
+      padding: 6px 16px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 20px;
+    }
+    .exit-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 32px;
+      font-weight: 800;
+      letter-spacing: -1px;
+      line-height: 1.1;
+      margin-bottom: 12px;
+    }
+    .exit-title em {
+      font-style: normal;
+      background: linear-gradient(135deg, var(--gold), var(--gold-light));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .exit-sub { font-size: 14px; color: var(--text-muted); line-height: 1.6; margin-bottom: 28px; }
+    .exit-form { display: flex; gap: 10px; margin-bottom: 16px; }
+    .exit-input {
+      flex: 1;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 13px 16px;
+      font-size: 14px;
+      color: var(--text);
+      outline: none;
+      font-family: 'Inter', sans-serif;
+      transition: border-color 0.2s;
+    }
+    .exit-input:focus { border-color: rgba(0,212,255,0.4); }
+    .exit-input::placeholder { color: var(--text-dim); }
+    .exit-submit {
+      background: linear-gradient(135deg, var(--gold), #A0802A);
+      color: #000;
+      font-size: 13px;
+      font-weight: 700;
+      padding: 13px 20px;
+      border-radius: 10px;
+      border: none;
+      cursor: pointer;
+      white-space: nowrap;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      transition: box-shadow 0.2s;
+    }
+    .exit-submit:hover { box-shadow: 0 0 25px rgba(201,168,76,0.4); }
+    .exit-skip { font-size: 12px; color: var(--text-dim); cursor: pointer; margin-top: 4px; }
+    .exit-skip:hover { color: var(--text-muted); }
+
+    /* ── SHIPPING PROGRESS ── */
+    .ship-progress-wrap {
+      margin-bottom: 16px;
+      padding: 14px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+    }
+    .ship-progress-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      margin-bottom: 8px;
+    }
+    .ship-progress-label span { color: var(--text-muted); }
+    .ship-progress-label strong { color: #4ADE80; }
+    .ship-progress-bar {
+      height: 4px;
+      background: rgba(255,255,255,0.06);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+    .ship-progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--cyan), #4ADE80);
+      border-radius: 2px;
+      transition: width 0.6s cubic-bezier(0.16,1,0.3,1);
+    }
+
+    /* ── CART UPSELL ── */
+    .cart-upsell {
+      margin: 0 0 14px;
+      padding: 14px;
+      background: var(--gold-dim);
+      border: 1px solid var(--border-gold);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .cart-upsell-text { flex: 1; }
+    .cart-upsell-text strong { display: block; font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 2px; }
+    .cart-upsell-text span { font-size: 11px; color: var(--text-muted); }
+    .cart-upsell-btn {
+      background: var(--gold);
+      color: #000;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 7px 12px;
+      border-radius: 7px;
+      border: none;
+      cursor: pointer;
+      white-space: nowrap;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    /* ── HERO SOCIAL PROOF ── */
+    .hero-social-proof {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 28px;
+      padding: 12px 16px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 12px;
+      width: fit-content;
+    }
+    .hero-sp-avatars {
+      display: flex;
+    }
+    .hero-sp-avatars span {
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      border: 2px solid var(--bg-primary);
+      font-size: 11px;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 700;
+      margin-left: -8px;
+      background: linear-gradient(135deg, var(--cyan), #5570CC);
+      color: #000;
+    }
+    .hero-sp-avatars span:first-child { margin-left: 0; }
+    .hero-sp-avatars span:nth-child(2) { background: linear-gradient(135deg, var(--gold), #A07830); }
+    .hero-sp-avatars span:nth-child(3) { background: linear-gradient(135deg, #7B9FFF, #5570CC); }
+    .hero-sp-info strong { display: block; font-size: 13px; font-weight: 700; color: var(--text); }
+    .hero-sp-info span { font-size: 11px; color: var(--text-muted); }
+    .hero-sp-stars { color: var(--gold); font-size: 12px; letter-spacing: 1px; }
+
+    /* ── GUARANTEE BANNER ── */
+    .guarantee-section {
+      background: linear-gradient(135deg, rgba(201,168,76,0.06) 0%, rgba(0,212,255,0.04) 100%);
+      border-top: 1px solid rgba(201,168,76,0.12);
+      border-bottom: 1px solid rgba(201,168,76,0.12);
+      padding: 32px 24px;
+    }
+    .guarantee-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 48px;
+      flex-wrap: wrap;
+    }
+    .guarantee-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .guarantee-icon {
+      width: 44px; height: 44px;
+      background: var(--gold-dim);
+      border: 1px solid var(--border-gold);
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--gold);
+      flex-shrink: 0;
+    }
+    .guarantee-item strong { display: block; font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 2px; }
+    .guarantee-item span { font-size: 12px; color: var(--text-muted); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 1024px) {
+      .hero-inner { grid-template-columns: 1fr; text-align: center; }
+      .hero-visual { display: none; }
+      .hero-sub { max-width: 100%; }
+      .stats-inner { grid-template-columns: repeat(2, 1fr); }
+      .cert-grid { grid-template-columns: repeat(2, 1fr); }
+      .reviews-grid { grid-template-columns: 1fr; }
+      .steps-grid { grid-template-columns: 1fr; }
+      .steps-grid::before { display: none; }
+      .footer-top { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 768px) {
+      section { padding: 64px 20px; }
+      .header-inner { padding: 0 16px; gap: 16px; }
+      nav { display: none; }
+      .hero-actions { justify-content: center; }
+      .hero-trust { justify-content: center; }
+      .stats-inner { grid-template-columns: repeat(2, 1fr); }
+      .cert-grid { grid-template-columns: repeat(2, 1fr); }
+      .products-grid { grid-template-columns: 1fr; }
+      .footer-top { grid-template-columns: 1fr; gap: 32px; }
+      .cart-sidebar { width: 100%; }
+      .products-header { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ANNOUNCEMENT BAR -->
+<div class="announce-bar">
+  <div class="announce-track" id="announceTrack">
+    <span><strong>MADE FOR RESEARCH.</strong> BUILT WITH INTEGRITY.</span>
+    <span class="gold">● ≥99% PURITY · COA ON EVERY BATCH</span>
+    <span><strong>USA</strong> GMP Certified Facility · Domestic Shipping</span>
+    <span class="gold">● PRECISION. PURITY. PERFORMANCE.</span>
+    <span><strong>NEW:</strong> Klow 80mg Blend Now Available · $130</span>
+    <span class="gold">● HPLC + MASS SPEC VERIFIED · RESEARCH GRADE</span>
+    <span>MUST BE 21+ TO PURCHASE · <strong>FOR RESEARCH USE ONLY</strong></span>
+    <span class="gold">● MADE FOR RESEARCH. BUILT WITH INTEGRITY.</span>
+    <span><strong>MADE FOR RESEARCH.</strong> BUILT WITH INTEGRITY.</span>
+    <span class="gold">● ≥99% PURITY · COA ON EVERY BATCH</span>
+    <span><strong>USA</strong> GMP Certified Facility · Domestic Shipping</span>
+    <span class="gold">● PRECISION. PURITY. PERFORMANCE.</span>
+    <span><strong>NEW:</strong> Klow 80mg Blend Now Available · $130</span>
+    <span class="gold">● HPLC + MASS SPEC VERIFIED · RESEARCH GRADE</span>
+    <span>MUST BE 21+ TO PURCHASE · <strong>FOR RESEARCH USE ONLY</strong></span>
+    <span class="gold">● MADE FOR RESEARCH. BUILT WITH INTEGRITY.</span>
+  </div>
+</div>
+
+<!-- HEADER -->
+<header id="header">
+  <div class="header-inner">
+    <a href="#" class="logo">
+      <div class="logo-wordmark">
+        <span class="logo-ne">NE</span>
+        <div class="logo-o-wrap">
+          <span class="logo-o">O</span>
+        </div>
+        <div class="logo-bars">
+          <div class="logo-bar"></div>
+          <div class="logo-bar"></div>
+        </div>
+      </div>
+      <span class="logo-sub">Peptide</span>
+    </a>
+
+    <nav>
+      <a href="#products">Store</a>
+      <a href="#how">How It Works</a>
+      <a href="#certs">Lab Testing</a>
+      <a href="#reviews">Reviews</a>
+      <a href="#faq">FAQ</a>
+      <a href="mailto:neopeptides@outlook.com">Contact</a>
+    </nav>
+
+    <div class="header-actions">
+      <button class="icon-btn" title="Search" onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+        </svg>
+      </button>
+      <button class="icon-btn" title="Cart" onclick="openCart()">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/>
+        </svg>
+        <span class="cart-badge" id="cartBadge">0</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg-overlay"></div>
+  <canvas id="hero-canvas"></canvas>
+  <div class="hero-glow-1"></div>
+  <div class="hero-glow-2"></div>
+  <div class="hero-inner">
+    <div class="hero-content">
+      <div class="hero-tag">
+        <span class="dot"></span>
+        Now Shipping Nationwide · 48h Delivery
+      </div>
+      <h1 class="hero-headline">
+        The Purity Your<br>
+        Research <em>Demands.</em><br>
+        <span class="gold-word">Delivered in 48h.</span>
+      </h1>
+      <p class="hero-sub">
+        Research-grade peptide compounds — independently tested, COA guaranteed, and shipped
+        from the USA with discreet, insulated packaging.
+      </p>
+      <div class="hero-social-proof">
+        <div class="hero-sp-avatars">
+          <span>JM</span><span>SR</span><span>MK</span>
+        </div>
+        <div>
+          <div class="hero-sp-stars">★★★★★</div>
+          <div class="hero-sp-info">
+            <strong>Trusted by 2,847+ researchers</strong>
+            <span>4.9 average · Verified purchases</span>
+          </div>
+        </div>
+      </div>
+      <div class="hero-actions">
+        <a href="#products" class="btn-primary" style="font-size:15px;padding:17px 36px;box-shadow:0 0 40px rgba(0,212,255,0.45)">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/>
+          </svg>
+          Start Your Protocol
+        </a>
+        <a href="#certs" class="btn-secondary" style="font-size:14px;padding:16px 26px">
+          View COA Results
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+        </a>
+      </div>
+      <div class="hero-trust">
+        <div class="hero-trust-item">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          <span>3rd Party Verified</span>
+        </div>
+        <div class="hero-trust-item">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          <span>USA Manufactured</span>
+        </div>
+        <div class="hero-trust-item">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          <span>Discreet Shipping</span>
+        </div>
+        <div class="hero-trust-item">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+          <span>Secure Checkout</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Hero Visual -->
+    <div class="hero-visual">
+      <div class="hero-product-ring">
+        <div class="ring-outer"></div>
+        <div class="ring-inner"></div>
+        <div class="hero-product-card">
+          <div class="hero-product-inner">
+            <div class="hero-product-pair">
+              <div class="product-mock-bag">
+                <div class="mockup-bag-header">
+                  <svg class="hex-logo" viewBox="0 0 40 40" fill="none">
+                    <polygon points="20,3 36,12 36,28 20,37 4,28 4,12" stroke="#C9A84C" stroke-width="1.5" fill="rgba(201,168,76,0.1)"/>
+                    <text x="12" y="25" font-family="Space Grotesk" font-size="11" font-weight="800" fill="#C9A84C">NP</text>
+                  </svg>
+                </div>
+                <div class="mockup-bag-name">5-Amino 1MQ</div>
+              </div>
+              <div class="mockup-vial"></div>
+            </div>
+            <div class="hero-product-label">
+              <strong>NEO PEPTIDE</strong>
+              <span>Research Grade</span>
+            </div>
+          </div>
+        </div>
+        <!-- Floating badges -->
+        <div class="float-badge" style="top:20px;right:-20px">
+          <span class="icon">🧪</span>
+          <div class="info">
+            <strong>Lab Certified</strong>
+            <span>COA Available</span>
+          </div>
+        </div>
+        <div class="float-badge" style="bottom:80px;left:-30px">
+          <span class="icon">⭐</span>
+          <div class="info">
+            <strong>4.9 / 5.0</strong>
+            <span>2,847 Reviews</span>
+          </div>
+        </div>
+        <div class="float-badge" style="bottom:10px;right:10px">
+          <span class="icon">🛡️</span>
+          <div class="info">
+            <strong>USA Grade</strong>
+            <span>Premium Quality</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS BAR -->
+<div class="stats-bar">
+  <div class="stats-inner">
+    <div class="stat-item reveal">
+      <div class="stat-num" data-target="12847">0</div>
+      <div class="stat-label">Orders Fulfilled</div>
+    </div>
+    <div class="stat-item reveal" style="transition-delay:0.1s">
+      <div class="stat-num" data-target="99.7" data-decimal>0</div>
+      <div class="stat-label">Purity Rate %</div>
+    </div>
+    <div class="stat-item reveal" style="transition-delay:0.2s">
+      <div class="stat-num" data-target="2847">0</div>
+      <div class="stat-label">Verified Reviews</div>
+    </div>
+    <div class="stat-item reveal" style="transition-delay:0.3s">
+      <div class="stat-num" data-target="48">0</div>
+      <div class="stat-label">Research Compounds</div>
+    </div>
+  </div>
+</div>
+
+<!-- PRODUCTS -->
+<section id="products">
+  <div class="section-inner">
+    <div class="products-header">
+      <div>
+        <div class="section-tag">Shop</div>
+        <h2 class="section-title">Research <em>Compounds</em></h2>
+        <p class="section-sub">Every batch independently tested. COA available on request.</p>
+      </div>
+      <div class="filter-tabs">
+        <button class="filter-tab active" onclick="filterProducts('all',this)">All</button>
+        <button class="filter-tab" onclick="filterProducts('metabolic',this)">Metabolic</button>
+        <button class="filter-tab" onclick="filterProducts('blends',this)">Blends</button>
+        <button class="filter-tab" onclick="filterProducts('cellular',this)">Cellular Health</button>
+        <button class="filter-tab" onclick="filterProducts('peptides',this)">Peptides</button>
+      </div>
+    </div>
+
+    <div class="products-grid" id="productsGrid">
+
+      <!-- 5-AMINO 1MQ -->
+      <div class="product-card reveal" data-cat="metabolic" >
+        <div class="product-image-wrap">
+          <span class="product-stock-badge" style="">12 Left</span>
+          <button class="product-wish" onclick="toggleWish(this)">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          </button>
+          <div class="product-img-mockup">
+            <div class="mockup-bag">
+              <div class="mockup-bag-header">
+                <svg class="hex-icon" viewBox="0 0 40 40" fill="none"><polygon points="20,3 36,12 36,28 20,37 4,28 4,12" stroke="#C9A84C" stroke-width="1.5" fill="rgba(201,168,76,0.1)"/><text x="12" y="25" font-family="Space Grotesk" font-size="11" font-weight="800" fill="#C9A84C">NP</text></svg>
+              </div>
+              <div class="mockup-bag-name">5-Amino 1MQ</div>
+            </div>
+            <div class="mockup-vial"></div>
+          </div>
+        </div>
+        <div class="product-body">
+          <div class="product-name">5-Amino 1MQ</div>
+          <div class="product-dose">50mg · Lyophilized Powder · ≥98% Purity</div>
+          <div class="product-divider"></div>
+          <div class="product-stars">
+            <div class="stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div>
+            <span class="review-count">4.9 (312 reviews)</span>
+          </div>
+          <div class="product-price-row">
+            <span class="product-price">$75.00</span>
+            <span class="product-price-old">$89.00</span>
+            <span class="product-price-save">Save 16%</span>
+          </div>
+          <button class="btn-add-cart" onclick="addToCart('5-Amino 1MQ', 75, this)">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+            Add to Cart
+          </button>
+          <div class="cart-trust-line">
+            <span><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Secure</span>
+            <span><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>COA Verified</span>
+            <span><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Ships 48h</span>
+          </div>
+        </div>
+      </div>
+      <div class="product-card reveal" data-cat="metabolic" style="transition-delay:0.08s">
+        <div class="product-image-wrap">
+          <span class="product-new-badge" style="">New Stock</span>
+          <button class="product-wish" onclick="toggleWish(this)">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          </button>
+          <div class="product-img-mockup">
+            <div class="mockup-bag">
+              <div class="mockup-bag-header">
+                <svg class="hex-icon" viewBox="0 0 40 40" fill="none"><polygon points="20,3 36,12 36,28 20,37 4,28 4,12" stroke="#C9A84C" stroke-width="1.5" fill="rgba(201,168,76,0.1)"/><text x="12" y="25" font-family="Space Grotesk" font-size="11" font-weight="800" fill="#C9A84C">NP</text></svg>
+              </div>
+              <div class="mockup-bag-name">AOD 9604</div>
+            </div>
+            <div class="mockup-vial"></div>
+          </div>
+        </div>
+        <div class="product-body">
+          <div class="product-name">AOD 9604</div>
+          <div class="product-dose">5mg · Modified hGH Fragment · Freeze-Dried</div>
+          <div class="product-divider"></div>
+          <div class="product-stars">
+            <div class="stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div>
+            <span class="review-count">4.7 (198 reviews)</span>
+          </div>
+          <div class="product-price-row">
+            <span class="product-price">$45.00</span>
+          </div>
+          <button class="btn-add-cart" onclick="addToCart('AOD 9604', 45, this)">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+            Add to Cart
+          </button>
+          <div class="cart-trust-line">
+            <span><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Secure</span>
+            <span><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>COA Verified</span>
+            <span><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Ships 48h</span>
+          </div>
+        </div>
+      </div>
+      <div class="product-card reveal" data-cat="metabolic" style="transition-delay:0.16s">
+        <div class="product-image-wrap">
+          <button class="product-wish" onclick="toggleWish(this)">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          </button>
+          <div class="product-img-mockup">
+            <div class="mockup-bag">
+              <div class="mockup-bag-header">
+                <svg class="hex-icon" viewBox="0 0 40 40" fill="none"><polygon points="20,3 36,12 36,28 20,37 4,28 4,12" stroke="#C9A84C" stroke-width="1.5" fill="rgba(201,168,76,0.1)"/><text x="12" y="25" font-family="Space Grotesk" font-size="11" font-weight="800" fill="#C9A84C">NP</text></svg>
+              </div>
+              <div class="mockup-bag-name">GLP-1/GIP</div>
+            </div>
+            <div class="mockup-vial"></div>
+          </div>
+        </div>
+        <div class="product-body">
+          <div class="product-name">GLP-1/GIP</div>
+          <div class="product-dose">30mg · Dual Receptor Agonist · Lyophilized</div>
+          <div class="product-divider"></div>
+          <div class="product-stars">
+            <div class="stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div>
+            <span class="review-count">4.9 (241 reviews)</span>
+          </div>
+          <div class="product-price-row">
+            <span class="product-price">$210.00</span>
+          </div>
+          <button class="btn-add-cart" onclick="addToCart('GLP-1/GIP', 210, this)">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+            Add to Cart
+          </button>
+          <div class="cart-trust-line">
+            <span><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Secure</span>
+            <span><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>COA Verified</span>
+            <span><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Ships 48h</span>
+          </div>
+        </div>
+      </div>
+      <div class="product-card reveal" data-cat="metabolic" style="transition-delay:0.24s">
+        <div class="product-image-wrap">
+          <button class="product-wish" onclick="toggleWish(this)">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          </button>
+          <div class="product-img-mockup">
+            <div class="mockup-bag">
+              <div class="mockup-bag-header">
+                <svg class="hex-icon" viewBox="0 0 40 40" fill="none"><polygon points="20,3 36,12 36,28 20,37 4,28 4,12" stroke="#C9A84C" stroke-width="1.5" fill="rgba(201,168,76,0.1)"/><text x="12" y="25" font-family="Space Grotesk" font-size="11" font-weight="800" fill="#C9A84C">NP</text></svg>
+              </div>
+              <div class="mockup-bag-name">GLP-1/GIP</div>
+            </div>
+            <div class="mockup-vial"></div>
+          </div>
+        </div>
+        <div class="product-body">
+          <div class="product-name">GLP-1/GIP</div>
+          <div class="product-dose">20mg · Dual Receptor Agonist · Lyophilized</div>
+          <div class="product-divider"></div>
+          <div class="product-stars">
+            <div class="stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div>
+            <span class="review-count">4.8 (185 reviews)</span>
+          </div>
+          <div class="product-price-row">
+            <span class="product-price">$150.00</span>
+          </div>
+          <button class="btn-add-cart" onclick="addToCart('GLP-1/GIP', 150, this)">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+            Add to Cart
+          </button>
+          <div class="cart-trust-line">
+            <span><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Secure</span>
+            <span><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>COA Verified</span>
+            <span><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Ships 48h</span>
+          </div>
+        </div>
+      </div>
+      <div class="product-card reveal" data-cat="metabolic" style="transition-delay:0.08s">
+        <div class="product-image-wrap">
+          <button class="product-wish" onclick="toggleWish(this)">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          </button>
+          <div class="product-img-mockup">
+            <div class="mockup-bag">
+              <div class="mockup-bag-header">
+                <svg class="hex-icon" viewBox="0 0 40 40" fill="none"><polygon points="20,3 36,12 36,28 20,37 4,28 4,12" stroke="#C9A84C" stroke-width="1.5" fill="rgba(201,168,76,0.1)"/><text x="12" y="25" font-family="Space Grotesk" font-size="11" font-weight="800" fill="#C9A84C">NP</text></svg>
+              </div>
+              <div class="mockup-bag-name">RT</div>
+            </div>
+            <div class="mockup-vial"></div>
+          </div>
+        </div>
+        <div class="product-body">
+          <div class="product-name">RT</div>
+          <div class="product-dose">10mg · Lyophilized Powder</div>
+          <div class="product-divider"></div>
+          <div class="product-stars">
+            <div class="stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div>
+            <span class="review-count">4.8 (97 reviews)</span>
+          </div>
+          <div class="product-price-row">
+            <span class="product-price">$80.00</span>
+          </div>
+          <button class="btn-add-cart" onclick="addToCart('RT', 80, this)">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+            Add to Cart
+          </button>
+          <div class="cart-trust-line">
+            <span><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Secure</span>
+            <span><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>COA Verified</span>
+            <span><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Ships 48h</span>
+          </div>
+        </div>
+      </div>
+      <div class="product-card is-popular reveal" data-cat="blends" >
+        <div class="product-image-wrap">
+          <div class="popular-badge">Most Popular</div>
+          <button class="product-wish" onclick="toggleWish(this)">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          </button>
+          <div class="product-img-mockup">
+            <div class="mockup-bag">
+              <div class="mockup-bag-header">
+                <svg class="hex-icon" viewBox="0 0 40 40" fill="none"><polygon points="20,3 36,12 36,28 20,37 4,28 4,12" stroke="#C9A84C" stroke-width="1.5" fill="rgba(201,168,76,0.1)"/><text x="12" y="25" font-family="Space Grotesk" font-size="11" font-weight="800" fill="#C9A84C">NP</text></svg>
+              </div>
+              <div class="mockup-bag-name">Klow 80mg</div>
+            </div>
+            <div class="mockup-vial"></div>
+          </div>
+        </div>
+        <div class="product-body">
+          <div class="product-name">Klow 80mg</div>
+          <div class="product-dose">GHK-Cu 50mg · BPC-157 10mg · TB-500 10mg</div>
+          <div class="product-divider"></div>
+          <div class="product-stars">
+            <div class="stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div>
+            <span class="review-count">5.0 (567 reviews)</span>
+          </div>
+          <div class="product-price-row">
+            <span class="product-price">$130.00</span>
+            <span class="product-price-old">$160.00</span>
+            <span class="product-price-save">Save 19%</span>
+          </div>
+          <button class="btn-add-cart" onclick="addToCart('Klow 80mg', 130, this)">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+            Add to Cart
+          </button>
+          <div class="cart-trust-line">
+            <span><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Secure</span>
+            <span><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>COA Verified</span>
+            <span><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Ships 48h</span>
+          </div>
+        </div>
+      </div>
+      <div class="product-card reveal" data-cat="blends" style="transition-delay:0.08s">
+        <div class="product-image-wrap">
+          <span class="product-new-badge" style="">New</span>
+          <button class="product-wish" onclick="toggleWish(this)">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          </button>
+          <div class="product-img-mockup">
+            <div class="mockup-bag">
+              <div class="mockup-bag-header">
+                <svg class="hex-icon" viewBox="0 0 40 40" fill="none"><polygon points="20,3 36,12 36,28 20,37 4,28 4,12" stroke="#C9A84C" stroke-width="1.5" fill="rgba(201,168,76,0.1)"/><text x="12" y="25" font-family="Space Grotesk" font-size="11" font-weight="800" fill="#C9A84C">NP</text></svg>
+              </div>
+              <div class="mockup-bag-name">Glow Blend</div>
+            </div>
+            <div class="mockup-vial"></div>
+          </div>
+        </div>
+        <div class="product-body">
+          <div class="product-name">Glow Blend</div>
+          <div class="product-dose">GHK-Cu · BPC-157 · TB-500 · 50/10/10mg</div>
+          <div class="product-divider"></div>
+          <div class="product-stars">
+            <div class="stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div>
+            <span class="review-count">4.9 (203 reviews)</span>
+          </div>
+          <div class="product-price-row">
+            <span class="product-price">$100.00</span>
+          </div>
+          <button class="btn-add-cart" onclick="addToCart('Glow Blend', 100, this)">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+            Add to Cart
+          </button>
+          <div class="cart-trust-line">
+            <span><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Secure</span>
+            <span><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>COA Verified</span>
+            <span><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Ships 48h</span>
+          </div>
+        </div>
+      </div>
+      <div class="product-card reveal" data-cat="blends" style="transition-delay:0.16s">
+        <div class="product-image-wrap">
+          <button class="product-wish" onclick="toggleWish(this)">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          </button>
+          <div class="product-img-mockup">
+            <div class="mockup-bag">
+              <div class="mockup-bag-header">
+                <svg class="hex-icon" viewBox="0 0 40 40" fill="none"><polygon points="20,3 36,12 36,28 20,37 4,28 4,12" stroke="#C9A84C" stroke-width="1.5" fill="rgba(201,168,76,0.1)"/><text x="12" y="25" font-family="Space Grotesk" font-size="11" font-weight="800" fill="#C9A84C">NP</text></svg>
+              </div>
+              <div class="mockup-bag-name">TB-500 + BPC-157</div>
+            </div>
+            <div class="mockup-vial"></div>
+          </div>
+        </div>
+        <div class="product-body">
+          <div class="product-name">TB-500 + BPC-157</div>
+          <div class="product-dose">10mg · Synergistic Peptide Blend</div>
+          <div class="product-divider"></div>
+          <div class="product-stars">
+            <div class="stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div>
+            <span class="review-count">4.9 (344 reviews)</span>
+          </div>
+          <div class="product-price-row">
+            <span class="product-price">$60.00</span>
+          </div>
+          <button class="btn-add-cart" onclick="addToCart('TB-500 + BPC-157', 60, this)">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+            Add to Cart
+          </button>
+          <div class="cart-trust-line">
+            <span><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Secure</span>
+            <span><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>COA Verified</span>
+            <span><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Ships 48h</span>
+          </div>
+        </div>
+      </div>
+      <div class="product-card reveal" data-cat="cellular" >
+        <div class="product-image-wrap">
+          <button class="product-wish" onclick="toggleWish(this)">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          </button>
+          <div class="product-img-mockup">
+            <div class="mockup-bag">
+              <div class="mockup-bag-header">
+                <svg class="hex-icon" viewBox="0 0 40 40" fill="none"><polygon points="20,3 36,12 36,28 20,37 4,28 4,12" stroke="#C9A84C" stroke-width="1.5" fill="rgba(201,168,76,0.1)"/><text x="12" y="25" font-family="Space Grotesk" font-size="11" font-weight="800" fill="#C9A84C">NP</text></svg>
+              </div>
+              <div class="mockup-bag-name">NAD+</div>
+            </div>
+            <div class="mockup-vial"></div>
+          </div>
+        </div>
+        <div class="product-body">
+          <div class="product-name">NAD+</div>
+          <div class="product-dose">500mg · Lyophilized · Energy & DNA Repair</div>
+          <div class="product-divider"></div>
+          <div class="product-stars">
+            <div class="stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div>
+            <span class="review-count">4.9 (412 reviews)</span>
+          </div>
+          <div class="product-price-row">
+            <span class="product-price">$80.00</span>
+          </div>
+          <button class="btn-add-cart" onclick="addToCart('NAD+', 80, this)">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+            Add to Cart
+          </button>
+          <div class="cart-trust-line">
+            <span><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Secure</span>
+            <span><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>COA Verified</span>
+            <span><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Ships 48h</span>
+          </div>
+        </div>
+      </div>
+      <div class="product-card reveal" data-cat="cellular" style="transition-delay:0.08s">
+        <div class="product-image-wrap">
+          <button class="product-wish" onclick="toggleWish(this)">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          </button>
+          <div class="product-img-mockup">
+            <div class="mockup-bag">
+              <div class="mockup-bag-header">
+                <svg class="hex-icon" viewBox="0 0 40 40" fill="none"><polygon points="20,3 36,12 36,28 20,37 4,28 4,12" stroke="#C9A84C" stroke-width="1.5" fill="rgba(201,168,76,0.1)"/><text x="12" y="25" font-family="Space Grotesk" font-size="11" font-weight="800" fill="#C9A84C">NP</text></svg>
+              </div>
+              <div class="mockup-bag-name">NAD+</div>
+            </div>
+            <div class="mockup-vial"></div>
+          </div>
+        </div>
+        <div class="product-body">
+          <div class="product-name">NAD+</div>
+          <div class="product-dose">1000mg · Lyophilized · High-Dose Formula</div>
+          <div class="product-divider"></div>
+          <div class="product-stars">
+            <div class="stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div>
+            <span class="review-count">4.8 (178 reviews)</span>
+          </div>
+          <div class="product-price-row">
+            <span class="product-price">$120.00</span>
+          </div>
+          <button class="btn-add-cart" onclick="addToCart('NAD+', 120, this)">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+            Add to Cart
+          </button>
+          <div class="cart-trust-line">
+            <span><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Secure</span>
+            <span><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>COA Verified</span>
+            <span><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Ships 48h</span>
+          </div>
+        </div>
+      </div>
+      <div class="product-card reveal" data-cat="cellular" style="transition-delay:0.16s">
+        <div class="product-image-wrap">
+          <button class="product-wish" onclick="toggleWish(this)">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          </button>
+          <div class="product-img-mockup">
+            <div class="mockup-bag">
+              <div class="mockup-bag-header">
+                <svg class="hex-icon" viewBox="0 0 40 40" fill="none"><polygon points="20,3 36,12 36,28 20,37 4,28 4,12" stroke="#C9A84C" stroke-width="1.5" fill="rgba(201,168,76,0.1)"/><text x="12" y="25" font-family="Space Grotesk" font-size="11" font-weight="800" fill="#C9A84C">NP</text></svg>
+              </div>
+              <div class="mockup-bag-name">GHK-Cu</div>
+            </div>
+            <div class="mockup-vial"></div>
+          </div>
+        </div>
+        <div class="product-body">
+          <div class="product-name">GHK-Cu</div>
+          <div class="product-dose">100mg · Copper-Binding Peptide · Tissue Research</div>
+          <div class="product-divider"></div>
+          <div class="product-stars">
+            <div class="stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div>
+            <span class="review-count">4.8 (289 reviews)</span>
+          </div>
+          <div class="product-price-row">
+            <span class="product-price">$55.00</span>
+          </div>
+          <button class="btn-add-cart" onclick="addToCart('GHK-Cu', 55, this)">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+            Add to Cart
+          </button>
+          <div class="cart-trust-line">
+            <span><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Secure</span>
+            <span><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>COA Verified</span>
+            <span><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Ships 48h</span>
+          </div>
+        </div>
+      </div>
+      <div class="product-card reveal" data-cat="cellular" style="transition-delay:0.24s">
+        <div class="product-image-wrap">
+          <button class="product-wish" onclick="toggleWish(this)">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          </button>
+          <div class="product-img-mockup">
+            <div class="mockup-bag">
+              <div class="mockup-bag-header">
+                <svg class="hex-icon" viewBox="0 0 40 40" fill="none"><polygon points="20,3 36,12 36,28 20,37 4,28 4,12" stroke="#C9A84C" stroke-width="1.5" fill="rgba(201,168,76,0.1)"/><text x="12" y="25" font-family="Space Grotesk" font-size="11" font-weight="800" fill="#C9A84C">NP</text></svg>
+              </div>
+              <div class="mockup-bag-name">Mots-C</div>
+            </div>
+            <div class="mockup-vial"></div>
+          </div>
+        </div>
+        <div class="product-body">
+          <div class="product-name">Mots-C</div>
+          <div class="product-dose">10mg · Mitochondrial Peptide · Lyophilized</div>
+          <div class="product-divider"></div>
+          <div class="product-stars">
+            <div class="stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div>
+            <span class="review-count">4.7 (156 reviews)</span>
+          </div>
+          <div class="product-price-row">
+            <span class="product-price">$43.00</span>
+          </div>
+          <button class="btn-add-cart" onclick="addToCart('Mots-C', 43, this)">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+            Add to Cart
+          </button>
+          <div class="cart-trust-line">
+            <span><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Secure</span>
+            <span><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>COA Verified</span>
+            <span><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Ships 48h</span>
+          </div>
+        </div>
+      </div>
+      <div class="product-card reveal" data-cat="peptides" >
+        <div class="product-image-wrap">
+          <button class="product-wish" onclick="toggleWish(this)">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          </button>
+          <div class="product-img-mockup">
+            <div class="mockup-bag">
+              <div class="mockup-bag-header">
+                <svg class="hex-icon" viewBox="0 0 40 40" fill="none"><polygon points="20,3 36,12 36,28 20,37 4,28 4,12" stroke="#C9A84C" stroke-width="1.5" fill="rgba(201,168,76,0.1)"/><text x="12" y="25" font-family="Space Grotesk" font-size="11" font-weight="800" fill="#C9A84C">NP</text></svg>
+              </div>
+              <div class="mockup-bag-name">GHRP-6</div>
+            </div>
+            <div class="mockup-vial"></div>
+          </div>
+        </div>
+        <div class="product-body">
+          <div class="product-name">GHRP-6</div>
+          <div class="product-dose">· Growth Hormone Releasing Peptide</div>
+          <div class="product-divider"></div>
+          <div class="product-stars">
+            <div class="stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div>
+            <span class="review-count">4.8 (221 reviews)</span>
+          </div>
+          <div class="product-price-row">
+            <span class="product-price">$55.00</span>
+          </div>
+          <button class="btn-add-cart" onclick="addToCart('GHRP-6', 55, this)">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+            Add to Cart
+          </button>
+          <div class="cart-trust-line">
+            <span><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Secure</span>
+            <span><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>COA Verified</span>
+            <span><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Ships 48h</span>
+          </div>
+        </div>
+      </div>
+      <div class="product-card reveal" data-cat="peptides" style="transition-delay:0.08s">
+        <div class="product-image-wrap">
+          <button class="product-wish" onclick="toggleWish(this)">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          </button>
+          <div class="product-img-mockup">
+            <div class="mockup-bag">
+              <div class="mockup-bag-header">
+                <svg class="hex-icon" viewBox="0 0 40 40" fill="none"><polygon points="20,3 36,12 36,28 20,37 4,28 4,12" stroke="#C9A84C" stroke-width="1.5" fill="rgba(201,168,76,0.1)"/><text x="12" y="25" font-family="Space Grotesk" font-size="11" font-weight="800" fill="#C9A84C">NP</text></svg>
+              </div>
+              <div class="mockup-bag-name">KPV</div>
+            </div>
+            <div class="mockup-vial"></div>
+          </div>
+        </div>
+        <div class="product-body">
+          <div class="product-name">KPV</div>
+          <div class="product-dose">10mg · Anti-Inflammatory Peptide · Lyophilized</div>
+          <div class="product-divider"></div>
+          <div class="product-stars">
+            <div class="stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div>
+            <span class="review-count">4.7 (134 reviews)</span>
+          </div>
+          <div class="product-price-row">
+            <span class="product-price">$65.00</span>
+          </div>
+          <button class="btn-add-cart" onclick="addToCart('KPV', 65, this)">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+            Add to Cart
+          </button>
+          <div class="cart-trust-line">
+            <span><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Secure</span>
+            <span><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>COA Verified</span>
+            <span><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Ships 48h</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how-section" id="how">
+  <div class="section-inner">
+    <div class="section-header" style="text-align:center">
+      <div class="section-tag" style="justify-content:center;margin:0 auto 16px">Process</div>
+      <h2 class="section-title" style="max-width:500px;margin:0 auto 14px">From Lab to <em>Your Door</em></h2>
+      <p class="section-sub" style="margin:0 auto">Every compound follows a rigorous process from synthesis to delivery.</p>
+    </div>
+    <div class="steps-grid">
+      <div class="step-card reveal">
+        <div class="step-num">01</div>
+        <div class="step-title">Precision Synthesis</div>
+        <p class="step-text">Each compound is synthesized in certified USA laboratories using pharmaceutical-grade reagents and strict quality protocols.</p>
+      </div>
+      <div class="step-card reveal" style="transition-delay:0.15s">
+        <div class="step-num">02</div>
+        <div class="step-title">Third-Party Testing</div>
+        <p class="step-text">Every batch is independently tested for purity, identity, and potency. Certificate of Analysis available for all products on request.</p>
+      </div>
+      <div class="step-card reveal" style="transition-delay:0.3s">
+        <div class="step-num">03</div>
+        <div class="step-title">Secure Delivery</div>
+        <p class="step-text">Packaged under controlled conditions and shipped discreetly via insulated containers to preserve compound integrity.</p>
+      </div>
+    </div>
+    <div class="section-cta">
+      <a href="#products" class="btn-primary">
+        Start Your Research Protocol
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+      <p>Free shipping on orders over $150 · 48h USA delivery</p>
+    </div>
+  </div>
+</section>
+
+<!-- CERTIFICATIONS -->
+<section id="certs">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="section-tag">Standards</div>
+      <h2 class="section-title">Built on <em>Science.</em><br>Backed by Data.</h2>
+      <p class="section-sub">No shortcuts. Every product meets the highest research-grade standards.</p>
+    </div>
+    <div class="cert-grid">
+      <div class="cert-card reveal">
+        <div class="cert-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18m0 0h10a2 2 0 0 0 2-2V9M9 21H5a2 2 0 0 1-2-2V9m0 0h18"/></svg>
+        </div>
+        <div class="cert-title">HPLC Verified</div>
+        <div class="cert-sub">High-performance liquid chromatography purity analysis on every batch.</div>
+      </div>
+      <div class="cert-card reveal" style="transition-delay:0.1s">
+        <div class="cert-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <div class="cert-title">COA Available</div>
+        <div class="cert-sub">Certificate of Analysis from independent labs available for all products.</div>
+      </div>
+      <div class="cert-card reveal" style="transition-delay:0.2s">
+        <div class="cert-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
+        </div>
+        <div class="cert-title">&gt;99% Purity</div>
+        <div class="cert-sub">Minimum 99% purity guarantee across all research compounds.</div>
+      </div>
+      <div class="cert-card reveal" style="transition-delay:0.3s">
+        <div class="cert-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        </div>
+        <div class="cert-title">USA Manufactured</div>
+        <div class="cert-sub">All products synthesized and packaged within the United States.</div>
+      </div>
+    </div>
+    <div class="section-cta">
+      <a href="#products" class="btn-primary">
+        View All Products
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- WHERE TO START -->
+<section style="background:var(--bg-card);padding:80px 24px">
+  <div class="section-inner">
+    <div style="text-align:center;margin-bottom:48px">
+      <div class="section-tag" style="justify-content:center;margin:0 auto 16px">Guided Experience</div>
+      <h2 class="section-title" style="margin:0 auto 14px">Not Sure <em>Where to Start?</em></h2>
+      <p class="section-sub" style="margin:0 auto">Our research team helps you find the right compounds for your specific protocol. Start here.</p>
+    </div>
+    <div class="start-grid">
+      <div class="start-card reveal" onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})">
+        <div class="start-card-icon">🔬</div>
+        <h3>Recovery &amp; Blends</h3>
+        <p>Multi-peptide formulations for tissue remodeling, cellular signaling, and regenerative pathway research.</p>
+        <div class="start-card-products">
+          <span class="start-pill">Klow 80mg</span>
+          <span class="start-pill">Glow Blend</span>
+          <span class="start-pill">TB-500 + BPC-157</span>
+        </div>
+        <a class="start-link" href="#products">View blends <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+      </div>
+      <div class="start-card reveal" style="transition-delay:0.12s" onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})">
+        <div class="start-card-icon">⚗️</div>
+        <h3>Metabolic Research</h3>
+        <p>GLP-1/GIP dual agonists, AOD 9604, and 5-Amino 1MQ for metabolic pathway and fat metabolism studies.</p>
+        <div class="start-card-products">
+          <span class="start-pill">GLP-1/GIP 30mg</span>
+          <span class="start-pill">AOD 9604</span>
+          <span class="start-pill">5-Amino 1MQ</span>
+        </div>
+        <a class="start-link" href="#products">View compounds <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+      </div>
+      <div class="start-card reveal" style="transition-delay:0.24s" onclick="openChat()">
+        <div class="start-card-icon">💬</div>
+        <h3>Need Guidance?</h3>
+        <p>Speak directly with our research team. We help identify the right compounds for your specific protocol requirements.</p>
+        <div class="start-card-products">
+          <span class="start-pill">neopeptides@outlook.com</span>
+        </div>
+        <a class="start-link" href="mailto:neopeptides@outlook.com">Contact our team <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section id="reviews" style="background:var(--bg-card)">
+  <div class="section-inner">
+    <div class="section-header" style="text-align:center">
+      <div class="section-tag" style="justify-content:center;margin:0 auto 16px">Testimonials</div>
+      <h2 class="section-title" style="margin:0 auto 14px">Trusted by <em>Researchers</em></h2>
+      <p class="section-sub" style="margin:0 auto">2,847 verified reviews. 4.9 average rating.</p>
+    </div>
+    <div class="reviews-grid">
+      <div class="review-card reveal">
+        <div class="review-header">
+          <div class="reviewer-avatar">JM</div>
+          <div class="reviewer-info">
+            <strong>Dr. James M.</strong>
+            <span>Verified Researcher · Texas</span>
+          </div>
+        </div>
+        <div class="review-stars">
+          <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+        </div>
+        <p class="review-text">"Exceptional purity on the BPC-157. COA matched exactly what was on the label — 99.3% HPLC purity. Fast shipping and discreet packaging. Will be ordering again."</p>
+        <div class="review-verified">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          Verified Purchase
+        </div>
+      </div>
+      <div class="review-card reveal" style="transition-delay:0.1s">
+        <div class="review-header">
+          <div class="reviewer-avatar" style="background:linear-gradient(135deg,var(--gold),#A07830)">SR</div>
+          <div class="reviewer-info">
+            <strong>Sarah R.</strong>
+            <span>Verified Researcher · California</span>
+          </div>
+        </div>
+        <div class="review-stars">
+          <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+        </div>
+        <p class="review-text">"The 5-Amino 1MQ is exactly as described. I've tried multiple vendors and Neo Peptide is consistently the best in terms of quality and consistency. The lab results speak for themselves."</p>
+        <div class="review-verified">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          Verified Purchase
+        </div>
+      </div>
+      <div class="review-card reveal" style="transition-delay:0.2s">
+        <div class="review-header">
+          <div class="reviewer-avatar" style="background:linear-gradient(135deg,#7B9FFF,#5570CC)">MK</div>
+          <div class="reviewer-info">
+            <strong>Marcus K.</strong>
+            <span>Verified Researcher · Florida</span>
+          </div>
+        </div>
+        <div class="review-stars">
+          <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+        </div>
+        <p class="review-text">"Ordered Tirzepatide and Cagrilintide. Both arrived in 48 hours, properly packaged. The customer support is top-tier — they actually know the science. Highly recommend."</p>
+        <div class="review-verified">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          Verified Purchase
+        </div>
+      </div>
+    </div>
+    <div class="section-cta" style="margin-top:48px">
+      <a href="#products" class="btn-primary">
+        Join 2,847+ Researchers — Shop Now
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+      <p>30-Day Satisfaction Guarantee · No questions asked</p>
+    </div>
+  </div>
+</section>
+
+<!-- GUARANTEE -->
+<div class="guarantee-section">
+  <div class="guarantee-inner">
+    <div class="guarantee-item">
+      <div class="guarantee-icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      </div>
+      <div>
+        <strong>30-Day Guarantee</strong>
+        <span>If you're not satisfied, we make it right. No questions.</span>
+      </div>
+    </div>
+    <div class="guarantee-item">
+      <div class="guarantee-icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      </div>
+      <div>
+        <strong>Ships in 48 Hours</strong>
+        <span>Every order fulfilled and dispatched within 48h.</span>
+      </div>
+    </div>
+    <div class="guarantee-item">
+      <div class="guarantee-icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18m0 0h10a2 2 0 0 0 2-2V9M9 21H5a2 2 0 0 1-2-2V9m0 0h18"/></svg>
+      </div>
+      <div>
+        <strong>COA on Every Batch</strong>
+        <span>Third-party Certificate of Analysis available on request.</span>
+      </div>
+    </div>
+    <div class="guarantee-item">
+      <div class="guarantee-icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13.4a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 2.5h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 10a16 16 0 0 0 6.09 6.09l.94-1.94a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+      </div>
+      <div>
+        <strong>Expert Support</strong>
+        <span>Research team available Mon–Fri, 9am–6pm EST.</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FAQ -->
+<section id="faq">
+  <div class="section-inner">
+    <div class="section-header" style="text-align:center">
+      <div class="section-tag" style="justify-content:center;margin:0 auto 16px">FAQ</div>
+      <h2 class="section-title" style="margin:0 auto 14px">Common <em>Questions</em></h2>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          Are these products safe for human consumption?
+          <span class="faq-chevron">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </span>
+        </div>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            All products sold by Neo Peptide are strictly for research purposes only and are not intended for human consumption, diagnosis, treatment, or prevention of any disease or condition. These compounds are sold exclusively to licensed researchers and research institutions.
+          </div>
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          How can I obtain a Certificate of Analysis (COA)?
+          <span class="faq-chevron">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </span>
+        </div>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            A Certificate of Analysis is available for all products upon request. Simply contact our support team with your order number and the specific product(s) you need the COA for. We'll send the third-party lab results directly to your email within 24 hours.
+          </div>
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          What shipping methods do you offer?
+          <span class="faq-chevron">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </span>
+        </div>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            We offer standard (3-5 business days) and expedited (1-2 business days) shipping within the USA. All orders are shipped in discreet, unmarked packaging with insulated containers to preserve compound stability. Free standard shipping on orders over $150.
+          </div>
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          How should research compounds be stored?
+          <span class="faq-chevron">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </span>
+        </div>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            Lyophilized peptide powders should be stored at -20°C for long-term storage or at 4°C for short-term use (up to 4 weeks). Protect from light and moisture. Once reconstituted with bacteriostatic water, store at 4°C and use within 4 weeks.
+          </div>
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          Do you offer bulk or institutional pricing?
+          <span class="faq-chevron">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </span>
+        </div>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            Yes. We offer volume pricing for research institutions, universities, and licensed facilities. Contact our sales team with your institution credentials and research requirements for a custom pricing quote.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <a href="#" class="logo">
+        <div class="logo-wordmark">
+          <span class="logo-ne">NE</span>
+          <div class="logo-o-wrap"><span class="logo-o">O</span></div>
+          <div class="logo-bars"><div class="logo-bar"></div><div class="logo-bar"></div></div>
+        </div>
+        <span class="logo-sub">Peptide</span>
+      </a>
+      <p>Advanced research compounds engineered for accuracy, consistency, and results. Made for research. Built with integrity.</p>
+      <div class="footer-social">
+        <a class="social-btn" href="https://instagram.com/neo_peptides" title="Instagram" target="_blank">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+        </a>
+        <a class="social-btn" href="mailto:neopeptides@outlook.com" title="Email">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        </a>
+        <a class="social-btn" href="#" title="WhatsApp">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+        </a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Products</h4>
+      <ul>
+        <li><a href="#products">All Compounds</a></li>
+        <li><a href="#products">Metabolic Research</a></li>
+        <li><a href="#products">Peptide Blends</a></li>
+        <li><a href="#products">Cellular Health</a></li>
+        <li><a href="#products">Peptides</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="#">About Us</a></li>
+        <li><a href="#">Lab Standards</a></li>
+        <li><a href="#">COA Library</a></li>
+        <li><a href="#">Research Blog</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Support</h4>
+      <ul>
+        <li><a href="#">Privacy Policy</a></li>
+        <li><a href="#">Terms of Service</a></li>
+        <li><a href="mailto:neopeptides@outlook.com">neopeptides@outlook.com</a></li>
+        <li><a href="https://instagram.com/neo_peptides" target="_blank">@neo_peptides</a></li>
+        <li><a href="#">My Account</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 Neo Peptide USA. All rights reserved.</p>
+    <p>🇺🇸 USA GMP Certified · For Research Use Only · Must Be 21+</p>
+  </div>
+  <div class="footer-disclaimer">
+    DISCLAIMER: All products sold by Neo Peptide USA are strictly for in-vitro laboratory research use only. Not for human or animal consumption. Products are not intended to diagnose, treat, cure, or prevent any medical condition. Compounds are sold in powder form and require reconstitution with a suitable diluent before use. Research supplies are not included. By purchasing, you confirm you are 21+ and a licensed researcher or research institution acting in compliance with all applicable local, state, and federal laws. Neo Peptide USA makes no claims about the safety or efficacy of these compounds for use in humans or animals. These statements have not been evaluated by the FDA.
+  </div>
+</footer>
+
+<!-- CART SIDEBAR -->
+<div class="cart-overlay" id="cartOverlay" onclick="closeCart()"></div>
+<div class="cart-sidebar" id="cartSidebar">
+  <div class="cart-header">
+    <h3>Your Cart <span id="cartItemCount" style="color:var(--text-muted);font-weight:400;font-size:14px">(0 items)</span></h3>
+    <button class="cart-close" onclick="closeCart()">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+  </div>
+  <div class="cart-items" id="cartItems">
+    <div class="cart-empty">
+      <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--text-dim)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+      Your cart is empty
+    </div>
+  </div>
+  <div class="cart-footer">
+    <div id="shipProgressWrap" class="ship-progress-wrap" style="display:none">
+      <div class="ship-progress-label">
+        <span id="shipProgressLabel">Add <strong>$150</strong> for free shipping</span>
+        <strong id="shipProgressPct" style="color:var(--text-muted)">0%</strong>
+      </div>
+      <div class="ship-progress-bar">
+        <div class="ship-progress-fill" id="shipProgressFill" style="width:0%"></div>
+      </div>
+    </div>
+    <div id="cartUpsell" class="cart-upsell" style="display:none">
+      <div class="cart-upsell-text">
+        <strong>Add Bacteriostatic Water</strong>
+        <span>Essential for reconstitution · $10.00</span>
+      </div>
+      <button class="cart-upsell-btn" onclick="addToCart('Bacteriostatic Water',10,{innerHTML:''})">+ Add</button>
+    </div>
+    <div class="cart-total">
+      <span>Total</span>
+      <strong id="cartTotal">$0.00</strong>
+    </div>
+    <button class="btn-checkout">
+      Proceed to Checkout
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </button>
+    <p class="cart-shipping" style="text-align:center;font-size:11px;color:var(--text-dim);margin-top:10px">
+      🔒 Secure checkout · SSL encrypted · COA guaranteed
+    </p>
+  </div>
+</div>
+
+<script>
+// ── PARTICLE CANVAS ──
+(function() {
+  const canvas = document.getElementById('hero-canvas');
+  const ctx = canvas.getContext('2d');
+  let W, H, particles = [], connections = [];
+  const N = 55;
+
+  function resize() {
+    W = canvas.width  = canvas.offsetWidth;
+    H = canvas.height = canvas.offsetHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  for (let i = 0; i < N; i++) {
+    particles.push({
+      x: Math.random() * W,
+      y: Math.random() * H,
+      vx: (Math.random() - 0.5) * 0.35,
+      vy: (Math.random() - 0.5) * 0.35,
+      r: Math.random() * 1.8 + 0.6
+    });
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+    for (let i = 0; i < N; i++) {
+      const p = particles[i];
+      p.x += p.vx; p.y += p.vy;
+      if (p.x < 0 || p.x > W) p.vx *= -1;
+      if (p.y < 0 || p.y > H) p.vy *= -1;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(0,212,255,0.55)';
+      ctx.shadowBlur = 6;
+      ctx.shadowColor = 'rgba(0,212,255,0.4)';
+      ctx.fill();
+      ctx.shadowBlur = 0;
+      for (let j = i + 1; j < N; j++) {
+        const q = particles[j];
+        const dx = p.x - q.x, dy = p.y - q.y;
+        const dist = Math.sqrt(dx*dx + dy*dy);
+        if (dist < 130) {
+          ctx.beginPath();
+          ctx.moveTo(p.x, p.y);
+          ctx.lineTo(q.x, q.y);
+          ctx.strokeStyle = `rgba(0,212,255,${0.12 * (1 - dist/130)})`;
+          ctx.lineWidth = 0.7;
+          ctx.stroke();
+        }
+      }
+    }
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+// ── HEADER SCROLL ──
+window.addEventListener('scroll', () => {
+  document.getElementById('header').classList.toggle('scrolled', window.scrollY > 20);
+});
+
+// ── SCROLL REVEAL ──
+const revealObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.12 });
+document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+
+// ── ANIMATED COUNTERS ──
+const counterObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (!e.isIntersecting) return;
+    const el = e.target;
+    const target = parseFloat(el.dataset.target);
+    const isDecimal = 'decimal' in el.dataset;
+    const duration = 1800;
+    const start = performance.now();
+    function step(now) {
+      const p = Math.min((now - start) / duration, 1);
+      const eased = p < 0.5 ? 2*p*p : -1+(4-2*p)*p;
+      const val = eased * target;
+      el.textContent = isDecimal ? val.toFixed(1) + '%' : Math.floor(val).toLocaleString() + (target > 100 ? '+' : '');
+      if (p < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+    counterObs.unobserve(el);
+  });
+}, { threshold: 0.5 });
+document.querySelectorAll('[data-target]').forEach(el => counterObs.observe(el));
+
+// ── CART STATE ──
+let cart = [];
+
+function addToCart(name, price, btn) {
+  const existing = cart.find(i => i.name === name);
+  if (existing) { existing.qty++; }
+  else { cart.push({ name, price, qty: 1 }); }
+  updateCart();
+  openCart();
+  btn.textContent = '✓ Added!';
+  btn.style.background = 'linear-gradient(135deg,#4ADE80,#22C55E)';
+  setTimeout(() => {
+    btn.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg> Add to Cart`;
+    btn.style.background = '';
+  }, 1800);
+}
+
+function removeFromCart(name) {
+  cart = cart.filter(i => i.name !== name);
+  updateCart();
+}
+
+function updateCart() {
+  const total = cart.reduce((s, i) => s + i.price * i.qty, 0);
+  const count = cart.reduce((s, i) => s + i.qty, 0);
+  document.getElementById('cartBadge').textContent = count;
+  document.getElementById('cartItemCount').textContent = `(${count} item${count !== 1 ? 's' : ''})`;
+  document.getElementById('cartTotal').textContent = `$${total.toFixed(2)}`;
+
+  const badge = document.getElementById('cartBadge');
+  badge.classList.remove('pop');
+  void badge.offsetWidth;
+  badge.classList.add('pop');
+
+  const container = document.getElementById('cartItems');
+  if (cart.length === 0) {
+    container.innerHTML = `<div class="cart-empty"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--text-dim)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>Your cart is empty</div>`;
+    return;
+  }
+  container.innerHTML = cart.map(item => `
+    <div class="cart-item">
+      <div class="cart-item-img">🧪</div>
+      <div class="cart-item-info">
+        <strong>${item.name}</strong>
+        <span>Qty: ${item.qty}</span>
+      </div>
+      <div class="cart-item-price">$${(item.price * item.qty).toFixed(2)}</div>
+      <span class="cart-item-remove" onclick="removeFromCart('${item.name}')">✕</span>
+    </div>
+  `).join('');
+}
+
+function openCart() {
+  document.getElementById('cartOverlay').classList.add('open');
+  document.getElementById('cartSidebar').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeCart() {
+  document.getElementById('cartOverlay').classList.remove('open');
+  document.getElementById('cartSidebar').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+// ── FAQ ──
+function toggleFaq(el) {
+  const item = el.parentElement;
+  const answer = item.querySelector('.faq-answer');
+  const isOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item.open').forEach(i => {
+    i.classList.remove('open');
+    i.querySelector('.faq-answer').style.maxHeight = '0';
+  });
+  if (!isOpen) {
+    item.classList.add('open');
+    answer.style.maxHeight = answer.scrollHeight + 40 + 'px';
+  }
+}
+
+// ── PRODUCT FILTER ──
+function filterProducts(cat, btn) {
+  document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.product-card').forEach(card => {
+    const cats = card.dataset.cat || '';
+    card.style.display = (cat === 'all' || cats.includes(cat)) ? '' : 'none';
+  });
+}
+
+// ── WISHLIST ──
+function toggleWish(btn) {
+  btn.classList.toggle('active');
+  if (btn.classList.contains('active')) {
+    btn.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="#FF6680" stroke="#FF6680" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>`;
+  } else {
+    btn.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>`;
+  }
+}
+
+// ── SHIPPING PROGRESS ──
+function updateShipping(total) {
+  const wrap = document.getElementById('shipProgressWrap');
+  const fill = document.getElementById('shipProgressFill');
+  const label = document.getElementById('shipProgressLabel');
+  const pct = document.getElementById('shipProgressPct');
+  if (!wrap) return;
+  if (total > 0) {
+    wrap.style.display = '';
+    const progress = Math.min(total / 150, 1);
+    fill.style.width = (progress * 100) + '%';
+    pct.textContent = Math.round(progress * 100) + '%';
+    if (total >= 150) {
+      label.innerHTML = '<strong style="color:#4ADE80">🎉 Free shipping unlocked!</strong>';
+      pct.style.color = '#4ADE80';
+    } else {
+      const remaining = (150 - total).toFixed(2);
+      label.innerHTML = `Add <strong>$${remaining}</strong> for free shipping`;
+      pct.style.color = 'var(--text-muted)';
+    }
+  } else {
+    wrap.style.display = 'none';
+  }
+}
+
+// ── CART UPSELL VISIBILITY ──
+function updateUpsell() {
+  const upsell = document.getElementById('cartUpsell');
+  if (!upsell) return;
+  const hasBact = cart.some(i => i.name === 'Bacteriostatic Water');
+  const hasPeptide = cart.some(i => i.name !== 'Bacteriostatic Water');
+  upsell.style.display = (hasPeptide && !hasBact && cart.length > 0) ? '' : 'none';
+}
+
+// Patch updateCart to call new functions
+const _origUpdateCart = updateCart;
+updateCart = function() {
+  _origUpdateCart();
+  const total = cart.reduce((s, i) => s + i.price * i.qty, 0);
+  updateShipping(total);
+  updateUpsell();
+};
+
+// ── CHAT ──
+function openChat() {
+  alert('Chat coming soon! Contact us at support@neopeptideusa.com');
+}
+
+// ── EXIT INTENT ──
+let exitShown = sessionStorage.getItem('exitShown');
+if (!exitShown) {
+  let exitTimer = setTimeout(() => { showExitPopup(); }, 35000);
+  document.addEventListener('mouseleave', (e) => {
+    if (e.clientY < 5 && !exitShown) showExitPopup();
+  });
+}
+function showExitPopup() {
+  if (exitShown) return;
+  exitShown = true;
+  sessionStorage.setItem('exitShown', '1');
+  document.getElementById('exitOverlay').classList.add('show');
+}
+function closeExit() {
+  document.getElementById('exitOverlay').classList.remove('show');
+}
+function submitExit(e) {
+  e.preventDefault();
+  const email = document.getElementById('exitEmail').value;
+  if (!email) return;
+  document.getElementById('exitModal').innerHTML = `
+    <div style="text-align:center;padding:20px 0">
+      <div style="font-size:48px;margin-bottom:16px">🎉</div>
+      <h3 style="font-family:'Space Grotesk',sans-serif;font-size:24px;font-weight:800;margin-bottom:10px">You're in.</h3>
+      <p style="color:var(--text-muted);font-size:14px;line-height:1.6">Your 10% discount code has been sent to <strong style="color:var(--text)">${email}</strong>. Check your inbox.</p>
+      <button onclick="closeExit()" style="margin-top:24px;padding:12px 28px;background:var(--gold);color:#000;font-weight:700;font-size:13px;border:none;border-radius:10px;cursor:pointer;letter-spacing:.06em;text-transform:uppercase">Shop Now</button>
+    </div>`;
+  setTimeout(closeExit, 4000);
+}
+
+// ── STICKY BAR HIDE ON FOOTER ──
+const stickyBar = document.getElementById('stickyBar');
+if (stickyBar) {
+  const footerEl = document.querySelector('footer');
+  const stickyObs = new IntersectionObserver(([entry]) => {
+    stickyBar.style.opacity = entry.isIntersecting ? '0' : '1';
+    stickyBar.style.pointerEvents = entry.isIntersecting ? 'none' : '';
+  }, { threshold: 0.1 });
+  if (footerEl) stickyObs.observe(footerEl);
+}
+</script>
+
+<!-- CHAT BUTTON -->
+<button class="chat-btn" onclick="openChat()" title="Talk to our research team">
+  <div class="chat-btn-icon">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+  </div>
+  <div class="chat-btn-text">
+    <strong>Need guidance?</strong>
+    <span>Talk to our team</span>
+  </div>
+  <div class="chat-btn-dot"></div>
+</button>
+
+<!-- STICKY MOBILE BAR -->
+<div class="sticky-bar" id="stickyBar" style="transition:opacity 0.3s">
+  <a href="#products" class="sticky-bar-primary">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+    Shop Now
+  </a>
+  <button class="sticky-bar-secondary" onclick="openChat()">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+    Guidance
+  </button>
+</div>
+
+<!-- EXIT POPUP -->
+<div class="exit-overlay" id="exitOverlay" onclick="if(event.target===this)closeExit()">
+  <div class="exit-modal" id="exitModal">
+    <button class="exit-close" onclick="closeExit()">✕</button>
+    <div class="exit-badge">First Order Offer</div>
+    <h2 class="exit-title">Get <em>10% Off</em><br>Your First Order</h2>
+    <p class="exit-sub">Join 2,847 researchers. Get exclusive access to new compounds, batch notifications, and your first-order discount.</p>
+    <form class="exit-form" onsubmit="submitExit(event)">
+      <input class="exit-input" id="exitEmail" type="email" placeholder="your@email.com" required>
+      <button class="exit-submit" type="submit">Claim</button>
+    </form>
+    <p class="exit-skip" onclick="closeExit()">No thanks, I'll pay full price</p>
+  </div>
+</div>
+
+</body>
+</html>
