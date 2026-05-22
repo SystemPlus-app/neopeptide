@@ -322,6 +322,54 @@
     .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.7s, transform 0.7s; }
     .reveal.in { opacity: 1; transform: none; }
 
+    /* PROGRAM SECTIONS */
+    .prog-section { overflow: hidden; }
+    .prog-banner { padding: 80px 80px 72px; display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; }
+    .prog-banner.glp1      { background: linear-gradient(135deg, #E5F5EC 0%, #6DC48A 50%, #2E6B4A 100%); }
+    .prog-banner.longevity { background: linear-gradient(135deg, #D8EAFB 0%, #6AA4E0 50%, #2255A0 100%); }
+    .prog-banner.testosterone { background: linear-gradient(135deg, #FAEAEA 0%, #D47878 50%, #8B3232 100%); }
+    .prog-banner.microdose { background: linear-gradient(135deg, #D4F0DF 0%, #78CCA0 50%, #2E7A4A 100%); }
+    .prog-eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(0,0,0,0.38); margin-bottom: 14px; }
+    .prog-h2 { font-family: 'Plus Jakarta Sans', sans-serif; font-size: clamp(28px, 3.8vw, 48px); font-weight: 800; color: #111; line-height: 1.05; letter-spacing: -0.02em; margin-bottom: 18px; }
+    .prog-text { font-size: 15px; color: rgba(0,0,0,0.5); line-height: 1.8; max-width: 480px; }
+    .prog-chips { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .prog-chip { background: rgba(255,255,255,0.48); backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.65); border-radius: 14px; padding: 18px 16px; }
+    .prog-chip-icon { font-size: 22px; margin-bottom: 8px; }
+    .prog-chip-title { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 13px; font-weight: 700; color: #111; margin-bottom: 4px; }
+    .prog-chip-desc { font-size: 11px; color: rgba(0,0,0,0.45); line-height: 1.5; }
+    .prog-products-row { background: var(--cream); padding: 56px 80px 72px; }
+    .prog-products-row-inner { max-width: 1200px; margin: 0 auto; }
+
+    /* TESTIMONIAL BREAKS */
+    .testi-break { background: var(--dark); padding: 80px 48px; }
+    .testi-break-inner { max-width: 1100px; margin: 0 auto; }
+    .testi-break-label { font-size: 11px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.25); margin-bottom: 10px; }
+    .testi-break-title { font-family: 'Plus Jakarta Sans', sans-serif; font-size: clamp(22px, 2.8vw, 34px); font-weight: 800; color: #fff; margin-bottom: 40px; }
+    .testi-break-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; }
+    .testi-card { border-radius: 14px; overflow: hidden; background: var(--dark2); transition: transform 0.3s; }
+    .testi-card:hover { transform: translateY(-3px); }
+    .testi-thumb { position: relative; aspect-ratio: 3/2; background: linear-gradient(160deg, #1A1A2E 0%, #0A0A10 100%); display: flex; align-items: center; justify-content: center; overflow: hidden; }
+    .testi-glow { position: absolute; inset: 0; pointer-events: none; }
+    .testi-play { width: 50px; height: 50px; border-radius: 50%; background: rgba(255,255,255,0.12); backdrop-filter: blur(8px); border: 1.5px solid rgba(255,255,255,0.25); display: flex; align-items: center; justify-content: center; color: #fff; position: relative; z-index: 2; }
+    .testi-tag { position: absolute; top: 12px; left: 12px; z-index: 2; background: rgba(0,0,0,0.5); backdrop-filter: blur(8px); border-radius: 100px; padding: 4px 11px; font-size: 11px; font-weight: 600; color: rgba(255,255,255,0.8); }
+    .testi-info { padding: 16px 18px; }
+    .testi-info strong { display: block; font-size: 14px; font-weight: 700; color: var(--dk-text); margin-bottom: 2px; }
+    .testi-info span { font-size: 12px; color: var(--dk-muted); }
+    .testi-result { display: inline-flex; align-items: center; gap: 5px; margin-top: 9px; background: rgba(74,222,128,0.1); border-radius: 100px; padding: 4px 11px; font-size: 11px; font-weight: 600; color: #4ADE80; }
+    .ba-side { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .ba-side-panel { border-radius: 14px; padding: 32px 28px; }
+    .ba-side-before { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07); }
+    .ba-side-after { background: rgba(74,222,128,0.05); border: 1px solid rgba(74,222,128,0.2); }
+    .ba-side-tag { font-size: 10px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; padding: 5px 14px; border-radius: 100px; display: inline-block; margin-bottom: 20px; }
+    .ba-side-before .ba-side-tag { background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.3); }
+    .ba-side-after .ba-side-tag { background: rgba(74,222,128,0.12); color: #4ADE80; }
+    .ba-side-list { list-style: none; display: flex; flex-direction: column; gap: 11px; }
+    .ba-side-list li { display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 500; }
+    .ba-side-before .ba-side-list li { color: rgba(255,255,255,0.3); }
+    .ba-side-before .ba-side-list li::before { content: '✕'; font-size: 10px; color: rgba(255,255,255,0.18); flex-shrink: 0; }
+    .ba-side-after .ba-side-list li { color: rgba(255,255,255,0.75); }
+    .ba-side-after .ba-side-list li::before { content: '✓'; font-size: 11px; color: #4ADE80; flex-shrink: 0; }
+
     /* RESPONSIVE */
     @media (max-width: 1024px) {
       header { padding: 0 24px; }
@@ -340,8 +388,13 @@
       .cart-drawer { width: 100%; }
       .chat-btn { bottom: 80px; right: 16px; border-radius: 50%; width: 50px; height: 50px; padding: 0; justify-content: center; }
       .chat-text { display: none; }
-      .bundles-section, .before-after, .testimonials, .quality, .products-section { padding: 72px 24px; }
+      .bundles-section, .quality { padding: 72px 24px; }
       .trust-strip { padding: 14px 24px; gap: 18px; }
+      .prog-banner { grid-template-columns: 1fr; padding: 56px 24px 48px; gap: 36px; }
+      .prog-products-row { padding: 44px 24px 56px; }
+      .testi-break { padding: 64px 24px; }
+      .testi-break-grid { grid-template-columns: 1fr; }
+      .ba-side { grid-template-columns: 1fr; }
     }
     @media (max-width: 640px) {
       .trust-strip { gap: 12px; }
@@ -350,7 +403,7 @@
       .footer-top { grid-template-columns: 1fr; }
       footer { padding: 56px 20px 32px; }
       .final-cta { padding: 80px 20px; }
-      .ba-panel { padding: 40px 28px; }
+      .prog-chips { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -487,85 +540,347 @@
   </div>
 </section>
 
-<!-- BEFORE / AFTER -->
-<section class="before-after" id="results">
-  <div class="ba-wrap">
-    <div class="ba-header">
-      <p class="section-label reveal">Real Results</p>
-      <h2 class="section-h2 reveal" style="transition-delay:0.08s">Life before.<br>Life after Neo Peptide.</h2>
+<!-- GLP-1 / WEIGHT LOSS -->
+<section class="prog-section" id="section-glp1">
+  <div class="prog-banner glp1">
+    <div>
+      <p class="prog-eyebrow">GLP-1 / Weight Loss Program</p>
+      <h2 class="prog-h2">Reshape your body.<br>Reset your metabolism.</h2>
+      <p class="prog-text">GLP-1 receptor agonists mimic a naturally occurring hormone that regulates hunger signals in the brain. The result is dramatically reduced appetite, improved insulin sensitivity, and sustainable fat loss — without the crash of restrictive diets.</p>
     </div>
-    <div class="reveal" style="max-width:560px;margin:0 auto;border-radius:20px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,0.12)">
-      <img src="fotos/before-after.png" alt="Before and After Neo Peptide" style="width:100%;display:block">
+    <div class="prog-chips">
+      <div class="prog-chip"><div class="prog-chip-icon">🧠</div><div class="prog-chip-title">Appetite Suppression</div><div class="prog-chip-desc">Targets hunger centers in the brain for effortless caloric reduction</div></div>
+      <div class="prog-chip"><div class="prog-chip-icon">🔥</div><div class="prog-chip-title">Metabolic Reset</div><div class="prog-chip-desc">Improves insulin sensitivity and glucose regulation from week one</div></div>
+      <div class="prog-chip"><div class="prog-chip-icon">⚖️</div><div class="prog-chip-title">Sustained Weight Loss</div><div class="prog-chip-desc">Clinical trials show 15–22% body weight reduction over 68 weeks</div></div>
+      <div class="prog-chip"><div class="prog-chip-icon">💪</div><div class="prog-chip-title">Lean Mass Preserved</div><div class="prog-chip-desc">GLP-1 protocols preserve muscle tissue during fat loss</div></div>
     </div>
-    <p style="text-align:center;margin-top:16px;font-size:12px;color:var(--muted)">* Individual results vary. Real client transformation. Program for research use only.</p>
+  </div>
+  <div class="prog-products-row">
+    <div class="prog-products-row-inner">
+      <div class="products-grid">
+        <div class="product-card reveal">
+          <div class="product-tag" style="color:#2E6B45">GLP-1 / Weight Loss</div>
+          <div class="product-name">Compounded Semaglutide</div>
+          <div class="product-desc">Weekly injection · Appetite suppression · Sustained weight loss · GLP-1 agonist</div>
+          <div class="product-divider"></div>
+          <div class="product-price">$249</div>
+          <div class="product-old">&nbsp;</div>
+          <button class="btn-add" onclick="addToCart('Compounded Semaglutide', 249, this)">Add to Cart</button>
+        </div>
+        <div class="product-card reveal" style="transition-delay:0.07s">
+          <div class="product-tag" style="color:#2E6B45">GLP-1 / Weight Loss</div>
+          <div class="product-name">Compounded Tirzepatide</div>
+          <div class="product-desc">Dual GIP+GLP-1 agonist · Superior efficacy · Faster results</div>
+          <div class="product-divider"></div>
+          <div class="product-price">$289</div>
+          <div class="product-old">&nbsp;</div>
+          <button class="btn-add" onclick="addToCart('Compounded Tirzepatide', 289, this)">Add to Cart</button>
+        </div>
+        <div class="product-card reveal" style="transition-delay:0.14s">
+          <div class="product-tag" style="color:#2E6B45">GLP-1 / Weight Loss</div>
+          <div class="product-name">Zepbound</div>
+          <div class="product-desc">Brand-name tirzepatide · FDA approved · Highest tier GLP-1 program</div>
+          <div class="product-divider"></div>
+          <div class="product-price">$499</div>
+          <div class="product-old">&nbsp;</div>
+          <button class="btn-add" onclick="addToCart('Zepbound', 499, this)">Add to Cart</button>
+        </div>
+        <div class="product-card reveal" style="transition-delay:0.21s">
+          <div class="product-tag" style="color:#2E6B45">GLP-1 / Weight Loss</div>
+          <div class="product-name">Microdose Semaglutide</div>
+          <div class="product-desc">Low-dose entry protocol · Appetite + energy · Gentle on body</div>
+          <div class="product-divider"></div>
+          <div class="product-price">$149</div>
+          <div class="product-old">&nbsp;</div>
+          <button class="btn-add" onclick="addToCart('Microdose Semaglutide', 149, this)">Add to Cart</button>
+        </div>
+        <div class="product-card reveal" style="transition-delay:0.28s">
+          <div class="product-tag" style="color:#2E6B45">GLP-1 / Weight Loss</div>
+          <div class="product-name">Microdose Tirzepatide</div>
+          <div class="product-desc">Low-dose dual agonist · Metabolic support · Minimal side effects</div>
+          <div class="product-divider"></div>
+          <div class="product-price">$169</div>
+          <div class="product-old">&nbsp;</div>
+          <button class="btn-add" onclick="addToCart('Microdose Tirzepatide', 169, this)">Add to Cart</button>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
-<!-- VIDEO TESTIMONIALS -->
-<section class="testimonials">
-  <div class="testimonials-inner">
-    <div style="margin-bottom:52px">
-      <p class="section-label reveal">Testimonials</p>
-      <h2 class="section-h2 reveal" style="transition-delay:0.08s">Hear it from<br>our clients.</h2>
-    </div>
-    <div class="testimonials-grid">
-
-      <div class="video-card reveal">
-        <div class="video-thumb">
-          <div class="video-glow" style="background:radial-gradient(ellipse at 50% 30%, rgba(45,122,79,0.25) 0%, transparent 70%)"></div>
-          <div class="video-tag">Weight Loss · 3 months</div>
-          <div class="play-btn">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="6 3 20 12 6 21 6 3"/></svg>
-          </div>
+<!-- BREAK 1 — GLP-1 Testimonials -->
+<div class="testi-break">
+  <div class="testi-break-inner">
+    <p class="testi-break-label">Real Results</p>
+    <h3 class="testi-break-title">Clients who transformed with GLP-1.</h3>
+    <div class="testi-break-grid">
+      <div class="testi-card reveal">
+        <div class="testi-thumb">
+          <div class="testi-glow" style="background:radial-gradient(ellipse at 50% 30%, rgba(45,122,79,0.3) 0%, transparent 65%)"></div>
+          <div class="testi-tag">GLP-1 · 3 months</div>
+          <div class="testi-play"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="6 3 20 12 6 21 6 3"/></svg></div>
         </div>
-        <div class="video-info">
+        <div class="testi-info">
           <strong>Sarah M., 38</strong>
-          <span>GLP-1 Weight Loss Program</span>
-          <div class="video-result">
-            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-            Lost 28 lbs in 90 days
-          </div>
+          <span>Compounded Semaglutide</span>
+          <div class="testi-result"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Lost 28 lbs in 90 days</div>
         </div>
       </div>
-
-      <div class="video-card reveal" style="transition-delay:0.1s">
-        <div class="video-thumb">
-          <div class="video-glow" style="background:radial-gradient(ellipse at 50% 30%, rgba(139,37,37,0.25) 0%, transparent 70%)"></div>
-          <div class="video-tag">Testosterone · 6 weeks</div>
-          <div class="play-btn">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="6 3 20 12 6 21 6 3"/></svg>
-          </div>
+      <div class="testi-card reveal" style="transition-delay:0.1s">
+        <div class="testi-thumb">
+          <div class="testi-glow" style="background:radial-gradient(ellipse at 50% 30%, rgba(45,122,79,0.25) 0%, transparent 65%)"></div>
+          <div class="testi-tag">Tirzepatide · 2 months</div>
+          <div class="testi-play"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="6 3 20 12 6 21 6 3"/></svg></div>
         </div>
-        <div class="video-info">
+        <div class="testi-info">
+          <strong>Diana L., 44</strong>
+          <span>Compounded Tirzepatide</span>
+          <div class="testi-result"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Down 19 lbs, energy tripled</div>
+        </div>
+      </div>
+      <div class="testi-card reveal" style="transition-delay:0.2s">
+        <div class="testi-thumb">
+          <div class="testi-glow" style="background:radial-gradient(ellipse at 50% 30%, rgba(45,122,79,0.2) 0%, transparent 65%)"></div>
+          <div class="testi-tag">GLP-1 · 10 weeks</div>
+          <div class="testi-play"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="6 3 20 12 6 21 6 3"/></svg></div>
+        </div>
+        <div class="testi-info">
+          <strong>Carol S., 51</strong>
+          <span>Zepbound Protocol</span>
+          <div class="testi-result"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Visible results from week 3</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- LONGEVITY & RECOVERY -->
+<section class="prog-section" id="section-longevity">
+  <div class="prog-banner longevity">
+    <div>
+      <p class="prog-eyebrow">Longevity & Recovery Program</p>
+      <h2 class="prog-h2">Age slower.<br>Recover faster.</h2>
+      <p class="prog-text">NAD+ is the master coenzyme behind cellular energy, DNA repair, and healthy aging. As levels decline with age, so does performance, recovery, and resilience. Our longevity protocols replenish what time takes away.</p>
+    </div>
+    <div class="prog-chips">
+      <div class="prog-chip"><div class="prog-chip-icon">⚡</div><div class="prog-chip-title">Cellular Energy</div><div class="prog-chip-desc">NAD+ directly powers mitochondrial ATP production</div></div>
+      <div class="prog-chip"><div class="prog-chip-icon">🔬</div><div class="prog-chip-title">DNA Repair</div><div class="prog-chip-desc">Activates sirtuins — the longevity proteins</div></div>
+      <div class="prog-chip"><div class="prog-chip-icon">😴</div><div class="prog-chip-title">Deep Sleep</div><div class="prog-chip-desc">Sermorelin optimizes growth hormone pulses at night</div></div>
+      <div class="prog-chip"><div class="prog-chip-icon">🧬</div><div class="prog-chip-title">Healthy Aging</div><div class="prog-chip-desc">Reduces inflammatory markers, supports telomere health</div></div>
+    </div>
+  </div>
+  <div class="prog-products-row">
+    <div class="prog-products-row-inner">
+      <div class="products-grid">
+        <div class="product-card reveal">
+          <div class="product-tag" style="color:#1E3A6E">Longevity & Recovery</div>
+          <div class="product-name">NAD+ Injectable</div>
+          <div class="product-desc">500mg · Cellular energy · DNA repair · Mitochondrial function</div>
+          <div class="product-divider"></div>
+          <div class="product-price">$80</div>
+          <div class="product-old">&nbsp;</div>
+          <button class="btn-add" onclick="addToCart('NAD+ Injectable 500mg', 80, this)">Add to Cart</button>
+        </div>
+        <div class="product-card reveal" style="transition-delay:0.07s">
+          <div class="product-tag" style="color:#1E3A6E">Longevity & Recovery</div>
+          <div class="product-name">NAD+ Liposomal Liquid</div>
+          <div class="product-desc">1000mg · Oral · High bioavailability · Daily longevity protocol</div>
+          <div class="product-divider"></div>
+          <div class="product-price">$120</div>
+          <div class="product-old">&nbsp;</div>
+          <button class="btn-add" onclick="addToCart('NAD+ Liposomal 1000mg', 120, this)">Add to Cart</button>
+        </div>
+        <div class="product-card reveal" style="transition-delay:0.14s">
+          <div class="product-tag" style="color:#1E3A6E">Longevity & Recovery</div>
+          <div class="product-name">Sermorelin</div>
+          <div class="product-desc">GH secretagogue · Sleep quality · Recovery · Anti-aging support</div>
+          <div class="product-divider"></div>
+          <div class="product-price">$149</div>
+          <div class="product-old">&nbsp;</div>
+          <button class="btn-add" onclick="addToCart('Sermorelin', 149, this)">Add to Cart</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BREAK 2 — Before & After + Longevity client -->
+<div class="testi-break">
+  <div class="testi-break-inner">
+    <p class="testi-break-label">Transformations</p>
+    <h3 class="testi-break-title">The difference is visible.</h3>
+    <div class="ba-side reveal">
+      <div class="ba-side-panel ba-side-before">
+        <span class="ba-side-tag">Before</span>
+        <ul class="ba-side-list">
+          <li>Constant fatigue even after 8 hours of sleep</li>
+          <li>Brain fog and poor concentration all day</li>
+          <li>Slow recovery from exercise</li>
+          <li>Visible signs of premature aging</li>
+          <li>Low motivation, flat energy from morning to night</li>
+        </ul>
+      </div>
+      <div class="ba-side-panel ba-side-after">
+        <span class="ba-side-tag">After Neo Peptide</span>
+        <ul class="ba-side-list">
+          <li>Waking up genuinely restored and sharp</li>
+          <li>Mental clarity and sustained focus</li>
+          <li>Fast recovery and stronger performance</li>
+          <li>Healthier skin, hair, and energy levels</li>
+          <li>Consistent drive and mood from morning to night</li>
+        </ul>
+      </div>
+    </div>
+    <div style="margin-top:28px;max-width:540px;margin-left:auto;margin-right:auto;border-radius:16px;overflow:hidden;box-shadow:0 24px 60px rgba(0,0,0,0.4)">
+      <img src="fotos/before-after.png" alt="Before and After Neo Peptide" style="width:100%;display:block">
+    </div>
+    <p style="text-align:center;margin-top:14px;font-size:11px;color:rgba(255,255,255,0.2)">* Individual results vary. Real client. Program for research use only.</p>
+  </div>
+</div>
+
+<!-- TESTOSTERONE / HORMONE -->
+<section class="prog-section" id="section-testosterone">
+  <div class="prog-banner testosterone">
+    <div>
+      <p class="prog-eyebrow">Testosterone / Hormone Program</p>
+      <h2 class="prog-h2">Reclaim your drive.<br>Optimize your hormones.</h2>
+      <p class="prog-text">After 30, testosterone naturally declines 1–2% per year. The effects accumulate silently — fatigue, brain fog, lost motivation, reduced libido. Our hormone optimization protocols are designed to reverse that decline and restore baseline vitality.</p>
+    </div>
+    <div class="prog-chips">
+      <div class="prog-chip"><div class="prog-chip-icon">⚡</div><div class="prog-chip-title">Restored Energy</div><div class="prog-chip-desc">Eliminate the fatigue and brain fog of low testosterone</div></div>
+      <div class="prog-chip"><div class="prog-chip-icon">💪</div><div class="prog-chip-title">Strength & Muscle</div><div class="prog-chip-desc">Improved protein synthesis and body composition</div></div>
+      <div class="prog-chip"><div class="prog-chip-icon">🔥</div><div class="prog-chip-title">Libido & Drive</div><div class="prog-chip-desc">Testosterone is the primary driver of desire and motivation</div></div>
+      <div class="prog-chip"><div class="prog-chip-icon">🧠</div><div class="prog-chip-title">Mood & Focus</div><div class="prog-chip-desc">Balanced hormones improve emotional stability and clarity</div></div>
+    </div>
+  </div>
+  <div class="prog-products-row">
+    <div class="prog-products-row-inner">
+      <div class="products-grid">
+        <div class="product-card reveal">
+          <div class="product-tag" style="color:#7C2C2C">Testosterone / Hormone</div>
+          <div class="product-name">Testosterone Cypionate</div>
+          <div class="product-desc">Injectable TRT · Muscle preservation · Libido · Energy</div>
+          <div class="product-divider"></div>
+          <div class="product-price">$129</div>
+          <div class="product-old">&nbsp;</div>
+          <button class="btn-add" onclick="addToCart('Testosterone Cypionate', 129, this)">Add to Cart</button>
+        </div>
+        <div class="product-card reveal" style="transition-delay:0.07s">
+          <div class="product-tag" style="color:#7C2C2C">Testosterone / Hormone</div>
+          <div class="product-name">Testosterone Oral</div>
+          <div class="product-desc">Oral capsule · No injection needed · Convenient daily protocol</div>
+          <div class="product-divider"></div>
+          <div class="product-price">$149</div>
+          <div class="product-old">&nbsp;</div>
+          <button class="btn-add" onclick="addToCart('Testosterone Oral', 149, this)">Add to Cart</button>
+        </div>
+        <div class="product-card reveal" style="transition-delay:0.14s">
+          <div class="product-tag" style="color:#7C2C2C">Testosterone / Hormone</div>
+          <div class="product-name">Enclomiphene</div>
+          <div class="product-desc">Natural testosterone boost · Preserves fertility · Oral protocol</div>
+          <div class="product-divider"></div>
+          <div class="product-price">$99</div>
+          <div class="product-old">&nbsp;</div>
+          <button class="btn-add" onclick="addToCart('Enclomiphene', 99, this)">Add to Cart</button>
+        </div>
+        <div class="product-card reveal" style="transition-delay:0.21s">
+          <div class="product-tag" style="color:#7C2C2C">Testosterone / Hormone</div>
+          <div class="product-name">Male Hormone Panel</div>
+          <div class="product-desc">Complete biomarker assessment · Total & free testosterone · Full panel</div>
+          <div class="product-divider"></div>
+          <div class="product-price">$79</div>
+          <div class="product-old">&nbsp;</div>
+          <button class="btn-add" onclick="addToCart('Male Hormone Panel', 79, this)">Add to Cart</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BREAK 3 — Hormone & general testimonials -->
+<div class="testi-break">
+  <div class="testi-break-inner">
+    <p class="testi-break-label">Client Stories</p>
+    <h3 class="testi-break-title">Hear it from our clients.</h3>
+    <div class="testi-break-grid">
+      <div class="testi-card reveal">
+        <div class="testi-thumb">
+          <div class="testi-glow" style="background:radial-gradient(ellipse at 50% 30%, rgba(139,37,37,0.32) 0%, transparent 65%)"></div>
+          <div class="testi-tag">Testosterone · 6 weeks</div>
+          <div class="testi-play"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="6 3 20 12 6 21 6 3"/></svg></div>
+        </div>
+        <div class="testi-info">
           <strong>Marcus T., 45</strong>
           <span>Men's Hormone Optimization</span>
-          <div class="video-result">
-            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-            Energy & libido fully restored
-          </div>
+          <div class="testi-result"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Energy & libido fully restored</div>
         </div>
       </div>
-
-      <div class="video-card reveal" style="transition-delay:0.2s">
-        <div class="video-thumb">
-          <div class="video-glow" style="background:radial-gradient(ellipse at 50% 30%, rgba(30,79,160,0.25) 0%, transparent 70%)"></div>
-          <div class="video-tag">Longevity · 8 weeks</div>
-          <div class="play-btn">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="6 3 20 12 6 21 6 3"/></svg>
-          </div>
+      <div class="testi-card reveal" style="transition-delay:0.1s">
+        <div class="testi-thumb">
+          <div class="testi-glow" style="background:radial-gradient(ellipse at 50% 30%, rgba(139,37,37,0.25) 0%, transparent 65%)"></div>
+          <div class="testi-tag">TRT · 8 weeks</div>
+          <div class="testi-play"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="6 3 20 12 6 21 6 3"/></svg></div>
         </div>
-        <div class="video-info">
+        <div class="testi-info">
+          <strong>Ryan B., 39</strong>
+          <span>Testosterone Cypionate</span>
+          <div class="testi-result"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> +40% gym performance in 8 weeks</div>
+        </div>
+      </div>
+      <div class="testi-card reveal" style="transition-delay:0.2s">
+        <div class="testi-thumb">
+          <div class="testi-glow" style="background:radial-gradient(ellipse at 50% 30%, rgba(30,79,160,0.28) 0%, transparent 65%)"></div>
+          <div class="testi-tag">Longevity · 8 weeks</div>
+          <div class="testi-play"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="6 3 20 12 6 21 6 3"/></svg></div>
+        </div>
+        <div class="testi-info">
           <strong>Jennifer K., 52</strong>
           <span>Longevity & Recovery Program</span>
-          <div class="video-result">
-            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-            Sleep & mental clarity transformed
-          </div>
+          <div class="testi-result"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Sleep & mental clarity transformed</div>
         </div>
       </div>
-
     </div>
-    <p class="testimonials-note">* Individual results vary. All testimonials are from verified clients. Programs for research use only.</p>
+  </div>
+</div>
+
+<!-- MICRODOSING / LIGHT GLP-1 -->
+<section class="prog-section" id="section-microdose">
+  <div class="prog-banner microdose">
+    <div>
+      <p class="prog-eyebrow">Microdosing / Light GLP-1 Program</p>
+      <h2 class="prog-h2">Subtle support.<br>Real results.</h2>
+      <p class="prog-text">Not everyone needs the full dose. Our microdosing protocols deliver appetite control, mood balance, and metabolic support — gently and precisely. Fewer side effects, easier titration, meaningful results.</p>
+    </div>
+    <div class="prog-chips">
+      <div class="prog-chip"><div class="prog-chip-icon">🌿</div><div class="prog-chip-title">Gentle Appetite Control</div><div class="prog-chip-desc">Subtle reduction in hunger without aggressive suppression</div></div>
+      <div class="prog-chip"><div class="prog-chip-icon">⚡</div><div class="prog-chip-title">Steady Energy</div><div class="prog-chip-desc">More stable energy through improved metabolic function</div></div>
+      <div class="prog-chip"><div class="prog-chip-icon">😌</div><div class="prog-chip-title">Mood Balance</div><div class="prog-chip-desc">GLP-1 receptors in the brain also influence serotonin</div></div>
+      <div class="prog-chip"><div class="prog-chip-icon">✅</div><div class="prog-chip-title">Minimal Side Effects</div><div class="prog-chip-desc">Low-dose protocols dramatically better tolerated</div></div>
+    </div>
+  </div>
+  <div class="prog-products-row">
+    <div class="prog-products-row-inner">
+      <div class="products-grid">
+        <div class="product-card reveal">
+          <div class="product-tag" style="color:#3A6B3D">Microdosing</div>
+          <div class="product-name">Microdose Semaglutide</div>
+          <div class="product-desc">Low-dose GLP-1 · Appetite control · Energy support · Mood balance</div>
+          <div class="product-divider"></div>
+          <div class="product-price">$149</div>
+          <div class="product-old">&nbsp;</div>
+          <button class="btn-add" onclick="addToCart('Microdose Semaglutide', 149, this)">Add to Cart</button>
+        </div>
+        <div class="product-card reveal" style="transition-delay:0.07s">
+          <div class="product-tag" style="color:#3A6B3D">Microdosing</div>
+          <div class="product-name">Microdose Tirzepatide</div>
+          <div class="product-desc">Low-dose dual agonist · Gentle metabolic support · No aggressive side effects</div>
+          <div class="product-divider"></div>
+          <div class="product-price">$169</div>
+          <div class="product-old">&nbsp;</div>
+          <button class="btn-add" onclick="addToCart('Microdose Tirzepatide', 169, this)">Add to Cart</button>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -611,8 +926,8 @@
   </div>
 </section>
 
-<!-- PRODUCTS BY BUNDLE -->
-<section class="products-section" id="shop">
+<!-- PRODUCTS BY BUNDLE (removed — products are in each program section above) -->
+<section class="products-section" id="shop" style="display:none">
   <div class="products-inner">
     <div style="margin-bottom:44px">
       <p class="section-label reveal">Products</p>
@@ -780,7 +1095,7 @@
   <h2 class="final-h2 reveal" style="transition-delay:0.08s">Your transformation starts with one decision.</h2>
   <p class="final-sub reveal" style="transition-delay:0.16s">Thousands of people have already made the switch. GMP certified, shipped in 48 hours, COA guaranteed on every order.</p>
   <div class="final-actions reveal" style="transition-delay:0.24s">
-    <a href="#shop" class="btn-lg">Choose Your Program</a>
+    <a href="#section-glp1" class="btn-lg">Choose Your Program</a>
     <a href="mailto:neopeptides@outlook.com" class="btn-lg-outline">Talk to Our Team</a>
   </div>
   <p class="final-disclaimer reveal" style="transition-delay:0.32s">For research use only. Not for human consumption. Must be 21+. These statements have not been evaluated by the FDA.</p>
@@ -809,10 +1124,10 @@
     <div class="footer-col">
       <h5>Programs</h5>
       <ul>
-        <li><a href="#shop" onclick="switchBundle('glp1')">GLP-1 / Weight Loss</a></li>
-        <li><a href="#shop" onclick="switchBundle('longevity')">Longevity & Recovery</a></li>
-        <li><a href="#shop" onclick="switchBundle('testosterone')">Testosterone / Hormone</a></li>
-        <li><a href="#shop" onclick="switchBundle('microdose')">Microdosing</a></li>
+        <li><a href="#section-glp1">GLP-1 / Weight Loss</a></li>
+        <li><a href="#section-longevity">Longevity & Recovery</a></li>
+        <li><a href="#section-testosterone">Testosterone / Hormone</a></li>
+        <li><a href="#section-microdose">Microdosing</a></li>
       </ul>
     </div>
     <div class="footer-col">
@@ -952,22 +1267,10 @@ const cntObs = new IntersectionObserver(entries => {
 }, { threshold: 0.5 });
 document.querySelectorAll('[data-target]').forEach(el => cntObs.observe(el));
 
-// BUNDLE TABS
-const BUNDLE_IDS = ['glp1','longevity','testosterone','microdose'];
+// BUNDLE CARDS → scroll to program section
 function switchBundle(id) {
-  document.querySelectorAll('.bundle-tab').forEach((tab, i) => {
-    tab.classList.toggle('active', BUNDLE_IDS[i] === id);
-  });
-  document.querySelectorAll('.bundle-pane').forEach(p => p.classList.remove('active'));
-  const pane = document.getElementById('pane-' + id);
-  if (pane) {
-    pane.classList.add('active');
-    pane.querySelectorAll('.product-card').forEach((el, i) => {
-      el.style.opacity = '0'; el.style.transform = 'translateY(16px)';
-      setTimeout(() => { el.style.transition = 'opacity 0.4s, transform 0.4s'; el.style.opacity = '1'; el.style.transform = 'none'; }, i * 60);
-    });
-    document.getElementById('shop').scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }
+  const target = document.getElementById('section-' + id);
+  if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
 // CART
