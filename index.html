@@ -339,6 +339,33 @@
     .prog-chip-desc { font-size: 11px; color: rgba(0,0,0,0.45); line-height: 1.5; }
     .prog-products-row { background: var(--cream); padding: 56px 80px 72px; }
     .prog-products-row-inner { max-width: 1200px; margin: 0 auto; }
+    .prog-products-label { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); margin-bottom: 24px; }
+
+    /* PROG ENRICHMENTS */
+    .prog-stats-row { display: flex; flex-wrap: wrap; gap: 0; margin-bottom: 18px; }
+    .prog-stat-item { padding: 4px 14px; border-right: 1px solid rgba(0,0,0,0.1); font-size: 10px; font-weight: 700; color: rgba(0,0,0,0.38); letter-spacing: 0.1em; text-transform: uppercase; }
+    .prog-stat-item:first-child { padding-left: 0; }
+    .prog-stat-item:last-child { border-right: none; }
+    .prog-anchor { background: rgba(255,255,255,0.32); backdrop-filter: blur(6px); border-left: 3px solid rgba(0,0,0,0.18); border-radius: 0 8px 8px 0; padding: 11px 16px; margin-top: 16px; font-size: 13px; font-style: italic; color: rgba(0,0,0,0.52); line-height: 1.6; }
+    .prog-pills { display: flex; gap: 7px; flex-wrap: wrap; margin-top: 16px; }
+    .prog-pill { background: rgba(255,255,255,0.42); backdrop-filter: blur(4px); border: 1px solid rgba(255,255,255,0.62); border-radius: 100px; padding: 4px 13px; font-size: 10.5px; font-weight: 600; color: rgba(0,0,0,0.52); letter-spacing: 0.03em; white-space: nowrap; }
+    .product-role { font-size: 9px; font-weight: 800; letter-spacing: 0.13em; text-transform: uppercase; color: var(--blue); margin-bottom: 4px; opacity: 0.65; }
+    .product-dose { font-family: 'Courier New', monospace; font-size: 11px; color: rgba(0,0,0,0.4); background: var(--cream2); border-radius: 5px; padding: 2px 8px; display: inline-block; margin-bottom: 10px; }
+
+    /* HORMONE FLOW */
+    .hormone-flow { display: flex; flex-direction: column; gap: 8px; }
+    .hormone-step { display: flex; align-items: flex-start; gap: 12px; padding: 12px 14px; background: rgba(255,255,255,0.36); backdrop-filter: blur(6px); border: 1px solid rgba(255,255,255,0.6); border-radius: 12px; }
+    .hormone-step-num { width: 26px; height: 26px; border-radius: 50%; background: rgba(255,255,255,0.6); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 800; color: rgba(0,0,0,0.55); flex-shrink: 0; }
+    .hormone-step-title { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 12px; font-weight: 700; color: rgba(0,0,0,0.65); margin-bottom: 2px; }
+    .hormone-step-desc { font-size: 11px; color: rgba(0,0,0,0.4); line-height: 1.4; }
+
+    /* MICRO OBJECTIONS */
+    .micro-obj-block { background: rgba(255,255,255,0.38); backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.62); border-radius: 14px; padding: 18px 18px 14px; margin-top: 18px; }
+    .micro-obj-title { font-size: 10px; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(0,0,0,0.38); margin-bottom: 10px; }
+    .micro-obj-list { list-style: none; display: flex; flex-direction: column; gap: 7px; }
+    .micro-obj-list li { font-size: 12px; color: rgba(0,0,0,0.52); line-height: 1.4; display: flex; gap: 8px; align-items: flex-start; }
+    .micro-obj-list li::before { content: '→'; color: rgba(0,0,0,0.28); font-size: 11px; flex-shrink: 0; margin-top: 1px; }
+    .micro-badge { display: inline-flex; align-items: center; gap: 7px; background: rgba(0,0,0,0.07); border: 1px solid rgba(0,0,0,0.12); border-radius: 100px; padding: 6px 16px; font-size: 11px; font-weight: 700; color: rgba(0,0,0,0.5); letter-spacing: 0.05em; margin-top: 14px; }
 
     /* TESTIMONIAL BREAKS */
     .testi-break { background: var(--dark); padding: 80px 48px; }
@@ -526,9 +553,23 @@
 <section class="prog-section" id="section-glp1">
   <div class="prog-banner glp1">
     <div>
+      <div class="prog-stats-row">
+        <span class="prog-stat-item">GLP-1 Incretins</span>
+        <span class="prog-stat-item">5 Protocols</span>
+        <span class="prog-stat-item">#1 Best Selling</span>
+        <span class="prog-stat-item">Receptor Agonists</span>
+      </div>
       <p class="prog-eyebrow">GLP-1 / Weight Loss Program</p>
       <h2 class="prog-h2">Reshape your body.<br>Reset your metabolism.</h2>
       <p class="prog-text">GLP-1 receptor agonists mimic a naturally occurring hormone that regulates hunger signals in the brain. The result is dramatically reduced appetite, improved insulin sensitivity, and sustainable fat loss — without the crash of restrictive diets.</p>
+      <div class="prog-anchor">"Researchers report significant weight reduction markers within 30 days of GLP-1 protocol initiation."</div>
+      <div class="prog-pills">
+        <span class="prog-pill">Appetite Control</span>
+        <span class="prog-pill">Fat Metabolism</span>
+        <span class="prog-pill">Blood Sugar</span>
+        <span class="prog-pill">Cravings Reduction</span>
+        <span class="prog-pill">Energy Stabilization</span>
+      </div>
     </div>
     <div class="prog-chips">
       <div class="prog-chip"><div class="prog-chip-icon">🧠</div><div class="prog-chip-title">Appetite Suppression</div><div class="prog-chip-desc">Targets hunger centers in the brain for effortless caloric reduction</div></div>
@@ -541,8 +582,10 @@
     <div class="prog-products-row-inner">
       <div class="products-grid">
         <div class="product-card reveal">
+          <div class="product-role">Anchor / Hero</div>
           <div class="product-tag" style="color:#2E6B45">GLP-1 / Weight Loss</div>
           <div class="product-name">Compounded Semaglutide</div>
+          <span class="product-dose">0.25–2.4 mg/wk</span>
           <div class="product-desc">Weekly injection · Appetite suppression · Sustained weight loss · GLP-1 agonist</div>
           <div class="product-divider"></div>
           <div class="product-price">$249</div>
@@ -550,8 +593,10 @@
           <button class="btn-add" onclick="addToCart('Compounded Semaglutide', 249, this)">Add to Cart</button>
         </div>
         <div class="product-card reveal" style="transition-delay:0.07s">
+          <div class="product-role">Premium Hero</div>
           <div class="product-tag" style="color:#2E6B45">GLP-1 / Weight Loss</div>
           <div class="product-name">Compounded Tirzepatide</div>
+          <span class="product-dose">2.5–15 mg/wk</span>
           <div class="product-desc">Dual GIP+GLP-1 agonist · Superior efficacy · Faster results</div>
           <div class="product-divider"></div>
           <div class="product-price">$289</div>
@@ -559,8 +604,10 @@
           <button class="btn-add" onclick="addToCart('Compounded Tirzepatide', 289, this)">Add to Cart</button>
         </div>
         <div class="product-card reveal" style="transition-delay:0.14s">
+          <div class="product-role">Trust Builder</div>
           <div class="product-tag" style="color:#2E6B45">GLP-1 / Weight Loss</div>
           <div class="product-name">Zepbound</div>
+          <span class="product-dose">2.5–15 mg/wk</span>
           <div class="product-desc">Brand-name tirzepatide · FDA approved · Highest tier GLP-1 program</div>
           <div class="product-divider"></div>
           <div class="product-price">$499</div>
@@ -568,8 +615,10 @@
           <button class="btn-add" onclick="addToCart('Zepbound', 499, this)">Add to Cart</button>
         </div>
         <div class="product-card reveal" style="transition-delay:0.21s">
+          <div class="product-role">Entry / Upsell</div>
           <div class="product-tag" style="color:#2E6B45">GLP-1 / Weight Loss</div>
           <div class="product-name">Microdose Semaglutide</div>
+          <span class="product-dose">0.05–0.25 mg/wk</span>
           <div class="product-desc">Low-dose entry protocol · Appetite + energy · Gentle on body</div>
           <div class="product-divider"></div>
           <div class="product-price">$149</div>
@@ -577,8 +626,10 @@
           <button class="btn-add" onclick="addToCart('Microdose Semaglutide', 149, this)">Add to Cart</button>
         </div>
         <div class="product-card reveal" style="transition-delay:0.28s">
+          <div class="product-role">Entry / Upsell</div>
           <div class="product-tag" style="color:#2E6B45">GLP-1 / Weight Loss</div>
           <div class="product-name">Microdose Tirzepatide</div>
+          <span class="product-dose">0.5–2 mg/wk</span>
           <div class="product-desc">Low-dose dual agonist · Metabolic support · Minimal side effects</div>
           <div class="product-divider"></div>
           <div class="product-price">$169</div>
@@ -640,9 +691,23 @@
 <section class="prog-section" id="section-longevity">
   <div class="prog-banner longevity">
     <div>
+      <div class="prog-stats-row">
+        <span class="prog-stat-item">Longevity · NAD+/GH</span>
+        <span class="prog-stat-item">3 Protocols</span>
+        <span class="prog-stat-item">Biohacker Tier</span>
+        <span class="prog-stat-item">Mitochondrial</span>
+      </div>
       <p class="prog-eyebrow">Longevity & Recovery Program</p>
       <h2 class="prog-h2">Age slower.<br>Recover faster.</h2>
       <p class="prog-text">NAD+ is the master coenzyme behind cellular energy, DNA repair, and healthy aging. As levels decline with age, so does performance, recovery, and resilience. Our longevity protocols replenish what time takes away.</p>
+      <div class="prog-anchor">"NAD+ directly fuels mitochondrial function — restoring cellular energy and activating longevity proteins from day one of the protocol."</div>
+      <div class="prog-pills">
+        <span class="prog-pill">Energy Restoration</span>
+        <span class="prog-pill">Sleep Architecture</span>
+        <span class="prog-pill">Cellular Longevity</span>
+        <span class="prog-pill">Cognitive Performance</span>
+        <span class="prog-pill">DNA Repair</span>
+      </div>
     </div>
     <div class="prog-chips">
       <div class="prog-chip"><div class="prog-chip-icon">⚡</div><div class="prog-chip-title">Cellular Energy</div><div class="prog-chip-desc">NAD+ directly powers mitochondrial ATP production</div></div>
@@ -655,27 +720,33 @@
     <div class="prog-products-row-inner">
       <div class="products-grid">
         <div class="product-card reveal">
+          <div class="product-role">Hero / Premium</div>
           <div class="product-tag" style="color:#1E3A6E">Longevity & Recovery</div>
           <div class="product-name">NAD+ Injectable</div>
-          <div class="product-desc">500mg · Cellular energy · DNA repair · Mitochondrial function</div>
+          <span class="product-dose">100–500 mg/session</span>
+          <div class="product-desc">IV/IM injection · Cellular energy · DNA repair · Mitochondrial function</div>
           <div class="product-divider"></div>
           <div class="product-price">$80</div>
           <div class="product-old">&nbsp;</div>
           <button class="btn-add" onclick="addToCart('NAD+ Injectable 500mg', 80, this)">Add to Cart</button>
         </div>
         <div class="product-card reveal" style="transition-delay:0.07s">
+          <div class="product-role">Accessible Entry</div>
           <div class="product-tag" style="color:#1E3A6E">Longevity & Recovery</div>
           <div class="product-name">NAD+ Liposomal Liquid</div>
-          <div class="product-desc">1000mg · Oral · High bioavailability · Daily longevity protocol</div>
+          <span class="product-dose">250 mg/dose · oral</span>
+          <div class="product-desc">High bioavailability · No injection needed · Daily longevity protocol</div>
           <div class="product-divider"></div>
           <div class="product-price">$120</div>
           <div class="product-old">&nbsp;</div>
           <button class="btn-add" onclick="addToCart('NAD+ Liposomal 1000mg', 120, this)">Add to Cart</button>
         </div>
         <div class="product-card reveal" style="transition-delay:0.14s">
+          <div class="product-role">Performance Hero</div>
           <div class="product-tag" style="color:#1E3A6E">Longevity & Recovery</div>
           <div class="product-name">Sermorelin</div>
-          <div class="product-desc">GH secretagogue · Sleep quality · Recovery · Anti-aging support</div>
+          <span class="product-dose">200–300 mcg/night</span>
+          <div class="product-desc">GH secretagogue · Deep sleep optimization · Recovery · Anti-aging support</div>
           <div class="product-divider"></div>
           <div class="product-price">$149</div>
           <div class="product-old">&nbsp;</div>
@@ -724,51 +795,105 @@
 <section class="prog-section" id="section-testosterone">
   <div class="prog-banner testosterone">
     <div>
+      <div class="prog-stats-row">
+        <span class="prog-stat-item">TRT / Androgens</span>
+        <span class="prog-stat-item">4 Protocols</span>
+        <span class="prog-stat-item">Men 30–50</span>
+        <span class="prog-stat-item">Hormone Optimization</span>
+      </div>
       <p class="prog-eyebrow">Testosterone / Hormone Program</p>
       <h2 class="prog-h2">Reclaim your drive.<br>Optimize your hormones.</h2>
-      <p class="prog-text">After 30, testosterone naturally declines 1–2% per year. The effects accumulate silently — fatigue, brain fog, lost motivation, reduced libido. Our hormone optimization protocols are designed to reverse that decline and restore baseline vitality.</p>
+      <p class="prog-text">After 30, testosterone naturally declines 1–2% per year. The effects accumulate silently — fatigue, brain fog, lost motivation, reduced libido. Our protocols are precision optimization for men who take their biology seriously.</p>
+      <div class="prog-pills">
+        <span class="prog-pill">Restored Energy</span>
+        <span class="prog-pill">Lean Muscle</span>
+        <span class="prog-pill">Libido & Drive</span>
+        <span class="prog-pill">Mental Clarity</span>
+        <span class="prog-pill">Mood Stability</span>
+      </div>
     </div>
-    <div class="prog-chips">
-      <div class="prog-chip"><div class="prog-chip-icon">⚡</div><div class="prog-chip-title">Restored Energy</div><div class="prog-chip-desc">Eliminate the fatigue and brain fog of low testosterone</div></div>
-      <div class="prog-chip"><div class="prog-chip-icon">💪</div><div class="prog-chip-title">Strength & Muscle</div><div class="prog-chip-desc">Improved protein synthesis and body composition</div></div>
-      <div class="prog-chip"><div class="prog-chip-icon">🔥</div><div class="prog-chip-title">Libido & Drive</div><div class="prog-chip-desc">Testosterone is the primary driver of desire and motivation</div></div>
-      <div class="prog-chip"><div class="prog-chip-icon">🧠</div><div class="prog-chip-title">Mood & Focus</div><div class="prog-chip-desc">Balanced hormones improve emotional stability and clarity</div></div>
+    <div>
+      <div class="hormone-flow">
+        <div class="hormone-step">
+          <div class="hormone-step-num">1</div>
+          <div>
+            <div class="hormone-step-title">Take Hormone Assessment</div>
+            <div class="hormone-step-desc">Identify where your levels stand with a targeted questionnaire</div>
+          </div>
+        </div>
+        <div class="hormone-step">
+          <div class="hormone-step-num">2</div>
+          <div>
+            <div class="hormone-step-title">Review Your Biomarkers</div>
+            <div class="hormone-step-desc">Order the Male Hormone Panel — total & free testosterone, full workup</div>
+          </div>
+        </div>
+        <div class="hormone-step">
+          <div class="hormone-step-num">3</div>
+          <div>
+            <div class="hormone-step-title">Receive Your Protocol</div>
+            <div class="hormone-step-desc">Dosing tailored to your labs — Cypionate, Oral, or Enclomiphene</div>
+          </div>
+        </div>
+        <div class="hormone-step">
+          <div class="hormone-step-num">4</div>
+          <div>
+            <div class="hormone-step-title">Start Optimization</div>
+            <div class="hormone-step-desc">Most clients notice measurable changes within 3–4 weeks</div>
+          </div>
+        </div>
+        <div class="hormone-step">
+          <div class="hormone-step-num">5</div>
+          <div>
+            <div class="hormone-step-title">Retest & Adjust</div>
+            <div class="hormone-step-desc">Quarterly biomarker review to dial in peak performance</div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
   <div class="prog-products-row">
     <div class="prog-products-row-inner">
       <div class="products-grid">
         <div class="product-card reveal">
+          <div class="product-role">Anchor Hero</div>
           <div class="product-tag" style="color:#7C2C2C">Testosterone / Hormone</div>
           <div class="product-name">Testosterone Cypionate</div>
-          <div class="product-desc">Injectable TRT · Muscle preservation · Libido · Energy</div>
+          <span class="product-dose">100–200 mg/wk</span>
+          <div class="product-desc">Injectable TRT · Muscle preservation · Libido · Sustained energy</div>
           <div class="product-divider"></div>
           <div class="product-price">$129</div>
           <div class="product-old">&nbsp;</div>
           <button class="btn-add" onclick="addToCart('Testosterone Cypionate', 129, this)">Add to Cart</button>
         </div>
         <div class="product-card reveal" style="transition-delay:0.07s">
+          <div class="product-role">Accessibility Play</div>
           <div class="product-tag" style="color:#7C2C2C">Testosterone / Hormone</div>
           <div class="product-name">Testosterone Oral</div>
-          <div class="product-desc">Oral capsule · No injection needed · Convenient daily protocol</div>
+          <span class="product-dose">oral · daily dose</span>
+          <div class="product-desc">No injection needed · Convenient daily protocol · Full TRT benefits</div>
           <div class="product-divider"></div>
           <div class="product-price">$149</div>
           <div class="product-old">&nbsp;</div>
           <button class="btn-add" onclick="addToCart('Testosterone Oral', 149, this)">Add to Cart</button>
         </div>
         <div class="product-card reveal" style="transition-delay:0.14s">
+          <div class="product-role">Entry / Softer TRT</div>
           <div class="product-tag" style="color:#7C2C2C">Testosterone / Hormone</div>
           <div class="product-name">Enclomiphene</div>
-          <div class="product-desc">Natural testosterone boost · Preserves fertility · Oral protocol</div>
+          <span class="product-dose">12.5–25 mg/day</span>
+          <div class="product-desc">Stimulates natural production · Preserves fertility · Ideal first step</div>
           <div class="product-divider"></div>
           <div class="product-price">$99</div>
           <div class="product-old">&nbsp;</div>
           <button class="btn-add" onclick="addToCart('Enclomiphene', 99, this)">Add to Cart</button>
         </div>
         <div class="product-card reveal" style="transition-delay:0.21s">
+          <div class="product-role">Trust / Upsell Tool</div>
           <div class="product-tag" style="color:#7C2C2C">Testosterone / Hormone</div>
           <div class="product-name">Male Hormone Panel</div>
-          <div class="product-desc">Complete biomarker assessment · Total & free testosterone · Full panel</div>
+          <span class="product-dose">full biomarker panel</span>
+          <div class="product-desc">Total & free testosterone · Complete hormone workup · Start here</div>
           <div class="product-divider"></div>
           <div class="product-price">$79</div>
           <div class="product-old">&nbsp;</div>
@@ -829,9 +954,25 @@
 <section class="prog-section" id="section-microdose">
   <div class="prog-banner microdose">
     <div>
+      <div class="prog-stats-row">
+        <span class="prog-stat-item">Microdose GLP-1</span>
+        <span class="prog-stat-item">2 Protocols</span>
+        <span class="prog-stat-item">Hesitant Buyer</span>
+        <span class="prog-stat-item">Entry + Upsell</span>
+      </div>
       <p class="prog-eyebrow">Microdosing / Light GLP-1 Program</p>
-      <h2 class="prog-h2">Subtle support.<br>Real results.</h2>
-      <p class="prog-text">Not everyone needs the full dose. Our microdosing protocols deliver appetite control, mood balance, and metabolic support — gently and precisely. Fewer side effects, easier titration, meaningful results.</p>
+      <h2 class="prog-h2">Start light.<br>Scale when ready.</h2>
+      <p class="prog-text">Not ready for a full GLP-1 protocol? Start with a precision microdose. Same science. Lower commitment. Real results — appetite control, steady energy, and mood balance without aggressive suppression.</p>
+      <div class="micro-obj-block">
+        <div class="micro-obj-title">This is for you if</div>
+        <ul class="micro-obj-list">
+          <li>You're curious but concerned about full-dose side effects</li>
+          <li>You just want cravings and energy under control</li>
+          <li>You're not ready to commit to a full protocol yet</li>
+          <li>You want to test the science before going all in</li>
+        </ul>
+        <div class="micro-badge">Start Light. Scale When Ready.</div>
+      </div>
     </div>
     <div class="prog-chips">
       <div class="prog-chip"><div class="prog-chip-icon">🌿</div><div class="prog-chip-title">Gentle Appetite Control</div><div class="prog-chip-desc">Subtle reduction in hunger without aggressive suppression</div></div>
@@ -844,8 +985,10 @@
     <div class="prog-products-row-inner">
       <div class="products-grid">
         <div class="product-card reveal">
+          <div class="product-role">Entry / Upsell</div>
           <div class="product-tag" style="color:#3A6B3D">Microdosing</div>
           <div class="product-name">Microdose Semaglutide</div>
+          <span class="product-dose">0.05–0.25 mg/wk</span>
           <div class="product-desc">Low-dose GLP-1 · Appetite control · Energy support · Mood balance</div>
           <div class="product-divider"></div>
           <div class="product-price">$149</div>
@@ -853,8 +996,10 @@
           <button class="btn-add" onclick="addToCart('Microdose Semaglutide', 149, this)">Add to Cart</button>
         </div>
         <div class="product-card reveal" style="transition-delay:0.07s">
+          <div class="product-role">Entry / Upsell</div>
           <div class="product-tag" style="color:#3A6B3D">Microdosing</div>
           <div class="product-name">Microdose Tirzepatide</div>
+          <span class="product-dose">0.5–2 mg/wk</span>
           <div class="product-desc">Low-dose dual agonist · Gentle metabolic support · No aggressive side effects</div>
           <div class="product-divider"></div>
           <div class="product-price">$169</div>
