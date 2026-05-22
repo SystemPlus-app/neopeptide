@@ -64,7 +64,7 @@
     @keyframes pop { 0%,100%{transform:scale(1)} 50%{transform:scale(1.5)} }
 
     /* HERO */
-    .hero { position: relative; height: 200px; min-height: 200px; display: flex; align-items: center; justify-content: center; overflow: hidden; background: var(--dark); }
+    .hero { position: relative; height: 150px; min-height: 150px; display: flex; align-items: center; justify-content: center; overflow: hidden; background: var(--dark); }
     .hero-bg { position: absolute; inset: 0; background-image: url('fotos/fundo/fundo.png'); background-size: cover; background-position: center; transform: scale(1.04); transition: transform 8s ease; }
     .hero-bg.loaded { transform: scale(1); }
     .hero-overlay { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(10,10,16,0.4) 0%, rgba(10,10,16,0.55) 40%, rgba(10,10,16,0.88) 75%, rgba(10,10,16,1) 100%); }
@@ -72,7 +72,7 @@
     .hero-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.09); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.13); border-radius: 100px; padding: 6px 18px 6px 8px; font-size: 12px; color: rgba(255,255,255,0.75); margin-bottom: 32px; opacity: 0; animation: fadeUp 0.9s 0.3s forwards; }
     .hero-badge-dot { width: 8px; height: 8px; border-radius: 50%; background: #4ADE80; animation: pulse 2s infinite; }
     @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
-    .hero-h1 { font-size: clamp(28px, 3.5vw, 44px); font-weight: 800; line-height: 1.05; letter-spacing: -0.03em; color: #fff; margin-bottom: 0; opacity: 0; animation: fadeUp 0.9s 0.3s forwards; }
+    .hero-h1 { font-size: clamp(20px, 2.2vw, 28px); font-weight: 700; line-height: 1.1; letter-spacing: -0.02em; color: #fff; margin-bottom: 0; text-align: center; opacity: 0; animation: fadeUp 0.9s 0.3s forwards; }
     .hero-h1 .accent { color: #6FACFF; }
     .hero-sub { font-size: clamp(15px, 1.5vw, 18px); font-weight: 400; line-height: 1.65; color: rgba(255,255,255,0.5); max-width: 480px; margin: 0 auto 40px; opacity: 0; animation: fadeUp 0.9s 0.7s forwards; }
     .hero-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; opacity: 0; animation: fadeUp 0.9s 0.9s forwards; }
@@ -134,8 +134,9 @@
     .bundle-text { flex: 1; }
     .bundle-name { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 18px; font-weight: 800; color: #fff; line-height: 1.2; }
     .bundle-promise { font-size: 11px; color: rgba(255,255,255,0.6); margin-top: 5px; }
-    .bundle-bottle { width: 80px; height: 100px; object-fit: contain; filter: drop-shadow(0 4px 16px rgba(0,0,0,0.35)); flex-shrink: 0; transition: transform 0.35s; }
-    .bundle-card:hover .bundle-bottle { transform: translateY(-4px) scale(1.05); }
+    .bundle-bottle-wrap { width: 72px; height: 68px; overflow: hidden; flex-shrink: 0; display: flex; align-items: flex-end; justify-content: center; }
+    .bundle-bottle { width: 72px; height: 130px; object-fit: contain; object-position: bottom center; filter: drop-shadow(0 6px 18px rgba(0,0,0,0.4)); transform: perspective(300px) rotateY(-18deg) rotateX(4deg) translateY(10px); transition: transform 0.35s; }
+    .bundle-card:hover .bundle-bottle { transform: perspective(300px) rotateY(-10deg) rotateX(2deg) translateY(4px) scale(1.06); }
     .bundle-arrow { width: 36px; height: 36px; border-radius: 50%; background: rgba(255,255,255,0.15); display: flex; align-items: center; justify-content: center; color: #fff; flex-shrink: 0; margin-left: 20px; transition: background 0.2s, transform 0.2s; }
     .bundle-card:hover .bundle-arrow { background: rgba(255,255,255,0.28); transform: translateX(3px); }
 
@@ -437,7 +438,7 @@
           <div class="bundle-name">GLP-1 / Weight Loss</div>
           <div class="bundle-promise">Appetite control · Craving suppression · Metabolic support</div>
         </div>
-        <img class="bundle-bottle" src="fotos/bottles/bottle.png" alt="GLP-1 vial">
+        <div class="bundle-bottle-wrap"><img class="bundle-bottle" src="fotos/bottles/bottle2.png" alt="vial"></div>
         <div class="bundle-arrow">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </div>
@@ -450,7 +451,7 @@
           <div class="bundle-name">Longevity & Recovery</div>
           <div class="bundle-promise">Energy · Cellular repair · Sleep quality · Healthy aging</div>
         </div>
-        <img class="bundle-bottle" src="fotos/bottles/bottle.png" alt="Longevity vial">
+        <div class="bundle-bottle-wrap"><img class="bundle-bottle" src="fotos/bottles/bottle2.png" alt="vial"></div>
         <div class="bundle-arrow">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </div>
@@ -463,7 +464,7 @@
           <div class="bundle-name">Testosterone / Hormone</div>
           <div class="bundle-promise">Energy · Mood · Libido · Strength · Hormone balance</div>
         </div>
-        <img class="bundle-bottle" src="fotos/bottles/bottle.png" alt="Testosterone vial">
+        <div class="bundle-bottle-wrap"><img class="bundle-bottle" src="fotos/bottles/bottle2.png" alt="vial"></div>
         <div class="bundle-arrow">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </div>
@@ -476,7 +477,7 @@
           <div class="bundle-name">Microdosing / Light GLP-1</div>
           <div class="bundle-promise">Small-dose support · Appetite · Energy · Mood balance</div>
         </div>
-        <img class="bundle-bottle" src="fotos/bottles/bottle.png" alt="Microdose vial">
+        <div class="bundle-bottle-wrap"><img class="bundle-bottle" src="fotos/bottles/bottle2.png" alt="vial"></div>
         <div class="bundle-arrow">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </div>
@@ -493,32 +494,10 @@
       <p class="section-label reveal">Real Results</p>
       <h2 class="section-h2 reveal" style="transition-delay:0.08s">Life before.<br>Life after Neo Peptide.</h2>
     </div>
-    <div class="ba-grid reveal">
-      <div class="ba-panel ba-before">
-        <div class="ba-tag">✕ &nbsp;Before</div>
-        <div class="ba-title">Where most people are stuck</div>
-        <ul class="ba-list">
-          <li class="ba-item"><div class="ba-icon">😴</div> Constant fatigue, poor sleep</li>
-          <li class="ba-item"><div class="ba-icon">🍕</div> Uncontrollable cravings</li>
-          <li class="ba-item"><div class="ba-icon">📉</div> Slow metabolism despite effort</li>
-          <li class="ba-item"><div class="ba-icon">😞</div> Low mood, brain fog, poor focus</li>
-          <li class="ba-item"><div class="ba-icon">⚖️</div> Weight stuck in plateau</li>
-          <li class="ba-item"><div class="ba-icon">💪</div> Low energy and drive</li>
-        </ul>
-      </div>
-      <div class="ba-panel ba-after">
-        <div class="ba-tag">✓ &nbsp;After Neo Peptide</div>
-        <div class="ba-title">What our clients achieve</div>
-        <ul class="ba-list">
-          <li class="ba-item"><div class="ba-icon">⚡</div> Sustained energy, deep sleep</li>
-          <li class="ba-item"><div class="ba-icon">🎯</div> Cravings gone, appetite controlled</li>
-          <li class="ba-item"><div class="ba-icon">🔥</div> Accelerated fat loss, metabolic reset</li>
-          <li class="ba-item"><div class="ba-icon">🧠</div> Mental clarity, focus, better mood</li>
-          <li class="ba-item"><div class="ba-icon">📈</div> Weight loss that sticks</li>
-          <li class="ba-item"><div class="ba-icon">💪</div> Strength, drive, confidence restored</li>
-        </ul>
-      </div>
+    <div class="reveal" style="max-width:560px;margin:0 auto;border-radius:20px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,0.12)">
+      <img src="fotos/before-after.png" alt="Before and After Neo Peptide" style="width:100%;display:block">
     </div>
+    <p style="text-align:center;margin-top:16px;font-size:12px;color:var(--muted)">* Individual results vary. Real client transformation. Program for research use only.</p>
   </div>
 </section>
 
