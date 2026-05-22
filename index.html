@@ -119,14 +119,14 @@
       content: ''; position: absolute; inset: 0; border-radius: 16px;
       opacity: 0; transition: opacity 0.4s;
     }
-    .bundle-card.glp1::before  { background: linear-gradient(90deg, #F5F0EB 0%, var(--glp1-b) 55%, var(--glp1-a) 100%); }
-    .bundle-card.glp1::after   { background: linear-gradient(270deg, #F5F0EB 0%, var(--glp1-b) 55%, var(--glp1-a) 100%); }
-    .bundle-card.longevity::before  { background: linear-gradient(90deg, #F5F0EB 0%, var(--long-b) 55%, var(--long-a) 100%); }
-    .bundle-card.longevity::after   { background: linear-gradient(270deg, #F5F0EB 0%, var(--long-b) 55%, var(--long-a) 100%); }
-    .bundle-card.testosterone::before  { background: linear-gradient(90deg, #F5F0EB 0%, var(--test-b) 55%, var(--test-a) 100%); }
-    .bundle-card.testosterone::after   { background: linear-gradient(270deg, #F5F0EB 0%, var(--test-b) 55%, var(--test-a) 100%); }
-    .bundle-card.microdose::before  { background: linear-gradient(90deg, #F5F0EB 0%, var(--micro-b) 55%, var(--micro-a) 100%); }
-    .bundle-card.microdose::after   { background: linear-gradient(270deg, #F5F0EB 0%, var(--micro-b) 55%, var(--micro-a) 100%); }
+    .bundle-card.glp1::before  { background: linear-gradient(90deg, #C8E8D6 0%, var(--glp1-b) 55%, var(--glp1-a) 100%); }
+    .bundle-card.glp1::after   { background: linear-gradient(270deg, #C8E8D6 0%, var(--glp1-b) 55%, var(--glp1-a) 100%); }
+    .bundle-card.longevity::before  { background: linear-gradient(90deg, #C2D8F2 0%, var(--long-b) 55%, var(--long-a) 100%); }
+    .bundle-card.longevity::after   { background: linear-gradient(270deg, #C2D8F2 0%, var(--long-b) 55%, var(--long-a) 100%); }
+    .bundle-card.testosterone::before  { background: linear-gradient(90deg, #EDD0D0 0%, var(--test-b) 55%, var(--test-a) 100%); }
+    .bundle-card.testosterone::after   { background: linear-gradient(270deg, #EDD0D0 0%, var(--test-b) 55%, var(--test-a) 100%); }
+    .bundle-card.microdose::before  { background: linear-gradient(90deg, #C5EAD5 0%, var(--micro-b) 55%, var(--micro-a) 100%); }
+    .bundle-card.microdose::after   { background: linear-gradient(270deg, #C5EAD5 0%, var(--micro-b) 55%, var(--micro-a) 100%); }
     .bundle-card:hover::before { opacity: 0; }
     .bundle-card:hover::after  { opacity: 1; }
 
@@ -134,9 +134,9 @@
     .bundle-text { flex: 1; }
     .bundle-name { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 18px; font-weight: 800; color: #111; line-height: 1.2; }
     .bundle-promise { font-size: 11px; color: rgba(0,0,0,0.5); margin-top: 5px; }
-    .bundle-bottle-wrap { width: 126px; height: 112px; overflow: hidden; flex-shrink: 0; display: flex; align-items: flex-start; justify-content: center; }
-    .bundle-bottle { width: 140px; height: 238px; object-fit: contain; object-position: top center; mix-blend-mode: multiply; transform: translateY(-4px) scale(1); transition: transform 0.35s; }
-    .bundle-card:hover .bundle-bottle { transform: translateY(-8px) scale(1.04); }
+    .bundle-bottle-wrap { width: 130px; align-self: stretch; overflow: hidden; flex-shrink: 0; display: flex; align-items: flex-end; justify-content: center; }
+    .bundle-bottle { width: 130px; height: 190px; object-fit: contain; object-position: bottom center; mix-blend-mode: multiply; transform: translateY(0); transition: transform 0.35s; }
+    .bundle-card:hover .bundle-bottle { transform: translateY(-5px) scale(1.04); }
     .bundle-arrow { width: 36px; height: 36px; border-radius: 50%; background: rgba(0,0,0,0.1); display: flex; align-items: center; justify-content: center; color: #111; flex-shrink: 0; margin-left: 20px; transition: background 0.2s, transform 0.2s; }
     .bundle-card:hover .bundle-arrow { background: rgba(0,0,0,0.18); transform: translateX(3px); }
 
