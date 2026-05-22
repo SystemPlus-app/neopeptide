@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Neo Peptide USA — Medical-Grade Peptide Programs</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -32,8 +32,8 @@
       --dk-line: rgba(255,255,255,0.06);
     }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
-    body { background: var(--cream); color: var(--text); font-family: 'Inter', sans-serif; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+    html { scroll-behavior: smooth; overflow-x: hidden; }
+    body { background: var(--cream); color: var(--text); font-family: 'Inter', sans-serif; overflow-x: hidden; -webkit-font-smoothing: antialiased; -webkit-text-size-adjust: 100%; }
     h1,h2,h3,h4 { font-family: 'Plus Jakarta Sans', sans-serif; line-height: 1.1; letter-spacing: -0.02em; }
     ::selection { background: var(--blue); color: #fff; }
 
@@ -297,7 +297,7 @@
     .chat-dot { position: absolute; top: 8px; right: 8px; width: 8px; height: 8px; border-radius: 50%; background: #4ADE80; border: 2px solid #fff; animation: pulse 2.5s ease-in-out infinite; }
 
     /* MOBILE BAR */
-    .mobile-bar { display: none; position: fixed; bottom: 0; left: 0; right: 0; z-index: 140; background: rgba(245,240,235,0.97); backdrop-filter: blur(20px); border-top: 1px solid var(--border); padding: 10px 16px; gap: 10px; transition: opacity 0.3s; }
+    .mobile-bar { display: none; position: fixed; bottom: 0; left: 0; right: 0; z-index: 140; background: rgba(245,240,235,0.97); backdrop-filter: blur(20px); border-top: 1px solid var(--border); padding: 10px 16px env(safe-area-inset-bottom, 10px); gap: 10px; transition: opacity 0.3s; }
     .mobile-bar a, .mobile-bar button { flex: 1; display: flex; align-items: center; justify-content: center; gap: 7px; padding: 13px; border-radius: 10px; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 13px; font-weight: 700; cursor: pointer; text-decoration: none; border: none; }
     .mb-primary { background: var(--ink); color: #fff; }
     .mb-ghost { background: var(--white); border: 1.5px solid var(--border) !important; color: var(--ink); }
@@ -400,15 +400,15 @@
     .ba-side-after .ba-side-list li { color: rgba(255,255,255,0.75); }
     .ba-side-after .ba-side-list li::before { content: '✓'; font-size: 11px; color: #4ADE80; flex-shrink: 0; }
 
-    /* RESPONSIVE */
+    /* RESPONSIVE — TABLET */
     @media (max-width: 1024px) {
       .header-inner { padding: 0 20px; justify-content: space-between; }
       nav { display: none; flex: none; }
       .bundles-top { grid-template-columns: 1fr; gap: 24px; }
       .bundles-grid { grid-template-columns: 1fr; }
-      .bundle-card { height: 100px; }
+      .bundle-card { height: 110px; }
       .bundle-name { font-size: 16px; }
-      .bundle-bottle { width: 64px; height: 80px; }
+      .bundle-bottle { width: 80px; height: 110px; }
       .ba-grid { grid-template-columns: 1fr; }
       .testimonials-grid { grid-template-columns: 1fr; }
       .numbers-inner { grid-template-columns: repeat(2,1fr); }
@@ -420,19 +420,97 @@
       .chat-text { display: none; }
       .bundles-section, .quality { padding: 72px 24px; }
       .trust-strip { padding: 6px 20px; font-size: 9px; }
-      .prog-banner { grid-template-columns: 1fr; padding: 56px 24px 48px; gap: 36px; }
+      .prog-banner { grid-template-columns: 1fr; padding: 56px 24px 48px; gap: 32px; }
       .prog-products-row { padding: 44px 24px 56px; }
       .testi-break { padding: 64px 24px; }
-      .testi-break-grid { grid-template-columns: 1fr; }
+      .testi-break-grid { grid-template-columns: repeat(2,1fr); }
       .ba-side { grid-template-columns: 1fr; }
+      .numbers { padding: 72px 24px; }
+      .final-cta { padding: 96px 32px; }
     }
+
+    /* RESPONSIVE — MOBILE */
     @media (max-width: 640px) {
-      .trust-strip { font-size: 9px; letter-spacing: 0.07em; }
-      .numbers-inner { grid-template-columns: 1fr 1fr; }
-      .footer-top { grid-template-columns: 1fr; }
-      footer { padding: 56px 20px 32px; }
-      .final-cta { padding: 80px 20px; }
+      /* HERO */
+      .hero { height: 480px; min-height: 480px; }
+      .hero-content { padding: 0 20px; padding-top: 12px; }
+      .hero-badge { font-size: 9.5px; padding: 5px 13px 5px 8px; margin-bottom: 18px; letter-spacing: 0.03em; }
+      .hero-sub { font-size: 14px; line-height: 1.65; max-width: 340px; margin-bottom: 28px; }
+      .hero-actions { flex-direction: column; align-items: center; gap: 10px; }
+      .btn-primary, .btn-ghost-white { width: 100%; max-width: 300px; justify-content: center; font-size: 14px; }
+      .hero-scroll { display: none; }
+
+      /* HEADER */
+      .header-inner { padding: 0 16px; }
+      .logo-text { font-size: 12.5px; }
+      .btn-nav { display: none; }
+
+      /* TRUST */
+      .trust-strip { font-size: 8.5px; letter-spacing: 0.06em; padding: 6px 16px; }
+
+      /* BUNDLES */
+      .bundles-section { padding: 56px 16px; }
+      .bundle-card { height: 96px; }
+      .bundle-name { font-size: 15px; }
+      .bundle-promise { font-size: 10px; }
+      .bundle-bottle { width: 68px; height: 90px; }
+      .bundle-inner { padding: 0 18px; }
+      .bundle-arrow { width: 30px; height: 30px; margin-left: 10px; }
+
+      /* PROG SECTIONS */
+      .prog-banner { padding: 44px 20px 40px; gap: 28px; }
+      .prog-h2 { font-size: clamp(24px, 7.5vw, 36px); }
+      .prog-text { font-size: 14px; }
+      .prog-stats-row { gap: 0; }
+      .prog-stat-item { border-right: none; padding: 3px 0 3px 0; font-size: 9px; width: 50%; }
+      .prog-anchor { font-size: 12px; padding: 10px 14px; }
       .prog-chips { grid-template-columns: 1fr; }
+      .prog-pill { font-size: 10px; padding: 3px 11px; }
+      .prog-products-row { padding: 36px 16px 48px; }
+      .prog-products-label { font-size: 10px; }
+      .hormone-step { padding: 10px 12px; gap: 10px; }
+      .hormone-step-title { font-size: 11.5px; }
+      .hormone-step-desc { font-size: 10.5px; }
+      .micro-obj-block { padding: 14px 14px 12px; }
+
+      /* PRODUCT CARDS */
+      .products-grid { grid-template-columns: 1fr; gap: 12px; }
+      .product-card { padding: 22px 20px; }
+
+      /* NUMBERS */
+      .numbers { padding: 56px 16px; }
+      .numbers-inner { grid-template-columns: 1fr 1fr; }
+      .number-item { padding: 28px 18px; }
+      .number-val { font-size: clamp(28px, 8vw, 44px); }
+
+      /* QUALITY */
+      .quality { padding: 64px 16px; }
+      .quality-item { padding: 32px 24px; }
+
+      /* TESTIMONIALS */
+      .testi-break { padding: 52px 16px; }
+      .testi-break-grid { grid-template-columns: 1fr; }
+
+      /* FINAL CTA */
+      .final-cta { padding: 72px 20px; }
+      .final-h2 { font-size: clamp(30px, 9vw, 52px); }
+
+      /* FOOTER */
+      .footer-top { grid-template-columns: 1fr; gap: 32px; }
+      footer { padding: 52px 20px 100px; }
+      .footer-bottom { flex-direction: column; text-align: center; }
+
+      /* CART */
+      .cart-drawer { width: 100%; }
+    }
+
+    /* RESPONSIVE — SMALL PHONE */
+    @media (max-width: 390px) {
+      .logo-text { display: none; }
+      .hero { height: 440px; min-height: 440px; }
+      .hero-badge { display: none; }
+      .btn-primary, .btn-ghost-white { max-width: 100%; padding: 14px 20px; }
+      .bundle-bottle-wrap { display: none; }
     }
   </style>
 </head>
