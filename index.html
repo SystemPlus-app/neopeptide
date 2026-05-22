@@ -64,7 +64,7 @@
     @keyframes pop { 0%,100%{transform:scale(1)} 50%{transform:scale(1.5)} }
 
     /* HERO */
-    .hero { position: relative; height: 33vh; min-height: 280px; display: flex; align-items: center; justify-content: center; overflow: hidden; background: var(--dark); }
+    .hero { position: relative; height: 200px; min-height: 200px; display: flex; align-items: center; justify-content: center; overflow: hidden; background: var(--dark); }
     .hero-bg { position: absolute; inset: 0; background-image: url('fotos/fundo/fundo.png'); background-size: cover; background-position: center; transform: scale(1.04); transition: transform 8s ease; }
     .hero-bg.loaded { transform: scale(1); }
     .hero-overlay { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(10,10,16,0.4) 0%, rgba(10,10,16,0.55) 40%, rgba(10,10,16,0.88) 75%, rgba(10,10,16,1) 100%); }
@@ -72,7 +72,7 @@
     .hero-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.09); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.13); border-radius: 100px; padding: 6px 18px 6px 8px; font-size: 12px; color: rgba(255,255,255,0.75); margin-bottom: 32px; opacity: 0; animation: fadeUp 0.9s 0.3s forwards; }
     .hero-badge-dot { width: 8px; height: 8px; border-radius: 50%; background: #4ADE80; animation: pulse 2s infinite; }
     @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
-    .hero-h1 { font-size: clamp(52px, 7.5vw, 100px); font-weight: 800; line-height: 1.0; letter-spacing: -0.04em; color: #fff; margin-bottom: 24px; opacity: 0; animation: fadeUp 0.9s 0.5s forwards; }
+    .hero-h1 { font-size: clamp(28px, 3.5vw, 44px); font-weight: 800; line-height: 1.05; letter-spacing: -0.03em; color: #fff; margin-bottom: 0; opacity: 0; animation: fadeUp 0.9s 0.3s forwards; }
     .hero-h1 .accent { color: #6FACFF; }
     .hero-sub { font-size: clamp(15px, 1.5vw, 18px); font-weight: 400; line-height: 1.65; color: rgba(255,255,255,0.5); max-width: 480px; margin: 0 auto 40px; opacity: 0; animation: fadeUp 0.9s 0.7s forwards; }
     .hero-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; opacity: 0; animation: fadeUp 0.9s 0.9s forwards; }
@@ -362,19 +362,7 @@
   <div class="hero-bg" id="heroBg"></div>
   <div class="hero-overlay"></div>
   <div class="hero-content">
-    <div class="hero-badge">
-      <div class="hero-badge-dot"></div>
-      USA GMP Certified · Ships in 48h
-    </div>
-    <h1 class="hero-h1">Your Body.<br><span class="accent">Optimized.</span></h1>
-    <p class="hero-sub">Medical-grade peptide programs for weight loss, longevity, hormone optimization, and metabolic support.</p>
-    <div class="hero-actions">
-      <a href="#programs" class="btn-primary">
-        View Programs
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-      </a>
-      <a href="#results" class="btn-ghost-white">See Results</a>
-    </div>
+    <h1 class="hero-h1">Your Body. <span class="accent">Optimized.</span></h1>
   </div>
   <div class="hero-scroll">
     <span>Scroll</span>
