@@ -64,7 +64,7 @@
     @keyframes pop { 0%,100%{transform:scale(1)} 50%{transform:scale(1.5)} }
 
     /* HERO */
-    .hero { position: relative; height: 100vh; min-height: 700px; display: flex; align-items: center; justify-content: center; overflow: hidden; background: var(--dark); }
+    .hero { position: relative; height: 33vh; min-height: 280px; display: flex; align-items: center; justify-content: center; overflow: hidden; background: var(--dark); }
     .hero-bg { position: absolute; inset: 0; background-image: url('fotos/fundo/fundo.png'); background-size: cover; background-position: center; transform: scale(1.04); transition: transform 8s ease; }
     .hero-bg.loaded { transform: scale(1); }
     .hero-overlay { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(10,10,16,0.4) 0%, rgba(10,10,16,0.55) 40%, rgba(10,10,16,0.88) 75%, rgba(10,10,16,1) 100%); }
@@ -80,7 +80,7 @@
     .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 40px rgba(24,85,232,0.55); }
     .btn-ghost-white { display: inline-flex; align-items: center; gap: 8px; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 14px; font-weight: 600; padding: 14px 28px; border-radius: 10px; background: transparent; color: rgba(255,255,255,0.8); border: 1px solid rgba(255,255,255,0.2); text-decoration: none; cursor: pointer; transition: all 0.2s; }
     .btn-ghost-white:hover { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.35); color: #fff; }
-    .hero-scroll { position: absolute; bottom: 36px; left: 50%; transform: translateX(-50%); z-index: 2; display: flex; flex-direction: column; align-items: center; gap: 6px; opacity: 0; animation: fadeUp 0.9s 1.2s forwards; }
+    .hero-scroll { display: none; }
     .hero-scroll span { font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(255,255,255,0.3); }
     .scroll-chevron { width: 16px; height: 16px; border-right: 1.5px solid rgba(255,255,255,0.25); border-bottom: 1.5px solid rgba(255,255,255,0.25); transform: rotate(45deg); animation: bounce 2s ease-in-out infinite; }
     @keyframes bounce { 0%,100%{transform:rotate(45deg) translateY(0)} 50%{transform:rotate(45deg) translateY(5px)} }
