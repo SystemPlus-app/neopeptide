@@ -97,24 +97,47 @@
     .section-sub { font-size: 16px; font-weight: 400; color: var(--sub); line-height: 1.7; max-width: 480px; }
 
     /* BUNDLE GRID */
-    .bundles-section { background: var(--cream); padding: 100px 48px; }
-    .bundles-top { max-width: 1200px; margin: 0 auto 52px; display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: end; }
-    .bundles-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; max-width: 1200px; margin: 0 auto; }
-    .bundle-card { position: relative; border-radius: 20px; padding: 40px 36px; min-height: 240px; overflow: hidden; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between; transition: transform 0.3s, box-shadow 0.3s; text-decoration: none; }
-    .bundle-card:hover { transform: translateY(-4px); box-shadow: 0 24px 60px rgba(0,0,0,0.22); }
-    .bundle-card.glp1 { background: linear-gradient(135deg, var(--glp1-a) 0%, var(--glp1-b) 100%); }
-    .bundle-card.longevity { background: linear-gradient(135deg, var(--long-a) 0%, var(--long-b) 100%); }
-    .bundle-card.testosterone { background: linear-gradient(135deg, var(--test-a) 0%, var(--test-b) 100%); }
-    .bundle-card.microdose { background: linear-gradient(135deg, var(--micro-a) 0%, var(--micro-b) 100%); }
-    .bundle-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
-    .bundle-name { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 20px; font-weight: 800; color: #fff; line-height: 1.2; }
-    .bundle-promise { font-size: 12px; color: rgba(255,255,255,0.6); margin-top: 8px; line-height: 1.5; }
-    .bundle-arrow { width: 38px; height: 38px; border-radius: 50%; background: rgba(255,255,255,0.15); display: flex; align-items: center; justify-content: center; color: #fff; flex-shrink: 0; transition: background 0.2s, transform 0.2s; }
-    .bundle-card:hover .bundle-arrow { background: rgba(255,255,255,0.25); transform: translate(2px,-2px); }
-    .bundle-pills { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 20px; }
-    .bundle-pill { background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2); border-radius: 100px; padding: 4px 11px; font-size: 11px; font-weight: 500; color: rgba(255,255,255,0.8); }
-    .bundle-bg-circle { position: absolute; bottom: -30px; right: -30px; width: 160px; height: 160px; border-radius: 50%; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.06); pointer-events: none; }
-    .bundle-bg-circle::before { content:''; position:absolute; inset:22px; border-radius:50%; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.06); }
+    .bundles-section { background: var(--cream); padding: 80px 48px; }
+    .bundles-top { max-width: 1200px; margin: 0 auto 40px; display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: end; }
+    .bundles-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; max-width: 1200px; margin: 0 auto; }
+
+    .bundle-card {
+      position: relative; border-radius: 16px; height: 120px;
+      overflow: hidden; cursor: pointer;
+      display: flex; align-items: center;
+      transition: box-shadow 0.35s, transform 0.25s;
+      text-decoration: none;
+    }
+    .bundle-card:hover { transform: translateY(-2px); box-shadow: 0 16px 48px rgba(0,0,0,0.2); }
+
+    /* gradient layer — switches direction on hover */
+    .bundle-card::before {
+      content: ''; position: absolute; inset: 0; border-radius: 16px;
+      transition: opacity 0.4s;
+    }
+    .bundle-card::after {
+      content: ''; position: absolute; inset: 0; border-radius: 16px;
+      opacity: 0; transition: opacity 0.4s;
+    }
+    .bundle-card.glp1::before  { background: linear-gradient(90deg, var(--glp1-a) 0%, var(--glp1-b) 55%, rgba(245,240,235,0.12) 100%); }
+    .bundle-card.glp1::after   { background: linear-gradient(270deg, var(--glp1-a) 0%, var(--glp1-b) 55%, rgba(245,240,235,0.12) 100%); }
+    .bundle-card.longevity::before  { background: linear-gradient(90deg, var(--long-a) 0%, var(--long-b) 55%, rgba(245,240,235,0.12) 100%); }
+    .bundle-card.longevity::after   { background: linear-gradient(270deg, var(--long-a) 0%, var(--long-b) 55%, rgba(245,240,235,0.12) 100%); }
+    .bundle-card.testosterone::before  { background: linear-gradient(90deg, var(--test-a) 0%, var(--test-b) 55%, rgba(245,240,235,0.12) 100%); }
+    .bundle-card.testosterone::after   { background: linear-gradient(270deg, var(--test-a) 0%, var(--test-b) 55%, rgba(245,240,235,0.12) 100%); }
+    .bundle-card.microdose::before  { background: linear-gradient(90deg, var(--micro-a) 0%, var(--micro-b) 55%, rgba(245,240,235,0.12) 100%); }
+    .bundle-card.microdose::after   { background: linear-gradient(270deg, var(--micro-a) 0%, var(--micro-b) 55%, rgba(245,240,235,0.12) 100%); }
+    .bundle-card:hover::before { opacity: 0; }
+    .bundle-card:hover::after  { opacity: 1; }
+
+    .bundle-inner { position: relative; z-index: 2; display: flex; align-items: center; width: 100%; padding: 0 28px; gap: 0; }
+    .bundle-text { flex: 1; }
+    .bundle-name { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 18px; font-weight: 800; color: #fff; line-height: 1.2; }
+    .bundle-promise { font-size: 11px; color: rgba(255,255,255,0.6); margin-top: 5px; }
+    .bundle-bottle { width: 80px; height: 100px; object-fit: contain; filter: drop-shadow(0 4px 16px rgba(0,0,0,0.35)); flex-shrink: 0; transition: transform 0.35s; }
+    .bundle-card:hover .bundle-bottle { transform: translateY(-4px) scale(1.05); }
+    .bundle-arrow { width: 36px; height: 36px; border-radius: 50%; background: rgba(255,255,255,0.15); display: flex; align-items: center; justify-content: center; color: #fff; flex-shrink: 0; margin-left: 20px; transition: background 0.2s, transform 0.2s; }
+    .bundle-card:hover .bundle-arrow { background: rgba(255,255,255,0.28); transform: translateX(3px); }
 
     /* BEFORE / AFTER */
     .before-after { background: var(--white); padding: 100px 48px; }
@@ -304,6 +327,9 @@
       nav { display: none; }
       .bundles-top { grid-template-columns: 1fr; gap: 24px; }
       .bundles-grid { grid-template-columns: 1fr; }
+      .bundle-card { height: 100px; }
+      .bundle-name { font-size: 16px; }
+      .bundle-bottle { width: 64px; height: 80px; }
       .ba-grid { grid-template-columns: 1fr; }
       .testimonials-grid { grid-template-columns: 1fr; }
       .numbers-inner { grid-template-columns: repeat(2,1fr); }
@@ -406,75 +432,54 @@
   <div class="bundles-grid">
 
     <div class="bundle-card glp1 reveal" onclick="switchBundle('glp1')">
-      <div class="bundle-bg-circle"></div>
-      <div class="bundle-top">
-        <div>
+      <div class="bundle-inner">
+        <div class="bundle-text">
           <div class="bundle-name">GLP-1 / Weight Loss</div>
           <div class="bundle-promise">Appetite control · Craving suppression · Metabolic support</div>
         </div>
+        <img class="bundle-bottle" src="fotos/bottles/bottle.png" alt="GLP-1 vial">
         <div class="bundle-arrow">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </div>
-      </div>
-      <div class="bundle-pills">
-        <span class="bundle-pill">Semaglutide</span>
-        <span class="bundle-pill">Tirzepatide</span>
-        <span class="bundle-pill">Zepbound</span>
-        <span class="bundle-pill">Microdose</span>
       </div>
     </div>
 
     <div class="bundle-card longevity reveal" style="transition-delay:0.08s" onclick="switchBundle('longevity')">
-      <div class="bundle-bg-circle"></div>
-      <div class="bundle-top">
-        <div>
+      <div class="bundle-inner">
+        <div class="bundle-text">
           <div class="bundle-name">Longevity & Recovery</div>
           <div class="bundle-promise">Energy · Cellular repair · Sleep quality · Healthy aging</div>
         </div>
+        <img class="bundle-bottle" src="fotos/bottles/bottle.png" alt="Longevity vial">
         <div class="bundle-arrow">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </div>
-      </div>
-      <div class="bundle-pills">
-        <span class="bundle-pill">NAD+ Injectable</span>
-        <span class="bundle-pill">NAD+ Liposomal</span>
-        <span class="bundle-pill">Sermorelin</span>
       </div>
     </div>
 
     <div class="bundle-card testosterone reveal" style="transition-delay:0.16s" onclick="switchBundle('testosterone')">
-      <div class="bundle-bg-circle"></div>
-      <div class="bundle-top">
-        <div>
+      <div class="bundle-inner">
+        <div class="bundle-text">
           <div class="bundle-name">Testosterone / Hormone</div>
           <div class="bundle-promise">Energy · Mood · Libido · Strength · Hormone balance</div>
         </div>
+        <img class="bundle-bottle" src="fotos/bottles/bottle.png" alt="Testosterone vial">
         <div class="bundle-arrow">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </div>
-      </div>
-      <div class="bundle-pills">
-        <span class="bundle-pill">Testosterone Cypionate</span>
-        <span class="bundle-pill">Testosterone Oral</span>
-        <span class="bundle-pill">Enclomiphene</span>
-        <span class="bundle-pill">Hormone Panel</span>
       </div>
     </div>
 
     <div class="bundle-card microdose reveal" style="transition-delay:0.24s" onclick="switchBundle('microdose')">
-      <div class="bundle-bg-circle"></div>
-      <div class="bundle-top">
-        <div>
+      <div class="bundle-inner">
+        <div class="bundle-text">
           <div class="bundle-name">Microdosing / Light GLP-1</div>
           <div class="bundle-promise">Small-dose support · Appetite · Energy · Mood balance</div>
         </div>
+        <img class="bundle-bottle" src="fotos/bottles/bottle.png" alt="Microdose vial">
         <div class="bundle-arrow">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </div>
-      </div>
-      <div class="bundle-pills">
-        <span class="bundle-pill">Microdose Semaglutide</span>
-        <span class="bundle-pill">Microdose Tirzepatide</span>
       </div>
     </div>
 
