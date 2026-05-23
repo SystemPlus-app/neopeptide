@@ -45,13 +45,10 @@
     header { position: fixed; top: 0; left: 0; right: 0; z-index: 100; height: 66px; background: rgba(9,9,15,0.48); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-bottom: 1px solid rgba(255,255,255,0.06); transition: background 0.45s, border-color 0.45s, box-shadow 0.45s; }
     header.light { background: rgba(249,246,242,0.97); backdrop-filter: blur(28px); -webkit-backdrop-filter: blur(28px); border-bottom: 1px solid rgba(0,0,0,0.06); box-shadow: 0 1px 18px rgba(0,0,0,0.05); }
     .header-inner { max-width: 1140px; margin: 0 auto; height: 100%; padding: 0 clamp(24px, 4vw, 48px); display: flex; align-items: center; position: relative; z-index: 1; }
-    .logo { text-decoration: none; display: flex; align-items: center; flex-shrink: 0; gap: 10px; transition: opacity 0.2s; }
-    .logo:hover { opacity: 0.8; }
-    .logo-hex { flex-shrink: 0; }
-    .logo-text { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 14px; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; color: rgba(255,255,255,0.93); transition: color 0.3s; }
-    header.light .logo-text { color: var(--ink); }
-    .logo-img { display: none; }
-    .logo-mark { display: none; }
+    .logo { text-decoration: none; display: flex; align-items: center; flex-shrink: 0; transition: opacity 0.2s; }
+    .logo:hover { opacity: 0.82; }
+    .logo-img-main { height: 38px; width: auto; display: block; }
+    header.light .logo-img-main { filter: brightness(0.15); }
     nav { display: flex; gap: 34px; flex: 1; justify-content: center; }
     nav a { font-size: 13px; font-weight: 500; letter-spacing: 0.02em; color: rgba(255,255,255,0.62); text-decoration: none; transition: color 0.2s; }
     nav a:hover { color: rgba(255,255,255,0.95); }
@@ -423,7 +420,7 @@
 
       /* HEADER */
       .header-inner { padding: 0 16px; }
-      .logo-text { font-size: 12.5px; }
+      .logo-img-main { height: 30px; }
       .btn-nav { display: none; }
 
       /* TRUST */
@@ -487,7 +484,7 @@
 
     /* RESPONSIVE — SMALL PHONE */
     @media (max-width: 390px) {
-      .logo-text { display: none; }
+      .logo-img-main { height: 26px; }
       .hero-slider { height: 400px; }
       .btn-primary, .btn-ghost-white { max-width: 100%; padding: 14px 20px; }
       .bundle-bottle-wrap { display: none; }
@@ -500,23 +497,7 @@
 <header id="header">
   <div class="header-inner">
     <a class="logo" href="#">
-      <svg class="logo-hex" width="36" height="36" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <line x1="22" y1="5" x2="22" y2="1.5" stroke="#C8921A" stroke-width="1.3" stroke-linecap="round"/>
-        <line x1="36.7" y1="13.5" x2="39.8" y2="11.7" stroke="#C8921A" stroke-width="1.3" stroke-linecap="round"/>
-        <line x1="36.7" y1="30.5" x2="39.8" y2="32.3" stroke="#C8921A" stroke-width="1.3" stroke-linecap="round"/>
-        <line x1="22" y1="39" x2="22" y2="42.5" stroke="#C8921A" stroke-width="1.3" stroke-linecap="round"/>
-        <line x1="7.3" y1="30.5" x2="4.2" y2="32.3" stroke="#C8921A" stroke-width="1.3" stroke-linecap="round"/>
-        <line x1="7.3" y1="13.5" x2="4.2" y2="11.7" stroke="#C8921A" stroke-width="1.3" stroke-linecap="round"/>
-        <circle cx="22" cy="1.5" r="1.9" fill="#C8921A"/>
-        <circle cx="39.8" cy="11.7" r="1.9" fill="#C8921A"/>
-        <circle cx="39.8" cy="32.3" r="1.9" fill="#C8921A"/>
-        <circle cx="22" cy="42.5" r="1.9" fill="#C8921A"/>
-        <circle cx="4.2" cy="32.3" r="1.9" fill="#C8921A"/>
-        <circle cx="4.2" cy="11.7" r="1.9" fill="#C8921A"/>
-        <polygon points="22,5 36.7,13.5 36.7,30.5 22,39 7.3,30.5 7.3,13.5" fill="#0C0D16" stroke="#C8921A" stroke-width="1.6"/>
-        <text x="22" y="25.5" text-anchor="middle" font-family="Arial Black,Impact,sans-serif" font-weight="900" font-size="11.5" fill="#5A9EF0" letter-spacing="-0.4">NP</text>
-      </svg>
-      <span class="logo-text">Neo Peptide</span>
+      <img class="logo-img-main" src="fotos/logo/logo transparente.png" alt="Neo Peptide" height="38">
     </a>
     <nav>
       <a href="#programs">Programs</a>
