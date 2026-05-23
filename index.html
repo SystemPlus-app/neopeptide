@@ -291,7 +291,7 @@
     /* MOBILE BAR */
     .mobile-bar { display: none; position: fixed; bottom: 0; left: 0; right: 0; z-index: 140; background: rgba(245,240,235,0.97); backdrop-filter: blur(20px); border-top: 1px solid var(--border); padding: 10px 16px env(safe-area-inset-bottom, 10px); gap: 10px; transition: opacity 0.3s; }
     .mobile-bar a, .mobile-bar button { flex: 1; display: flex; align-items: center; justify-content: center; gap: 7px; padding: 13px; border-radius: 10px; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 13px; font-weight: 700; cursor: pointer; text-decoration: none; border: none; }
-    .mb-primary { background: var(--ink); color: #fff; }
+    .mb-primary { background: linear-gradient(135deg, #5BB8FF 0%, #1A6EFF 40%, #1040CC 75%, #0A2A8A 100%); color: #fff; }
     .mb-ghost { background: var(--white); border: 1.5px solid var(--border) !important; color: var(--ink); }
 
     /* EXIT */
@@ -429,9 +429,15 @@
       header { top: 26px; }
 
       /* PHOTO CAROUSEL */
-      .photo-section { padding: 108px 16px 52px; }
-      .photo-frame { height: 420px; border-radius: 14px; }
-      .photo-head-title { font-size: 20px; }
+      .photo-section { padding: 100px 0 48px; }
+      .photo-inner { padding: 0; }
+      .photo-head { padding: 0 16px; margin-bottom: 16px; }
+      .photo-frame { height: 260px; border-radius: 0; }
+      .photo-item img { object-fit: cover; }
+      .photo-head-title { font-size: 18px; }
+      .ph-arrow { width: 34px; height: 34px; font-size: 20px; }
+      .ph-dots { padding: 10px 0 4px; }
+      .ph-dot { width: 8px; height: 8px; }
 
       /* HEADER */
       .header-inner { padding: 0 16px; }
@@ -499,10 +505,12 @@
 
     /* RESPONSIVE — SMALL PHONE */
     @media (max-width: 390px) {
-      .announce-strip { height: 22px; font-size: 8px; }
+      .announce-strip { height: 22px; font-size: 8px; letter-spacing: 0.08em; }
+      .announce-flag { display: none; }
       header { top: 22px; }
       .logo-img { height: 36px; }
-      .photo-frame { height: 330px; }
+      .photo-section { padding: 94px 0 40px; }
+      .photo-frame { height: 210px; }
       .btn-primary, .btn-ghost-white { max-width: 100%; padding: 14px 20px; }
       .bundle-bottle-wrap { display: none; }
     }
