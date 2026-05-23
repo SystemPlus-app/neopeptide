@@ -46,27 +46,22 @@
     .announce-flag { font-size: 17px; line-height: 1; }
 
     /* HEADER */
-    header { position: fixed; top: 32px; left: 0; right: 0; z-index: 100; height: 66px; background: rgba(9,9,15,0.48); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-bottom: 1px solid rgba(255,255,255,0.06); transition: background 0.45s, border-color 0.45s, box-shadow 0.45s; }
-    header.light { background: rgba(249,246,242,0.97); backdrop-filter: blur(28px); -webkit-backdrop-filter: blur(28px); border-bottom: 1px solid rgba(0,0,0,0.06); box-shadow: 0 1px 18px rgba(0,0,0,0.05); }
+    header { position: fixed; top: 32px; left: 0; right: 0; z-index: 100; height: 66px; background: #000; border-bottom: 1px solid rgba(255,255,255,0.07); transition: box-shadow 0.3s; }
+    header.light { background: #000; border-bottom: 1px solid rgba(255,255,255,0.07); }
     .header-inner { max-width: 1140px; margin: 0 auto; height: 100%; padding: 0 clamp(24px, 4vw, 48px); display: flex; align-items: center; position: relative; z-index: 1; }
     .logo { text-decoration: none; display: flex; align-items: center; flex-shrink: 0; transition: opacity 0.2s; }
     .logo:hover { opacity: 0.82; }
-    .logo-dark { height: 56px; width: auto; display: block; mix-blend-mode: screen; }
-    .logo-light { height: 56px; width: auto; display: none; }
-    header.light .logo-dark { display: none; }
-    header.light .logo-light { display: block; filter: brightness(0.1) saturate(0); }
+    .logo-img { height: 52px; width: auto; display: block; }
     nav { display: flex; gap: 34px; flex: 1; justify-content: center; }
     nav a { font-size: 13px; font-weight: 500; letter-spacing: 0.02em; color: rgba(255,255,255,0.62); text-decoration: none; transition: color 0.2s; }
     nav a:hover { color: rgba(255,255,255,0.95); }
-    header.light nav a { color: var(--muted); }
-    header.light nav a:hover { color: var(--ink); }
     .header-right { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
     .btn-nav { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 12px; font-weight: 700; letter-spacing: 0.03em; padding: 9px 22px; border-radius: 9px; background: var(--blue); color: #fff; text-decoration: none; border: none; cursor: pointer; transition: transform 0.15s, box-shadow 0.15s, background 0.2s; white-space: nowrap; }
     .btn-nav:hover { transform: translateY(-1px); box-shadow: 0 6px 22px rgba(24,85,232,0.46); }
     .cart-btn { display: flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.42); background: none; border: none; cursor: pointer; transition: color 0.2s; padding: 7px; border-radius: 7px; }
     .cart-btn:hover { color: rgba(255,255,255,0.88); }
-    header.light .cart-btn { color: var(--muted); }
-    header.light .cart-btn:hover { color: var(--ink); }
+    header.light .cart-btn { color: rgba(255,255,255,0.42); }
+    header.light .cart-btn:hover { color: rgba(255,255,255,0.88); }
     .cart-count { width: 18px; height: 18px; border-radius: 50%; background: var(--blue); color: #fff; font-size: 10px; font-weight: 700; display: flex; align-items: center; justify-content: center; }
     .cart-count.pop { animation: pop 0.35s cubic-bezier(0.34,1.56,0.64,1); }
     @keyframes pop { 0%,100%{transform:scale(1)} 50%{transform:scale(1.5)} }
@@ -79,7 +74,7 @@
     .photo-head-nav { display: flex; gap: 8px; }
     .ph-arrow { width: 42px; height: 42px; border-radius: 50%; border: 1.5px solid var(--border); background: var(--white); cursor: pointer; font-size: 24px; line-height: 1; display: flex; align-items: center; justify-content: center; color: var(--ink); transition: background 0.18s, border-color 0.18s; }
     .ph-arrow:hover { background: var(--cream2); border-color: var(--ink); }
-    .photo-frame { border-radius: 20px; overflow: hidden; position: relative; height: 595px; background: #111; box-shadow: 0 6px 40px rgba(0,0,0,0.12); }
+    .photo-frame { border-radius: 20px; overflow: hidden; position: relative; height: 595px; background: #000; box-shadow: 0 6px 40px rgba(0,0,0,0.18); }
     .photo-item { position: absolute; inset: 0; opacity: 0; transition: opacity 0.9s ease; }
     .photo-item.active { opacity: 1; }
     .photo-item img { width: 100%; height: 100%; object-fit: contain; object-position: center; display: block; }
@@ -440,7 +435,7 @@
 
       /* HEADER */
       .header-inner { padding: 0 16px; }
-      .logo-dark, .logo-light { height: 38px; }
+      .logo-img { height: 38px; }
       .btn-nav { display: none; }
 
       /* TRUST */
@@ -506,7 +501,7 @@
     @media (max-width: 390px) {
       .announce-strip { height: 22px; font-size: 8px; }
       header { top: 22px; }
-      .logo-dark, .logo-light { height: 28px; }
+      .logo-img { height: 28px; }
       .photo-frame { height: 330px; }
       .btn-primary, .btn-ghost-white { max-width: 100%; padding: 14px 20px; }
       .bundle-bottle-wrap { display: none; }
@@ -525,8 +520,7 @@
 <header id="header">
   <div class="header-inner">
     <a class="logo" href="#">
-      <img class="logo-dark" src="fotos/logo/logo fundo preto.JPG" alt="Neo Peptide">
-      <img class="logo-light" src="fotos/logo/logo transparente.png" alt="Neo Peptide">
+      <img class="logo-img" src="fotos/logo/logo fundo preto.JPG" alt="Neo Peptide">
     </a>
     <nav>
       <a href="#section-glp1">GLP-1</a>
