@@ -68,28 +68,15 @@
     .cart-count.pop { animation: pop 0.35s cubic-bezier(0.34,1.56,0.64,1); }
     @keyframes pop { 0%,100%{transform:scale(1)} 50%{transform:scale(1.5)} }
 
-    /* HERO */
-    .hero { position: relative; height: 520px; min-height: 520px; display: flex; align-items: center; justify-content: center; overflow: hidden; background: #09090F; }
-    .hero-bg { position: absolute; inset: 0; background-image: url('fotos/fundo/fundo.png'); background-size: cover; background-position: center 35%; transform: scale(1.06); transition: transform 8s ease; filter: brightness(0.68) saturate(0.82); }
-    .hero-bg.loaded { transform: scale(1.02); }
-    .hero-overlay { position: absolute; inset: 0; background: radial-gradient(ellipse 90% 50% at 50% 38%, rgba(12,20,50,0.22) 0%, transparent 62%), linear-gradient(180deg, rgba(8,10,18,0.42) 0%, rgba(8,10,18,0.18) 38%, rgba(8,10,18,0.62) 70%, rgba(8,10,18,0.97) 100%); }
-    .hero-content { position: relative; z-index: 2; text-align: center; max-width: 760px; padding: 0 24px; padding-top: 24px; }
-    .hero-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.06); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.10); border-radius: 100px; padding: 6px 18px 6px 10px; font-size: 11px; color: rgba(255,255,255,0.58); margin-bottom: 26px; opacity: 0; animation: fadeUp 0.9s 0.2s forwards; letter-spacing: 0.04em; text-transform: uppercase; }
-    .hero-badge-dot { width: 6px; height: 6px; border-radius: 50%; background: rgba(74,222,128,0.7); animation: pulse 2.5s infinite; flex-shrink: 0; }
-    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.35} }
-    .hero-h1 { font-size: clamp(36px, 5vw, 64px); font-weight: 800; line-height: 1.06; letter-spacing: -0.03em; color: rgba(255,255,255,0.96); margin-bottom: 20px; text-align: center; opacity: 0; animation: fadeUp 0.9s 0.35s forwards; }
-    .hero-h1 .accent { color: #7DB8FF; }
-    .hero-sub { font-size: clamp(14px, 1.35vw, 16px); font-weight: 400; line-height: 1.75; color: rgba(255,255,255,0.42); max-width: 440px; margin: 0 auto 40px; opacity: 0; animation: fadeUp 0.9s 0.55s forwards; }
-    .hero-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; opacity: 0; animation: fadeUp 0.9s 0.72s forwards; }
-    .btn-primary { display: inline-flex; align-items: center; gap: 8px; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 14px; font-weight: 700; padding: 15px 32px; border-radius: 10px; background: var(--blue); color: #fff; text-decoration: none; border: none; cursor: pointer; transition: transform 0.15s, box-shadow 0.15s; box-shadow: 0 4px 32px rgba(24,85,232,0.42); }
-    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 44px rgba(24,85,232,0.58); }
-    .btn-ghost-white { display: inline-flex; align-items: center; gap: 8px; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 14px; font-weight: 600; padding: 14px 28px; border-radius: 10px; background: transparent; color: rgba(255,255,255,0.75); border: 1px solid rgba(255,255,255,0.18); text-decoration: none; cursor: pointer; transition: all 0.2s; }
-    .btn-ghost-white:hover { background: rgba(255,255,255,0.07); border-color: rgba(255,255,255,0.32); color: #fff; }
-    .hero-scroll { display: flex; flex-direction: column; align-items: center; gap: 9px; position: absolute; bottom: 28px; left: 50%; transform: translateX(-50%); z-index: 2; opacity: 0; animation: fadeUp 0.8s 1.2s forwards; }
-    .hero-scroll span { font-size: 9.5px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.25); }
-    .scroll-chevron { width: 14px; height: 14px; border-right: 1.5px solid rgba(255,255,255,0.22); border-bottom: 1.5px solid rgba(255,255,255,0.22); transform: rotate(45deg); animation: bounce 2s ease-in-out infinite; }
-    @keyframes bounce { 0%,100%{transform:rotate(45deg) translateY(0)} 50%{transform:rotate(45deg) translateY(5px)} }
-    @keyframes fadeUp { from{opacity:0;transform:translateY(18px)} to{opacity:1;transform:none} }
+    /* HERO SLIDER */
+    .hero-slider { position: relative; height: 500px; overflow: hidden; background: #08080E; }
+    .slide { position: absolute; inset: 0; background-size: cover; background-position: center center; opacity: 0; transition: opacity 1.2s ease; }
+    .slide.active { opacity: 1; }
+    .slider-overlay { position: absolute; inset: 0; z-index: 2; pointer-events: none; background: linear-gradient(180deg, rgba(0,0,0,0.28) 0%, rgba(0,0,0,0.04) 45%, rgba(0,0,0,0.04) 65%, rgba(0,0,0,0.52) 100%); }
+    .slider-dots { position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); display: flex; gap: 8px; z-index: 4; }
+    .dot { width: 7px; height: 7px; border-radius: 50%; background: rgba(255,255,255,0.32); border: none; cursor: pointer; padding: 0; transition: background 0.3s, transform 0.3s; }
+    .dot.active { background: #fff; transform: scale(1.25); }
+    .dot:hover { background: rgba(255,255,255,0.7); }
 
     /* TRUST STRIP */
     .trust-strip { background: var(--white); border-bottom: 1px solid var(--border); padding: 7px 24px; text-align: center; font-size: 10px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
@@ -431,14 +418,8 @@
 
     /* RESPONSIVE — MOBILE */
     @media (max-width: 640px) {
-      /* HERO */
-      .hero { height: 480px; min-height: 480px; }
-      .hero-content { padding: 0 20px; padding-top: 12px; }
-      .hero-badge { font-size: 9.5px; padding: 5px 13px 5px 8px; margin-bottom: 18px; letter-spacing: 0.03em; }
-      .hero-sub { font-size: 14px; line-height: 1.65; max-width: 340px; margin-bottom: 28px; }
-      .hero-actions { flex-direction: column; align-items: center; gap: 10px; }
-      .btn-primary, .btn-ghost-white { width: 100%; max-width: 300px; justify-content: center; font-size: 14px; }
-      .hero-scroll { display: none; }
+      /* HERO SLIDER */
+      .hero-slider { height: 480px; }
 
       /* HEADER */
       .header-inner { padding: 0 16px; }
@@ -507,8 +488,7 @@
     /* RESPONSIVE — SMALL PHONE */
     @media (max-width: 390px) {
       .logo-text { display: none; }
-      .hero { height: 440px; min-height: 440px; }
-      .hero-badge { display: none; }
+      .hero-slider { height: 400px; }
       .btn-primary, .btn-ghost-white { max-width: 100%; padding: 14px 20px; }
       .bundle-bottle-wrap { display: none; }
     }
@@ -554,28 +534,18 @@
   </div>
 </header>
 
-<!-- HERO -->
-<section class="hero">
-  <div class="hero-bg" id="heroBg"></div>
-  <div class="hero-overlay"></div>
-  <div class="hero-content">
-    <div class="hero-badge">
-      <div class="hero-badge-dot"></div>
-      GMP Certified &nbsp;·&nbsp; ≥99% Purity &nbsp;·&nbsp; Ships in 48h
-    </div>
-    <h1 class="hero-h1">Your Body. <span class="accent">Optimized.</span></h1>
-    <p class="hero-sub">Pharmaceutical-grade peptide protocols for weight loss, hormone optimization, and cellular longevity. Science-backed. Verified. Delivered.</p>
-    <div class="hero-actions">
-      <a class="btn-primary" href="#programs">
-        Explore Programs
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-      </a>
-      <a class="btn-ghost-white" href="#quality">View Science</a>
-    </div>
-  </div>
-  <div class="hero-scroll">
-    <span>Scroll</span>
-    <div class="scroll-chevron"></div>
+<!-- HERO SLIDER -->
+<section class="hero-slider" id="heroSlider">
+  <div class="slide active" style="background-image:url('fotos/antes e depois/1.png')"></div>
+  <div class="slide" style="background-image:url('fotos/antes e depois/2.png')"></div>
+  <div class="slide" style="background-image:url('fotos/antes e depois/3.png')"></div>
+  <div class="slide" style="background-image:url('fotos/antes e depois/4.png')"></div>
+  <div class="slider-overlay"></div>
+  <div class="slider-dots">
+    <button class="dot active" onclick="goToSlide(0)"></button>
+    <button class="dot" onclick="goToSlide(1)"></button>
+    <button class="dot" onclick="goToSlide(2)"></button>
+    <button class="dot" onclick="goToSlide(3)"></button>
   </div>
 </section>
 
@@ -1457,17 +1427,23 @@
 </div>
 
 <script>
-// HERO
-const heroBg = document.getElementById('heroBg');
-setTimeout(() => heroBg.classList.add('loaded'), 100);
-window.addEventListener('scroll', () => {
-  heroBg.style.transform = `scale(1) translateY(${window.scrollY * 0.25}px)`;
-}, { passive: true });
+// SLIDER
+const slides = document.querySelectorAll('.slide');
+const dots = document.querySelectorAll('.dot');
+let currentSlide = 0;
+function goToSlide(n) {
+  slides[currentSlide].classList.remove('active');
+  dots[currentSlide].classList.remove('active');
+  currentSlide = (n + slides.length) % slides.length;
+  slides[currentSlide].classList.add('active');
+  dots[currentSlide].classList.add('active');
+}
+setInterval(() => goToSlide(currentSlide + 1), 5000);
 
 // HEADER
 const hdr = document.getElementById('header');
 window.addEventListener('scroll', () => {
-  hdr.classList.toggle('light', window.scrollY > 420);
+  hdr.classList.toggle('light', window.scrollY > 460);
 }, { passive: true });
 
 // REVEAL
