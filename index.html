@@ -515,6 +515,100 @@
       .btn-primary, .btn-ghost-white { max-width: 100%; padding: 14px 20px; }
       .bundle-bottle-wrap { display: none; }
     }
+  /* LEGAL DISCLAIMER MODAL */
+  .legal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: rgba(0,0,0,0.82);
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    overflow-y: auto;
+  }
+  .legal-box {
+    background: #fff;
+    border-radius: 10px;
+    max-width: 660px;
+    width: 100%;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.55);
+    margin: auto;
+  }
+  .legal-header {
+    background: #c0392b;
+    color: #fff;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    text-align: center;
+    padding: 16px 24px;
+    line-height: 1.3;
+  }
+  .legal-body {
+    padding: 24px 28px 20px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 13.5px;
+    line-height: 1.75;
+    color: #222;
+  }
+  .legal-body p { margin: 0 0 14px; }
+  .legal-body p:last-child { margin-bottom: 0; }
+  .legal-note {
+    background: #f5f5f5;
+    border-left: 3px solid #c0392b;
+    padding: 12px 14px;
+    border-radius: 4px;
+    font-size: 12.5px;
+    color: #444;
+  }
+  .legal-btns {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 18px 28px 24px;
+  }
+  .legal-btn-accept {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 11.5px;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    padding: 14px 18px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    background: linear-gradient(135deg, #5BB8FF 0%, #1A6EFF 40%, #1040CC 75%, #0A2A8A 100%);
+    color: #fff;
+    box-shadow: 0 2px 12px rgba(30,80,220,0.35);
+    transition: filter 0.15s, transform 0.15s;
+    line-height: 1.4;
+  }
+  .legal-btn-accept:hover { filter: brightness(1.1); transform: translateY(-1px); }
+  .legal-btn-decline {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    padding: 11px 18px;
+    border: 1.5px solid #ccc;
+    border-radius: 8px;
+    cursor: pointer;
+    background: #fff;
+    color: #888;
+    transition: background 0.15s, color 0.15s;
+  }
+  .legal-btn-decline:hover { background: #f0f0f0; color: #444; }
+  @media (max-width: 640px) {
+    .legal-header { font-size: 12px; padding: 14px 16px; }
+    .legal-body { padding: 18px 16px 14px; font-size: 12.5px; }
+    .legal-btns { padding: 14px 16px 20px; }
+    .legal-btn-accept { font-size: 10.5px; }
+  }
   </style>
 </head>
 <body>
@@ -1450,7 +1544,38 @@
   </div>
 </div>
 
+<div id="legalOverlay" class="legal-overlay">
+  <div class="legal-box">
+    <div class="legal-header">⚠ Important Legal Notice – Please Read</div>
+    <div class="legal-body">
+      <p>The products on this website are for legitimate research use only. They are not intended to prevent, treat, or cure any illness or disease and are not intended for human consumption. By accessing this site, you acknowledge that you are at least 21 years of age, understand these terms, and have a legitimate research basis for buying these products.</p>
+      <p class="legal-note"><strong>NOTE:</strong> All of our compounds are sold individually, and DO NOT include research supplies such as bacteriostatic water or syringes. Most are sold in powder form and require reconstitution with a suitable diluent solution prior to research.</p>
+    </div>
+    <div class="legal-btns">
+      <button class="legal-btn-accept" onclick="legalAccept()">I Accept &mdash; I Acknowledge That I Am a Valid Researcher Over 21 Years of Age</button>
+      <button class="legal-btn-decline" onclick="legalDecline()">I Decline</button>
+    </div>
+  </div>
+</div>
+
 <script>
+// LEGAL DISCLAIMER
+(function() {
+  if (!localStorage.getItem('neopeptide_legal_accepted')) {
+    var overlay = document.getElementById('legalOverlay');
+    overlay.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+  }
+})();
+function legalAccept() {
+  localStorage.setItem('neopeptide_legal_accepted', '1');
+  document.getElementById('legalOverlay').style.display = 'none';
+  document.body.style.overflow = '';
+}
+function legalDecline() {
+  window.location.href = 'https://www.google.com';
+}
+
 // PHOTO CAROUSEL
 const phItems = document.querySelectorAll('.photo-item');
 const phDots  = document.querySelectorAll('.ph-dot');
