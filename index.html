@@ -1506,7 +1506,7 @@
   </div>
 </div>
 
-<!-- CRISP LIVE CHAT -->
+<!-- CRISP LIVE CHAT + GEMINI AI -->
 <script>
   window.$crisp = [];
   window.CRISP_WEBSITE_ID = "3377d9c1-4785-497e-b676-bc91178e0219";
@@ -1516,8 +1516,43 @@
     s.async = 1;
     document.getElementsByTagName("head")[0].appendChild(s);
   })();
+
+  // Brand color
   $crisp.push(["config", "color:theme", ["#1855E8"]]);
   $crisp.push(["config", "position:reverse", [false]]);
+
+  // AI: conversation memory (resets on page reload, natural for chat)
+  var _aiHistory = [];
+  var _aiPending = false;
+
+  // Listen for visitor messages and reply with Gemini AI
+  $crisp.push(["on", "message:sent", function(message) {
+    if (_aiPending || message.type !== "text") return;
+    _aiPending = true;
+
+    var userText = message.content;
+    _aiHistory.push({ role: "user", parts: [{ text: userText }] });
+
+    fetch("https://neopeptide.vercel.app/api/chat", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ message: userText, history: _aiHistory.slice(-8) })
+    })
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      _aiPending = false;
+      if (data.reply) {
+        _aiHistory.push({ role: "model", parts: [{ text: data.reply }] });
+        $crisp.push(["do", "message:show", ["text", data.reply]]);
+      }
+    })
+    .catch(function() {
+      _aiPending = false;
+      $crisp.push(["do", "message:show", ["text",
+        "Thanks for your message. Our team will follow up with you shortly."
+      ]]);
+    });
+  }]);
 </script>
 
 <!-- MOBILE BAR -->
