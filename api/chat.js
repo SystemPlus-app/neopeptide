@@ -64,32 +64,40 @@ module.exports = async function handler(req, res) {
   if (!message) return res.status(400).json({ error: 'No message provided' });
 
   try {
-    const contents = [
-      ...(Array.isArray(history) ? history.slice(-8) : []),
-      { role: 'user', parts: [{ text: message }] }
+    // Convert Gemini-format history to OpenAI/Groq format
+    const messages = [
+      { role: 'system', content: SYSTEM_PROMPT },
+      ...(Array.isArray(history) ? history.slice(-8).map(function(m) {
+        return {
+          role: m.role === 'model' ? 'assistant' : 'user',
+          content: m.parts?.[0]?.text || ''
+        };
+      }) : []),
+      { role: 'user', content: message }
     ];
 
-    const res2 = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${process.env.GEMINI_API_KEY}`,
-      {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          system_instruction: { parts: [{ text: SYSTEM_PROMPT }] },
-          contents,
-          generationConfig: { temperature: 0.72, maxOutputTokens: 420 }
-        })
-      }
-    );
+    const res2 = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${process.env.GROQ_API_KEY}`
+      },
+      body: JSON.stringify({
+        model: 'llama-3.3-70b-versatile',
+        messages,
+        temperature: 0.72,
+        max_tokens: 420
+      })
+    });
 
     if (!res2.ok) {
       const err = await res2.json();
-      throw new Error(err.error?.message || `Gemini ${res2.status}`);
+      throw new Error(err.error?.message || `Groq ${res2.status}`);
     }
 
     const json = await res2.json();
     const reply =
-      json.candidates?.[0]?.content?.parts?.[0]?.text ||
+      json.choices?.[0]?.message?.content ||
       'Thank you for your message. Our team will follow up with you shortly.';
 
     return res.status(200).json({ reply });
