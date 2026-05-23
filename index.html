@@ -280,13 +280,10 @@
     .btn-checkout:hover { background: var(--blue); }
     .cart-secure { text-align: center; font-size: 11px; color: var(--muted); margin-top: 10px; }
 
-    /* CHAT */
-    .chat-btn { position: fixed; bottom: 28px; right: 28px; z-index: 150; display: flex; align-items: center; gap: 10px; background: var(--white); border: 1.5px solid var(--border); border-radius: 100px; padding: 10px 18px 10px 10px; cursor: pointer; text-decoration: none; box-shadow: 0 8px 30px rgba(0,0,0,0.1); transition: transform 0.3s, box-shadow 0.3s; }
-    .chat-btn:hover { transform: translateY(-3px); box-shadow: 0 14px 40px rgba(0,0,0,0.15); }
-    .chat-icon { width: 34px; height: 34px; border-radius: 50%; background: var(--blue); display: flex; align-items: center; justify-content: center; color: #fff; flex-shrink: 0; }
-    .chat-text strong { display: block; font-size: 12px; font-weight: 700; color: var(--ink); }
-    .chat-text span { font-size: 11px; color: var(--muted); }
-    .chat-dot { position: absolute; top: 8px; right: 8px; width: 8px; height: 8px; border-radius: 50%; background: #4ADE80; border: 2px solid #fff; animation: pulse 2.5s ease-in-out infinite; }
+    /* CRISP — push widget above mobile nav bar on tablet/mobile */
+    @media (max-width: 1024px) {
+      #crisp-chatbox { bottom: 72px !important; }
+    }
 
     /* MOBILE BAR */
     .mobile-bar { display: none; position: fixed; bottom: 0; left: 0; right: 0; z-index: 140; background: rgba(245,240,235,0.97); backdrop-filter: blur(20px); border-top: 1px solid var(--border); padding: 10px 16px env(safe-area-inset-bottom, 10px); gap: 10px; transition: opacity 0.3s; }
@@ -408,8 +405,6 @@
       .footer-top { grid-template-columns: 1fr 1fr; }
       .mobile-bar { display: flex; }
       .cart-drawer { width: 100%; }
-      .chat-btn { bottom: 80px; right: 16px; border-radius: 50%; width: 50px; height: 50px; padding: 0; justify-content: center; }
-      .chat-text { display: none; }
       .bundles-section, .quality { padding: 72px 24px; }
       .trust-strip { padding: 6px 20px; font-size: 9px; }
       .prog-banner { grid-template-columns: 1fr; padding: 56px 24px 48px; gap: 32px; }
@@ -1511,17 +1506,19 @@
   </div>
 </div>
 
-<!-- CHAT -->
-<a class="chat-btn" href="mailto:neopeptides@outlook.com" title="Talk to our team">
-  <div class="chat-icon">
-    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-  </div>
-  <div class="chat-text">
-    <strong>Have questions?</strong>
-    <span>Talk to our team</span>
-  </div>
-  <div class="chat-dot"></div>
-</a>
+<!-- CRISP LIVE CHAT -->
+<script>
+  window.$crisp = [];
+  window.CRISP_WEBSITE_ID = "3377d9c1-4785-497e-b676-bc91178e0219";
+  (function() {
+    var s = document.createElement("script");
+    s.src = "https://client.crisp.chat/l.js";
+    s.async = 1;
+    document.getElementsByTagName("head")[0].appendChild(s);
+  })();
+  $crisp.push(["config", "color:theme", ["#1855E8"]]);
+  $crisp.push(["config", "position:reverse", [false]]);
+</script>
 
 <!-- MOBILE BAR -->
 <div class="mobile-bar" id="mobileBar">
@@ -1720,5 +1717,6 @@ function submitExit(e) {
   setTimeout(closeExit, 4500);
 }
 </script>
+
 </body>
 </html>
