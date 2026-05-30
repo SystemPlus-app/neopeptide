@@ -6,1470 +6,908 @@
   <title>Neo Peptide USA — Medical-Grade Peptide Programs</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
   <style>
+    /* ── VARIABLES ── */
     :root {
       --cream:   #F5F0EB;
-      --cream2:  #ECE7E1;
+      --cream2:  #EDE8E0;
       --white:   #FFFFFF;
-      --ink:     #111111;
-      --text:    #222222;
-      --sub:     #555555;
-      --muted:   #888888;
+      --ink:     #0A0A0F;
+      --text:    #1A1A22;
+      --sub:     #55555F;
+      --muted:   #8A8A98;
       --border:  #DDD8D0;
-      --line-lt: rgba(0,0,0,0.06);
       --blue:    #1855E8;
       --blue-lt: rgba(24,85,232,0.08);
-      --blue-md: rgba(24,85,232,0.15);
-      --glp1-a:  #2E6B4A; --glp1-b: #5FAD82;
-      --long-a:  #2255A0; --long-b: #5B90D8;
-      --test-a:  #8B3232; --test-b: #C46868;
-      --micro-a: #7A5230; --micro-b: #C49565;
       --dark:    #0A0A10;
       --dark2:   #12121A;
       --dk-text: #E8E8F0;
       --dk-muted:#5A5A70;
-      --dk-line: rgba(255,255,255,0.06);
+      --site-bg:
+        radial-gradient(ellipse at 8% 22%,rgba(155,210,240,.62) 0%,transparent 44%),
+        radial-gradient(ellipse at 92% 18%,rgba(240,195,210,.55) 0%,transparent 42%),
+        radial-gradient(ellipse at 82% 88%,rgba(175,230,195,.50) 0%,transparent 40%),
+        radial-gradient(ellipse at 18% 85%,rgba(215,195,245,.42) 0%,transparent 38%),
+        radial-gradient(ellipse at 50% 50%,rgba(245,240,235,.8) 0%,transparent 60%),
+        #F5F0EB;
     }
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; overflow-x: hidden; }
-    body { background: var(--cream); color: var(--text); font-family: 'Inter', sans-serif; overflow-x: hidden; -webkit-font-smoothing: antialiased; -webkit-text-size-adjust: 100%; }
-    h1,h2,h3,h4 { font-family: 'Plus Jakarta Sans', sans-serif; line-height: 1.1; letter-spacing: -0.02em; }
-    ::selection { background: var(--blue); color: #fff; }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth;overflow-x:hidden}
+    body{background:var(--site-bg);color:var(--text);font-family:'Inter',sans-serif;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+    h1,h2,h3,h4{font-family:'Plus Jakarta Sans',sans-serif;line-height:1.05;letter-spacing:-0.03em}
+    ::selection{background:var(--blue);color:#fff}
+    a{text-decoration:none}
+    img{display:block}
 
-    /* ANNOUNCE */
-    .announce { background: var(--ink); color: rgba(255,255,255,0.32); text-align: center; padding: 5px 24px; font-size: 9.5px; letter-spacing: 0.18em; text-transform: uppercase; border-bottom: 1px solid rgba(255,255,255,0.04); }
-    .announce strong { color: rgba(255,255,255,0.56); font-weight: 600; }
+    /* ── HEADER ── */
+    header{position:fixed;top:0;left:0;right:0;z-index:100;height:92px;background:transparent;transition:background .4s,backdrop-filter .4s,border-color .4s;border-bottom:1px solid transparent}
+    header.scrolled{background:rgba(245,240,235,.88);backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);border-bottom-color:rgba(0,0,0,.07)}
+    .header-inner{max-width:1200px;margin:0 auto;height:100%;padding:0 clamp(20px,4vw,48px);display:flex;align-items:center}
+    .logo{display:flex;align-items:center;overflow:visible;align-self:stretch;flex-shrink:0;transition:opacity .2s}
+    .logo:hover{opacity:.8}
+    .logo-img{height:91px;width:auto}
+    nav{display:flex;gap:32px;flex:1;justify-content:center}
+    nav a{font-size:13px;font-weight:500;letter-spacing:.01em;color:rgba(10,10,15,.62);transition:color .2s;cursor:pointer}
+    nav a:hover{color:var(--ink)}
+    .header-right{display:flex;align-items:center;gap:10px;flex-shrink:0}
+    .cart-btn{display:flex;align-items:center;gap:7px;font-size:13px;font-weight:600;color:var(--ink);background:none;border:none;cursor:pointer;padding:8px 14px;border-radius:12px;transition:background .2s;font-family:'Plus Jakarta Sans',sans-serif}
+    .cart-btn:hover{background:rgba(0,0,0,.06)}
+    .cart-count{min-width:20px;height:20px;border-radius:10px;background:var(--ink);color:#fff;font-size:10px;font-weight:800;display:flex;align-items:center;justify-content:center;padding:0 5px}
+    .cart-count.pop{animation:pop .35s cubic-bezier(.34,1.56,.64,1)}
+    @keyframes pop{0%,100%{transform:scale(1)}50%{transform:scale(1.45)}}
 
-    /* ANNOUNCE STRIP */
-    .announce-strip { position: fixed; top: 0; left: 0; right: 0; z-index: 102; height: 32px; background: #EDE8DF; border-bottom: 1px solid rgba(0,0,0,0.08); display: flex; align-items: center; justify-content: center; gap: 11px; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 10.5px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(30,25,20,0.72); pointer-events: none; }
-    .announce-flag { font-size: 17px; line-height: 1; }
+    /* ── VIEWS ── */
+    .view{display:none}
+    .view.active{display:block}
 
-    /* HEADER */
-    header { position: fixed; top: 32px; left: 0; right: 0; z-index: 100; height: 66px; background: #000; border-bottom: 1px solid rgba(255,255,255,0.07); transition: box-shadow 0.3s; }
-    header.light { background: #000; border-bottom: 1px solid rgba(255,255,255,0.07); }
-    .header-inner { max-width: 1140px; margin: 0 auto; height: 100%; padding: 0 clamp(24px, 4vw, 48px); display: flex; align-items: center; position: relative; z-index: 1; }
-    .logo { text-decoration: none; display: flex; align-items: center; flex-shrink: 0; transition: opacity 0.2s; overflow: hidden; align-self: stretch; }
-    .logo:hover { opacity: 0.82; }
-    .logo-img { height: 68px; width: auto; display: block; flex-shrink: 0; }
-    nav { display: flex; gap: 34px; flex: 1; justify-content: center; }
-    nav a { font-size: 13px; font-weight: 500; letter-spacing: 0.02em; color: rgba(255,255,255,0.62); text-decoration: none; transition: color 0.2s; }
-    nav a:hover { color: rgba(255,255,255,0.95); }
-    .header-right { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
-    .btn-nav { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 12px; font-weight: 700; letter-spacing: 0.03em; padding: 9px 22px; border-radius: 9px; background: linear-gradient(135deg, #5BB8FF 0%, #1A6EFF 40%, #1040CC 75%, #0A2A8A 100%); color: #fff; text-decoration: none; border: none; cursor: pointer; transition: transform 0.15s, box-shadow 0.15s, filter 0.2s; white-space: nowrap; box-shadow: 0 2px 12px rgba(30,80,220,0.45); }
-    .btn-nav:hover { transform: translateY(-1px); filter: brightness(1.12); box-shadow: 0 6px 24px rgba(30,80,220,0.62); }
-    .cart-btn { display: flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.42); background: none; border: none; cursor: pointer; transition: color 0.2s; padding: 7px; border-radius: 7px; }
-    .cart-btn:hover { color: rgba(255,255,255,0.88); }
-    header.light .cart-btn { color: rgba(255,255,255,0.42); }
-    header.light .cart-btn:hover { color: rgba(255,255,255,0.88); }
-    .cart-count { width: 18px; height: 18px; border-radius: 50%; background: var(--blue); color: #fff; font-size: 10px; font-weight: 700; display: flex; align-items: center; justify-content: center; }
-    .cart-count.pop { animation: pop 0.35s cubic-bezier(0.34,1.56,0.64,1); }
-    @keyframes pop { 0%,100%{transform:scale(1)} 50%{transform:scale(1.5)} }
+    /* ── HERO ── */
+    .hero{min-height:100vh;padding-top:92px;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;overflow:hidden;background:transparent}
+    .hero::before{content:'';position:absolute;inset:0;background:var(--site-bg);pointer-events:none}
+    .hero-inner{position:relative;z-index:1;text-align:center;padding:0 24px;display:flex;flex-direction:column;align-items:center}
+    .hero-label{font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:rgba(10,10,15,.38);margin-bottom:22px}
+    .hero-label-flag{opacity:1;color:initial;filter:saturate(1.2);margin-right:8px}
+    .hero-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(54px,9.5vw,132px);font-weight:900;color:var(--ink);letter-spacing:-.045em;line-height:.88;max-width:1140px;margin-bottom:0}
+    .hero-bottle{width:clamp(200px,26vw,360px);height:auto;filter:drop-shadow(0 48px 80px rgba(0,0,0,.18)) drop-shadow(0 8px 20px rgba(0,0,0,.1));margin:-10px 0 -6px;position:relative;z-index:2;transition:transform .6s cubic-bezier(.34,1.2,.64,1)}
+    .hero-bottle:hover{transform:translateY(-10px) scale(1.02)}
+    .hero-actions{display:flex;gap:12px;justify-content:center;margin-top:16px}
+    .btn-hero{font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:700;padding:16px 42px;border-radius:100px;background:var(--ink);color:#fff;border:none;cursor:pointer;transition:transform .15s,box-shadow .15s;letter-spacing:-.01em}
+    .btn-hero:hover{transform:translateY(-2px);box-shadow:0 14px 40px rgba(0,0,0,.22)}
+    .hero-trust{margin-top:52px;display:flex;gap:0;align-items:center;justify-content:center;flex-wrap:wrap;font-size:10.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:rgba(10,10,15,.38);border:1px solid rgba(0,0,0,.08);border-radius:100px;padding:10px 24px;background:rgba(255,255,255,.6);backdrop-filter:blur(8px)}
+    .hero-trust span{padding:0 14px;border-right:1px solid rgba(0,0,0,.1)}
+    .hero-trust span:last-child{border-right:none}
 
-    /* PHOTO CAROUSEL */
-    .photo-section { background: var(--cream); padding: 130px 32px 64px; }
-    .photo-inner { max-width: 1140px; margin: 0 auto; }
-    .photo-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 22px; }
-    .photo-head-title { font-family: 'Plus Jakarta Sans', sans-serif; font-size: clamp(22px, 2.8vw, 34px); font-weight: 800; color: var(--ink); letter-spacing: -0.02em; }
-    .photo-head-nav { display: flex; gap: 8px; }
-    .ph-arrow { width: 42px; height: 42px; border-radius: 50%; border: 1.5px solid var(--border); background: var(--white); cursor: pointer; font-size: 24px; line-height: 1; display: flex; align-items: center; justify-content: center; color: var(--ink); transition: background 0.18s, border-color 0.18s; }
-    .ph-arrow:hover { background: var(--cream2); border-color: var(--ink); }
-    .photo-frame { border-radius: 0; overflow: hidden; position: relative; height: 595px; background: #000; }
-    .photo-item { position: absolute; inset: 0; opacity: 0; transition: opacity 0.9s ease; }
-    .photo-item.active { opacity: 1; }
-    .photo-item img { width: 100%; height: 100%; object-fit: contain; object-position: center; display: block; }
-    .ph-dots { display: flex; gap: 9px; justify-content: center; margin-top: 18px; }
-    .ph-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--border); border: none; cursor: pointer; padding: 0; transition: background 0.3s, transform 0.3s; }
-    .ph-dot.active { background: var(--ink); transform: scale(1.3); }
-    .ph-dot:hover { background: var(--muted); }
+    /* ── PROGRAMS SECTION ── */
+    .programs-section{background:transparent;padding:80px 24px}
+    .programs-top{max-width:1600px;margin:0 auto 40px;display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:end}
+    .section-label{font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--blue);margin-bottom:12px}
+    .section-h2{font-size:clamp(28px,3.5vw,44px);font-weight:800;color:var(--ink);margin-bottom:14px}
+    .section-sub{font-size:15px;color:var(--sub);line-height:1.7;max-width:420px}
+    .programs-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;max-width:1600px;margin:0 auto}
 
-    /* TRUST STRIP */
-    .trust-strip { background: var(--white); border-bottom: 1px solid var(--border); padding: 7px 24px; text-align: center; font-size: 10px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
+    /* Program card */
+    .prog-card{position:relative;border-radius:24px;overflow:hidden;cursor:pointer;min-height:420px;display:flex;align-items:flex-end;transition:transform .3s,box-shadow .35s}
+    .prog-card:hover{transform:translateY(-5px);box-shadow:0 32px 72px rgba(0,0,0,.22)}
+    .prog-card.glp1      {background:radial-gradient(ellipse at 72% 42%,#B0DCC0 0%,#4A9E6A 35%,#1A5A38 100%)}
+    .prog-card.longevity {background:radial-gradient(ellipse at 72% 42%,#A4CCEE 0%,#3E7CC0 35%,#1A3878 100%)}
+    .prog-card.testosterone{background:radial-gradient(ellipse at 72% 42%,#ECA8A8 0%,#C25050 35%,#7A1A1A 100%)}
+    .prog-card.microdose {background:radial-gradient(ellipse at 72% 42%,#ECD4A0 0%,#C09040 35%,#7A4E18 100%)}
+    .prog-card-bottle{position:absolute;right:-2%;bottom:0;top:-10%;width:50%;height:118%;object-fit:contain;object-position:center bottom;filter:drop-shadow(-10px 10px 28px rgba(0,0,0,.28));transition:transform .4s cubic-bezier(.34,1.1,.64,1);z-index:1}
+    .prog-card:hover .prog-card-bottle{transform:scale(1.06) translateY(-8px)}
+    .prog-card-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.6) 0%,rgba(0,0,0,.12) 40%,transparent 68%);z-index:2}
+    .prog-card-content{position:relative;z-index:3;padding:28px 32px 34px;width:100%}
+    .prog-card-name{font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(17px,2.2vw,24px);font-weight:800;color:#fff;line-height:1.15;letter-spacing:-.02em;margin-bottom:6px}
+    .prog-card-promise{font-size:12px;color:rgba(255,255,255,.62)}
+    .prog-card-cta{display:inline-flex;align-items:center;gap:8px;margin-top:16px;font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.75);transition:color .2s,gap .2s}
+    .prog-card:hover .prog-card-cta{color:#fff;gap:13px}
+    .prog-card-arrow{width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,.15);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.28);display:flex;align-items:center;justify-content:center;transition:background .2s,transform .2s}
+    .prog-card:hover .prog-card-arrow{background:rgba(255,255,255,.28);transform:translateX(3px)}
 
-    /* SECTION COMMONS */
-    .section-label { font-size: 11px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--blue); margin-bottom: 12px; }
-    .section-h2 { font-size: clamp(30px, 3.5vw, 48px); font-weight: 800; color: var(--ink); margin-bottom: 16px; }
-    .section-sub { font-size: 16px; font-weight: 400; color: var(--sub); line-height: 1.7; max-width: 480px; }
+    /* ── BEFORE / AFTER ── */
+    .before-after{background:transparent;padding:100px 48px}
+    .ba-wrap{max-width:1100px;margin:0 auto}
+    .ba-header{margin-bottom:56px}
+    .ba-grid{display:grid;grid-template-columns:1fr 1fr;border-radius:24px;overflow:hidden}
+    .ba-panel{padding:56px 52px}
+    .ba-before{background:#F0EDE8}
+    .ba-after{background:var(--dark)}
+    .ba-tag{display:inline-flex;align-items:center;gap:7px;font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;padding:6px 14px;border-radius:100px;margin-bottom:28px}
+    .ba-before .ba-tag{background:#E5E0DA;color:var(--muted)}
+    .ba-after .ba-tag{background:rgba(74,222,128,.12);color:#4ADE80}
+    .ba-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:26px;font-weight:800;margin-bottom:28px}
+    .ba-before .ba-title{color:#999}
+    .ba-after .ba-title{color:var(--dk-text)}
+    .ba-list{list-style:none}
+    .ba-item{display:flex;align-items:center;gap:14px;padding:14px 0;border-bottom:1px solid;font-size:15px;font-weight:500}
+    .ba-before .ba-item{border-bottom-color:rgba(0,0,0,.06);color:var(--sub)}
+    .ba-after .ba-item{border-bottom-color:rgba(255,255,255,.06);color:var(--dk-text)}
+    .ba-item:last-child{border-bottom:none}
+    .ba-icon{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
+    .ba-before .ba-icon{background:#E5E0DA}
+    .ba-after .ba-icon{background:rgba(255,255,255,.06)}
 
-    /* BUNDLE GRID */
-    .bundles-section { background: var(--cream); padding: 80px 48px; }
-    .bundles-top { max-width: 1200px; margin: 0 auto 40px; display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: end; }
-    .bundles-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; max-width: 1200px; margin: 0 auto; }
+    /* ── NUMBERS ── */
+    .numbers{background:var(--dark);padding:88px 48px}
+    .numbers-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);background:rgba(255,255,255,.06);gap:1px;border-radius:20px;overflow:hidden}
+    .number-item{background:var(--dark);padding:40px 36px}
+    .number-val{font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(36px,4vw,56px);font-weight:800;letter-spacing:-.03em;color:#fff;line-height:1;margin-bottom:10px}
+    .number-val span{color:#5B9EFF}
+    .number-label{font-size:13px;color:var(--dk-muted);line-height:1.5}
 
-    .bundle-card {
-      position: relative; border-radius: 16px; height: 140px;
-      overflow: hidden; cursor: pointer;
-      display: flex; align-items: center;
-      transition: box-shadow 0.35s, transform 0.25s;
-      text-decoration: none;
+    /* ── QUALITY ── */
+    .quality{background:transparent;padding:100px 48px}
+    .quality-inner{max-width:1100px;margin:0 auto}
+    .quality-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:2px}
+    .quality-item{padding:48px 44px;background:var(--cream);border:1px solid transparent;transition:border-color .25s,background .25s;border-radius:4px}
+    .quality-item:hover{border-color:rgba(24,85,232,.15);background:#fff}
+    .quality-num{font-family:'Plus Jakarta Sans',sans-serif;font-size:11px;font-weight:700;letter-spacing:.12em;color:var(--blue);margin-bottom:16px}
+    .quality-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:20px;font-weight:700;color:var(--ink);margin-bottom:12px}
+    .quality-text{font-size:14px;color:var(--sub);line-height:1.8}
+
+    /* ── FINAL CTA ── */
+    .final-cta{position:relative;background:var(--dark);padding:120px 48px;text-align:center;overflow:hidden}
+    .final-glow{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:600px;height:600px;background:radial-gradient(circle,rgba(24,85,232,.12) 0%,transparent 70%);pointer-events:none}
+    .final-label{font-size:11px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:28px}
+    .final-h2{font-size:clamp(36px,5.5vw,72px);font-weight:800;color:#fff;max-width:680px;margin:0 auto 22px;position:relative;z-index:1}
+    .final-sub{font-size:16px;color:rgba(255,255,255,.4);max-width:440px;margin:0 auto 48px;line-height:1.7;position:relative;z-index:1}
+    .final-actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;position:relative;z-index:1}
+    .btn-lg{font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:700;padding:17px 44px;border-radius:100px;background:#fff;color:var(--ink);border:none;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;transition:transform .15s,box-shadow .15s}
+    .btn-lg:hover{transform:translateY(-2px);box-shadow:0 12px 40px rgba(255,255,255,.12)}
+    .btn-lg-outline{font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:600;padding:16px 36px;border-radius:100px;background:transparent;color:rgba(255,255,255,.65);border:1px solid rgba(255,255,255,.2);cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;transition:all .2s}
+    .btn-lg-outline:hover{border-color:rgba(255,255,255,.4);color:#fff}
+    .final-disclaimer{margin-top:48px;font-size:11px;color:rgba(255,255,255,.18);line-height:1.6;max-width:400px;margin-left:auto;margin-right:auto;position:relative;z-index:1}
+
+    /* ── FOOTER ── */
+    footer{background:transparent;border-top:1px solid var(--border);padding:72px 48px 40px}
+    .footer-top{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;margin-bottom:52px}
+    .footer-logo-wrap{display:flex;align-items:center;margin-bottom:14px}
+    .footer-logo-img{height:34px;width:auto}
+    .footer-desc{font-size:13px;color:var(--muted);line-height:1.7;max-width:260px;margin-bottom:22px}
+    .footer-social{display:flex;gap:10px}
+    .social-btn{width:36px;height:36px;border-radius:9px;border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--muted);text-decoration:none;transition:all .2s}
+    .social-btn:hover{border-color:var(--ink);color:var(--ink)}
+    .footer-col h5{font-family:'Plus Jakarta Sans',sans-serif;font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--ink);margin-bottom:18px}
+    .footer-col ul{list-style:none}
+    .footer-col li{margin-bottom:10px}
+    .footer-col a{font-size:14px;color:var(--muted);text-decoration:none;transition:color .2s}
+    .footer-col a:hover{color:var(--ink)}
+    .footer-bottom{max-width:1200px;margin:0 auto;padding-top:28px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+    .footer-bottom p{font-size:12px;color:var(--muted)}
+    .footer-disclaimer{max-width:1200px;margin:18px auto 0;font-size:10px;color:var(--border);line-height:1.7}
+
+    /* ── PRODUCT VIEW ── */
+    .pv-top{padding:118px 48px 0;background:transparent}
+    .back-btn{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:var(--sub);background:none;border:none;cursor:pointer;padding:10px 0;transition:color .2s;font-family:'Plus Jakarta Sans',sans-serif;letter-spacing:.01em}
+    .back-btn:hover{color:var(--ink)}
+    .pv-banner{padding:0 48px}
+    .pv-banner-inner{max-width:1200px;margin:32px auto 0;border-radius:28px;overflow:hidden;padding:64px 72px 0;min-height:380px;display:grid;grid-template-columns:1fr 420px;gap:32px;align-items:end;position:relative}
+    .pv-eyebrow{font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:rgba(0,0,0,.36);margin-bottom:14px}
+    .pv-h1{font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(32px,4vw,54px);font-weight:900;letter-spacing:-.035em;color:#111;margin-bottom:16px}
+    .pv-text{font-size:15px;color:rgba(0,0,0,.52);line-height:1.8;max-width:440px;margin-bottom:24px}
+    .pv-pills{display:flex;gap:7px;flex-wrap:wrap;padding-bottom:48px}
+    .pv-pill{background:rgba(255,255,255,.46);backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,.68);border-radius:100px;padding:5px 14px;font-size:11px;font-weight:600;color:rgba(0,0,0,.55)}
+    .pv-bottle-wrap{align-self:flex-end;display:flex;justify-content:center;align-items:flex-end}
+    .pv-bottle-img{width:220px;height:280px;object-fit:contain;object-position:bottom center;filter:drop-shadow(-8px 16px 32px rgba(0,0,0,.22))}
+    .pv-products{background:transparent;padding:56px 48px 80px}
+    .pv-products-inner{max-width:1200px;margin:0 auto}
+    .pvp-label{font-family:'Plus Jakarta Sans',sans-serif;font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:32px}
+
+    /* ── PRODUCT CARDS ── */
+    .products-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px}
+    .product-card{background:var(--white);border-radius:20px;border:1.5px solid var(--border);padding:28px 24px;display:flex;flex-direction:column;transition:border-color .2s,box-shadow .2s}
+    .product-card:hover{border-color:rgba(24,85,232,.2);box-shadow:0 8px 30px rgba(0,0,0,.07)}
+    .product-role{font-size:9px;font-weight:800;letter-spacing:.13em;text-transform:uppercase;color:var(--blue);margin-bottom:4px;opacity:.6}
+    .product-tag{font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;margin-bottom:14px}
+    .product-name{font-family:'Plus Jakarta Sans',sans-serif;font-size:18px;font-weight:800;color:var(--ink);margin-bottom:6px}
+    .product-dose{font-family:'Courier New',monospace;font-size:11px;color:rgba(0,0,0,.4);background:var(--cream2);border-radius:5px;padding:2px 8px;display:inline-block;margin-bottom:10px}
+    .product-desc{font-size:13px;color:var(--muted);margin-bottom:20px;line-height:1.6}
+    .product-divider{height:1px;background:var(--border);margin-bottom:18px}
+    .product-price{font-family:'Plus Jakarta Sans',sans-serif;font-size:26px;font-weight:800;color:var(--ink);margin-bottom:4px}
+    .product-old{font-size:12px;color:var(--muted);text-decoration:line-through;margin-bottom:18px;min-height:18px}
+    .btn-add{width:100%;font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;font-weight:700;padding:14px;border-radius:12px;background:var(--ink);color:#fff;border:none;cursor:pointer;margin-top:auto;transition:background .2s,transform .15s}
+    .btn-add:hover{background:var(--blue);transform:translateY(-1px)}
+
+    /* ── CHECKOUT ── */
+    .checkout-view{min-height:100vh;padding:118px 48px 80px;background:transparent}
+    .checkout-inner{max-width:1040px;margin:0 auto}
+    .checkout-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:42px;font-weight:900;letter-spacing:-.035em;color:var(--ink);margin:16px 0 6px}
+    .checkout-sub{font-size:14px;color:var(--sub);margin-bottom:36px}
+    .checkout-steps{display:flex;align-items:center;margin-bottom:40px;max-width:320px}
+    .checkout-step{display:flex;flex-direction:column;align-items:center;gap:7px;flex:1;position:relative}
+    .checkout-step:not(:last-child)::after{content:'';position:absolute;top:18px;left:50%;right:-50%;height:1px;background:var(--border);z-index:0}
+    .checkout-step.active:not(:last-child)::after,.checkout-step.done:not(:last-child)::after{background:var(--ink)}
+    .step-circle{width:36px;height:36px;border-radius:50%;border:2px solid var(--border);background:var(--white);display:flex;align-items:center;justify-content:center;font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;font-weight:700;color:var(--muted);position:relative;z-index:1;transition:all .3s}
+    .checkout-step.active .step-circle{border-color:var(--ink);background:var(--ink);color:#fff}
+    .checkout-step.done .step-circle{border-color:#16A34A;background:#16A34A;color:#fff}
+    .step-label{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+    .checkout-step.active .step-label{color:var(--ink)}
+    .checkout-layout{display:grid;grid-template-columns:1fr 380px;gap:28px;align-items:start}
+    .checkout-form-box{background:var(--white);border-radius:22px;padding:36px;border:1.5px solid var(--border)}
+    .form-section-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:20px;font-weight:800;color:var(--ink);margin-bottom:28px}
+    .form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+    .form-row.full{grid-template-columns:1fr}
+    .form-row.three{grid-template-columns:1fr 1fr 1fr}
+    .form-group{display:flex;flex-direction:column;gap:6px}
+    .form-label{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--sub)}
+    .form-label .req{color:#DC2626}
+    .form-input{padding:13px 16px;border:1.5px solid var(--border);border-radius:12px;font-size:14px;color:var(--ink);font-family:'Inter',sans-serif;background:var(--cream);outline:none;transition:border-color .2s,background .2s;width:100%}
+    .form-input:focus{border-color:var(--blue);background:var(--white)}
+    .form-input::placeholder{color:var(--muted)}
+    select.form-input{cursor:pointer;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238A8A98' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center}
+    .btn-continue{width:100%;font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:700;padding:16px;border-radius:14px;background:var(--ink);color:#fff;border:none;cursor:pointer;margin-top:24px;display:flex;align-items:center;justify-content:center;gap:8px;transition:background .2s,transform .15s}
+    .btn-continue:hover{background:var(--blue);transform:translateY(-1px)}
+    .order-summary{background:var(--white);border-radius:22px;padding:28px;border:1.5px solid var(--border);position:sticky;top:110px}
+    .os-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:20px}
+    .os-item{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--border)}
+    .os-item:last-of-type{border-bottom:none}
+    .os-icon{width:44px;height:48px;background:var(--cream);border:1.5px solid var(--border);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+    .os-info{flex:1}
+    .os-info strong{display:block;font-size:13px;font-weight:700;color:var(--ink);margin-bottom:2px}
+    .os-info span{font-size:11px;color:var(--muted)}
+    .os-divider{height:1px;background:var(--border);margin:16px 0}
+    .os-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;font-size:13px}
+    .os-row span{color:var(--sub)}
+    .os-row strong{font-weight:700;color:var(--ink)}
+    .os-row.total{margin-top:16px;padding-top:16px;border-top:1.5px solid var(--border)}
+    .os-row.total span{font-size:14px;font-weight:700;color:var(--ink)}
+    .os-row.total strong{font-family:'Plus Jakarta Sans',sans-serif;font-size:24px;font-weight:900;color:var(--ink)}
+
+    /* ── CHECKOUT REVIEW ── */
+    .review-layout{display:grid;grid-template-columns:1fr 380px;gap:28px;align-items:start}
+    .review-box{background:var(--white);border-radius:22px;padding:36px;border:1.5px solid var(--border);display:flex;flex-direction:column;gap:20px}
+    .review-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:22px;font-weight:800;color:var(--ink);margin-bottom:4px}
+    .ack-block{border:1.5px solid var(--border);border-radius:16px;padding:24px}
+    .ack-header{display:flex;align-items:center;gap:8px;font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--sub);margin-bottom:18px}
+    .ack-check{display:flex;align-items:flex-start;gap:14px;padding:14px 0;border-bottom:1px solid var(--border);cursor:pointer;user-select:none}
+    .ack-check:last-child{border-bottom:none;padding-bottom:0}
+    .ack-check input[type="checkbox"]{display:none}
+    .ack-box{width:22px;height:22px;border-radius:50%;border:2px solid var(--border);flex-shrink:0;margin-top:1px;display:flex;align-items:center;justify-content:center;transition:border-color .2s,background .2s;font-size:11px;color:#fff;font-weight:800}
+    .ack-check input:checked ~ .ack-box{border-color:#16A34A;background:#16A34A}
+    .ack-text{font-size:14px;color:var(--text);line-height:1.55;font-weight:500}
+    .payment-methods-label{font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;font-weight:700;color:var(--sub);letter-spacing:.04em;text-transform:uppercase;font-size:11px;letter-spacing:.12em;margin-bottom:12px}
+    .payment-method{border:1.5px solid var(--border);border-radius:16px;padding:18px 22px;cursor:pointer;transition:border-color .2s,background .2s;position:relative;display:flex;align-items:center;gap:14px;margin-bottom:10px}
+    .payment-method.selected{border-color:var(--ink);background:rgba(10,10,15,.03)}
+    .payment-method.disabled{opacity:.4;cursor:not-allowed;pointer-events:none}
+    .pm-radio{width:20px;height:20px;border-radius:50%;border:2px solid var(--border);flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:border-color .2s}
+    .payment-method.selected .pm-radio{border-color:var(--ink)}
+    .pm-dot{width:8px;height:8px;border-radius:50%;background:var(--ink);opacity:0;transition:opacity .2s}
+    .payment-method.selected .pm-dot{opacity:1}
+    .pm-info{flex:1}
+    .pm-name{font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:700;color:var(--ink)}
+    .pm-desc{font-size:12px;color:var(--muted);margin-top:3px}
+    .pm-soon{font-size:9.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:4px 10px;border-radius:100px;background:var(--cream2);color:var(--muted)}
+    .pm-logo{font-size:20px}
+    .zelle-detail{background:#EDF4FF;border:1px solid #B8D0F8;border-radius:12px;padding:16px 18px;display:none;margin-top:12px}
+    .zelle-detail.show{display:block}
+    .zelle-detail-title{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);margin-bottom:10px}
+    .zelle-detail-row{font-size:13px;color:var(--text);display:flex;gap:6px;margin-bottom:6px;align-items:baseline}
+    .zelle-detail-row strong{font-weight:700;min-width:80px;color:var(--sub);font-size:11px;text-transform:uppercase;letter-spacing:.06em}
+    .zelle-amount{font-family:'Plus Jakarta Sans',sans-serif;font-size:22px;font-weight:800;color:var(--ink);margin-top:10px}
+    .btn-confirm{width:100%;font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:700;padding:16px;border-radius:14px;background:var(--ink);color:#fff;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:background .2s,transform .15s,opacity .3s}
+    .btn-confirm:hover:not(:disabled){background:var(--blue);transform:translateY(-1px)}
+    .btn-confirm:disabled{opacity:.32;cursor:not-allowed;transform:none}
+
+    /* ── CONFIRMATION ── */
+    .confirm-view{min-height:100vh;padding:118px 48px 80px;background:transparent;display:flex;align-items:center;justify-content:center}
+    .confirm-box{background:var(--white);border-radius:28px;padding:64px 52px;max-width:560px;width:100%;text-align:center;border:1.5px solid var(--border);box-shadow:0 40px 80px rgba(0,0,0,.07)}
+    .confirm-icon{font-size:60px;margin-bottom:24px}
+    .confirm-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:32px;font-weight:900;letter-spacing:-.03em;color:var(--ink);margin-bottom:14px}
+    .confirm-sub{font-size:15px;color:var(--sub);line-height:1.7;margin-bottom:32px}
+    .confirm-detail{background:var(--cream);border-radius:14px;padding:20px 24px;text-align:left;margin-bottom:32px}
+    .confirm-row{display:flex;justify-content:space-between;font-size:13px;color:var(--sub);margin-bottom:8px}
+    .confirm-row:last-child{margin-bottom:0;font-weight:700;color:var(--ink);font-size:14px;padding-top:10px;border-top:1px solid var(--border)}
+    .btn-home{font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:700;padding:16px 44px;border-radius:100px;background:var(--ink);color:#fff;border:none;cursor:pointer;transition:transform .15s}
+    .btn-home:hover{transform:translateY(-2px)}
+
+    /* ── CART DRAWER ── */
+    .cart-overlay{position:fixed;inset:0;background:rgba(0,0,0,.4);backdrop-filter:blur(6px);z-index:200;opacity:0;pointer-events:none;transition:opacity .3s}
+    .cart-overlay.open{opacity:1;pointer-events:all}
+    .cart-drawer{position:fixed;top:0;right:0;bottom:0;width:420px;z-index:201;background:var(--white);border-left:1px solid var(--border);transform:translateX(100%);transition:transform .4s cubic-bezier(.16,1,.3,1);display:flex;flex-direction:column}
+    .cart-drawer.open{transform:translateX(0)}
+    .cart-head{padding:24px 28px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
+    .cart-head h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:17px;font-weight:800;color:var(--ink)}
+    .cart-x{width:32px;height:32px;border-radius:8px;border:1.5px solid var(--border);background:none;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--muted);font-size:14px;transition:all .2s}
+    .cart-x:hover{border-color:var(--ink);color:var(--ink)}
+    .cart-body{flex:1;overflow-y:auto;padding:20px 28px}
+    .cart-empty{display:flex;flex-direction:column;align-items:center;justify-content:center;height:220px;gap:12px;color:var(--muted);font-size:14px}
+    .cart-item{display:flex;gap:14px;align-items:center;padding:16px 0;border-bottom:1px solid var(--border)}
+    .cart-item-icon{width:48px;height:52px;background:var(--cream);border:1.5px solid var(--border);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+    .cart-item-info{flex:1}
+    .cart-item-info strong{display:block;font-size:13px;font-weight:700;color:var(--ink);margin-bottom:2px}
+    .cart-item-info span{font-size:11px;color:var(--muted)}
+    .cart-item-price{font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:800;color:var(--ink)}
+    .cart-item-rm{color:var(--muted);cursor:pointer;font-size:14px;padding:4px;background:none;border:none;transition:color .2s}
+    .cart-item-rm:hover{color:#DC2626}
+    .cart-foot{padding:20px 28px;border-top:1px solid var(--border)}
+    .ship-wrap{margin-bottom:14px;padding:14px 16px;background:var(--blue-lt);border:1px solid rgba(24,85,232,.14);border-radius:12px}
+    .ship-lbl{display:flex;justify-content:space-between;font-size:12px;margin-bottom:8px}
+    .ship-lbl span{color:var(--sub)}
+    .ship-bar{height:4px;background:var(--border);border-radius:2px}
+    .ship-fill{height:100%;background:linear-gradient(90deg,var(--blue),#4ADE80);border-radius:2px;transition:width .6s ease}
+    .cart-upsell{display:flex;align-items:center;gap:12px;padding:12px 14px;background:#FFF8ED;border:1px solid #F0D88A;border-radius:12px;margin-bottom:14px}
+    .cart-upsell-info strong{display:block;font-size:12px;font-weight:700;color:var(--ink)}
+    .cart-upsell-info span{font-size:11px;color:var(--muted)}
+    .cart-upsell-add{font-family:'Plus Jakarta Sans',sans-serif;font-size:11px;font-weight:700;background:#F0C040;color:#000;border:none;border-radius:7px;padding:7px 12px;cursor:pointer;white-space:nowrap}
+    .cart-total-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+    .cart-total-row span{font-size:13px;color:var(--sub)}
+    .cart-total-row strong{font-family:'Plus Jakarta Sans',sans-serif;font-size:22px;font-weight:800;color:var(--ink)}
+    .btn-checkout{width:100%;padding:15px;background:var(--ink);color:#fff;font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;font-weight:700;border:none;border-radius:12px;cursor:pointer;transition:background .2s}
+    .btn-checkout:hover{background:var(--blue)}
+    .cart-secure{text-align:center;font-size:11px;color:var(--muted);margin-top:10px}
+
+    /* ── MOBILE BAR ── */
+    .mobile-bar{display:none;position:fixed;bottom:0;left:0;right:0;z-index:140;background:rgba(245,240,235,.97);backdrop-filter:blur(20px);border-top:1px solid var(--border);padding:10px 16px env(safe-area-inset-bottom,10px);gap:10px;transition:opacity .3s}
+    .mobile-bar a,.mobile-bar button{flex:1;display:flex;align-items:center;justify-content:center;gap:7px;padding:13px;border-radius:12px;font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;font-weight:700;cursor:pointer;text-decoration:none;border:none}
+    .mb-primary{background:var(--ink);color:#fff}
+    .mb-ghost{background:var(--white);border:1.5px solid var(--border)!important;color:var(--ink)}
+
+    /* ── LEGAL ── */
+    .legal-overlay{display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.82);align-items:center;justify-content:center;padding:16px;overflow-y:auto}
+    .legal-box{background:#fff;border-radius:16px;max-width:660px;width:100%;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.55);margin:auto}
+    .legal-header{background:#c0392b;color:#fff;font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;text-align:center;padding:16px 24px;line-height:1.3}
+    .legal-body{padding:24px 28px 20px;font-family:'Plus Jakarta Sans',sans-serif;font-size:13.5px;line-height:1.75;color:#222}
+    .legal-body p{margin:0 0 14px}
+    .legal-body p:last-child{margin-bottom:0}
+    .legal-note{background:#f5f5f5;border-left:3px solid #c0392b;padding:12px 14px;border-radius:4px;font-size:12.5px;color:#444}
+    .legal-btns{display:flex;flex-direction:column;gap:10px;padding:18px 28px 24px}
+    .legal-btn-accept{font-family:'Plus Jakarta Sans',sans-serif;font-size:11.5px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;padding:14px 18px;border:none;border-radius:12px;cursor:pointer;background:linear-gradient(135deg,#5BB8FF 0%,#1A6EFF 40%,#1040CC 75%,#0A2A8A 100%);color:#fff;box-shadow:0 2px 12px rgba(30,80,220,.35);transition:filter .15s,transform .15s;line-height:1.4}
+    .legal-btn-accept:hover{filter:brightness(1.1);transform:translateY(-1px)}
+    .legal-btn-decline{font-family:'Plus Jakarta Sans',sans-serif;font-size:12px;font-weight:700;padding:11px 18px;border:1.5px solid #ccc;border-radius:12px;cursor:pointer;background:#fff;color:#888;transition:background .15s,color .15s}
+    .legal-btn-decline:hover{background:#f0f0f0;color:#444}
+
+    /* ── REVEAL ── */
+    .reveal{opacity:0;transform:translateY(20px);transition:opacity .7s,transform .7s}
+    .reveal.in{opacity:1;transform:none}
+
+    /* ── RESPONSIVE ── */
+    @media(max-width:1024px){
+      nav{display:none}
+      .header-inner{padding:0 20px;justify-content:space-between}
+      .programs-section{padding:64px 24px}
+      .programs-top{grid-template-columns:1fr;gap:16px}
+      .programs-grid{grid-template-columns:1fr;gap:12px}
+      .prog-card{min-height:280px}
+      .before-after{padding:72px 24px}
+      .ba-grid{grid-template-columns:1fr}
+      .numbers{padding:64px 24px}
+      .numbers-inner{grid-template-columns:repeat(2,1fr)}
+      .quality{padding:72px 24px}
+      .quality-grid{grid-template-columns:1fr}
+      .footer-top{grid-template-columns:1fr 1fr}
+      .mobile-bar{display:flex}
+      .cart-drawer{width:100%}
+      .checkout-layout,.review-layout{grid-template-columns:1fr}
+      .order-summary{position:static}
+      .checkout-view{padding:108px 24px 100px}
+      .pv-top{padding:108px 24px 0}
+      .pv-banner{padding:0 24px}
+      .pv-banner-inner{grid-template-columns:1fr;padding:40px 32px 0}
+      .pv-bottle-wrap{display:none}
+      .pv-products{padding:44px 24px 64px}
     }
-    .bundle-card:hover { transform: translateY(-2px); box-shadow: 0 16px 48px rgba(0,0,0,0.2); }
-
-    /* gradient layer — switches direction on hover */
-    .bundle-card::before {
-      content: ''; position: absolute; inset: 0; border-radius: 16px;
-      transition: opacity 0.4s;
+    @media(max-width:640px){
+      .hero{padding-top:92px}
+      .hero-title{font-size:clamp(44px,13vw,72px)}
+      .hero-bottle{width:clamp(160px,58vw,260px)}
+      .hero-trust{font-size:9px;gap:0}
+      .hero-trust span{padding:0 8px}
+      .programs-section{padding:48px 16px}
+      .prog-card{min-height:230px}
+      .prog-card-content{padding:20px 22px 26px}
+      .prog-card-name{font-size:16px}
+      .numbers-inner{grid-template-columns:1fr 1fr}
+      .number-item{padding:28px 18px}
+      .footer-top{grid-template-columns:1fr;gap:28px}
+      footer{padding:48px 16px 100px}
+      .checkout-view{padding:100px 16px 100px}
+      .checkout-form-box{padding:24px 18px}
+      .form-row{grid-template-columns:1fr}
+      .form-row.three{grid-template-columns:1fr 1fr}
+      .checkout-title{font-size:28px}
+      .final-cta{padding:80px 24px}
     }
-    .bundle-card::after {
-      content: ''; position: absolute; inset: 0; border-radius: 16px;
-      opacity: 0; transition: opacity 0.4s;
+    @media(max-width:390px){
+      .hero-title{font-size:clamp(36px,14vw,54px)}
+      .hero-bottle{width:56vw}
     }
-    .bundle-card.glp1::before  { background: linear-gradient(90deg, #C8E8D6 0%, var(--glp1-b) 55%, var(--glp1-a) 100%); }
-    .bundle-card.glp1::after   { background: linear-gradient(270deg, #C8E8D6 0%, var(--glp1-b) 55%, var(--glp1-a) 100%); }
-    .bundle-card.longevity::before  { background: linear-gradient(90deg, #C2D8F2 0%, var(--long-b) 55%, var(--long-a) 100%); }
-    .bundle-card.longevity::after   { background: linear-gradient(270deg, #C2D8F2 0%, var(--long-b) 55%, var(--long-a) 100%); }
-    .bundle-card.testosterone::before  { background: linear-gradient(90deg, #EDD0D0 0%, var(--test-b) 55%, var(--test-a) 100%); }
-    .bundle-card.testosterone::after   { background: linear-gradient(270deg, #EDD0D0 0%, var(--test-b) 55%, var(--test-a) 100%); }
-    .bundle-card.microdose::before  { background: linear-gradient(90deg, #F5EDD8 0%, var(--micro-b) 55%, var(--micro-a) 100%); }
-    .bundle-card.microdose::after   { background: linear-gradient(270deg, #F5EDD8 0%, var(--micro-b) 55%, var(--micro-a) 100%); }
-    .bundle-card:hover::before { opacity: 0; }
-    .bundle-card:hover::after  { opacity: 1; }
-
-    .bundle-inner { position: relative; z-index: 2; display: flex; align-items: center; width: 100%; padding: 0 28px; gap: 0; }
-    .bundle-text { flex: 1; }
-    .bundle-name { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 18px; font-weight: 800; color: #111; line-height: 1.2; }
-    .bundle-promise { font-size: 11px; color: rgba(0,0,0,0.5); margin-top: 5px; }
-    .bundle-bottle-wrap { width: 130px; align-self: stretch; overflow: hidden; flex-shrink: 0; display: flex; align-items: flex-end; justify-content: center; }
-    .bundle-bottle { width: 130px; height: 190px; object-fit: contain; object-position: bottom center; mix-blend-mode: multiply; transform: translateY(16px); transition: transform 0.35s; }
-    .bundle-card:hover .bundle-bottle { transform: translateY(10px) scale(1.04); }
-    .bundle-arrow { width: 36px; height: 36px; border-radius: 50%; background: rgba(0,0,0,0.1); display: flex; align-items: center; justify-content: center; color: #111; flex-shrink: 0; margin-left: 20px; transition: background 0.2s, transform 0.2s; }
-    .bundle-card:hover .bundle-arrow { background: rgba(0,0,0,0.18); transform: translateX(3px); }
-
-    /* BEFORE / AFTER */
-    .before-after { background: var(--white); padding: 100px 48px; }
-    .ba-wrap { max-width: 1100px; margin: 0 auto; }
-    .ba-header { margin-bottom: 56px; }
-    .ba-grid { display: grid; grid-template-columns: 1fr 1fr; border-radius: 20px; overflow: hidden; }
-    .ba-panel { padding: 56px 52px; position: relative; }
-    .ba-before { background: #F0EDE8; }
-    .ba-after { background: var(--dark); }
-    .ba-tag { display: inline-flex; align-items: center; gap: 7px; font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; padding: 6px 14px; border-radius: 100px; margin-bottom: 28px; }
-    .ba-before .ba-tag { background: #E5E0DA; color: var(--muted); }
-    .ba-after .ba-tag { background: rgba(74,222,128,0.12); color: #4ADE80; }
-    .ba-title { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 26px; font-weight: 800; margin-bottom: 28px; }
-    .ba-before .ba-title { color: #999; }
-    .ba-after .ba-title { color: var(--dk-text); }
-    .ba-list { list-style: none; }
-    .ba-item { display: flex; align-items: center; gap: 14px; padding: 14px 0; border-bottom: 1px solid; font-size: 15px; font-weight: 500; }
-    .ba-before .ba-item { border-bottom-color: rgba(0,0,0,0.06); color: var(--sub); }
-    .ba-after .ba-item { border-bottom-color: rgba(255,255,255,0.06); color: var(--dk-text); }
-    .ba-item:last-child { border-bottom: none; }
-    .ba-icon { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; }
-    .ba-before .ba-icon { background: #E5E0DA; }
-    .ba-after .ba-icon { background: rgba(255,255,255,0.06); }
-
-    /* TESTIMONIALS */
-    .testimonials { background: var(--cream); padding: 100px 48px; }
-    .testimonials-inner { max-width: 1200px; margin: 0 auto; }
-    .testimonials-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; }
-    .video-card { border-radius: 16px; overflow: hidden; background: var(--dark2); cursor: pointer; transition: transform 0.3s, box-shadow 0.3s; }
-    .video-card:hover { transform: translateY(-4px); box-shadow: 0 20px 50px rgba(0,0,0,0.2); }
-    .video-thumb { position: relative; aspect-ratio: 4/3; background: linear-gradient(180deg, #1A1A2E 0%, #0A0A10 100%); display: flex; align-items: center; justify-content: center; overflow: hidden; }
-    .video-glow { position: absolute; inset: 0; pointer-events: none; }
-    .play-btn { width: 60px; height: 60px; border-radius: 50%; background: rgba(255,255,255,0.15); backdrop-filter: blur(10px); border: 2px solid rgba(255,255,255,0.3); display: flex; align-items: center; justify-content: center; color: #fff; position: relative; z-index: 2; transition: background 0.2s, transform 0.2s; }
-    .video-card:hover .play-btn { background: rgba(255,255,255,0.25); transform: scale(1.1); }
-    .video-tag { position: absolute; top: 14px; left: 14px; z-index: 2; background: rgba(0,0,0,0.5); backdrop-filter: blur(8px); border-radius: 100px; padding: 5px 12px; font-size: 11px; font-weight: 600; color: rgba(255,255,255,0.8); }
-    .video-info { padding: 20px 22px; }
-    .video-info strong { display: block; font-size: 15px; font-weight: 700; color: var(--dk-text); margin-bottom: 3px; }
-    .video-info span { font-size: 12px; color: var(--dk-muted); }
-    .video-result { display: inline-flex; align-items: center; gap: 5px; margin-top: 10px; background: rgba(74,222,128,0.1); border-radius: 100px; padding: 4px 12px; font-size: 11px; font-weight: 600; color: #4ADE80; }
-    .testimonials-note { text-align: center; margin-top: 24px; font-size: 12px; color: var(--muted); }
-
-    /* NUMBERS */
-    .numbers { background: var(--dark); padding: 88px 48px; }
-    .numbers-inner { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(4,1fr); background: var(--dk-line); gap: 1px; }
-    .number-item { background: var(--dark); padding: 40px 36px; }
-    .number-val { font-family: 'Plus Jakarta Sans', sans-serif; font-size: clamp(36px, 4vw, 56px); font-weight: 800; letter-spacing: -0.03em; color: #fff; line-height: 1; margin-bottom: 10px; }
-    .number-val span { color: #5B9EFF; }
-    .number-label { font-size: 13px; color: var(--dk-muted); font-weight: 400; line-height: 1.5; }
-
-    /* QUALITY */
-    .quality { background: var(--white); padding: 100px 48px; }
-    .quality-inner { max-width: 1100px; margin: 0 auto; }
-    .quality-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 2px; }
-    .quality-item { padding: 48px 44px; background: var(--cream); border: 1px solid transparent; transition: border-color 0.25s, background 0.25s; }
-    .quality-item:hover { border-color: rgba(24,85,232,0.15); background: #fff; }
-    .quality-num { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.12em; color: var(--blue); margin-bottom: 16px; }
-    .quality-title { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 20px; font-weight: 700; color: var(--ink); margin-bottom: 12px; }
-    .quality-text { font-size: 14px; color: var(--sub); line-height: 1.8; }
-
-    /* PRODUCTS */
-    .products-section { background: var(--cream); padding: 100px 48px; }
-    .products-inner { max-width: 1200px; margin: 0 auto; }
-    .bundle-tabs { display: flex; gap: 8px; margin-bottom: 44px; flex-wrap: wrap; }
-    .bundle-tab { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 13px; font-weight: 600; padding: 9px 20px; border-radius: 100px; border: 1.5px solid var(--border); background: var(--white); color: var(--sub); cursor: pointer; transition: all 0.2s; }
-    .bundle-tab.active { background: var(--ink); border-color: var(--ink); color: #fff; }
-    .bundle-tab:hover:not(.active) { border-color: var(--ink); color: var(--ink); }
-    .bundle-pane { display: none; }
-    .bundle-pane.active { display: block; }
-    .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px,1fr)); gap: 16px; }
-    .product-card { background: var(--white); border-radius: 16px; border: 1.5px solid var(--border); padding: 28px 24px; display: flex; flex-direction: column; transition: border-color 0.2s, box-shadow 0.2s; }
-    .product-card:hover { border-color: rgba(24,85,232,0.2); box-shadow: 0 8px 30px rgba(0,0,0,0.07); }
-    .product-tag { font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 14px; }
-    .product-name { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 18px; font-weight: 800; color: var(--ink); margin-bottom: 6px; }
-    .product-desc { font-size: 13px; color: var(--muted); margin-bottom: 20px; line-height: 1.6; }
-    .product-divider { height: 1px; background: var(--border); margin-bottom: 18px; }
-    .product-price { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 26px; font-weight: 800; color: var(--ink); margin-bottom: 4px; }
-    .product-old { font-size: 12px; color: var(--muted); text-decoration: line-through; margin-bottom: 18px; min-height: 18px; }
-    .btn-add { width: 100%; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 13px; font-weight: 700; padding: 13px; border-radius: 10px; background: var(--ink); color: #fff; border: none; cursor: pointer; margin-top: auto; transition: background 0.2s; }
-    .btn-add:hover { background: var(--blue); }
-
-    /* FINAL CTA */
-    .final-cta { position: relative; background: var(--dark); padding: 120px 48px; text-align: center; overflow: hidden; }
-    .final-glow { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); width: 600px; height: 600px; background: radial-gradient(circle, rgba(24,85,232,0.12) 0%, transparent 70%); pointer-events: none; }
-    .final-label { font-size: 11px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.35); margin-bottom: 28px; }
-    .final-h2 { font-size: clamp(36px, 5.5vw, 72px); font-weight: 800; color: #fff; max-width: 680px; margin: 0 auto 22px; position: relative; z-index: 1; }
-    .final-sub { font-size: 16px; color: rgba(255,255,255,0.4); max-width: 440px; margin: 0 auto 48px; line-height: 1.7; position: relative; z-index: 1; }
-    .final-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; position: relative; z-index: 1; }
-    .btn-lg { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 15px; font-weight: 700; padding: 17px 44px; border-radius: 12px; background: #fff; color: var(--ink); border: none; cursor: pointer; text-decoration: none; transition: transform 0.15s, box-shadow 0.15s; }
-    .btn-lg:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(255,255,255,0.12); }
-    .btn-lg-outline { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 15px; font-weight: 600; padding: 16px 36px; border-radius: 12px; background: transparent; color: rgba(255,255,255,0.65); border: 1px solid rgba(255,255,255,0.15); cursor: pointer; text-decoration: none; transition: all 0.2s; }
-    .btn-lg-outline:hover { border-color: rgba(255,255,255,0.35); color: #fff; }
-    .final-disclaimer { margin-top: 48px; font-size: 11px; color: rgba(255,255,255,0.18); line-height: 1.6; max-width: 400px; margin-left: auto; margin-right: auto; position: relative; z-index: 1; }
-
-    /* FOOTER */
-    footer { background: var(--white); border-top: 1px solid var(--border); padding: 72px 48px 40px; }
-    .footer-top { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; margin-bottom: 52px; }
-    .footer-logo { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 14px; font-weight: 800; letter-spacing: 0.05em; text-transform: uppercase; color: var(--ink); display: flex; align-items: center; gap: 8px; margin-bottom: 14px; }
-    .footer-desc { font-size: 13px; color: var(--muted); line-height: 1.7; max-width: 260px; margin-bottom: 22px; }
-    .footer-social { display: flex; gap: 10px; }
-    .social-btn { width: 36px; height: 36px; border-radius: 9px; border: 1.5px solid var(--border); display: flex; align-items: center; justify-content: center; color: var(--muted); text-decoration: none; transition: all 0.2s; }
-    .social-btn:hover { border-color: var(--ink); color: var(--ink); }
-    .footer-col h5 { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink); margin-bottom: 18px; }
-    .footer-col ul { list-style: none; }
-    .footer-col li { margin-bottom: 10px; }
-    .footer-col a { font-size: 14px; color: var(--muted); text-decoration: none; transition: color 0.2s; }
-    .footer-col a:hover { color: var(--ink); }
-    .footer-bottom { max-width: 1200px; margin: 0 auto; padding-top: 28px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
-    .footer-bottom p { font-size: 12px; color: var(--muted); }
-    .footer-disclaimer { max-width: 1200px; margin: 18px auto 0; font-size: 10px; color: var(--border); line-height: 1.7; }
-
-    /* CART */
-    .cart-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.45); backdrop-filter: blur(6px); z-index: 200; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
-    .cart-overlay.open { opacity: 1; pointer-events: all; }
-    .cart-drawer { position: fixed; top: 0; right: 0; bottom: 0; width: 420px; z-index: 201; background: var(--white); border-left: 1px solid var(--border); transform: translateX(100%); transition: transform 0.4s cubic-bezier(0.16,1,0.3,1); display: flex; flex-direction: column; }
-    .cart-drawer.open { transform: translateX(0); }
-    .cart-head { padding: 24px 28px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
-    .cart-head h3 { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 17px; font-weight: 800; color: var(--ink); }
-    .cart-x { width: 32px; height: 32px; border-radius: 8px; border: 1.5px solid var(--border); background: none; display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--muted); font-size: 14px; transition: all 0.2s; }
-    .cart-x:hover { border-color: var(--ink); color: var(--ink); }
-    .cart-body { flex: 1; overflow-y: auto; padding: 20px 28px; }
-    .cart-empty { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 220px; gap: 12px; color: var(--muted); font-size: 14px; }
-    .cart-item { display: flex; gap: 14px; align-items: center; padding: 16px 0; border-bottom: 1px solid var(--border); }
-    .cart-item-icon { width: 48px; height: 52px; background: var(--cream); border: 1.5px solid var(--border); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
-    .cart-item-info { flex: 1; }
-    .cart-item-info strong { display: block; font-size: 13px; font-weight: 700; color: var(--ink); margin-bottom: 2px; }
-    .cart-item-info span { font-size: 11px; color: var(--muted); }
-    .cart-item-price { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 15px; font-weight: 800; color: var(--ink); }
-    .cart-item-rm { color: var(--muted); cursor: pointer; font-size: 14px; padding: 4px; background: none; border: none; transition: color 0.2s; }
-    .cart-item-rm:hover { color: #DC2626; }
-    .cart-foot { padding: 20px 28px; border-top: 1px solid var(--border); }
-    .ship-wrap { margin-bottom: 14px; padding: 14px 16px; background: var(--blue-lt); border: 1px solid var(--blue-md); border-radius: 10px; }
-    .ship-lbl { display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 8px; }
-    .ship-lbl span { color: var(--sub); }
-    .ship-bar { height: 4px; background: var(--border); border-radius: 2px; }
-    .ship-fill { height: 100%; background: linear-gradient(90deg, var(--blue), #4ADE80); border-radius: 2px; transition: width 0.6s ease; }
-    .cart-upsell { display: flex; align-items: center; gap: 12px; padding: 12px 14px; background: #FFF8ED; border: 1px solid #F0D88A; border-radius: 10px; margin-bottom: 14px; }
-    .cart-upsell-info strong { display: block; font-size: 12px; font-weight: 700; color: var(--ink); }
-    .cart-upsell-info span { font-size: 11px; color: var(--muted); }
-    .cart-upsell-add { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 11px; font-weight: 700; background: #F0C040; color: #000; border: none; border-radius: 7px; padding: 7px 12px; cursor: pointer; white-space: nowrap; }
-    .cart-total-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
-    .cart-total-row span { font-size: 13px; color: var(--sub); }
-    .cart-total-row strong { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 22px; font-weight: 800; color: var(--ink); }
-    .btn-checkout { width: 100%; padding: 15px; background: var(--ink); color: #fff; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 14px; font-weight: 700; border: none; border-radius: 10px; cursor: pointer; transition: background 0.2s; }
-    .btn-checkout:hover { background: var(--blue); }
-    .cart-secure { text-align: center; font-size: 11px; color: var(--muted); margin-top: 10px; }
-
-    /* CRISP — push widget above mobile nav bar on tablet/mobile */
-    @media (max-width: 1024px) {
-      #crisp-chatbox { bottom: 72px !important; }
-    }
-
-    /* MOBILE BAR */
-    .mobile-bar { display: none; position: fixed; bottom: 0; left: 0; right: 0; z-index: 140; background: rgba(245,240,235,0.97); backdrop-filter: blur(20px); border-top: 1px solid var(--border); padding: 10px 16px env(safe-area-inset-bottom, 10px); gap: 10px; transition: opacity 0.3s; }
-    .mobile-bar a, .mobile-bar button { flex: 1; display: flex; align-items: center; justify-content: center; gap: 7px; padding: 13px; border-radius: 10px; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 13px; font-weight: 700; cursor: pointer; text-decoration: none; border: none; }
-    .mb-primary { background: linear-gradient(135deg, #5BB8FF 0%, #1A6EFF 40%, #1040CC 75%, #0A2A8A 100%); color: #fff; }
-    .mb-ghost { background: var(--white); border: 1.5px solid var(--border) !important; color: var(--ink); }
-
-    /* EXIT */
-    .exit-wrap { position: fixed; inset: 0; background: rgba(0,0,0,0.65); backdrop-filter: blur(10px); z-index: 300; display: flex; align-items: center; justify-content: center; padding: 20px; opacity: 0; pointer-events: none; transition: opacity 0.4s; }
-    .exit-wrap.show { opacity: 1; pointer-events: all; }
-    .exit-box { background: var(--white); border-radius: 24px; padding: 52px 44px; max-width: 460px; width: 100%; text-align: center; position: relative; box-shadow: 0 40px 80px rgba(0,0,0,0.25); transform: translateY(24px); transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1); }
-    .exit-wrap.show .exit-box { transform: translateY(0); }
-    .exit-close { position: absolute; top: 16px; right: 16px; width: 30px; height: 30px; border: 1.5px solid var(--border); border-radius: 8px; background: none; display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--muted); font-size: 13px; }
-    .exit-close:hover { color: var(--ink); border-color: var(--ink); }
-    .exit-tag { font-size: 10px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--blue); margin-bottom: 18px; }
-    .exit-h3 { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 32px; font-weight: 800; color: var(--ink); margin-bottom: 12px; }
-    .exit-h3 span { color: var(--blue); }
-    .exit-sub { font-size: 14px; color: var(--sub); line-height: 1.7; margin-bottom: 28px; }
-    .exit-form { display: flex; gap: 8px; margin-bottom: 12px; }
-    .exit-input { flex: 1; border: 1.5px solid var(--border); border-radius: 10px; padding: 13px 16px; font-size: 14px; color: var(--ink); font-family: 'Inter', sans-serif; outline: none; transition: border-color 0.2s; }
-    .exit-input:focus { border-color: var(--blue); }
-    .exit-input::placeholder { color: var(--muted); }
-    .exit-submit { background: var(--blue); color: #fff; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 13px; font-weight: 700; padding: 13px 20px; border-radius: 10px; border: none; cursor: pointer; white-space: nowrap; }
-    .exit-skip { font-size: 12px; color: var(--muted); cursor: pointer; }
-    .exit-skip:hover { color: var(--ink); }
-
-    /* REVEAL */
-    .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.7s, transform 0.7s; }
-    .reveal.in { opacity: 1; transform: none; }
-
-    /* PROGRAM SECTIONS */
-    .prog-section { overflow: hidden; }
-    .prog-banner { padding: 80px 80px 72px; display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; }
-    .prog-banner.glp1      { background: linear-gradient(180deg, #F4FCF7 0%, #A0DAB8 50%, #5A9E7A 100%); }
-    .prog-banner.longevity { background: linear-gradient(180deg, #EDF6FD 0%, #9EC8EE 50%, #4080C0 100%); }
-    .prog-banner.testosterone { background: linear-gradient(180deg, #FDF5F5 0%, #E8AAAA 50%, #BC5555 100%); }
-    .prog-banner.microdose { background: linear-gradient(180deg, #FCF8EE 0%, #DEBB95 50%, #A87848 100%); }
-    .prog-eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(0,0,0,0.38); margin-bottom: 14px; }
-    .prog-h2 { font-family: 'Plus Jakarta Sans', sans-serif; font-size: clamp(28px, 3.8vw, 48px); font-weight: 800; color: #111; line-height: 1.05; letter-spacing: -0.02em; margin-bottom: 18px; }
-    .prog-text { font-size: 15px; color: rgba(0,0,0,0.5); line-height: 1.8; max-width: 480px; }
-    .prog-chips { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-    .prog-chip { background: rgba(255,255,255,0.48); backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.65); border-radius: 14px; padding: 18px 16px; }
-    .prog-chip-icon { font-size: 22px; margin-bottom: 8px; }
-    .prog-chip-title { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 13px; font-weight: 700; color: #111; margin-bottom: 4px; }
-    .prog-chip-desc { font-size: 11px; color: rgba(0,0,0,0.45); line-height: 1.5; }
-    .prog-products-row { background: var(--cream); padding: 56px 80px 72px; }
-    .prog-products-row-inner { max-width: 1200px; margin: 0 auto; }
-    .prog-products-label { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); margin-bottom: 24px; }
-
-    /* PROG ENRICHMENTS */
-    .prog-stats-row { display: flex; flex-wrap: wrap; gap: 0; margin-bottom: 18px; }
-    .prog-stat-item { padding: 4px 14px; border-right: 1px solid rgba(0,0,0,0.1); font-size: 10px; font-weight: 700; color: rgba(0,0,0,0.38); letter-spacing: 0.1em; text-transform: uppercase; }
-    .prog-stat-item:first-child { padding-left: 0; }
-    .prog-stat-item:last-child { border-right: none; }
-    .prog-anchor { background: rgba(255,255,255,0.32); backdrop-filter: blur(6px); border-left: 3px solid rgba(0,0,0,0.18); border-radius: 0 8px 8px 0; padding: 11px 16px; margin-top: 16px; font-size: 13px; font-style: italic; color: rgba(0,0,0,0.52); line-height: 1.6; }
-    .prog-pills { display: flex; gap: 7px; flex-wrap: wrap; margin-top: 16px; }
-    .prog-pill { background: rgba(255,255,255,0.42); backdrop-filter: blur(4px); border: 1px solid rgba(255,255,255,0.62); border-radius: 100px; padding: 4px 13px; font-size: 10.5px; font-weight: 600; color: rgba(0,0,0,0.52); letter-spacing: 0.03em; white-space: nowrap; }
-    .product-role { font-size: 9px; font-weight: 800; letter-spacing: 0.13em; text-transform: uppercase; color: var(--blue); margin-bottom: 4px; opacity: 0.65; }
-    .product-dose { font-family: 'Courier New', monospace; font-size: 11px; color: rgba(0,0,0,0.4); background: var(--cream2); border-radius: 5px; padding: 2px 8px; display: inline-block; margin-bottom: 10px; }
-
-    /* HORMONE FLOW */
-    .hormone-flow { display: flex; flex-direction: column; gap: 8px; }
-    .hormone-step { display: flex; align-items: flex-start; gap: 12px; padding: 12px 14px; background: rgba(255,255,255,0.36); backdrop-filter: blur(6px); border: 1px solid rgba(255,255,255,0.6); border-radius: 12px; }
-    .hormone-step-num { width: 26px; height: 26px; border-radius: 50%; background: rgba(255,255,255,0.6); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 800; color: rgba(0,0,0,0.55); flex-shrink: 0; }
-    .hormone-step-title { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 12px; font-weight: 700; color: rgba(0,0,0,0.65); margin-bottom: 2px; }
-    .hormone-step-desc { font-size: 11px; color: rgba(0,0,0,0.4); line-height: 1.4; }
-
-    /* MICRO OBJECTIONS */
-    .micro-obj-block { background: rgba(255,255,255,0.38); backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.62); border-radius: 14px; padding: 18px 18px 14px; margin-top: 18px; }
-    .micro-obj-title { font-size: 10px; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(0,0,0,0.38); margin-bottom: 10px; }
-    .micro-obj-list { list-style: none; display: flex; flex-direction: column; gap: 7px; }
-    .micro-obj-list li { font-size: 12px; color: rgba(0,0,0,0.52); line-height: 1.4; display: flex; gap: 8px; align-items: flex-start; }
-    .micro-obj-list li::before { content: '→'; color: rgba(0,0,0,0.28); font-size: 11px; flex-shrink: 0; margin-top: 1px; }
-    .micro-badge { display: inline-flex; align-items: center; gap: 7px; background: rgba(0,0,0,0.07); border: 1px solid rgba(0,0,0,0.12); border-radius: 100px; padding: 6px 16px; font-size: 11px; font-weight: 700; color: rgba(0,0,0,0.5); letter-spacing: 0.05em; margin-top: 14px; }
-
-    /* TESTIMONIAL BREAKS */
-    .testi-break { background: var(--dark); padding: 80px 48px; }
-    .testi-break-inner { max-width: 1100px; margin: 0 auto; }
-    .testi-break-label { font-size: 11px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.25); margin-bottom: 10px; }
-    .testi-break-title { font-family: 'Plus Jakarta Sans', sans-serif; font-size: clamp(22px, 2.8vw, 34px); font-weight: 800; color: #fff; margin-bottom: 40px; }
-    .testi-break-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; }
-    .testi-card { border-radius: 14px; overflow: hidden; background: var(--dark2); transition: transform 0.3s; }
-    .testi-card:hover { transform: translateY(-3px); }
-    .testi-thumb { position: relative; aspect-ratio: 3/2; background: linear-gradient(160deg, #1A1A2E 0%, #0A0A10 100%); display: flex; align-items: center; justify-content: center; overflow: hidden; }
-    .testi-glow { position: absolute; inset: 0; pointer-events: none; }
-    .testi-play { width: 50px; height: 50px; border-radius: 50%; background: rgba(255,255,255,0.12); backdrop-filter: blur(8px); border: 1.5px solid rgba(255,255,255,0.25); display: flex; align-items: center; justify-content: center; color: #fff; position: relative; z-index: 2; }
-    .testi-tag { position: absolute; top: 12px; left: 12px; z-index: 2; background: rgba(0,0,0,0.5); backdrop-filter: blur(8px); border-radius: 100px; padding: 4px 11px; font-size: 11px; font-weight: 600; color: rgba(255,255,255,0.8); }
-    .testi-info { padding: 16px 18px; }
-    .testi-info strong { display: block; font-size: 14px; font-weight: 700; color: var(--dk-text); margin-bottom: 2px; }
-    .testi-info span { font-size: 12px; color: var(--dk-muted); }
-    .testi-result { display: inline-flex; align-items: center; gap: 5px; margin-top: 9px; background: rgba(74,222,128,0.1); border-radius: 100px; padding: 4px 11px; font-size: 11px; font-weight: 600; color: #4ADE80; }
-    .ba-side { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-    .ba-side-panel { border-radius: 14px; padding: 32px 28px; }
-    .ba-side-before { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07); }
-    .ba-side-after { background: rgba(74,222,128,0.05); border: 1px solid rgba(74,222,128,0.2); }
-    .ba-side-tag { font-size: 10px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; padding: 5px 14px; border-radius: 100px; display: inline-block; margin-bottom: 20px; }
-    .ba-side-before .ba-side-tag { background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.3); }
-    .ba-side-after .ba-side-tag { background: rgba(74,222,128,0.12); color: #4ADE80; }
-    .ba-side-list { list-style: none; display: flex; flex-direction: column; gap: 11px; }
-    .ba-side-list li { display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 500; }
-    .ba-side-before .ba-side-list li { color: rgba(255,255,255,0.3); }
-    .ba-side-before .ba-side-list li::before { content: '✕'; font-size: 10px; color: rgba(255,255,255,0.18); flex-shrink: 0; }
-    .ba-side-after .ba-side-list li { color: rgba(255,255,255,0.75); }
-    .ba-side-after .ba-side-list li::before { content: '✓'; font-size: 11px; color: #4ADE80; flex-shrink: 0; }
-
-    /* RESPONSIVE — TABLET */
-    @media (max-width: 1024px) {
-      .header-inner { padding: 0 20px; justify-content: space-between; }
-      nav { display: none; flex: none; }
-      .bundles-top { grid-template-columns: 1fr; gap: 24px; }
-      .bundles-grid { grid-template-columns: 1fr; }
-      .bundle-card { height: 110px; }
-      .bundle-name { font-size: 16px; }
-      .bundle-bottle { width: 80px; height: 110px; }
-      .ba-grid { grid-template-columns: 1fr; }
-      .testimonials-grid { grid-template-columns: 1fr; }
-      .numbers-inner { grid-template-columns: repeat(2,1fr); }
-      .quality-grid { grid-template-columns: 1fr; }
-      .footer-top { grid-template-columns: 1fr 1fr; }
-      .mobile-bar { display: flex; }
-      .cart-drawer { width: 100%; }
-      .bundles-section, .quality { padding: 72px 24px; }
-      .trust-strip { padding: 6px 20px; font-size: 9px; }
-      .prog-banner { grid-template-columns: 1fr; padding: 56px 24px 48px; gap: 32px; }
-      .prog-products-row { padding: 44px 24px 56px; }
-      .testi-break { padding: 64px 24px; }
-      .testi-break-grid { grid-template-columns: repeat(2,1fr); }
-      .ba-side { grid-template-columns: 1fr; }
-      .numbers { padding: 72px 24px; }
-      .final-cta { padding: 96px 32px; }
-    }
-
-    /* RESPONSIVE — MOBILE */
-    @media (max-width: 640px) {
-      /* ANNOUNCE STRIP */
-      .announce-strip { height: 26px; font-size: 9px; letter-spacing: 0.1em; }
-      .announce-flag { font-size: 14px; }
-      header { top: 26px; }
-
-      /* PHOTO CAROUSEL */
-      .photo-section { padding: 100px 0 48px; }
-      .photo-inner { padding: 0; }
-      .photo-head { padding: 0 16px; margin-bottom: 16px; }
-      .photo-frame { height: 300px; border-radius: 0; }
-      .photo-item img { object-fit: contain; }
-      .photo-head-title { font-size: 18px; }
-      .ph-arrow { width: 34px; height: 34px; font-size: 20px; }
-      .ph-dots { padding: 10px 0 4px; }
-      .ph-dot { width: 8px; height: 8px; }
-
-      /* HEADER */
-      .header-inner { padding: 0 16px; }
-      .logo-img { height: 50px; }
-      .btn-nav { display: none; }
-
-      /* TRUST */
-      .trust-strip { font-size: 8.5px; letter-spacing: 0.06em; padding: 6px 16px; }
-
-      /* BUNDLES */
-      .bundles-section { padding: 56px 16px; }
-      .bundle-card { height: 120px; }
-      .bundle-name { font-size: 15px; }
-      .bundle-promise { font-size: 10px; }
-      .bundle-bottle-wrap { width: 100px; }
-      .bundle-bottle { width: 100px; height: 140px; transform: translateY(26px); }
-      .bundle-inner { padding: 0 18px; }
-      .bundle-arrow { width: 30px; height: 30px; margin-left: 10px; }
-
-      /* PROG SECTIONS */
-      .prog-banner { padding: 44px 20px 40px; gap: 28px; }
-      .prog-h2 { font-size: clamp(24px, 7.5vw, 36px); }
-      .prog-text { font-size: 14px; }
-      .prog-stats-row { gap: 0; }
-      .prog-stat-item { border-right: none; padding: 3px 0 3px 0; font-size: 9px; width: 50%; }
-      .prog-anchor { font-size: 12px; padding: 10px 14px; }
-      .prog-chips { grid-template-columns: 1fr; }
-      .prog-pill { font-size: 10px; padding: 3px 11px; }
-      .prog-products-row { padding: 36px 16px 48px; }
-      .prog-products-label { font-size: 10px; }
-      .hormone-step { padding: 10px 12px; gap: 10px; }
-      .hormone-step-title { font-size: 11.5px; }
-      .hormone-step-desc { font-size: 10.5px; }
-      .micro-obj-block { padding: 14px 14px 12px; }
-
-      /* PRODUCT CARDS */
-      .products-grid { grid-template-columns: 1fr; gap: 12px; }
-      .product-card { padding: 22px 20px; }
-
-      /* NUMBERS */
-      .numbers { padding: 56px 16px; }
-      .numbers-inner { grid-template-columns: 1fr 1fr; }
-      .number-item { padding: 28px 18px; }
-      .number-val { font-size: clamp(28px, 8vw, 44px); }
-
-      /* QUALITY */
-      .quality { padding: 64px 16px; }
-      .quality-item { padding: 32px 24px; }
-
-      /* TESTIMONIALS */
-      .testi-break { padding: 52px 16px; }
-      .testi-break-grid { grid-template-columns: 1fr; }
-
-      /* FINAL CTA */
-      .final-cta { padding: 72px 20px; }
-      .final-h2 { font-size: clamp(30px, 9vw, 52px); }
-
-      /* FOOTER */
-      .footer-top { grid-template-columns: 1fr; gap: 32px; }
-      footer { padding: 52px 20px 100px; }
-      .footer-bottom { flex-direction: column; text-align: center; }
-
-      /* CART */
-      .cart-drawer { width: 100%; }
-    }
-
-    /* RESPONSIVE — SMALL PHONE */
-    @media (max-width: 390px) {
-      .announce-strip { height: 22px; font-size: 8px; letter-spacing: 0.08em; }
-      .announce-flag { display: none; }
-      header { top: 22px; }
-      .logo-img { height: 36px; }
-      .photo-section { padding: 94px 0 40px; }
-      .photo-frame { height: 210px; }
-      .btn-primary, .btn-ghost-white { max-width: 100%; padding: 14px 20px; }
-      .bundle-bottle-wrap { display: none; }
-    }
-  /* LEGAL DISCLAIMER MODAL */
-  .legal-overlay {
-    display: none;
-    position: fixed;
-    inset: 0;
-    z-index: 9999;
-    background: rgba(0,0,0,0.82);
-    align-items: center;
-    justify-content: center;
-    padding: 16px;
-    overflow-y: auto;
-  }
-  .legal-box {
-    background: #fff;
-    border-radius: 10px;
-    max-width: 660px;
-    width: 100%;
-    overflow: hidden;
-    box-shadow: 0 20px 60px rgba(0,0,0,0.55);
-    margin: auto;
-  }
-  .legal-header {
-    background: #c0392b;
-    color: #fff;
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 14px;
-    font-weight: 800;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    text-align: center;
-    padding: 16px 24px;
-    line-height: 1.3;
-  }
-  .legal-body {
-    padding: 24px 28px 20px;
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 13.5px;
-    line-height: 1.75;
-    color: #222;
-  }
-  .legal-body p { margin: 0 0 14px; }
-  .legal-body p:last-child { margin-bottom: 0; }
-  .legal-note {
-    background: #f5f5f5;
-    border-left: 3px solid #c0392b;
-    padding: 12px 14px;
-    border-radius: 4px;
-    font-size: 12.5px;
-    color: #444;
-  }
-  .legal-btns {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    padding: 18px 28px 24px;
-  }
-  .legal-btn-accept {
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 11.5px;
-    font-weight: 800;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    padding: 14px 18px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    background: linear-gradient(135deg, #5BB8FF 0%, #1A6EFF 40%, #1040CC 75%, #0A2A8A 100%);
-    color: #fff;
-    box-shadow: 0 2px 12px rgba(30,80,220,0.35);
-    transition: filter 0.15s, transform 0.15s;
-    line-height: 1.4;
-  }
-  .legal-btn-accept:hover { filter: brightness(1.1); transform: translateY(-1px); }
-  .legal-btn-decline {
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    padding: 11px 18px;
-    border: 1.5px solid #ccc;
-    border-radius: 8px;
-    cursor: pointer;
-    background: #fff;
-    color: #888;
-    transition: background 0.15s, color 0.15s;
-  }
-  .legal-btn-decline:hover { background: #f0f0f0; color: #444; }
-  @media (max-width: 640px) {
-    .legal-header { font-size: 12px; padding: 14px 16px; }
-    .legal-body { padding: 18px 16px 14px; font-size: 12.5px; }
-    .legal-btns { padding: 14px 16px 20px; }
-    .legal-btn-accept { font-size: 10.5px; }
-  }
   </style>
 </head>
 <body>
 
-<!-- ANNOUNCE STRIP -->
-<div class="announce-strip">
-  <span class="announce-flag">🇺🇸</span>
-  <span>Made for Research. Built with Integrity.</span>
-</div>
-
 <!-- HEADER -->
 <header id="header">
   <div class="header-inner">
-    <a class="logo" href="#">
-      <img class="logo-img" src="fotos/logo/logo fundo preto.JPG" alt="Neo Peptide">
+    <a class="logo" href="#" onclick="showView('home')">
+      <img class="logo-img" src="fotos/logo/logo transparente2.png" alt="Neo Peptide">
     </a>
     <nav>
-      <a href="#section-glp1">Weight Loss</a>
-      <a href="#section-longevity">Longevity</a>
-      <a href="#section-testosterone">Testosterone</a>
-      <a href="#section-microdose">Microdosing</a>
+      <a onclick="showView('home');scrollTo('#programs')">Programs</a>
+      <a onclick="showProgram('longevity')">Longevity</a>
+      <a onclick="showProgram('testosterone')">Hormone</a>
       <a href="mailto:neopeptides@outlook.com">Contact</a>
     </nav>
     <div class="header-right">
-      <a class="btn-nav" href="#section-glp1">Explore Protocols</a>
       <button class="cart-btn" onclick="openCart()">
         <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+        Cart
         <div class="cart-count" id="cartCount">0</div>
       </button>
     </div>
   </div>
 </header>
 
-<!-- PHOTO CAROUSEL -->
-<section class="photo-section">
-  <div class="photo-inner">
-    <div class="photo-head">
-      <h2 class="photo-head-title">Real Results</h2>
-      <div class="photo-head-nav">
-        <button class="ph-arrow" onclick="phGo(phCurrent - 1)" aria-label="Previous">&#8249;</button>
-        <button class="ph-arrow" onclick="phGo(phCurrent + 1)" aria-label="Next">&#8250;</button>
+<!-- ═══════════════════════════════════════
+     VIEW: HOME
+════════════════════════════════════════ -->
+<div id="view-home" class="view active">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-inner">
+      <p class="hero-label reveal"><span class="hero-label-flag">🇺🇸</span>Premium Research Compounds · USA Made</p>
+      <h1 class="hero-title reveal" style="transition-delay:.08s">The Neo Peptide<br>Difference.</h1>
+      <img class="hero-bottle reveal" style="transition-delay:.18s" src="fotos/bottles/apresentacao.png" alt="Neo Peptide">
+      <div class="hero-actions reveal" style="transition-delay:.28s">
+        <button class="btn-hero" onclick="document.getElementById('programs').scrollIntoView({behavior:'smooth'})">Explore Programs</button>
+      </div>
+      <div class="hero-trust reveal" style="transition-delay:.36s">
+        <span>GMP Certified</span>
+        <span>≥99% Purity</span>
+        <span>Ships in 48h</span>
+        <span>COA Every Batch</span>
       </div>
     </div>
-    <div class="photo-frame" id="photoFrame">
-      <div class="photo-item active"><img src="fotos/antes e depois/1.1.png" alt="Neo Peptide Results 1" loading="eager"></div>
-      <div class="photo-item"><img src="fotos/antes e depois/2.png" alt="Neo Peptide Results 2" loading="lazy"></div>
-      <div class="photo-item"><img src="fotos/antes e depois/3.png" alt="Neo Peptide Results 3" loading="lazy"></div>
-      <div class="photo-item"><img src="fotos/antes e depois/4.png" alt="Neo Peptide Results 4" loading="lazy"></div>
+  </section>
+
+  <!-- PROGRAMS -->
+  <section class="programs-section" id="programs">
+    <div class="programs-top">
+      <div>
+        <p class="section-label reveal">Our Programs</p>
+        <h2 class="section-h2 reveal" style="transition-delay:.08s">A peptide program<br>that works for you.</h2>
+      </div>
+      <p class="section-sub reveal" style="transition-delay:.15s">Four targeted programs designed around specific goals — each with pharmaceutical-grade compounds and a Certificate of Analysis.</p>
     </div>
-    <div class="ph-dots">
-      <button class="ph-dot active" onclick="phGo(0)"></button>
-      <button class="ph-dot" onclick="phGo(1)"></button>
-      <button class="ph-dot" onclick="phGo(2)"></button>
-      <button class="ph-dot" onclick="phGo(3)"></button>
+    <div class="programs-grid">
+
+      <div class="prog-card glp1 reveal" onclick="showProgram('glp1')">
+        <img class="prog-card-bottle" src="fotos/bottles/bottle3.png" alt="">
+        <div class="prog-card-overlay"></div>
+        <div class="prog-card-content">
+          <div class="prog-card-name">GLP-1 / Weight Loss</div>
+          <div class="prog-card-promise">Appetite control · Craving suppression · Metabolic support</div>
+          <div class="prog-card-cta">
+            Learn More
+            <div class="prog-card-arrow"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="prog-card longevity reveal" style="transition-delay:.08s" onclick="showProgram('longevity')">
+        <img class="prog-card-bottle" src="fotos/bottles/bottle3.png" alt="">
+        <div class="prog-card-overlay"></div>
+        <div class="prog-card-content">
+          <div class="prog-card-name">Longevity & Recovery</div>
+          <div class="prog-card-promise">Energy · Cellular repair · Sleep quality · Healthy aging</div>
+          <div class="prog-card-cta">
+            Learn More
+            <div class="prog-card-arrow"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="prog-card testosterone reveal" style="transition-delay:.16s" onclick="showProgram('testosterone')">
+        <img class="prog-card-bottle" src="fotos/bottles/bottle3.png" alt="">
+        <div class="prog-card-overlay"></div>
+        <div class="prog-card-content">
+          <div class="prog-card-name">Testosterone / Hormone</div>
+          <div class="prog-card-promise">Energy · Mood · Libido · Strength · Hormone balance</div>
+          <div class="prog-card-cta">
+            Learn More
+            <div class="prog-card-arrow"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="prog-card microdose reveal" style="transition-delay:.24s" onclick="showProgram('microdose')">
+        <img class="prog-card-bottle" src="fotos/bottles/bottle3.png" alt="">
+        <div class="prog-card-overlay"></div>
+        <div class="prog-card-content">
+          <div class="prog-card-name">Microdosing / Light GLP-1</div>
+          <div class="prog-card-promise">Small-dose support · Appetite · Energy · Mood balance</div>
+          <div class="prog-card-cta">
+            Learn More
+            <div class="prog-card-arrow"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- BEFORE / AFTER -->
+  <section class="before-after">
+    <div class="ba-wrap">
+      <div class="ba-header">
+        <p class="section-label reveal">Transformations</p>
+        <h2 class="section-h2 reveal" style="transition-delay:.08s">The difference<br>is visible.</h2>
+      </div>
+      <div class="ba-grid reveal" style="transition-delay:.12s">
+        <div class="ba-panel ba-before">
+          <div class="ba-tag">Before</div>
+          <h3 class="ba-title">Struggling daily.</h3>
+          <ul class="ba-list">
+            <li class="ba-item"><div class="ba-icon">✗</div>Constant fatigue even after 8 hours of sleep</li>
+            <li class="ba-item"><div class="ba-icon">✗</div>Brain fog and poor concentration all day</li>
+            <li class="ba-item"><div class="ba-icon">✗</div>Slow recovery from exercise</li>
+            <li class="ba-item"><div class="ba-icon">✗</div>Visible signs of premature aging</li>
+            <li class="ba-item"><div class="ba-icon">✗</div>Low motivation, flat energy from morning to night</li>
+          </ul>
+        </div>
+        <div class="ba-panel ba-after">
+          <div class="ba-tag">✓ After Neo Peptide</div>
+          <h3 class="ba-title">Performing at your best.</h3>
+          <ul class="ba-list">
+            <li class="ba-item"><div class="ba-icon">✓</div>Waking up genuinely restored and sharp</li>
+            <li class="ba-item"><div class="ba-icon">✓</div>Mental clarity and sustained focus</li>
+            <li class="ba-item"><div class="ba-icon">✓</div>Fast recovery and stronger performance</li>
+            <li class="ba-item"><div class="ba-icon">✓</div>Healthier skin, hair, and energy levels</li>
+            <li class="ba-item"><div class="ba-icon">✓</div>Consistent drive and mood from morning to night</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- NUMBERS -->
+  <div class="numbers">
+    <div class="numbers-inner">
+      <div class="number-item reveal"><div class="number-val" data-target="12847">0<span>+</span></div><div class="number-label">Orders Fulfilled</div></div>
+      <div class="number-item reveal" style="transition-delay:.1s"><div class="number-val" data-target="99" data-suffix="%">0<span>%</span></div><div class="number-label">Purity Verified</div></div>
+      <div class="number-item reveal" style="transition-delay:.2s"><div class="number-val" data-target="4800">0<span>+</span></div><div class="number-label">Active Clients</div></div>
+      <div class="number-item reveal" style="transition-delay:.3s"><div class="number-val" data-target="48" data-suffix="h">0<span>h</span></div><div class="number-label">Dispatch Window</div></div>
     </div>
   </div>
-</section>
 
-<!-- TRUST STRIP -->
-<div class="trust-strip">
-  GMP Certified &nbsp;·&nbsp; ≥99% Verified Purity &nbsp;·&nbsp; Ships Within 48 Hours &nbsp;·&nbsp; COA on Every Batch &nbsp;·&nbsp; Free Shipping Over $150
-</div>
+  <!-- QUALITY -->
+  <section class="quality">
+    <div class="quality-inner">
+      <div style="margin-bottom:56px">
+        <p class="section-label reveal">Our Standards</p>
+        <h2 class="section-h2 reveal" style="transition-delay:.08s">No shortcuts.<br>No exceptions.</h2>
+      </div>
+      <div class="quality-grid">
+        <div class="quality-item reveal"><div class="quality-num">01</div><div class="quality-title">HPLC + Mass Spectrometry</div><p class="quality-text">Every batch undergoes high-performance liquid chromatography and mass spectrometry analysis. Identity and purity confirmed before any compound ships.</p></div>
+        <div class="quality-item reveal" style="transition-delay:.1s"><div class="quality-num">02</div><div class="quality-title">Third-Party Verified</div><p class="quality-text">Independent laboratory verification for every product. Certificate of Analysis available on request. Full transparency is non-negotiable.</p></div>
+        <div class="quality-item reveal" style="transition-delay:.2s"><div class="quality-num">03</div><div class="quality-title">USA GMP Certified Facility</div><p class="quality-text">Synthesized and packaged in a USA-based GMP certified facility. Pharmaceutical-grade standards throughout every step of production.</p></div>
+        <div class="quality-item reveal" style="transition-delay:.3s"><div class="quality-num">04</div><div class="quality-title">Temperature-Controlled Shipping</div><p class="quality-text">Shipped in insulated packaging to preserve compound stability. Discreet, secure, and tracked from our facility to your door within 48 hours.</p></div>
+      </div>
+    </div>
+  </section>
 
-<!-- PROGRAMS -->
-<section class="bundles-section" id="programs">
-  <div class="bundles-top">
-    <div>
-      <p class="section-label reveal">Our Programs</p>
-      <h2 class="section-h2 reveal" style="transition-delay:0.08s">A peptide program<br>that works for you.</h2>
+  <!-- FINAL CTA -->
+  <section class="final-cta">
+    <div class="final-glow"></div>
+    <p class="final-label reveal">Start Today</p>
+    <h2 class="final-h2 reveal" style="transition-delay:.08s">Your transformation starts with one decision.</h2>
+    <p class="final-sub reveal" style="transition-delay:.16s">Thousands of people have already made the switch. GMP certified, shipped in 48 hours, COA guaranteed on every order.</p>
+    <div class="final-actions reveal" style="transition-delay:.24s">
+      <button class="btn-lg" onclick="document.getElementById('programs').scrollIntoView({behavior:'smooth'})">Choose Your Program</button>
+      <a href="mailto:neopeptides@outlook.com" class="btn-lg-outline">Talk to Our Team</a>
     </div>
-    <p class="section-sub reveal" style="transition-delay:0.15s">Four targeted programs designed around specific goals — each with pharmaceutical-grade compounds and a Certificate of Analysis.</p>
-  </div>
-  <div class="bundles-grid">
+    <p class="final-disclaimer reveal" style="transition-delay:.32s">For research use only. Not for human consumption. Must be 21+. These statements have not been evaluated by the FDA.</p>
+  </section>
 
-    <div class="bundle-card glp1 reveal" onclick="switchBundle('glp1')">
-      <div class="bundle-inner">
-        <div class="bundle-text">
-          <div class="bundle-name">GLP-1 / Weight Loss</div>
-          <div class="bundle-promise">Appetite control · Craving suppression · Metabolic support</div>
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-top">
+      <div>
+        <div class="footer-logo-wrap">
+          <img class="footer-logo-img" src="fotos/logo/logo fundo preto.JPG" alt="Neo Peptide">
         </div>
-        <div class="bundle-bottle-wrap"><img class="bundle-bottle" src="fotos/bottles/bottle3.png" alt="vial"></div>
-        <div class="bundle-arrow">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </div>
-      </div>
-    </div>
-
-    <div class="bundle-card longevity reveal" style="transition-delay:0.08s" onclick="switchBundle('longevity')">
-      <div class="bundle-inner">
-        <div class="bundle-text">
-          <div class="bundle-name">Longevity & Recovery</div>
-          <div class="bundle-promise">Energy · Cellular repair · Sleep quality · Healthy aging</div>
-        </div>
-        <div class="bundle-bottle-wrap"><img class="bundle-bottle" src="fotos/bottles/bottle3.png" alt="vial"></div>
-        <div class="bundle-arrow">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        <p class="footer-desc">Medical-grade peptide programs for weight loss, longevity, and hormone optimization. Made in the USA. Built with integrity.</p>
+        <div class="footer-social">
+          <a class="social-btn" href="https://instagram.com/neo_peptides" target="_blank" title="Instagram">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          </a>
+          <a class="social-btn" href="mailto:neopeptides@outlook.com" title="Email">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          </a>
         </div>
       </div>
-    </div>
-
-    <div class="bundle-card testosterone reveal" style="transition-delay:0.16s" onclick="switchBundle('testosterone')">
-      <div class="bundle-inner">
-        <div class="bundle-text">
-          <div class="bundle-name">Testosterone / Hormone</div>
-          <div class="bundle-promise">Energy · Mood · Libido · Strength · Hormone balance</div>
-        </div>
-        <div class="bundle-bottle-wrap"><img class="bundle-bottle" src="fotos/bottles/bottle3.png" alt="vial"></div>
-        <div class="bundle-arrow">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </div>
-      </div>
-    </div>
-
-    <div class="bundle-card microdose reveal" style="transition-delay:0.24s" onclick="switchBundle('microdose')">
-      <div class="bundle-inner">
-        <div class="bundle-text">
-          <div class="bundle-name">Microdosing / Light GLP-1</div>
-          <div class="bundle-promise">Small-dose support · Appetite · Energy · Mood balance</div>
-        </div>
-        <div class="bundle-bottle-wrap"><img class="bundle-bottle" src="fotos/bottles/bottle3.png" alt="vial"></div>
-        <div class="bundle-arrow">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </div>
-      </div>
-    </div>
-
-  </div>
-</section>
-
-<!-- GLP-1 / WEIGHT LOSS -->
-<section class="prog-section" id="section-glp1">
-  <div class="prog-banner glp1">
-    <div>
-      <div class="prog-stats-row">
-        <span class="prog-stat-item">GLP-1 Incretins</span>
-        <span class="prog-stat-item">5 Protocols</span>
-        <span class="prog-stat-item">#1 Best Selling</span>
-        <span class="prog-stat-item">Receptor Agonists</span>
-      </div>
-      <p class="prog-eyebrow">GLP-1 / Weight Loss Program</p>
-      <h2 class="prog-h2">Reshape your body.<br>Reset your metabolism.</h2>
-      <p class="prog-text">GLP-1 receptor agonists mimic a naturally occurring hormone that regulates hunger signals in the brain. The result is dramatically reduced appetite, improved insulin sensitivity, and sustainable fat loss — without the crash of restrictive diets.</p>
-      <div class="prog-anchor">"Researchers report significant weight reduction markers within 30 days of GLP-1 protocol initiation."</div>
-      <div class="prog-pills">
-        <span class="prog-pill">Appetite Control</span>
-        <span class="prog-pill">Fat Metabolism</span>
-        <span class="prog-pill">Blood Sugar</span>
-        <span class="prog-pill">Cravings Reduction</span>
-        <span class="prog-pill">Energy Stabilization</span>
-      </div>
-    </div>
-    <div class="prog-chips">
-      <div class="prog-chip"><div class="prog-chip-icon">🧠</div><div class="prog-chip-title">Appetite Suppression</div><div class="prog-chip-desc">Targets hunger centers in the brain for effortless caloric reduction</div></div>
-      <div class="prog-chip"><div class="prog-chip-icon">🔥</div><div class="prog-chip-title">Metabolic Reset</div><div class="prog-chip-desc">Improves insulin sensitivity and glucose regulation from week one</div></div>
-      <div class="prog-chip"><div class="prog-chip-icon">⚖️</div><div class="prog-chip-title">Sustained Weight Loss</div><div class="prog-chip-desc">Clinical trials show 15–22% body weight reduction over 68 weeks</div></div>
-      <div class="prog-chip"><div class="prog-chip-icon">💪</div><div class="prog-chip-title">Lean Mass Preserved</div><div class="prog-chip-desc">GLP-1 protocols preserve muscle tissue during fat loss</div></div>
-    </div>
-  </div>
-  <div class="prog-products-row">
-    <div class="prog-products-row-inner">
-      <div class="products-grid">
-        <div class="product-card reveal">
-          <div class="product-role">Anchor / Hero</div>
-          <div class="product-tag" style="color:#2E6B45">GLP-1 / Weight Loss</div>
-          <div class="product-name">Compounded Semaglutide</div>
-          <span class="product-dose">0.25–2.4 mg/wk</span>
-          <div class="product-desc">Weekly injection · Appetite suppression · Sustained weight loss · GLP-1 agonist</div>
-          <div class="product-divider"></div>
-          <div class="product-price">$249</div>
-          <div class="product-old">&nbsp;</div>
-          <button class="btn-add" onclick="addToCart('Compounded Semaglutide', 249, this)">Add to Cart</button>
-        </div>
-        <div class="product-card reveal" style="transition-delay:0.07s">
-          <div class="product-role">Premium Hero</div>
-          <div class="product-tag" style="color:#2E6B45">GLP-1 / Weight Loss</div>
-          <div class="product-name">Compounded Tirzepatide</div>
-          <span class="product-dose">2.5–15 mg/wk</span>
-          <div class="product-desc">Dual GIP+GLP-1 agonist · Superior efficacy · Faster results</div>
-          <div class="product-divider"></div>
-          <div class="product-price">$289</div>
-          <div class="product-old">&nbsp;</div>
-          <button class="btn-add" onclick="addToCart('Compounded Tirzepatide', 289, this)">Add to Cart</button>
-        </div>
-        <div class="product-card reveal" style="transition-delay:0.14s">
-          <div class="product-role">Trust Builder</div>
-          <div class="product-tag" style="color:#2E6B45">GLP-1 / Weight Loss</div>
-          <div class="product-name">Zepbound</div>
-          <span class="product-dose">2.5–15 mg/wk</span>
-          <div class="product-desc">Brand-name tirzepatide · FDA approved · Highest tier GLP-1 program</div>
-          <div class="product-divider"></div>
-          <div class="product-price">$499</div>
-          <div class="product-old">&nbsp;</div>
-          <button class="btn-add" onclick="addToCart('Zepbound', 499, this)">Add to Cart</button>
-        </div>
-        <div class="product-card reveal" style="transition-delay:0.21s">
-          <div class="product-role">Entry / Upsell</div>
-          <div class="product-tag" style="color:#2E6B45">GLP-1 / Weight Loss</div>
-          <div class="product-name">Microdose Semaglutide</div>
-          <span class="product-dose">0.05–0.25 mg/wk</span>
-          <div class="product-desc">Low-dose entry protocol · Appetite + energy · Gentle on body</div>
-          <div class="product-divider"></div>
-          <div class="product-price">$149</div>
-          <div class="product-old">&nbsp;</div>
-          <button class="btn-add" onclick="addToCart('Microdose Semaglutide', 149, this)">Add to Cart</button>
-        </div>
-        <div class="product-card reveal" style="transition-delay:0.28s">
-          <div class="product-role">Entry / Upsell</div>
-          <div class="product-tag" style="color:#2E6B45">GLP-1 / Weight Loss</div>
-          <div class="product-name">Microdose Tirzepatide</div>
-          <span class="product-dose">0.5–2 mg/wk</span>
-          <div class="product-desc">Low-dose dual agonist · Metabolic support · Minimal side effects</div>
-          <div class="product-divider"></div>
-          <div class="product-price">$169</div>
-          <div class="product-old">&nbsp;</div>
-          <button class="btn-add" onclick="addToCart('Microdose Tirzepatide', 169, this)">Add to Cart</button>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- BREAK 1 — GLP-1 Testimonials -->
-<div class="testi-break">
-  <div class="testi-break-inner">
-    <p class="testi-break-label">Real Results</p>
-    <h3 class="testi-break-title">Clients who transformed with GLP-1.</h3>
-    <div class="testi-break-grid">
-      <div class="testi-card reveal">
-        <div class="testi-thumb">
-          <div class="testi-glow" style="background:radial-gradient(ellipse at 50% 30%, rgba(45,122,79,0.3) 0%, transparent 65%)"></div>
-          <div class="testi-tag">GLP-1 · 3 months</div>
-          <div class="testi-play"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="6 3 20 12 6 21 6 3"/></svg></div>
-        </div>
-        <div class="testi-info">
-          <strong>Sarah M., 38</strong>
-          <span>Compounded Semaglutide</span>
-          <div class="testi-result"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Lost 28 lbs in 90 days</div>
-        </div>
-      </div>
-      <div class="testi-card reveal" style="transition-delay:0.1s">
-        <div class="testi-thumb">
-          <div class="testi-glow" style="background:radial-gradient(ellipse at 50% 30%, rgba(45,122,79,0.25) 0%, transparent 65%)"></div>
-          <div class="testi-tag">Tirzepatide · 2 months</div>
-          <div class="testi-play"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="6 3 20 12 6 21 6 3"/></svg></div>
-        </div>
-        <div class="testi-info">
-          <strong>Diana L., 44</strong>
-          <span>Compounded Tirzepatide</span>
-          <div class="testi-result"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Down 19 lbs, energy tripled</div>
-        </div>
-      </div>
-      <div class="testi-card reveal" style="transition-delay:0.2s">
-        <div class="testi-thumb">
-          <div class="testi-glow" style="background:radial-gradient(ellipse at 50% 30%, rgba(45,122,79,0.2) 0%, transparent 65%)"></div>
-          <div class="testi-tag">GLP-1 · 10 weeks</div>
-          <div class="testi-play"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="6 3 20 12 6 21 6 3"/></svg></div>
-        </div>
-        <div class="testi-info">
-          <strong>Carol S., 51</strong>
-          <span>Zepbound Protocol</span>
-          <div class="testi-result"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Visible results from week 3</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- LONGEVITY & RECOVERY -->
-<section class="prog-section" id="section-longevity">
-  <div class="prog-banner longevity">
-    <div>
-      <div class="prog-stats-row">
-        <span class="prog-stat-item">Longevity · NAD+/GH</span>
-        <span class="prog-stat-item">3 Protocols</span>
-        <span class="prog-stat-item">Biohacker Tier</span>
-        <span class="prog-stat-item">Mitochondrial</span>
-      </div>
-      <p class="prog-eyebrow">Longevity & Recovery Program</p>
-      <h2 class="prog-h2">Age slower.<br>Recover faster.</h2>
-      <p class="prog-text">NAD+ is the master coenzyme behind cellular energy, DNA repair, and healthy aging. As levels decline with age, so does performance, recovery, and resilience. Our longevity protocols replenish what time takes away.</p>
-      <div class="prog-anchor">"NAD+ directly fuels mitochondrial function — restoring cellular energy and activating longevity proteins from day one of the protocol."</div>
-      <div class="prog-pills">
-        <span class="prog-pill">Energy Restoration</span>
-        <span class="prog-pill">Sleep Architecture</span>
-        <span class="prog-pill">Cellular Longevity</span>
-        <span class="prog-pill">Cognitive Performance</span>
-        <span class="prog-pill">DNA Repair</span>
-      </div>
-    </div>
-    <div class="prog-chips">
-      <div class="prog-chip"><div class="prog-chip-icon">⚡</div><div class="prog-chip-title">Cellular Energy</div><div class="prog-chip-desc">NAD+ directly powers mitochondrial ATP production</div></div>
-      <div class="prog-chip"><div class="prog-chip-icon">🔬</div><div class="prog-chip-title">DNA Repair</div><div class="prog-chip-desc">Activates sirtuins — the longevity proteins</div></div>
-      <div class="prog-chip"><div class="prog-chip-icon">😴</div><div class="prog-chip-title">Deep Sleep</div><div class="prog-chip-desc">Sermorelin optimizes growth hormone pulses at night</div></div>
-      <div class="prog-chip"><div class="prog-chip-icon">🧬</div><div class="prog-chip-title">Healthy Aging</div><div class="prog-chip-desc">Reduces inflammatory markers, supports telomere health</div></div>
-    </div>
-  </div>
-  <div class="prog-products-row">
-    <div class="prog-products-row-inner">
-      <div class="products-grid">
-        <div class="product-card reveal">
-          <div class="product-role">Hero / Premium</div>
-          <div class="product-tag" style="color:#1E3A6E">Longevity & Recovery</div>
-          <div class="product-name">NAD+ Injectable</div>
-          <span class="product-dose">100–500 mg/session</span>
-          <div class="product-desc">IV/IM injection · Cellular energy · DNA repair · Mitochondrial function</div>
-          <div class="product-divider"></div>
-          <div class="product-price">$80</div>
-          <div class="product-old">&nbsp;</div>
-          <button class="btn-add" onclick="addToCart('NAD+ Injectable 500mg', 80, this)">Add to Cart</button>
-        </div>
-        <div class="product-card reveal" style="transition-delay:0.07s">
-          <div class="product-role">Accessible Entry</div>
-          <div class="product-tag" style="color:#1E3A6E">Longevity & Recovery</div>
-          <div class="product-name">NAD+ Liposomal Liquid</div>
-          <span class="product-dose">250 mg/dose · oral</span>
-          <div class="product-desc">High bioavailability · No injection needed · Daily longevity protocol</div>
-          <div class="product-divider"></div>
-          <div class="product-price">$120</div>
-          <div class="product-old">&nbsp;</div>
-          <button class="btn-add" onclick="addToCart('NAD+ Liposomal 1000mg', 120, this)">Add to Cart</button>
-        </div>
-        <div class="product-card reveal" style="transition-delay:0.14s">
-          <div class="product-role">Performance Hero</div>
-          <div class="product-tag" style="color:#1E3A6E">Longevity & Recovery</div>
-          <div class="product-name">Sermorelin</div>
-          <span class="product-dose">200–300 mcg/night</span>
-          <div class="product-desc">GH secretagogue · Deep sleep optimization · Recovery · Anti-aging support</div>
-          <div class="product-divider"></div>
-          <div class="product-price">$149</div>
-          <div class="product-old">&nbsp;</div>
-          <button class="btn-add" onclick="addToCart('Sermorelin', 149, this)">Add to Cart</button>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- BREAK 2 — Before & After + Longevity client -->
-<div class="testi-break">
-  <div class="testi-break-inner">
-    <p class="testi-break-label">Transformations</p>
-    <h3 class="testi-break-title">The difference is visible.</h3>
-    <div class="ba-side reveal">
-      <div class="ba-side-panel ba-side-before">
-        <span class="ba-side-tag">Before</span>
-        <ul class="ba-side-list">
-          <li>Constant fatigue even after 8 hours of sleep</li>
-          <li>Brain fog and poor concentration all day</li>
-          <li>Slow recovery from exercise</li>
-          <li>Visible signs of premature aging</li>
-          <li>Low motivation, flat energy from morning to night</li>
+      <div class="footer-col">
+        <h5>Programs</h5>
+        <ul>
+          <li><a onclick="showProgram('glp1')">GLP-1 / Weight Loss</a></li>
+          <li><a onclick="showProgram('longevity')">Longevity & Recovery</a></li>
+          <li><a onclick="showProgram('testosterone')">Testosterone / Hormone</a></li>
+          <li><a onclick="showProgram('microdose')">Microdosing</a></li>
         </ul>
       </div>
-      <div class="ba-side-panel ba-side-after">
-        <span class="ba-side-tag">After Neo Peptide</span>
-        <ul class="ba-side-list">
-          <li>Waking up genuinely restored and sharp</li>
-          <li>Mental clarity and sustained focus</li>
-          <li>Fast recovery and stronger performance</li>
-          <li>Healthier skin, hair, and energy levels</li>
-          <li>Consistent drive and mood from morning to night</li>
+      <div class="footer-col">
+        <h5>Company</h5>
+        <ul>
+          <li><a href="#">About Us</a></li>
+          <li><a href="#">Lab Standards</a></li>
+          <li><a href="mailto:neopeptides@outlook.com">Contact</a></li>
+          <li><a href="https://instagram.com/neo_peptides" target="_blank">Instagram</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Legal</h5>
+        <ul>
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Terms of Service</a></li>
+          <li><a href="#">Shipping Policy</a></li>
+          <li><a href="#">Research Policy</a></li>
         </ul>
       </div>
     </div>
-    <div style="margin-top:28px;max-width:540px;margin-left:auto;margin-right:auto;border-radius:16px;overflow:hidden;box-shadow:0 24px 60px rgba(0,0,0,0.4)">
-      <img src="fotos/before-after.png" alt="Before and After Neo Peptide" style="width:100%;display:block">
+    <div class="footer-bottom">
+      <p>© 2025 Neo Peptide USA. All rights reserved.</p>
+      <p>🇺🇸 USA GMP Certified · For Research Use Only · Must Be 21+</p>
     </div>
-    <p style="text-align:center;margin-top:14px;font-size:11px;color:rgba(255,255,255,0.2)">* Individual results vary. Real client. Program for research use only.</p>
+    <div class="footer-disclaimer">
+      All products sold by Neo Peptide USA are strictly for in-vitro laboratory research use only. Not for human or animal consumption. Products are not intended to diagnose, treat, cure, or prevent any medical condition. By purchasing, you confirm you are 21+ and acting in compliance with all applicable laws. These statements have not been evaluated by the FDA.
+    </div>
+  </footer>
+
+</div><!-- end view-home -->
+
+<!-- ═══════════════════════════════════════
+     VIEW: PRODUCT
+════════════════════════════════════════ -->
+<div id="view-product" class="view">
+  <div class="pv-top">
+    <button class="back-btn" onclick="showView('home')">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+      All Programs
+    </button>
+  </div>
+  <div class="pv-banner">
+    <div class="pv-banner-inner" id="pvBannerInner">
+      <!-- filled by JS -->
+    </div>
+  </div>
+  <div class="pv-products">
+    <div class="pv-products-inner">
+      <p class="pvp-label">Available Protocols</p>
+      <div class="products-grid" id="pvProductsGrid">
+        <!-- filled by JS -->
+      </div>
+    </div>
   </div>
 </div>
 
-<!-- TESTOSTERONE / HORMONE -->
-<section class="prog-section" id="section-testosterone">
-  <div class="prog-banner testosterone">
-    <div>
-      <div class="prog-stats-row">
-        <span class="prog-stat-item">TRT / Androgens</span>
-        <span class="prog-stat-item">4 Protocols</span>
-        <span class="prog-stat-item">Men 30–50</span>
-        <span class="prog-stat-item">Hormone Optimization</span>
-      </div>
-      <p class="prog-eyebrow">Testosterone / Hormone Program</p>
-      <h2 class="prog-h2">Reclaim your drive.<br>Optimize your hormones.</h2>
-      <p class="prog-text">After 30, testosterone naturally declines 1–2% per year. The effects accumulate silently — fatigue, brain fog, lost motivation, reduced libido. Our protocols are precision optimization for men who take their biology seriously.</p>
-      <div class="prog-pills">
-        <span class="prog-pill">Restored Energy</span>
-        <span class="prog-pill">Lean Muscle</span>
-        <span class="prog-pill">Libido & Drive</span>
-        <span class="prog-pill">Mental Clarity</span>
-        <span class="prog-pill">Mood Stability</span>
-      </div>
-    </div>
-    <div>
-      <div class="hormone-flow">
-        <div class="hormone-step">
-          <div class="hormone-step-num">1</div>
-          <div>
-            <div class="hormone-step-title">Take Hormone Assessment</div>
-            <div class="hormone-step-desc">Identify where your levels stand with a targeted questionnaire</div>
-          </div>
+<!-- ═══════════════════════════════════════
+     VIEW: CHECKOUT STEP 1 — ADDRESS
+════════════════════════════════════════ -->
+<div id="view-checkout-1" class="view">
+  <div class="checkout-view">
+    <div class="checkout-inner">
+      <button class="back-btn" onclick="closeCart();showView('home')">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+        Back
+      </button>
+      <h1 class="checkout-title">Checkout</h1>
+      <p class="checkout-sub">Secure checkout. All transactions are encrypted end-to-end.</p>
+      <div class="checkout-steps">
+        <div class="checkout-step active" id="step1-indicator">
+          <div class="step-circle">1</div>
+          <span class="step-label">Address</span>
         </div>
-        <div class="hormone-step">
-          <div class="hormone-step-num">2</div>
-          <div>
-            <div class="hormone-step-title">Review Your Biomarkers</div>
-            <div class="hormone-step-desc">Order the Male Hormone Panel — total & free testosterone, full workup</div>
-          </div>
-        </div>
-        <div class="hormone-step">
-          <div class="hormone-step-num">3</div>
-          <div>
-            <div class="hormone-step-title">Receive Your Protocol</div>
-            <div class="hormone-step-desc">Dosing tailored to your labs — Cypionate, Oral, or Enclomiphene</div>
-          </div>
-        </div>
-        <div class="hormone-step">
-          <div class="hormone-step-num">4</div>
-          <div>
-            <div class="hormone-step-title">Start Optimization</div>
-            <div class="hormone-step-desc">Most clients notice measurable changes within 3–4 weeks</div>
-          </div>
-        </div>
-        <div class="hormone-step">
-          <div class="hormone-step-num">5</div>
-          <div>
-            <div class="hormone-step-title">Retest & Adjust</div>
-            <div class="hormone-step-desc">Quarterly biomarker review to dial in peak performance</div>
-          </div>
+        <div class="checkout-step" id="step2-indicator">
+          <div class="step-circle">2</div>
+          <span class="step-label">Review</span>
         </div>
       </div>
-    </div>
-  </div>
-  <div class="prog-products-row">
-    <div class="prog-products-row-inner">
-      <div class="products-grid">
-        <div class="product-card reveal">
-          <div class="product-role">Anchor Hero</div>
-          <div class="product-tag" style="color:#7C2C2C">Testosterone / Hormone</div>
-          <div class="product-name">Testosterone Cypionate</div>
-          <span class="product-dose">100–200 mg/wk</span>
-          <div class="product-desc">Injectable TRT · Muscle preservation · Libido · Sustained energy</div>
-          <div class="product-divider"></div>
-          <div class="product-price">$129</div>
-          <div class="product-old">&nbsp;</div>
-          <button class="btn-add" onclick="addToCart('Testosterone Cypionate', 129, this)">Add to Cart</button>
+      <div class="checkout-layout">
+        <div class="checkout-form-box">
+          <h2 class="form-section-title">Shipping Address</h2>
+          <form id="addressForm" onsubmit="goToReview(event)">
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label">Full Name <span class="req">*</span></label>
+                <input class="form-input" type="text" placeholder="Enter your full name" required id="f-name">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Email Address <span class="req">*</span></label>
+                <input class="form-input" type="email" placeholder="you@example.com" required id="f-email">
+              </div>
+            </div>
+            <div class="form-row full">
+              <div class="form-group">
+                <label class="form-label">Phone Number <span class="req">*</span></label>
+                <input class="form-input" type="tel" placeholder="(555) 555-1234" required id="f-phone">
+              </div>
+            </div>
+            <div class="form-row full">
+              <div class="form-group">
+                <label class="form-label">Street Address <span class="req">*</span></label>
+                <input class="form-input" type="text" placeholder="Start typing your address..." required id="f-street">
+              </div>
+            </div>
+            <div class="form-row three">
+              <div class="form-group">
+                <label class="form-label">City <span class="req">*</span></label>
+                <input class="form-input" type="text" placeholder="City" required id="f-city">
+              </div>
+              <div class="form-group">
+                <label class="form-label">State <span class="req">*</span></label>
+                <select class="form-input" required id="f-state">
+                  <option value="">Select</option>
+                  <option>AL</option><option>AK</option><option>AZ</option><option>AR</option><option>CA</option>
+                  <option>CO</option><option>CT</option><option>DE</option><option>FL</option><option>GA</option>
+                  <option>HI</option><option>ID</option><option>IL</option><option>IN</option><option>IA</option>
+                  <option>KS</option><option>KY</option><option>LA</option><option>ME</option><option>MD</option>
+                  <option>MA</option><option>MI</option><option>MN</option><option>MS</option><option>MO</option>
+                  <option>MT</option><option>NE</option><option>NV</option><option>NH</option><option>NJ</option>
+                  <option>NM</option><option>NY</option><option>NC</option><option>ND</option><option>OH</option>
+                  <option>OK</option><option>OR</option><option>PA</option><option>RI</option><option>SC</option>
+                  <option>SD</option><option>TN</option><option>TX</option><option>UT</option><option>VT</option>
+                  <option>VA</option><option>WA</option><option>WV</option><option>WI</option><option>WY</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label">ZIP Code <span class="req">*</span></label>
+                <input class="form-input" type="text" placeholder="12345" required id="f-zip" maxlength="10">
+              </div>
+            </div>
+            <button class="btn-continue" type="submit">
+              Continue to Review
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </button>
+          </form>
         </div>
-        <div class="product-card reveal" style="transition-delay:0.07s">
-          <div class="product-role">Accessibility Play</div>
-          <div class="product-tag" style="color:#7C2C2C">Testosterone / Hormone</div>
-          <div class="product-name">Testosterone Oral</div>
-          <span class="product-dose">oral · daily dose</span>
-          <div class="product-desc">No injection needed · Convenient daily protocol · Full TRT benefits</div>
-          <div class="product-divider"></div>
-          <div class="product-price">$149</div>
-          <div class="product-old">&nbsp;</div>
-          <button class="btn-add" onclick="addToCart('Testosterone Oral', 149, this)">Add to Cart</button>
-        </div>
-        <div class="product-card reveal" style="transition-delay:0.14s">
-          <div class="product-role">Entry / Softer TRT</div>
-          <div class="product-tag" style="color:#7C2C2C">Testosterone / Hormone</div>
-          <div class="product-name">Enclomiphene</div>
-          <span class="product-dose">12.5–25 mg/day</span>
-          <div class="product-desc">Stimulates natural production · Preserves fertility · Ideal first step</div>
-          <div class="product-divider"></div>
-          <div class="product-price">$99</div>
-          <div class="product-old">&nbsp;</div>
-          <button class="btn-add" onclick="addToCart('Enclomiphene', 99, this)">Add to Cart</button>
-        </div>
-        <div class="product-card reveal" style="transition-delay:0.21s">
-          <div class="product-role">Trust / Upsell Tool</div>
-          <div class="product-tag" style="color:#7C2C2C">Testosterone / Hormone</div>
-          <div class="product-name">Male Hormone Panel</div>
-          <span class="product-dose">full biomarker panel</span>
-          <div class="product-desc">Total & free testosterone · Complete hormone workup · Start here</div>
-          <div class="product-divider"></div>
-          <div class="product-price">$79</div>
-          <div class="product-old">&nbsp;</div>
-          <button class="btn-add" onclick="addToCart('Male Hormone Panel', 79, this)">Add to Cart</button>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- BREAK 3 — Hormone & general testimonials -->
-<div class="testi-break">
-  <div class="testi-break-inner">
-    <p class="testi-break-label">Client Stories</p>
-    <h3 class="testi-break-title">Hear it from our clients.</h3>
-    <div class="testi-break-grid">
-      <div class="testi-card reveal">
-        <div class="testi-thumb">
-          <div class="testi-glow" style="background:radial-gradient(ellipse at 50% 30%, rgba(139,37,37,0.32) 0%, transparent 65%)"></div>
-          <div class="testi-tag">Testosterone · 6 weeks</div>
-          <div class="testi-play"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="6 3 20 12 6 21 6 3"/></svg></div>
-        </div>
-        <div class="testi-info">
-          <strong>Marcus T., 45</strong>
-          <span>Men's Hormone Optimization</span>
-          <div class="testi-result"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Energy & libido fully restored</div>
-        </div>
-      </div>
-      <div class="testi-card reveal" style="transition-delay:0.1s">
-        <div class="testi-thumb">
-          <div class="testi-glow" style="background:radial-gradient(ellipse at 50% 30%, rgba(139,37,37,0.25) 0%, transparent 65%)"></div>
-          <div class="testi-tag">TRT · 8 weeks</div>
-          <div class="testi-play"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="6 3 20 12 6 21 6 3"/></svg></div>
-        </div>
-        <div class="testi-info">
-          <strong>Ryan B., 39</strong>
-          <span>Testosterone Cypionate</span>
-          <div class="testi-result"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> +40% gym performance in 8 weeks</div>
-        </div>
-      </div>
-      <div class="testi-card reveal" style="transition-delay:0.2s">
-        <div class="testi-thumb">
-          <div class="testi-glow" style="background:radial-gradient(ellipse at 50% 30%, rgba(30,79,160,0.28) 0%, transparent 65%)"></div>
-          <div class="testi-tag">Longevity · 8 weeks</div>
-          <div class="testi-play"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="6 3 20 12 6 21 6 3"/></svg></div>
-        </div>
-        <div class="testi-info">
-          <strong>Jennifer K., 52</strong>
-          <span>Longevity & Recovery Program</span>
-          <div class="testi-result"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Sleep & mental clarity transformed</div>
+        <div class="order-summary" id="orderSummary1">
+          <!-- filled by JS -->
         </div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- MICRODOSING / LIGHT GLP-1 -->
-<section class="prog-section" id="section-microdose">
-  <div class="prog-banner microdose">
-    <div>
-      <div class="prog-stats-row">
-        <span class="prog-stat-item">Microdose GLP-1</span>
-        <span class="prog-stat-item">2 Protocols</span>
-        <span class="prog-stat-item">Hesitant Buyer</span>
-        <span class="prog-stat-item">Entry + Upsell</span>
-      </div>
-      <p class="prog-eyebrow">Microdosing / Light GLP-1 Program</p>
-      <h2 class="prog-h2">Start light.<br>Scale when ready.</h2>
-      <p class="prog-text">Not ready for a full GLP-1 protocol? Start with a precision microdose. Same science. Lower commitment. Real results — appetite control, steady energy, and mood balance without aggressive suppression.</p>
-      <div class="micro-obj-block">
-        <div class="micro-obj-title">This is for you if</div>
-        <ul class="micro-obj-list">
-          <li>You're curious but concerned about full-dose side effects</li>
-          <li>You just want cravings and energy under control</li>
-          <li>You're not ready to commit to a full protocol yet</li>
-          <li>You want to test the science before going all in</li>
-        </ul>
-        <div class="micro-badge">Start Light. Scale When Ready.</div>
-      </div>
-    </div>
-    <div class="prog-chips">
-      <div class="prog-chip"><div class="prog-chip-icon">🌿</div><div class="prog-chip-title">Gentle Appetite Control</div><div class="prog-chip-desc">Subtle reduction in hunger without aggressive suppression</div></div>
-      <div class="prog-chip"><div class="prog-chip-icon">⚡</div><div class="prog-chip-title">Steady Energy</div><div class="prog-chip-desc">More stable energy through improved metabolic function</div></div>
-      <div class="prog-chip"><div class="prog-chip-icon">😌</div><div class="prog-chip-title">Mood Balance</div><div class="prog-chip-desc">GLP-1 receptors in the brain also influence serotonin</div></div>
-      <div class="prog-chip"><div class="prog-chip-icon">✅</div><div class="prog-chip-title">Minimal Side Effects</div><div class="prog-chip-desc">Low-dose protocols dramatically better tolerated</div></div>
-    </div>
-  </div>
-  <div class="prog-products-row">
-    <div class="prog-products-row-inner">
-      <div class="products-grid">
-        <div class="product-card reveal">
-          <div class="product-role">Entry / Upsell</div>
-          <div class="product-tag" style="color:#7A5230">Microdosing</div>
-          <div class="product-name">Microdose Semaglutide</div>
-          <span class="product-dose">0.05–0.25 mg/wk</span>
-          <div class="product-desc">Low-dose GLP-1 · Appetite control · Energy support · Mood balance</div>
-          <div class="product-divider"></div>
-          <div class="product-price">$149</div>
-          <div class="product-old">&nbsp;</div>
-          <button class="btn-add" onclick="addToCart('Microdose Semaglutide', 149, this)">Add to Cart</button>
+<!-- ═══════════════════════════════════════
+     VIEW: CHECKOUT STEP 2 — REVIEW & PAY
+════════════════════════════════════════ -->
+<div id="view-checkout-2" class="view">
+  <div class="checkout-view">
+    <div class="checkout-inner">
+      <button class="back-btn" onclick="showView('checkout-1')">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+        Back to Address
+      </button>
+      <h1 class="checkout-title">Review & Pay</h1>
+      <p class="checkout-sub">Confirm your order and complete payment.</p>
+      <div class="checkout-steps">
+        <div class="checkout-step done" id="step1-indicator-2">
+          <div class="step-circle">✓</div>
+          <span class="step-label">Address</span>
         </div>
-        <div class="product-card reveal" style="transition-delay:0.07s">
-          <div class="product-role">Entry / Upsell</div>
-          <div class="product-tag" style="color:#7A5230">Microdosing</div>
-          <div class="product-name">Microdose Tirzepatide</div>
-          <span class="product-dose">0.5–2 mg/wk</span>
-          <div class="product-desc">Low-dose dual agonist · Gentle metabolic support · No aggressive side effects</div>
-          <div class="product-divider"></div>
-          <div class="product-price">$169</div>
-          <div class="product-old">&nbsp;</div>
-          <button class="btn-add" onclick="addToCart('Microdose Tirzepatide', 169, this)">Add to Cart</button>
+        <div class="checkout-step active" id="step2-indicator-2">
+          <div class="step-circle">2</div>
+          <span class="step-label">Review</span>
         </div>
       </div>
-    </div>
-  </div>
-</section>
+      <div class="review-layout">
+        <div class="review-box">
+          <!-- ACKNOWLEDGMENT -->
+          <div class="ack-block">
+            <div class="ack-header">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              Acknowledgement Required
+            </div>
+            <label class="ack-check">
+              <input type="checkbox" id="ack1" onchange="checkAck()">
+              <div class="ack-box" id="ackBox1"></div>
+              <span class="ack-text">I confirm I am 21 years of age or older.</span>
+            </label>
+            <label class="ack-check">
+              <input type="checkbox" id="ack2" onchange="checkAck()">
+              <div class="ack-box" id="ackBox2"></div>
+              <span class="ack-text">I understand these compounds are sold for laboratory and research purposes only and are not for human consumption.</span>
+            </label>
+          </div>
 
-<!-- NUMBERS -->
-<div class="numbers">
-  <div class="numbers-inner">
-    <div class="number-item reveal"><div class="number-val" data-target="12847">0<span>+</span></div><div class="number-label">Orders Fulfilled</div></div>
-    <div class="number-item reveal" style="transition-delay:0.1s"><div class="number-val" data-target="99" data-suffix="%">0<span>%</span></div><div class="number-label">Purity Verified</div></div>
-    <div class="number-item reveal" style="transition-delay:0.2s"><div class="number-val" data-target="4800">0<span>+</span></div><div class="number-label">Active Clients</div></div>
-    <div class="number-item reveal" style="transition-delay:0.3s"><div class="number-val" data-target="48" data-suffix="h">0<span>h</span></div><div class="number-label">Dispatch Window</div></div>
+          <!-- PAYMENT METHODS -->
+          <div>
+            <p class="payment-methods-label">Payment Method</p>
+
+            <!-- ZELLE — available -->
+            <div class="payment-method selected" id="pm-zelle" onclick="selectPayment('zelle')">
+              <div class="pm-radio"><div class="pm-dot"></div></div>
+              <div class="pm-logo">💚</div>
+              <div class="pm-info">
+                <div class="pm-name">Pay with Zelle</div>
+                <div class="pm-desc">Instant bank transfer — no fees</div>
+              </div>
+            </div>
+            <div class="zelle-detail show" id="zelleDetail">
+              <div class="zelle-detail-title">Zelle Payment Instructions</div>
+              <div class="zelle-detail-row"><strong>Send to</strong> neopeptides@outlook.com</div>
+              <div class="zelle-detail-row"><strong>Memo</strong> Your order # will be provided</div>
+              <div class="zelle-amount" id="zelleAmount">$0.00</div>
+            </div>
+
+            <!-- CARD — coming soon -->
+            <div class="payment-method disabled">
+              <div class="pm-radio"></div>
+              <div class="pm-logo">💳</div>
+              <div class="pm-info">
+                <div class="pm-name">Pay with Card</div>
+                <div class="pm-desc">Debit or credit card</div>
+              </div>
+              <span class="pm-soon">Coming Soon</span>
+            </div>
+
+            <!-- PAYPAL — coming soon -->
+            <div class="payment-method disabled">
+              <div class="pm-radio"></div>
+              <div class="pm-logo">🅿️</div>
+              <div class="pm-info">
+                <div class="pm-name">Pay with PayPal</div>
+                <div class="pm-desc">PayPal, Venmo, Pay Later</div>
+              </div>
+              <span class="pm-soon">Coming Soon</span>
+            </div>
+
+            <!-- ACH — coming soon -->
+            <div class="payment-method disabled">
+              <div class="pm-radio"></div>
+              <div class="pm-logo">🏦</div>
+              <div class="pm-info">
+                <div class="pm-name">Pay with Bank (ACH)</div>
+                <div class="pm-desc">Direct bank transfer</div>
+              </div>
+              <span class="pm-soon">Coming Soon</span>
+            </div>
+
+            <!-- CRYPTO — coming soon -->
+            <div class="payment-method disabled" style="margin-bottom:0">
+              <div class="pm-radio"></div>
+              <div class="pm-logo">₿</div>
+              <div class="pm-info">
+                <div class="pm-name">Pay with Crypto</div>
+                <div class="pm-desc">BTC, ETH, USDC</div>
+              </div>
+              <span class="pm-soon">Coming Soon</span>
+            </div>
+          </div>
+
+          <button class="btn-confirm" id="btnConfirm" disabled onclick="confirmOrder()">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            Confirm Payment
+          </button>
+          <p style="text-align:center;font-size:11px;color:var(--muted);margin-top:10px">🔒 Secure · COA Guaranteed · Ships in 48h</p>
+        </div>
+        <div class="order-summary" id="orderSummary2">
+          <!-- filled by JS -->
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 
-<!-- QUALITY -->
-<section class="quality" id="quality">
-  <div class="quality-inner">
-    <div style="margin-bottom:56px">
-      <p class="section-label reveal">Our Standards</p>
-      <h2 class="section-h2 reveal" style="transition-delay:0.08s">No shortcuts.<br>No exceptions.</h2>
-    </div>
-    <div class="quality-grid">
-      <div class="quality-item reveal">
-        <div class="quality-num">01</div>
-        <div class="quality-title">HPLC + Mass Spectrometry</div>
-        <p class="quality-text">Every batch undergoes high-performance liquid chromatography and mass spectrometry analysis. Identity and purity confirmed before any compound ships.</p>
+<!-- ═══════════════════════════════════════
+     VIEW: CONFIRMATION
+════════════════════════════════════════ -->
+<div id="view-confirm" class="view">
+  <div class="confirm-view">
+    <div class="confirm-box">
+      <div class="confirm-icon">✅</div>
+      <h2 class="confirm-title">Order Received!</h2>
+      <p class="confirm-sub">Thank you for your order. Please send your Zelle payment to complete it. We'll confirm and ship within 48 hours.</p>
+      <div class="confirm-detail" id="confirmDetail">
+        <!-- filled by JS -->
       </div>
-      <div class="quality-item reveal" style="transition-delay:0.1s">
-        <div class="quality-num">02</div>
-        <div class="quality-title">Third-Party Verified</div>
-        <p class="quality-text">Independent laboratory verification for every product. Certificate of Analysis available on request. Full transparency is non-negotiable.</p>
-      </div>
-      <div class="quality-item reveal" style="transition-delay:0.2s">
-        <div class="quality-num">03</div>
-        <div class="quality-title">USA GMP Certified Facility</div>
-        <p class="quality-text">Synthesized and packaged in a USA-based GMP certified facility. Pharmaceutical-grade standards throughout every step of production.</p>
-      </div>
-      <div class="quality-item reveal" style="transition-delay:0.3s">
-        <div class="quality-num">04</div>
-        <div class="quality-title">Temperature-Controlled Shipping</div>
-        <p class="quality-text">Shipped in insulated packaging to preserve compound stability. Discreet, secure, and tracked from our facility to your door within 48 hours.</p>
-      </div>
+      <button class="btn-home" onclick="showView('home');cart=[];refreshCart()">Back to Home</button>
     </div>
   </div>
-</section>
+</div>
 
-<!-- PRODUCTS BY BUNDLE (removed — products are in each program section above) -->
-<section class="products-section" id="shop" style="display:none">
-  <div class="products-inner">
-    <div style="margin-bottom:44px">
-      <p class="section-label reveal">Products</p>
-      <h2 class="section-h2 reveal" style="transition-delay:0.08s">Choose your program.</h2>
-    </div>
-    <div class="bundle-tabs">
-      <button class="bundle-tab active" onclick="switchBundle('glp1')">GLP-1 / Weight Loss</button>
-      <button class="bundle-tab" onclick="switchBundle('longevity')">Longevity</button>
-      <button class="bundle-tab" onclick="switchBundle('testosterone')">Testosterone</button>
-      <button class="bundle-tab" onclick="switchBundle('microdose')">Microdosing</button>
-    </div>
-
-    <div class="bundle-pane active" id="pane-glp1">
-      <div class="products-grid">
-        <div class="product-card">
-          <div class="product-tag" style="color:#2E6B45">GLP-1 / Weight Loss</div>
-          <div class="product-name">Compounded Semaglutide</div>
-          <div class="product-desc">Weekly injection · Appetite suppression · Sustained weight loss · GLP-1 agonist</div>
-          <div class="product-divider"></div>
-          <div class="product-price">$249</div>
-          <div class="product-old">&nbsp;</div>
-          <button class="btn-add" onclick="addToCart('Compounded Semaglutide', 249, this)">Add to Cart</button>
-        </div>
-        <div class="product-card">
-          <div class="product-tag" style="color:#2E6B45">GLP-1 / Weight Loss</div>
-          <div class="product-name">Compounded Tirzepatide</div>
-          <div class="product-desc">Dual GIP+GLP-1 agonist · Superior efficacy · Faster results</div>
-          <div class="product-divider"></div>
-          <div class="product-price">$289</div>
-          <div class="product-old">&nbsp;</div>
-          <button class="btn-add" onclick="addToCart('Compounded Tirzepatide', 289, this)">Add to Cart</button>
-        </div>
-        <div class="product-card">
-          <div class="product-tag" style="color:#2E6B45">GLP-1 / Weight Loss</div>
-          <div class="product-name">Zepbound</div>
-          <div class="product-desc">Brand-name tirzepatide · FDA approved · Highest tier GLP-1 program</div>
-          <div class="product-divider"></div>
-          <div class="product-price">$499</div>
-          <div class="product-old">&nbsp;</div>
-          <button class="btn-add" onclick="addToCart('Zepbound', 499, this)">Add to Cart</button>
-        </div>
-        <div class="product-card">
-          <div class="product-tag" style="color:#2E6B45">GLP-1 / Weight Loss</div>
-          <div class="product-name">Microdose Semaglutide</div>
-          <div class="product-desc">Low-dose entry protocol · Appetite + energy · Gentle on body</div>
-          <div class="product-divider"></div>
-          <div class="product-price">$149</div>
-          <div class="product-old">&nbsp;</div>
-          <button class="btn-add" onclick="addToCart('Microdose Semaglutide', 149, this)">Add to Cart</button>
-        </div>
-        <div class="product-card">
-          <div class="product-tag" style="color:#2E6B45">GLP-1 / Weight Loss</div>
-          <div class="product-name">Microdose Tirzepatide</div>
-          <div class="product-desc">Low-dose dual agonist · Metabolic support · Minimal side effects</div>
-          <div class="product-divider"></div>
-          <div class="product-price">$169</div>
-          <div class="product-old">&nbsp;</div>
-          <button class="btn-add" onclick="addToCart('Microdose Tirzepatide', 169, this)">Add to Cart</button>
-        </div>
-      </div>
-    </div>
-
-    <div class="bundle-pane" id="pane-longevity">
-      <div class="products-grid">
-        <div class="product-card">
-          <div class="product-tag" style="color:#1E3A6E">Longevity & Recovery</div>
-          <div class="product-name">NAD+ Injectable</div>
-          <div class="product-desc">500mg · Cellular energy · DNA repair · Mitochondrial function</div>
-          <div class="product-divider"></div>
-          <div class="product-price">$80</div>
-          <div class="product-old">&nbsp;</div>
-          <button class="btn-add" onclick="addToCart('NAD+ Injectable 500mg', 80, this)">Add to Cart</button>
-        </div>
-        <div class="product-card">
-          <div class="product-tag" style="color:#1E3A6E">Longevity & Recovery</div>
-          <div class="product-name">NAD+ Liposomal Liquid</div>
-          <div class="product-desc">1000mg · Oral · High bioavailability · Daily longevity protocol</div>
-          <div class="product-divider"></div>
-          <div class="product-price">$120</div>
-          <div class="product-old">&nbsp;</div>
-          <button class="btn-add" onclick="addToCart('NAD+ Liposomal 1000mg', 120, this)">Add to Cart</button>
-        </div>
-        <div class="product-card">
-          <div class="product-tag" style="color:#1E3A6E">Longevity & Recovery</div>
-          <div class="product-name">Sermorelin</div>
-          <div class="product-desc">GH secretagogue · Sleep quality · Recovery · Anti-aging support</div>
-          <div class="product-divider"></div>
-          <div class="product-price">$149</div>
-          <div class="product-old">&nbsp;</div>
-          <button class="btn-add" onclick="addToCart('Sermorelin', 149, this)">Add to Cart</button>
-        </div>
-      </div>
-    </div>
-
-    <div class="bundle-pane" id="pane-testosterone">
-      <div class="products-grid">
-        <div class="product-card">
-          <div class="product-tag" style="color:#7C2C2C">Testosterone / Hormone</div>
-          <div class="product-name">Testosterone Cypionate</div>
-          <div class="product-desc">Injectable TRT · Muscle preservation · Libido · Energy</div>
-          <div class="product-divider"></div>
-          <div class="product-price">$129</div>
-          <div class="product-old">&nbsp;</div>
-          <button class="btn-add" onclick="addToCart('Testosterone Cypionate', 129, this)">Add to Cart</button>
-        </div>
-        <div class="product-card">
-          <div class="product-tag" style="color:#7C2C2C">Testosterone / Hormone</div>
-          <div class="product-name">Testosterone Oral</div>
-          <div class="product-desc">Oral capsule · No injection needed · Convenient daily protocol</div>
-          <div class="product-divider"></div>
-          <div class="product-price">$149</div>
-          <div class="product-old">&nbsp;</div>
-          <button class="btn-add" onclick="addToCart('Testosterone Oral', 149, this)">Add to Cart</button>
-        </div>
-        <div class="product-card">
-          <div class="product-tag" style="color:#7C2C2C">Testosterone / Hormone</div>
-          <div class="product-name">Enclomiphene</div>
-          <div class="product-desc">Natural testosterone boost · Preserves fertility · Oral protocol</div>
-          <div class="product-divider"></div>
-          <div class="product-price">$99</div>
-          <div class="product-old">&nbsp;</div>
-          <button class="btn-add" onclick="addToCart('Enclomiphene', 99, this)">Add to Cart</button>
-        </div>
-        <div class="product-card">
-          <div class="product-tag" style="color:#7C2C2C">Testosterone / Hormone</div>
-          <div class="product-name">Male Hormone Panel</div>
-          <div class="product-desc">Complete biomarker assessment · Total & free testosterone · Full panel</div>
-          <div class="product-divider"></div>
-          <div class="product-price">$79</div>
-          <div class="product-old">&nbsp;</div>
-          <button class="btn-add" onclick="addToCart('Male Hormone Panel', 79, this)">Add to Cart</button>
-        </div>
-      </div>
-    </div>
-
-    <div class="bundle-pane" id="pane-microdose">
-      <div class="products-grid">
-        <div class="product-card">
-          <div class="product-tag" style="color:#7A5230">Microdosing</div>
-          <div class="product-name">Microdose Semaglutide</div>
-          <div class="product-desc">Low-dose GLP-1 · Appetite control · Energy support · Mood balance</div>
-          <div class="product-divider"></div>
-          <div class="product-price">$149</div>
-          <div class="product-old">&nbsp;</div>
-          <button class="btn-add" onclick="addToCart('Microdose Semaglutide', 149, this)">Add to Cart</button>
-        </div>
-        <div class="product-card">
-          <div class="product-tag" style="color:#7A5230">Microdosing</div>
-          <div class="product-name">Microdose Tirzepatide</div>
-          <div class="product-desc">Low-dose dual agonist · Gentle metabolic support · No aggressive side effects</div>
-          <div class="product-divider"></div>
-          <div class="product-price">$169</div>
-          <div class="product-old">&nbsp;</div>
-          <button class="btn-add" onclick="addToCart('Microdose Tirzepatide', 169, this)">Add to Cart</button>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- FINAL CTA -->
-<section class="final-cta">
-  <div class="final-glow"></div>
-  <p class="final-label reveal">Start Today</p>
-  <h2 class="final-h2 reveal" style="transition-delay:0.08s">Your transformation starts with one decision.</h2>
-  <p class="final-sub reveal" style="transition-delay:0.16s">Thousands of people have already made the switch. GMP certified, shipped in 48 hours, COA guaranteed on every order.</p>
-  <div class="final-actions reveal" style="transition-delay:0.24s">
-    <a href="#section-glp1" class="btn-lg">Choose Your Program</a>
-    <a href="mailto:neopeptides@outlook.com" class="btn-lg-outline">Talk to Our Team</a>
-  </div>
-  <p class="final-disclaimer reveal" style="transition-delay:0.32s">For research use only. Not for human consumption. Must be 21+. These statements have not been evaluated by the FDA.</p>
-</section>
-
-<!-- FOOTER -->
-<footer>
-  <div class="footer-top">
-    <div>
-      <div class="footer-logo">
-        <div class="logo-mark">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
-        </div>
-        Neo Peptide
-      </div>
-      <p class="footer-desc">Medical-grade peptide programs for weight loss, longevity, and hormone optimization. Made in the USA. Built with integrity.</p>
-      <div class="footer-social">
-        <a class="social-btn" href="https://instagram.com/neo_peptides" target="_blank" title="Instagram">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
-        </a>
-        <a class="social-btn" href="mailto:neopeptides@outlook.com" title="Email">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-        </a>
-      </div>
-    </div>
-    <div class="footer-col">
-      <h5>Programs</h5>
-      <ul>
-        <li><a href="#section-glp1">GLP-1 / Weight Loss</a></li>
-        <li><a href="#section-longevity">Longevity & Recovery</a></li>
-        <li><a href="#section-testosterone">Testosterone / Hormone</a></li>
-        <li><a href="#section-microdose">Microdosing</a></li>
-      </ul>
-    </div>
-    <div class="footer-col">
-      <h5>Company</h5>
-      <ul>
-        <li><a href="#quality">About Us</a></li>
-        <li><a href="#quality">Lab Standards</a></li>
-        <li><a href="mailto:neopeptides@outlook.com">Contact</a></li>
-        <li><a href="https://instagram.com/neo_peptides" target="_blank">Instagram</a></li>
-      </ul>
-    </div>
-    <div class="footer-col">
-      <h5>Legal</h5>
-      <ul>
-        <li><a href="#">Privacy Policy</a></li>
-        <li><a href="#">Terms of Service</a></li>
-        <li><a href="#">Shipping Policy</a></li>
-        <li><a href="#">Research Policy</a></li>
-      </ul>
-    </div>
-  </div>
-  <div class="footer-bottom">
-    <p>© 2025 Neo Peptide USA. All rights reserved.</p>
-    <p>🇺🇸 USA GMP Certified · For Research Use Only · Must Be 21+</p>
-  </div>
-  <div class="footer-disclaimer">
-    All products sold by Neo Peptide USA are strictly for in-vitro laboratory research use only. Not for human or animal consumption. Products are not intended to diagnose, treat, cure, or prevent any medical condition. By purchasing, you confirm you are 21+ and acting in compliance with all applicable laws. These statements have not been evaluated by the FDA.
-  </div>
-</footer>
-
-<!-- CART -->
+<!-- ═══════════════════════════════════════
+     CART DRAWER
+════════════════════════════════════════ -->
 <div class="cart-overlay" id="cartOverlay" onclick="closeCart()"></div>
 <div class="cart-drawer" id="cartDrawer">
   <div class="cart-head">
@@ -1501,81 +939,18 @@
       <span>Total</span>
       <strong id="cartTotal">$0.00</strong>
     </div>
-    <button class="btn-checkout">Proceed to Checkout →</button>
+    <button class="btn-checkout" onclick="goToCheckout()">Proceed to Checkout →</button>
     <p class="cart-secure">🔒 Secure · COA Guaranteed · Ships in 48h</p>
   </div>
 </div>
 
-<!-- CRISP LIVE CHAT + GEMINI AI -->
-<script>
-  window.$crisp = [];
-  window.CRISP_WEBSITE_ID = "3377d9c1-4785-497e-b676-bc91178e0219";
-  (function() {
-    var s = document.createElement("script");
-    s.src = "https://client.crisp.chat/l.js";
-    s.async = 1;
-    document.getElementsByTagName("head")[0].appendChild(s);
-  })();
-
-  // Brand color
-  $crisp.push(["config", "color:theme", ["#1855E8"]]);
-  $crisp.push(["config", "position:reverse", [false]]);
-
-  // AI: conversation memory (resets on page reload, natural for chat)
-  var _aiHistory = [];
-  var _aiPending = false;
-
-  // Listen for visitor messages and reply with Gemini AI
-  $crisp.push(["on", "message:sent", function(message) {
-    if (_aiPending || message.type !== "text") return;
-    _aiPending = true;
-
-    var userText = message.content;
-    _aiHistory.push({ role: "user", parts: [{ text: userText }] });
-
-    fetch("https://neopeptide.vercel.app/api/chat", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ message: userText, history: _aiHistory.slice(-8) })
-    })
-    .then(function(r) { return r.json(); })
-    .then(function(data) {
-      _aiPending = false;
-      if (data.reply) {
-        _aiHistory.push({ role: "model", parts: [{ text: data.reply }] });
-        $crisp.push(["do", "message:show", ["text", data.reply]]);
-      }
-    })
-    .catch(function() {
-      _aiPending = false;
-      $crisp.push(["do", "message:show", ["text",
-        "Thanks for your message. Our team will follow up with you shortly."
-      ]]);
-    });
-  }]);
-</script>
-
 <!-- MOBILE BAR -->
 <div class="mobile-bar" id="mobileBar">
-  <a href="#programs" class="mb-primary">Explore Programs →</a>
+  <button class="mb-primary" onclick="document.getElementById('programs').scrollIntoView({behavior:'smooth'});showView('home')">Explore Programs →</button>
   <button class="mb-ghost" onclick="openCart()">Cart (<span id="mobileCartCount">0</span>)</button>
 </div>
 
-<!-- EXIT POPUP -->
-<div class="exit-wrap" id="exitWrap" onclick="if(event.target===this)closeExit()">
-  <div class="exit-box" id="exitBox">
-    <button class="exit-close" onclick="closeExit()">✕</button>
-    <p class="exit-tag">First Order Offer</p>
-    <h3 class="exit-h3">Get <span>10% Off</span><br>Your First Order</h3>
-    <p class="exit-sub">Join 4,800+ clients already using Neo Peptide. Get your discount and be first to hear about new programs.</p>
-    <form class="exit-form" onsubmit="submitExit(event)">
-      <input class="exit-input" id="exitEmail" type="email" placeholder="your@email.com" required>
-      <button class="exit-submit" type="submit">Claim</button>
-    </form>
-    <p class="exit-skip" onclick="closeExit()">No thanks, I'll pay full price</p>
-  </div>
-</div>
-
+<!-- LEGAL -->
 <div id="legalOverlay" class="legal-overlay">
   <div class="legal-box">
     <div class="legal-header">⚠ Important Legal Notice – Please Read</div>
@@ -1584,110 +959,265 @@
       <p class="legal-note"><strong>NOTE:</strong> All of our compounds are sold individually, and DO NOT include research supplies such as bacteriostatic water or syringes. Most are sold in powder form and require reconstitution with a suitable diluent solution prior to research.</p>
     </div>
     <div class="legal-btns">
-      <button class="legal-btn-accept" onclick="legalAccept()">I Accept &mdash; I Acknowledge That I Am a Valid Researcher Over 21 Years of Age</button>
+      <button class="legal-btn-accept" onclick="legalAccept()">I Accept — I Acknowledge That I Am a Valid Researcher Over 21 Years of Age</button>
       <button class="legal-btn-decline" onclick="legalDecline()">I Decline</button>
     </div>
   </div>
 </div>
 
+<!-- CRISP LIVE CHAT -->
 <script>
-// LEGAL DISCLAIMER
-(function() {
-  if (!localStorage.getItem('neopeptide_legal_accepted')) {
-    var overlay = document.getElementById('legalOverlay');
-    overlay.style.display = 'flex';
-    document.body.style.overflow = 'hidden';
+  window.$crisp=[];window.CRISP_WEBSITE_ID="3377d9c1-4785-497e-b676-bc91178e0219";
+  (function(){var s=document.createElement("script");s.src="https://client.crisp.chat/l.js";s.async=1;document.getElementsByTagName("head")[0].appendChild(s)})();
+  $crisp.push(["config","color:theme",["#1855E8"]]);
+  var _aiHistory=[],_aiPending=false;
+  $crisp.push(["on","message:sent",function(message){
+    if(_aiPending||message.type!=="text")return;_aiPending=true;
+    var userText=message.content;_aiHistory.push({role:"user",parts:[{text:userText}]});
+    fetch("https://neopeptide.vercel.app/api/chat",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({message:userText,history:_aiHistory.slice(-8)})})
+    .then(function(r){return r.json()}).then(function(data){_aiPending=false;if(data.reply){_aiHistory.push({role:"model",parts:[{text:data.reply}]});$crisp.push(["do","message:show",["text",data.reply]])}})
+    .catch(function(){_aiPending=false;$crisp.push(["do","message:show",["text","Thanks for your message. Our team will follow up shortly."]])});
+  }]);
+</script>
+
+<script>
+/* ═══════════════════════════════════════
+   PROGRAM DATA
+════════════════════════════════════════ */
+const PROGRAMS = {
+  glp1: {
+    id: 'glp1',
+    name: 'GLP-1 / Weight Loss',
+    eyebrow: 'GLP-1 / Weight Loss Program',
+    headline: 'Reshape your body.<br>Reset your metabolism.',
+    text: 'GLP-1 receptor agonists mimic a naturally occurring hormone that regulates hunger signals in the brain. The result is dramatically reduced appetite, improved insulin sensitivity, and sustainable fat loss — without the crash of restrictive diets.',
+    pills: ['Appetite Control','Fat Metabolism','Blood Sugar','Cravings Reduction','Energy Stabilization'],
+    bgClass: 'glp1',
+    tagColor: '#2E6B45',
+    products: [
+      {role:'Anchor / Hero',name:'Compounded Semaglutide',dose:'0.25–2.4 mg/wk',desc:'Weekly injection · Appetite suppression · Sustained weight loss · GLP-1 agonist',price:249},
+      {role:'Premium Hero',name:'Compounded Tirzepatide',dose:'2.5–15 mg/wk',desc:'Dual GIP+GLP-1 agonist · Superior efficacy · Faster results',price:289},
+      {role:'Trust Builder',name:'Zepbound',dose:'2.5–15 mg/wk',desc:'Brand-name tirzepatide · FDA approved · Highest tier GLP-1 program',price:499},
+      {role:'Entry / Upsell',name:'Microdose Semaglutide',dose:'0.05–0.25 mg/wk',desc:'Low-dose entry protocol · Appetite + energy · Gentle on body',price:149},
+      {role:'Entry / Upsell',name:'Microdose Tirzepatide',dose:'0.5–2 mg/wk',desc:'Low-dose dual agonist · Metabolic support · Minimal side effects',price:169},
+    ]
+  },
+  longevity: {
+    id: 'longevity',
+    name: 'Longevity & Recovery',
+    eyebrow: 'Longevity & Recovery Program',
+    headline: 'Age slower.<br>Recover faster.',
+    text: 'NAD+ is the master coenzyme behind cellular energy, DNA repair, and healthy aging. As levels decline with age, so does performance, recovery, and resilience. Our longevity protocols replenish what time takes away.',
+    pills: ['Energy Restoration','Sleep Architecture','Cellular Longevity','Cognitive Performance','DNA Repair'],
+    bgClass: 'longevity',
+    tagColor: '#1E3A6E',
+    products: [
+      {role:'Hero / Premium',name:'NAD+ Injectable',dose:'100–500 mg/session',desc:'IV/IM injection · Cellular energy · DNA repair · Mitochondrial function',price:80},
+      {role:'Accessible Entry',name:'NAD+ Liposomal Liquid',dose:'250 mg/dose · oral',desc:'High bioavailability · No injection needed · Daily longevity protocol',price:120},
+      {role:'Performance Hero',name:'Sermorelin',dose:'200–300 mcg/night',desc:'GH secretagogue · Deep sleep optimization · Recovery · Anti-aging support',price:149},
+    ]
+  },
+  testosterone: {
+    id: 'testosterone',
+    name: 'Testosterone / Hormone',
+    eyebrow: 'Testosterone / Hormone Program',
+    headline: 'Reclaim your drive.<br>Optimize your hormones.',
+    text: 'After 30, testosterone naturally declines 1–2% per year. The effects accumulate silently — fatigue, brain fog, lost motivation, reduced libido. Our protocols are precision optimization for men who take their biology seriously.',
+    pills: ['Restored Energy','Lean Muscle','Libido & Drive','Mental Clarity','Mood Stability'],
+    bgClass: 'testosterone',
+    tagColor: '#7C2C2C',
+    products: [
+      {role:'Anchor Hero',name:'Testosterone Cypionate',dose:'100–200 mg/wk',desc:'Injectable TRT · Muscle preservation · Libido · Sustained energy',price:129},
+      {role:'Accessibility Play',name:'Testosterone Oral',dose:'oral · daily dose',desc:'No injection needed · Convenient daily protocol · Full TRT benefits',price:149},
+      {role:'Entry / Softer TRT',name:'Enclomiphene',dose:'12.5–25 mg/day',desc:'Stimulates natural production · Preserves fertility · Ideal first step',price:99},
+      {role:'Trust / Upsell Tool',name:'Male Hormone Panel',dose:'full biomarker panel',desc:'Total & free testosterone · Complete hormone workup · Start here',price:79},
+    ]
+  },
+  microdose: {
+    id: 'microdose',
+    name: 'Microdosing / Light GLP-1',
+    eyebrow: 'Microdosing / Light GLP-1 Program',
+    headline: 'Start light.<br>Scale when ready.',
+    text: 'Not ready for a full GLP-1 protocol? Start with a precision microdose. Same science. Lower commitment. Real results — appetite control, steady energy, and mood balance without aggressive suppression.',
+    pills: ['Gentle Appetite Control','Steady Energy','Mood Balance','Minimal Side Effects'],
+    bgClass: 'microdose',
+    tagColor: '#7A5230',
+    products: [
+      {role:'Entry / Upsell',name:'Microdose Semaglutide',dose:'0.05–0.25 mg/wk',desc:'Low-dose GLP-1 · Appetite control · Energy support · Mood balance',price:149},
+      {role:'Entry / Upsell',name:'Microdose Tirzepatide',dose:'0.5–2 mg/wk',desc:'Low-dose dual agonist · Gentle metabolic support · No aggressive side effects',price:169},
+    ]
   }
-})();
-function legalAccept() {
-  localStorage.setItem('neopeptide_legal_accepted', '1');
-  document.getElementById('legalOverlay').style.display = 'none';
-  document.body.style.overflow = '';
-}
-function legalDecline() {
-  window.location.href = 'https://www.google.com';
-}
+};
 
-// PHOTO CAROUSEL
-const phItems = document.querySelectorAll('.photo-item');
-const phDots  = document.querySelectorAll('.ph-dot');
-let phCurrent = 0, phTimer;
-function phGo(n) {
-  phItems[phCurrent].classList.remove('active');
-  phDots[phCurrent].classList.remove('active');
-  phCurrent = (n + phItems.length) % phItems.length;
-  phItems[phCurrent].classList.add('active');
-  phDots[phCurrent].classList.add('active');
-  clearInterval(phTimer);
-  phTimer = setInterval(() => phGo(phCurrent + 1), 5000);
-}
-phTimer = setInterval(() => phGo(phCurrent + 1), 5000);
-(function() {
-  const fr = document.getElementById('photoFrame');
-  let tx = 0;
-  fr.addEventListener('touchstart', e => { tx = e.touches[0].clientX; }, { passive: true });
-  fr.addEventListener('touchend', e => {
-    const dx = e.changedTouches[0].clientX - tx;
-    if (Math.abs(dx) > 40) phGo(dx < 0 ? phCurrent + 1 : phCurrent - 1);
-  }, { passive: true });
-})();
-
-// HEADER
-const hdr = document.getElementById('header');
-window.addEventListener('scroll', () => {
-  hdr.classList.toggle('light', window.scrollY > 860);
-}, { passive: true });
-
-// REVEAL
-const obs = new IntersectionObserver(entries => {
-  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); obs.unobserve(e.target); } });
-}, { threshold: 0.1 });
-document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
-
-// COUNTERS
-const cntObs = new IntersectionObserver(entries => {
-  entries.forEach(e => {
-    if (!e.isIntersecting) return;
-    const el = e.target, target = +el.dataset.target;
-    const suffix = el.dataset.suffix || (target > 1000 ? '+' : '');
-    const dur = 1800, start = performance.now();
-    const run = now => {
-      const p = Math.min((now - start) / dur, 1);
-      const ease = p < 0.5 ? 2*p*p : -1+(4-2*p)*p;
-      el.innerHTML = Math.floor(ease * target).toLocaleString() + `<span>${suffix}</span>`;
-      if (p < 1) requestAnimationFrame(run);
-    };
-    requestAnimationFrame(run);
-    cntObs.unobserve(el);
-  });
-}, { threshold: 0.5 });
-document.querySelectorAll('[data-target]').forEach(el => cntObs.observe(el));
-
-// BUNDLE CARDS → scroll to program section
-function switchBundle(id) {
-  const target = document.getElementById('section-' + id);
-  if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+/* ═══════════════════════════════════════
+   NAVIGATION
+════════════════════════════════════════ */
+function showView(name) {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  const el = document.getElementById('view-' + name);
+  if (el) { el.classList.add('active'); window.scrollTo({top:0,behavior:'smooth'}); }
+  // reset header scrolled state on home
+  if (name === 'home') {
+    window.dispatchEvent(new Event('scroll'));
+  }
 }
 
-// CART
+function showProgram(id) {
+  const p = PROGRAMS[id];
+  if (!p) return;
+
+  // Banner gradient colors per program
+  const bannerBg = {
+    glp1:        'linear-gradient(180deg,#F2FBF5 0%,#A4D8B8 55%,#5A9E7A 100%)',
+    longevity:   'linear-gradient(180deg,#EDF6FD 0%,#9EC8EE 55%,#4080C0 100%)',
+    testosterone:'linear-gradient(180deg,#FDF5F5 0%,#E8AAAA 55%,#BC5555 100%)',
+    microdose:   'linear-gradient(180deg,#FCF8EE 0%,#DEBB95 55%,#A87848 100%)',
+  };
+
+  // Build banner
+  document.getElementById('pvBannerInner').style.background = bannerBg[id];
+  document.getElementById('pvBannerInner').innerHTML = `
+    <div>
+      <p class="pv-eyebrow">${p.eyebrow}</p>
+      <h1 class="pv-h1">${p.headline}</h1>
+      <p class="pv-text">${p.text}</p>
+      <div class="pv-pills">${p.pills.map(pi=>`<span class="pv-pill">${pi}</span>`).join('')}</div>
+    </div>
+    <div class="pv-bottle-wrap">
+      <img class="pv-bottle-img" src="fotos/bottles/bottle3.png" alt="${p.name}">
+    </div>
+  `;
+
+  // Build product cards
+  document.getElementById('pvProductsGrid').innerHTML = p.products.map((pr,i) => `
+    <div class="product-card reveal" style="transition-delay:${i*0.07}s">
+      <div class="product-role">${pr.role}</div>
+      <div class="product-tag" style="color:${p.tagColor}">${p.name}</div>
+      <div class="product-name">${pr.name}</div>
+      <span class="product-dose">${pr.dose}</span>
+      <div class="product-desc">${pr.desc}</div>
+      <div class="product-divider"></div>
+      <div class="product-price">$${pr.price}</div>
+      <div class="product-old">&nbsp;</div>
+      <button class="btn-add" onclick="addToCart('${pr.name.replace(/'/g,"\\'")}',${pr.price},this)">Add to Cart</button>
+    </div>
+  `).join('');
+
+  showView('product');
+
+  // Trigger reveal animations
+  setTimeout(()=>{
+    document.querySelectorAll('#view-product .reveal').forEach(el=>revealObs.observe(el));
+  },50);
+}
+
+function goToCheckout() {
+  closeCart();
+  buildOrderSummary('orderSummary1');
+  showView('checkout-1');
+}
+
+function goToReview(e) {
+  e.preventDefault();
+  buildOrderSummary('orderSummary2');
+  updateZelleAmount();
+  document.getElementById('ack1').checked = false;
+  document.getElementById('ack2').checked = false;
+  document.getElementById('ackBox1').textContent = '';
+  document.getElementById('ackBox2').textContent = '';
+  document.getElementById('btnConfirm').disabled = true;
+  showView('checkout-2');
+}
+
+function buildOrderSummary(containerId) {
+  const total = cart.reduce((s,i)=>s+i.price*i.qty,0);
+  const shipping = total >= 150 ? 'Free' : '$9.99';
+  const shippingVal = total >= 150 ? 0 : 9.99;
+  const grand = total + shippingVal;
+
+  const container = document.getElementById(containerId);
+  container.innerHTML = `
+    <p class="os-title">Order Summary</p>
+    ${cart.map(i=>`
+      <div class="os-item">
+        <div class="os-icon">💊</div>
+        <div class="os-info">
+          <strong>${i.name}</strong>
+          <span>Qty: ${i.qty}</span>
+        </div>
+        <div class="cart-item-price">$${(i.price*i.qty).toFixed(2)}</div>
+      </div>
+    `).join('')}
+    <div class="os-divider"></div>
+    <div class="os-row"><span>Subtotal</span><strong>$${total.toFixed(2)}</strong></div>
+    <div class="os-row"><span>Shipping</span><strong>${shipping}</strong></div>
+    <div class="os-row total"><span>Total</span><strong>$${grand.toFixed(2)}</strong></div>
+  `;
+}
+
+function updateZelleAmount() {
+  const total = cart.reduce((s,i)=>s+i.price*i.qty,0);
+  const shippingVal = total >= 150 ? 0 : 9.99;
+  document.getElementById('zelleAmount').textContent = '$' + (total+shippingVal).toFixed(2);
+}
+
+function checkAck() {
+  const a1 = document.getElementById('ack1').checked;
+  const a2 = document.getElementById('ack2').checked;
+  document.getElementById('ackBox1').textContent = a1 ? '✓' : '';
+  document.getElementById('ackBox2').textContent = a2 ? '✓' : '';
+  document.getElementById('btnConfirm').disabled = !(a1 && a2);
+}
+
+function selectPayment(method) {
+  document.querySelectorAll('.payment-method:not(.disabled)').forEach(el => el.classList.remove('selected'));
+  document.getElementById('pm-' + method).classList.add('selected');
+  document.getElementById('zelleDetail').classList.toggle('show', method === 'zelle');
+}
+
+function confirmOrder() {
+  const total = cart.reduce((s,i)=>s+i.price*i.qty,0);
+  const shippingVal = total >= 150 ? 0 : 9.99;
+  const grand = total + shippingVal;
+  const orderNum = 'NP-' + Date.now().toString().slice(-6);
+  const name = document.getElementById('f-name') ? document.getElementById('f-name').value : 'Customer';
+
+  document.getElementById('confirmDetail').innerHTML = `
+    <div class="confirm-row"><span>Order #</span><span>${orderNum}</span></div>
+    <div class="confirm-row"><span>Name</span><span>${name}</span></div>
+    <div class="confirm-row"><span>Items</span><span>${cart.length} item(s)</span></div>
+    <div class="confirm-row"><span>Shipping</span><span>${total >= 150 ? 'Free' : '$9.99'}</span></div>
+    <div class="confirm-row"><span>Total Due via Zelle</span><span>$${grand.toFixed(2)}</span></div>
+  `;
+
+  showView('confirm');
+}
+
+/* ═══════════════════════════════════════
+   CART
+════════════════════════════════════════ */
 let cart = [];
+
 function addToCart(name, price, btn) {
-  const ex = cart.find(i => i.name === name);
-  if (ex) ex.qty++; else cart.push({ name, price, qty: 1 });
-  refreshCart(); openCart();
+  const ex = cart.find(i=>i.name===name);
+  if (ex) ex.qty++; else cart.push({name,price,qty:1});
+  refreshCart();
+  openCart();
   if (btn && btn.innerHTML !== undefined) {
     const orig = btn.innerHTML;
     btn.innerHTML = '✓ Added'; btn.style.background = '#16A34A';
-    setTimeout(() => { btn.innerHTML = orig; btn.style.background = ''; }, 1600);
+    setTimeout(()=>{ btn.innerHTML = orig; btn.style.background = ''; }, 1600);
   }
 }
-function removeItem(name) { cart = cart.filter(i => i.name !== name); refreshCart(); }
+
+function removeItem(name) { cart = cart.filter(i=>i.name!==name); refreshCart(); }
+
 function refreshCart() {
-  const total = cart.reduce((s,i) => s + i.price * i.qty, 0);
-  const count = cart.reduce((s,i) => s + i.qty, 0);
+  const total = cart.reduce((s,i)=>s+i.price*i.qty,0);
+  const count = cart.reduce((s,i)=>s+i.qty,0);
   document.getElementById('cartCount').textContent = count;
   document.getElementById('cartLabel').textContent = count ? `(${count})` : '';
-  document.getElementById('cartTotal').textContent = `$${total.toFixed(2)}`;
+  document.getElementById('cartTotal').textContent = '$'+total.toFixed(2);
   const mcc = document.getElementById('mobileCartCount');
   if (mcc) mcc.textContent = count;
   const cnt = document.getElementById('cartCount');
@@ -1699,59 +1229,85 @@ function refreshCart() {
     foot.style.display = 'none'; return;
   }
   foot.style.display = '';
-  body.innerHTML = cart.map(i => `
+  body.innerHTML = cart.map(i=>`
     <div class="cart-item">
       <div class="cart-item-icon">💊</div>
       <div class="cart-item-info"><strong>${i.name}</strong><span>Qty: ${i.qty}</span></div>
       <div class="cart-item-price">$${(i.price*i.qty).toFixed(2)}</div>
       <button class="cart-item-rm" onclick="removeItem('${i.name.replace(/'/g,"\\'")}')">✕</button>
     </div>`).join('');
-  const pct = Math.min(total / 150, 1);
-  document.getElementById('shipFill').style.width = (pct * 100) + '%';
-  document.getElementById('shipPct').textContent = Math.round(pct * 100) + '%';
+  const pct = Math.min(total/150,1);
+  document.getElementById('shipFill').style.width = (pct*100)+'%';
+  document.getElementById('shipPct').textContent = Math.round(pct*100)+'%';
   document.getElementById('shipLbl').innerHTML = total >= 150
     ? '<strong style="color:#16A34A">🎉 Free shipping unlocked!</strong>'
-    : `Add <strong>$${(150 - total).toFixed(2)}</strong> for free shipping`;
-  const hasBact = cart.some(i => i.name === 'Bacteriostatic Water');
-  const hasPep = cart.some(i => i.name !== 'Bacteriostatic Water');
-  document.getElementById('upsellWrap').style.display = (hasPep && !hasBact) ? '' : 'none';
+    : `Add <strong>$${(150-total).toFixed(2)}</strong> for free shipping`;
+  const hasBact = cart.some(i=>i.name==='Bacteriostatic Water');
+  const hasPep  = cart.some(i=>i.name!=='Bacteriostatic Water');
+  document.getElementById('upsellWrap').style.display = (hasPep&&!hasBact)?'':'none';
 }
-function openCart() { document.getElementById('cartOverlay').classList.add('open'); document.getElementById('cartDrawer').classList.add('open'); document.body.style.overflow = 'hidden'; }
-function closeCart() { document.getElementById('cartOverlay').classList.remove('open'); document.getElementById('cartDrawer').classList.remove('open'); document.body.style.overflow = ''; }
 
-// MOBILE BAR
+function openCart()  { document.getElementById('cartOverlay').classList.add('open'); document.getElementById('cartDrawer').classList.add('open'); document.body.style.overflow='hidden'; }
+function closeCart() { document.getElementById('cartOverlay').classList.remove('open'); document.getElementById('cartDrawer').classList.remove('open'); document.body.style.overflow=''; }
+
+/* ═══════════════════════════════════════
+   HEADER SCROLL
+════════════════════════════════════════ */
+const hdr = document.getElementById('header');
+window.addEventListener('scroll',()=>{ hdr.classList.toggle('scrolled',window.scrollY>60); },{passive:true});
+
+/* ═══════════════════════════════════════
+   REVEAL OBSERVER
+════════════════════════════════════════ */
+const revealObs = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); revealObs.unobserve(e.target); } });
+},{threshold:0.1});
+document.querySelectorAll('.reveal').forEach(el=>revealObs.observe(el));
+
+/* ═══════════════════════════════════════
+   COUNTERS
+════════════════════════════════════════ */
+const cntObs = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(!e.isIntersecting)return;
+    const el=e.target,target=+el.dataset.target;
+    const suffix=el.dataset.suffix||(target>1000?'+':'');
+    const dur=1800,start=performance.now();
+    const run=now=>{
+      const p=Math.min((now-start)/dur,1);
+      const ease=p<.5?2*p*p:-1+(4-2*p)*p;
+      el.innerHTML=Math.floor(ease*target).toLocaleString()+`<span>${suffix}</span>`;
+      if(p<1)requestAnimationFrame(run);
+    };
+    requestAnimationFrame(run);
+    cntObs.unobserve(el);
+  });
+},{threshold:.5});
+document.querySelectorAll('[data-target]').forEach(el=>cntObs.observe(el));
+
+/* ═══════════════════════════════════════
+   MOBILE BAR HIDE ON FOOTER
+════════════════════════════════════════ */
 const footerEl = document.querySelector('footer');
 const mobileBar = document.getElementById('mobileBar');
-new IntersectionObserver(([e]) => {
-  mobileBar.style.opacity = e.isIntersecting ? '0' : '1';
-  mobileBar.style.pointerEvents = e.isIntersecting ? 'none' : '';
-}, { threshold: 0.05 }).observe(footerEl);
+if (footerEl && mobileBar) {
+  new IntersectionObserver(([e])=>{
+    mobileBar.style.opacity = e.isIntersecting?'0':'1';
+    mobileBar.style.pointerEvents = e.isIntersecting?'none':'';
+  },{threshold:.05}).observe(footerEl);
+}
 
-// EXIT
-let exitDone = sessionStorage.getItem('exitDone');
-if (!exitDone) {
-  const t = setTimeout(showExit, 40000);
-  document.addEventListener('mouseleave', e => { if (e.clientY < 5) { clearTimeout(t); showExit(); } });
-}
-function showExit() {
-  if (exitDone) return; exitDone = true;
-  sessionStorage.setItem('exitDone', '1');
-  document.getElementById('exitWrap').classList.add('show');
-}
-function closeExit() { document.getElementById('exitWrap').classList.remove('show'); }
-function submitExit(e) {
-  e.preventDefault();
-  const email = document.getElementById('exitEmail').value;
-  document.getElementById('exitBox').innerHTML = `
-    <div style="padding:20px 0;text-align:center">
-      <div style="font-size:52px;margin-bottom:16px">✓</div>
-      <h3 style="font-family:'Plus Jakarta Sans',sans-serif;font-size:24px;font-weight:800;margin-bottom:10px;color:var(--ink)">You're in!</h3>
-      <p style="color:var(--sub);font-size:14px;line-height:1.7">Your 10% discount was sent to <strong style="color:var(--ink)">${email}</strong>.</p>
-      <button onclick="closeExit()" style="margin-top:24px;padding:13px 32px;background:var(--blue);color:#fff;font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;font-weight:700;border:none;border-radius:10px;cursor:pointer">Shop Now →</button>
-    </div>`;
-  setTimeout(closeExit, 4500);
-}
+/* ═══════════════════════════════════════
+   LEGAL
+════════════════════════════════════════ */
+(function(){
+  if(!localStorage.getItem('neopeptide_legal_accepted')){
+    var o=document.getElementById('legalOverlay');
+    o.style.display='flex'; document.body.style.overflow='hidden';
+  }
+})();
+function legalAccept(){ localStorage.setItem('neopeptide_legal_accepted','1'); document.getElementById('legalOverlay').style.display='none'; document.body.style.overflow=''; }
+function legalDecline(){ window.location.href='https://www.google.com'; }
 </script>
-
 </body>
 </html>
