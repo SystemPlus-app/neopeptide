@@ -360,6 +360,29 @@
     .legal-btn-decline{font-family:'Plus Jakarta Sans',sans-serif;font-size:12px;font-weight:700;padding:11px 18px;border:1.5px solid #ccc;border-radius:12px;cursor:pointer;background:#fff;color:#888;transition:background .15s,color .15s}
     .legal-btn-decline:hover{background:#f0f0f0;color:#444}
 
+    /* ── CATALOG PRODUCT CARDS (pc2) ── */
+    .products-grid2{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:16px}
+    .pc2{background:#fff;border-radius:20px;border:1.5px solid var(--border);display:flex;flex-direction:column;overflow:hidden;transition:box-shadow .2s,transform .2s}
+    .pc2:hover{box-shadow:0 8px 32px rgba(0,0,0,.09);transform:translateY(-3px)}
+    .pc2-top{padding:22px 22px 0}
+    .pc2-name{font-family:'Plus Jakarta Sans',sans-serif;font-size:20px;font-weight:800;color:var(--ink);letter-spacing:-.02em;margin-bottom:4px}
+    .pc2-sub{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+    .pc2-oos{display:inline-block;margin-top:8px;font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;background:#FEF2F2;color:#DC2626;padding:3px 10px;border-radius:100px;border:1px solid #FECACA}
+    .pc2-img-wrap{flex:1;display:flex;align-items:center;justify-content:center;padding:20px;min-height:180px}
+    .pc2-img{width:155px;height:200px;object-fit:contain;filter:drop-shadow(0 12px 24px rgba(0,0,0,.14));transition:transform .4s cubic-bezier(.34,1.1,.64,1)}
+    .pc2:hover .pc2-img{transform:translateY(-7px) scale(1.03)}
+    .pc2-dose-wrap{padding:0 18px 16px;display:flex;flex-wrap:wrap;gap:6px}
+    .dose-pill{padding:6px 13px;border-radius:100px;border:1.5px solid var(--border);font-size:12px;font-weight:600;cursor:pointer;background:#fff;color:var(--ink);transition:all .15s;font-family:'Inter',sans-serif}
+    .dose-pill:hover{border-color:rgba(0,0,0,.3)}
+    .dose-pill.active{border-color:var(--ink);background:var(--ink);color:#fff}
+    .pc2-foot{display:grid;grid-template-columns:1fr 1fr;border-top:1.5px solid var(--border)}
+    .pc2-price-side{padding:14px 18px;border-right:1.5px solid var(--border)}
+    .pc2-from{font-size:9px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:2px}
+    .pc2-price{font-family:'Plus Jakarta Sans',sans-serif;font-size:22px;font-weight:800;color:var(--ink);letter-spacing:-.02em}
+    .pc2-add-btn{padding:14px 10px;display:flex;align-items:center;justify-content:center;gap:7px;font-family:'Plus Jakarta Sans',sans-serif;font-size:11.5px;font-weight:700;cursor:pointer;background:none;border:none;color:var(--ink);letter-spacing:.01em;transition:background .2s}
+    .pc2-add-btn:hover:not(:disabled){background:rgba(0,0,0,.04)}
+    .pc2-add-btn:disabled{color:var(--muted);cursor:not-allowed}
+
     /* ── REVEAL ── */
     .reveal{opacity:0;transform:translateY(20px);transition:opacity .7s,transform .7s}
     .reveal.in{opacity:1;transform:none}
@@ -476,7 +499,7 @@
     <div class="programs-grid">
 
       <div class="prog-card glp1 reveal" onclick="showProgram('glp1')">
-        <img class="prog-card-bottle" src="fotos/bottles/bottle3.png" alt="">
+        <img class="prog-card-bottle" src="fotos/bottles/produtos%20bottle%20/GLP-3%20(RT).png" alt="">
         <div class="prog-card-overlay"></div>
         <div class="prog-card-content">
           <div class="prog-card-name">WEIGHT LOSS / GLP</div>
@@ -489,7 +512,7 @@
       </div>
 
       <div class="prog-card longevity reveal" style="transition-delay:.08s" onclick="showProgram('longevity')">
-        <img class="prog-card-bottle" src="fotos/bottles/bottle3.png" alt="">
+        <img class="prog-card-bottle" src="fotos/bottles/produtos%20bottle%20/NAD%2B.png" alt="">
         <div class="prog-card-overlay"></div>
         <div class="prog-card-content">
           <div class="prog-card-name">LONGEVITY</div>
@@ -502,7 +525,7 @@
       </div>
 
       <div class="prog-card testosterone reveal" style="transition-delay:.16s" onclick="showProgram('testosterone')">
-        <img class="prog-card-bottle" src="fotos/bottles/bottle3.png" alt="">
+        <img class="prog-card-bottle" src="fotos/bottles/produtos%20bottle%20/Tesamorelin.png" alt="">
         <div class="prog-card-overlay"></div>
         <div class="prog-card-content">
           <div class="prog-card-name">HORMONE / GH</div>
@@ -515,7 +538,7 @@
       </div>
 
       <div class="prog-card microdose reveal" style="transition-delay:.24s" onclick="showProgram('microdose')">
-        <img class="prog-card-bottle" src="fotos/bottles/bottle3.png" alt="">
+        <img class="prog-card-bottle" src="fotos/bottles/produtos%20bottle%20/TB-500%20%2B%20BPC-157.png" alt="">
         <div class="prog-card-overlay"></div>
         <div class="prog-card-content">
           <div class="prog-card-name">PERFORMANCE &amp; RECOVERY</div>
@@ -528,7 +551,7 @@
       </div>
 
       <div class="prog-card skin reveal" style="transition-delay:.32s" onclick="showProgram('skin')">
-        <img class="prog-card-bottle" src="fotos/bottles/bottle3.png" alt="">
+        <img class="prog-card-bottle" src="fotos/bottles/produtos%20bottle%20/Glow%20Blend.png" alt="">
         <div class="prog-card-overlay"></div>
         <div class="prog-card-content">
           <div class="prog-card-name">SKIN &amp; BEAUTY</div>
@@ -541,7 +564,7 @@
       </div>
 
       <div class="prog-card neuro reveal" style="transition-delay:.40s" onclick="showProgram('neuro')">
-        <img class="prog-card-bottle" src="fotos/bottles/bottle3.png" alt="">
+        <img class="prog-card-bottle" src="fotos/bottles/produtos%20bottle%20/Selank.png" alt="">
         <div class="prog-card-overlay"></div>
         <div class="prog-card-content">
           <div class="prog-card-name">NEURO / MOOD</div>
@@ -554,7 +577,7 @@
       </div>
 
       <div class="prog-card essentials reveal" style="transition-delay:.48s" onclick="showProgram('essentials')">
-        <img class="prog-card-bottle" src="fotos/bottles/bottle3.png" alt="">
+        <img class="prog-card-bottle" src="fotos/bottles/produtos%20bottle%20/Bacteriostatic%20Water.png" alt="">
         <div class="prog-card-overlay"></div>
         <div class="prog-card-content">
           <div class="prog-card-name">ESSENTIALS</div>
@@ -1031,6 +1054,9 @@
 /* ═══════════════════════════════════════
    PROGRAM DATA
 ════════════════════════════════════════ */
+const _B = 'fotos/bottles/produtos%20bottle%20/';
+function pImg(n){ return _B + encodeURIComponent(n) + '.png'; }
+
 const PROGRAMS = {
   glp1: {
     id: 'glp1',
@@ -1040,13 +1066,15 @@ const PROGRAMS = {
     text: 'GLP-1 receptor agonists mimic a naturally occurring hormone that regulates hunger signals in the brain. The result is dramatically reduced appetite, improved insulin sensitivity, and sustainable fat loss — without the crash of restrictive diets.',
     pills: ['Appetite Control','Fat Metabolism','Blood Sugar','Cravings Reduction','Energy Stabilization'],
     bgClass: 'glp1',
-    tagColor: '#2E6B45',
+    bannerImg: pImg('GLP-3 (RT)'),
     products: [
-      {role:'Anchor / Hero',name:'Compounded Semaglutide',dose:'0.25–2.4 mg/wk',desc:'Weekly injection · Appetite suppression · Sustained weight loss · GLP-1 agonist',price:249},
-      {role:'Premium Hero',name:'Compounded Tirzepatide',dose:'2.5–15 mg/wk',desc:'Dual GIP+GLP-1 agonist · Superior efficacy · Faster results',price:289},
-      {role:'Trust Builder',name:'Zepbound',dose:'2.5–15 mg/wk',desc:'Brand-name tirzepatide · FDA approved · Highest tier GLP-1 program',price:499},
-      {role:'Entry / Upsell',name:'Microdose Semaglutide',dose:'0.05–0.25 mg/wk',desc:'Low-dose entry protocol · Appetite + energy · Gentle on body',price:149},
-      {role:'Entry / Upsell',name:'Microdose Tirzepatide',dose:'0.5–2 mg/wk',desc:'Low-dose dual agonist · Metabolic support · Minimal side effects',price:169},
+      { name:'GLP-3 (RT)',               sub:'TRIPLE RECEPTOR AGONIST',    img:pImg('GLP-3 (RT)'),                 doses:[{l:'10mg',p:80},{l:'15mg',p:125},{l:'20mg',p:155}] },
+      { name:'GLP-1/GIP',                sub:'DUAL GIP+GLP-1 AGONIST',     img:pImg('GLP-1:GIP'),                  doses:[{l:'20mg',p:150},{l:'30mg',p:210}] },
+      { name:'AOD 9604',                 sub:'FAT LOSS FRAGMENT',           img:pImg('AOD 9604'),                   doses:[] , price:45 },
+      { name:'Cargrilintide',            sub:'AMYLIN ANALOGUE PEPTIDE',     img:pImg('Cargrilintide'),              doses:[{l:'5mg',p:60}] },
+      { name:'5-Amino 1MQ',             sub:'NNMT INHIBITOR',              img:pImg('5-Amino 1MQ'),                doses:[{l:'50mg',p:75}] },
+      { name:'SLU-PP-322',              sub:'ERR AGONIST',                 img:pImg('SLU-PP-322'),                 doses:[{l:'5mg',p:70}] },
+      { name:'Klow',                     sub:'METABOLIC SUPPORT BLEND',     img:pImg('Klow'),                       doses:[{l:'80mg',p:130}] },
     ]
   },
   longevity: {
@@ -1057,11 +1085,13 @@ const PROGRAMS = {
     text: 'NAD+ is the master coenzyme behind cellular energy, DNA repair, and healthy aging. As levels decline with age, so does performance, recovery, and resilience. Our longevity protocols replenish what time takes away.',
     pills: ['Energy Restoration','Sleep Architecture','Cellular Longevity','Cognitive Performance','DNA Repair'],
     bgClass: 'longevity',
-    tagColor: '#1E3A6E',
+    bannerImg: pImg('NAD+'),
     products: [
-      {role:'Hero / Premium',name:'NAD+ Injectable',dose:'100–500 mg/session',desc:'IV/IM injection · Cellular energy · DNA repair · Mitochondrial function',price:80},
-      {role:'Accessible Entry',name:'NAD+ Liposomal Liquid',dose:'250 mg/dose · oral',desc:'High bioavailability · No injection needed · Daily longevity protocol',price:120},
-      {role:'Performance Hero',name:'Sermorelin',dose:'200–300 mcg/night',desc:'GH secretagogue · Deep sleep optimization · Recovery · Anti-aging support',price:149},
+      { name:'NAD+',    sub:'CELLULAR ENERGY COENZYME',        img:pImg('NAD+'),   doses:[{l:'500mg',p:80},{l:'1000mg',p:120}] },
+      { name:'SS-31',   sub:'MITOCHONDRIAL PEPTIDE',           img:pImg('SS-31'),  doses:[{l:'10mg',p:49}] },
+      { name:'Mots-C',  sub:'MITOCHONDRIAL DERIVED PEPTIDE',   img:pImg('Mots-C'), doses:[{l:'10mg',p:43}] },
+      { name:'VIP',     sub:'VASOACTIVE INTESTINAL PEPTIDE',   img:pImg('VIP'),    doses:[{l:'10mg',p:60}] },
+      { name:'KPV',     sub:'ANTI-INFLAMMATORY TRIPEPTIDE',    img:pImg('KPV'),    doses:[{l:'10mg',p:65}] },
     ]
   },
   testosterone: {
@@ -1069,15 +1099,18 @@ const PROGRAMS = {
     name: 'HORMONE / GH',
     eyebrow: 'Hormone / GH Program',
     headline: 'Reclaim your drive.<br>Optimize your hormones.',
-    text: 'After 30, testosterone naturally declines 1–2% per year. The effects accumulate silently — fatigue, brain fog, lost motivation, reduced libido. Our protocols are precision optimization for men who take their biology seriously.',
-    pills: ['Restored Energy','Lean Muscle','Libido & Drive','Mental Clarity','Mood Stability'],
+    text: 'Growth hormone secretagogues stimulate your body\'s natural GH pulse. The result is improved body composition, deeper sleep, faster recovery, and restored energy — without suppressing endogenous production.',
+    pills: ['GH Release','Lean Muscle','Deep Sleep','Recovery','Hormone Balance'],
     bgClass: 'testosterone',
-    tagColor: '#7C2C2C',
+    bannerImg: pImg('Tesamorelin'),
     products: [
-      {role:'Anchor Hero',name:'Testosterone Cypionate',dose:'100–200 mg/wk',desc:'Injectable TRT · Muscle preservation · Libido · Sustained energy',price:129},
-      {role:'Accessibility Play',name:'Testosterone Oral',dose:'oral · daily dose',desc:'No injection needed · Convenient daily protocol · Full TRT benefits',price:149},
-      {role:'Entry / Softer TRT',name:'Enclomiphene',dose:'12.5–25 mg/day',desc:'Stimulates natural production · Preserves fertility · Ideal first step',price:99},
-      {role:'Trust / Upsell Tool',name:'Male Hormone Panel',dose:'full biomarker panel',desc:'Total & free testosterone · Complete hormone workup · Start here',price:79},
+      { name:'Ipamorelin + CJC-1295', sub:'GH RELEASING BLEND',    img:pImg('Ipamorelin + CJC-1295'),       doses:[], price:59 },
+      { name:'Ipamorelin',            sub:'GH RELEASING PEPTIDE',   img:pImg('Ipamorelin'),                  doses:[{l:'5mg',p:40}] },
+      { name:'CJC-1295 No DAC',       sub:'GROWTH HORMONE PEPTIDE', img:pImg('CJC-1295 No DAC'),             doses:[{l:'5mg',p:35}] },
+      { name:'Tesamorelin',           sub:'GH RELEASING FACTOR',    img:pImg('Tesamorelin'),                 doses:[{l:'5mg',p:45},{l:'10mg',p:80},{l:'15mg',p:115}] },
+      { name:'Tesamorelin + Ipamorelin Blend', sub:'GH SYNERGY BLEND', img:pImg('tesamorelin + Ipamorelin Blend'), doses:[], price:110 },
+      { name:'Sermorelin',            sub:'GH SECRETAGOGUE PEPTIDE', img:pImg('Sermorelin'),                 doses:[{l:'5mg',p:45}] },
+      { name:'GHRP-6',               sub:'GROWTH HORMONE PEPTIDE',  img:pImg('GHRP-6'),                     doses:[], price:55 },
     ]
   },
   microdose: {
@@ -1088,10 +1121,10 @@ const PROGRAMS = {
     text: 'Performance-focused peptide protocols are built around stamina, recovery, sleep quality, and body composition support. Designed for researchers studying resilience, output, and repair.',
     pills: ['Recovery Support','Stamina','Sleep Quality','Body Composition'],
     bgClass: 'microdose',
-    tagColor: '#7A5230',
+    bannerImg: pImg('TB-500 + BPC-157'),
     products: [
-      {role:'Entry / Upsell',name:'Microdose Semaglutide',dose:'0.05–0.25 mg/wk',desc:'Low-dose GLP-1 · Appetite control · Energy support · Mood balance',price:149},
-      {role:'Entry / Upsell',name:'Microdose Tirzepatide',dose:'0.5–2 mg/wk',desc:'Low-dose dual agonist · Gentle metabolic support · No aggressive side effects',price:169},
+      { name:'TB-500 + BPC-157', sub:'RECOVERY PEPTIDE BLEND',      img:pImg('TB-500 + BPC-157'), doses:[{l:'10mg',p:60}] },
+      { name:'TB-500',           sub:'THYMOSIN BETA-4 FRAGMENT',     img:pImg('TB-500'),           doses:[], price:55, outOfStock:true },
     ]
   },
   skin: {
@@ -1102,8 +1135,11 @@ const PROGRAMS = {
     text: 'A focused category for skin, beauty, and visible repair research goals, with protocols centered on tissue quality, radiance, and cosmetic support.',
     pills: ['Skin Quality','Beauty Support','Repair','Glow'],
     bgClass: 'skin',
-    tagColor: '#B94875',
-    products: []
+    bannerImg: pImg('Glow Blend'),
+    products: [
+      { name:'Glow Blend', sub:'SKIN BEAUTY PEPTIDE BLEND', img:pImg('Glow Blend'), doses:[], price:100 },
+      { name:'GHK-Cu',     sub:'COPPER PEPTIDE COMPLEX',    img:pImg('GHK-Cu'),     doses:[{l:'100mg',p:55}] },
+    ]
   },
   neuro: {
     id: 'neuro',
@@ -1113,8 +1149,10 @@ const PROGRAMS = {
     text: 'Neuro and mood support protocols are organized for research around clarity, cognitive performance, stress response, and emotional balance.',
     pills: ['Focus','Mood Balance','Clarity','Cognitive Support'],
     bgClass: 'neuro',
-    tagColor: '#6845B2',
-    products: []
+    bannerImg: pImg('Selank'),
+    products: [
+      { name:'Selank', sub:'ANXIOLYTIC PEPTIDE', img:pImg('Selank'), doses:[{l:'5mg',p:32.90}] },
+    ]
   },
   essentials: {
     id: 'essentials',
@@ -1124,8 +1162,10 @@ const PROGRAMS = {
     text: 'Essentials brings together foundational research supplies and core support products needed to complete a clean, organized protocol.',
     pills: ['Core Support','Research Supplies','Protocol Basics'],
     bgClass: 'essentials',
-    tagColor: '#59616B',
-    products: []
+    bannerImg: pImg('Bacteriostatic Water'),
+    products: [
+      { name:'Bacteriostatic Water', sub:'RECONSTITUTION SOLUTION', img:pImg('Bacteriostatic Water'), doses:[], price:10 },
+    ]
   }
 };
 
@@ -1146,7 +1186,6 @@ function showProgram(id) {
   const p = PROGRAMS[id];
   if (!p) return;
 
-  // Banner gradient colors per program
   const bannerBg = {
     glp1:        'linear-gradient(180deg,#F2FBF5 0%,#A4D8B8 55%,#5A9E7A 100%)',
     longevity:   'linear-gradient(180deg,#EDF6FD 0%,#9EC8EE 55%,#4080C0 100%)',
@@ -1157,7 +1196,6 @@ function showProgram(id) {
     essentials:  'linear-gradient(180deg,#F7F8FA 0%,#C7CDD5 55%,#6F7884 100%)',
   };
 
-  // Build banner
   document.getElementById('pvBannerInner').style.background = bannerBg[id];
   document.getElementById('pvBannerInner').innerHTML = `
     <div>
@@ -1167,36 +1205,76 @@ function showProgram(id) {
       <div class="pv-pills">${p.pills.map(pi=>`<span class="pv-pill">${pi}</span>`).join('')}</div>
     </div>
     <div class="pv-bottle-wrap">
-      <img class="pv-bottle-img" src="fotos/bottles/bottle3.png" alt="${p.name}">
+      <img class="pv-bottle-img" src="${p.bannerImg}" alt="${p.name}">
     </div>
   `;
 
-  // Build product cards
-  document.getElementById('pvProductsGrid').innerHTML = p.products.length ? p.products.map((pr,i) => `
-    <div class="product-card reveal" style="transition-delay:${i*0.07}s">
-      <div class="product-role">${pr.role}</div>
-      <div class="product-tag" style="color:${p.tagColor}">${p.name}</div>
-      <div class="product-name">${pr.name}</div>
-      <span class="product-dose">${pr.dose}</span>
-      <div class="product-desc">${pr.desc}</div>
-      <div class="product-divider"></div>
-      <div class="product-price">$${pr.price}</div>
-      <div class="product-old">&nbsp;</div>
-      <button class="btn-add" onclick="addToCart('${pr.name.replace(/'/g,"\\'")}',${pr.price},this)">Add to Cart</button>
-    </div>
-  `).join('') : `
-    <div class="products-empty reveal">
-      <strong>${p.name} products coming soon</strong>
-      This category is ready on the site. Add product SKUs here when the catalog is finalized.
-    </div>
-  `;
+  const grid = document.getElementById('pvProductsGrid');
+  grid.className = 'products-grid2';
+
+  grid.innerHTML = p.products.map((pr, i) => {
+    const hasDoses = pr.doses && pr.doses.length > 0;
+    const initPrice = hasDoses ? pr.doses[0].p : pr.price;
+    const isOOS = pr.outOfStock || false;
+    const hasMulti = hasDoses && pr.doses.length > 1;
+
+    const dosePills = hasDoses ? `
+      <div class="pc2-dose-wrap">
+        ${pr.doses.map((d, di) => `
+          <button class="dose-pill${di===0?' active':''}" data-dose="${d.l}" data-price="${d.p}" onclick="selectDose(this)">${d.l}</button>
+        `).join('')}
+      </div>` : '';
+
+    const priceStr = Number.isInteger(initPrice) ? initPrice : initPrice.toFixed(2);
+
+    return `
+      <div class="pc2 reveal" style="transition-delay:${i*0.06}s" data-price="${initPrice}">
+        <div class="pc2-top">
+          <div class="pc2-name">${pr.name}</div>
+          <div class="pc2-sub">${pr.sub}</div>
+          ${isOOS ? '<span class="pc2-oos">Out of Stock</span>' : ''}
+        </div>
+        <div class="pc2-img-wrap">
+          <img class="pc2-img" src="${pr.img}" alt="${pr.name}" loading="lazy">
+        </div>
+        ${dosePills}
+        <div class="pc2-foot">
+          <div class="pc2-price-side">
+            <div class="pc2-from">${hasMulti ? 'FROM' : 'PRICE'}</div>
+            <div class="pc2-price">$${priceStr}</div>
+          </div>
+          <button class="pc2-add-btn" ${isOOS ? 'disabled' : ''} onclick="addToCartPC2(this)">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+            ${isOOS ? 'OUT OF STOCK' : 'ADD TO CART'}
+          </button>
+        </div>
+      </div>`;
+  }).join('');
 
   showView('product');
-
-  // Trigger reveal animations
   setTimeout(()=>{
     document.querySelectorAll('#view-product .reveal').forEach(el=>revealObs.observe(el));
   },50);
+}
+
+function selectDose(btn) {
+  const card = btn.closest('.pc2');
+  card.querySelectorAll('.dose-pill').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+  const price = parseFloat(btn.dataset.price);
+  card.dataset.price = price;
+  const priceEl = card.querySelector('.pc2-price');
+  priceEl.textContent = '$' + (Number.isInteger(price) ? price : price.toFixed(2));
+}
+
+function addToCartPC2(btn) {
+  const card = btn.closest('.pc2');
+  const name = card.querySelector('.pc2-name').textContent;
+  const activePill = card.querySelector('.dose-pill.active');
+  const dose = activePill ? activePill.dataset.dose : '';
+  const price = parseFloat(card.dataset.price);
+  const fullName = dose ? name + ' ' + dose : name;
+  addToCart(fullName, price, btn);
 }
 
 function goToCheckout() {
@@ -1293,8 +1371,8 @@ function addToCart(name, price, btn) {
   openCart();
   if (btn && btn.innerHTML !== undefined) {
     const orig = btn.innerHTML;
-    btn.innerHTML = '✓ Added'; btn.style.background = '#16A34A';
-    setTimeout(()=>{ btn.innerHTML = orig; btn.style.background = ''; }, 1600);
+    btn.innerHTML = '✓ Added'; btn.style.background = '#16A34A'; btn.style.color = '#fff';
+    setTimeout(()=>{ btn.innerHTML = orig; btn.style.background = ''; btn.style.color = ''; }, 1600);
   }
 }
 
