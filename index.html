@@ -42,11 +42,11 @@
 
     /* ── HEADER ── */
     header{position:fixed;top:0;left:0;right:0;z-index:100;height:92px;background:transparent;transition:background .4s,backdrop-filter .4s,border-color .4s;border-bottom:1px solid transparent}
-    header.scrolled{background:rgba(245,240,235,.88);backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);border-bottom-color:rgba(0,0,0,.07)}
+    header.scrolled{background:transparent;backdrop-filter:none;-webkit-backdrop-filter:none;border-bottom-color:transparent}
     .header-inner{max-width:1200px;margin:0 auto;height:100%;padding:0 clamp(20px,4vw,48px);display:flex;align-items:center}
     .logo{display:flex;align-items:center;overflow:visible;align-self:stretch;flex-shrink:0;transition:opacity .2s}
     .logo:hover{opacity:.8}
-    .logo-img{height:109px;width:auto}
+    .logo-img{height:142px;width:auto}
     nav{display:flex;gap:32px;flex:1;justify-content:center}
     nav a{font-size:13px;font-weight:500;letter-spacing:.01em;color:rgba(10,10,15,.62);transition:color .2s;cursor:pointer}
     nav a:hover{color:var(--ink)}
@@ -63,12 +63,12 @@
 
     /* ── HERO ── */
     .hero{min-height:100vh;padding-top:92px;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;overflow:hidden;background:transparent}
-    .hero::before{content:'';position:absolute;inset:0;background:var(--site-bg);pointer-events:none}
-    .hero-inner{position:relative;z-index:1;text-align:center;padding:0 24px;display:flex;flex-direction:column;align-items:center}
-    .hero-label{font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:rgba(10,10,15,.38);margin-bottom:22px}
+    .hero::before{content:'';position:absolute;inset:0;background:none;pointer-events:none}
+    .hero-inner{position:relative;z-index:1;text-align:center;padding:0 24px;display:flex;flex-direction:column;align-items:center;margin-top:-20px}
+    .hero-label{font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:rgba(10,10,15,.38);margin-bottom:10px}
     .hero-label-flag{opacity:1;color:initial;filter:saturate(1.2);margin-right:8px}
     .hero-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(54px,9.5vw,132px);font-weight:900;color:var(--ink);letter-spacing:-.045em;line-height:.88;max-width:1140px;margin-bottom:0}
-    .hero-bottle{width:clamp(200px,26vw,360px);height:auto;filter:drop-shadow(0 48px 80px rgba(0,0,0,.18)) drop-shadow(0 8px 20px rgba(0,0,0,.1));margin:-10px 0 -18px;position:relative;z-index:2;transition:transform .6s cubic-bezier(.34,1.2,.64,1)}
+    .hero-bottle{width:clamp(260px,34vw,460px);height:auto;filter:drop-shadow(0 48px 80px rgba(0,0,0,.18)) drop-shadow(0 8px 20px rgba(0,0,0,.1));margin:-10px 0 -60px;position:relative;z-index:2;transition:transform .6s cubic-bezier(.34,1.2,.64,1)}
     .hero-bottle:hover{transform:translateY(-10px) scale(1.02)}
     .hero-actions{display:flex;gap:12px;justify-content:center;margin-top:0}
     .btn-hero{font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:700;padding:16px 42px;border-radius:100px;background:var(--ink);color:#fff;border:none;cursor:pointer;transition:transform .15s,box-shadow .15s;letter-spacing:-.01em}
@@ -78,7 +78,7 @@
     .hero-trust span:last-child{border-right:none}
 
     /* ── PROGRAMS SECTION ── */
-    .programs-section{background:transparent;padding:80px 24px}
+    .programs-section{background:transparent;padding:40px 24px 80px}
     .programs-top{max-width:1600px;margin:0 auto 40px;display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:end}
     .section-label{font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--blue);margin-bottom:12px}
     .section-h2{font-size:clamp(28px,3.5vw,44px);font-weight:800;color:var(--ink);margin-bottom:14px}
