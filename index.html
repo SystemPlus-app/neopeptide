@@ -92,6 +92,9 @@
     .prog-card.longevity {background:radial-gradient(ellipse at 72% 42%,#A4CCEE 0%,#3E7CC0 35%,#1A3878 100%)}
     .prog-card.testosterone{background:radial-gradient(ellipse at 72% 42%,#ECA8A8 0%,#C25050 35%,#7A1A1A 100%)}
     .prog-card.microdose {background:radial-gradient(ellipse at 72% 42%,#ECD4A0 0%,#C09040 35%,#7A4E18 100%)}
+    .prog-card.skin     {background:radial-gradient(ellipse at 72% 42%,#F5BDD2 0%,#D86A9B 35%,#8C2F58 100%)}
+    .prog-card.neuro    {background:radial-gradient(ellipse at 72% 42%,#C9B4F4 0%,#7A58C8 35%,#3D236F 100%)}
+    .prog-card.essentials{background:radial-gradient(ellipse at 72% 42%,#D8DCE2 0%,#7C858F 35%,#303641 100%)}
     .prog-card-bottle{position:absolute;right:-2%;bottom:0;top:-10%;width:50%;height:118%;object-fit:contain;object-position:center bottom;filter:drop-shadow(-10px 10px 28px rgba(0,0,0,.28));transition:transform .4s cubic-bezier(.34,1.1,.64,1);z-index:1}
     .prog-card:hover .prog-card-bottle{transform:scale(1.06) translateY(-8px)}
     .prog-card-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.6) 0%,rgba(0,0,0,.12) 40%,transparent 68%);z-index:2}
@@ -196,6 +199,8 @@
     .products-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px}
     .product-card{background:var(--white);border-radius:20px;border:1.5px solid var(--border);padding:28px 24px;display:flex;flex-direction:column;transition:border-color .2s,box-shadow .2s}
     .product-card:hover{border-color:rgba(24,85,232,.2);box-shadow:0 8px 30px rgba(0,0,0,.07)}
+    .products-empty{grid-column:1/-1;background:var(--white);border:1.5px solid var(--border);border-radius:20px;padding:34px 28px;color:var(--muted);font-size:14px;line-height:1.7}
+    .products-empty strong{display:block;font-family:'Plus Jakarta Sans',sans-serif;font-size:20px;font-weight:800;color:var(--ink);margin-bottom:6px}
     .product-role{font-size:9px;font-weight:800;letter-spacing:.13em;text-transform:uppercase;color:var(--blue);margin-bottom:4px;opacity:.6}
     .product-tag{font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;margin-bottom:14px}
     .product-name{font-family:'Plus Jakarta Sans',sans-serif;font-size:18px;font-weight:800;color:var(--ink);margin-bottom:6px}
@@ -423,7 +428,7 @@
     <nav>
       <a onclick="showView('home');scrollTo('#programs')">Programs</a>
       <a onclick="showProgram('longevity')">Longevity</a>
-      <a onclick="showProgram('testosterone')">Hormone</a>
+      <a onclick="showProgram('testosterone')">Hormone / GH</a>
       <a href="mailto:neopeptides@outlook.com">Contact</a>
     </nav>
     <div class="header-right">
@@ -466,7 +471,7 @@
         <p class="section-label reveal">Our Programs</p>
         <h2 class="section-h2 reveal" style="transition-delay:.08s">A peptide program<br>that works for you.</h2>
       </div>
-      <p class="section-sub reveal" style="transition-delay:.15s">Four targeted programs designed around specific goals — each with pharmaceutical-grade compounds and a Certificate of Analysis.</p>
+      <p class="section-sub reveal" style="transition-delay:.15s">Seven targeted programs designed around specific goals — each with pharmaceutical-grade compounds and a Certificate of Analysis.</p>
     </div>
     <div class="programs-grid">
 
@@ -474,7 +479,7 @@
         <img class="prog-card-bottle" src="fotos/bottles/bottle3.png" alt="">
         <div class="prog-card-overlay"></div>
         <div class="prog-card-content">
-          <div class="prog-card-name">GLP-1 / Weight Loss</div>
+          <div class="prog-card-name">WEIGHT LOSS / GLP</div>
           <div class="prog-card-promise">Appetite control · Craving suppression · Metabolic support</div>
           <div class="prog-card-cta">
             Learn More
@@ -487,7 +492,7 @@
         <img class="prog-card-bottle" src="fotos/bottles/bottle3.png" alt="">
         <div class="prog-card-overlay"></div>
         <div class="prog-card-content">
-          <div class="prog-card-name">Longevity & Recovery</div>
+          <div class="prog-card-name">LONGEVITY</div>
           <div class="prog-card-promise">Energy · Cellular repair · Sleep quality · Healthy aging</div>
           <div class="prog-card-cta">
             Learn More
@@ -500,7 +505,7 @@
         <img class="prog-card-bottle" src="fotos/bottles/bottle3.png" alt="">
         <div class="prog-card-overlay"></div>
         <div class="prog-card-content">
-          <div class="prog-card-name">Testosterone / Hormone</div>
+          <div class="prog-card-name">HORMONE / GH</div>
           <div class="prog-card-promise">Energy · Mood · Libido · Strength · Hormone balance</div>
           <div class="prog-card-cta">
             Learn More
@@ -513,8 +518,47 @@
         <img class="prog-card-bottle" src="fotos/bottles/bottle3.png" alt="">
         <div class="prog-card-overlay"></div>
         <div class="prog-card-content">
-          <div class="prog-card-name">Microdosing / Light GLP-1</div>
-          <div class="prog-card-promise">Small-dose support · Appetite · Energy · Mood balance</div>
+          <div class="prog-card-name">PERFORMANCE &amp; RECOVERY</div>
+          <div class="prog-card-promise">Strength · Stamina · Recovery · Performance support</div>
+          <div class="prog-card-cta">
+            Learn More
+            <div class="prog-card-arrow"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="prog-card skin reveal" style="transition-delay:.32s" onclick="showProgram('skin')">
+        <img class="prog-card-bottle" src="fotos/bottles/bottle3.png" alt="">
+        <div class="prog-card-overlay"></div>
+        <div class="prog-card-content">
+          <div class="prog-card-name">SKIN &amp; BEAUTY</div>
+          <div class="prog-card-promise">Skin quality · Glow · Repair · Beauty support</div>
+          <div class="prog-card-cta">
+            Learn More
+            <div class="prog-card-arrow"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="prog-card neuro reveal" style="transition-delay:.40s" onclick="showProgram('neuro')">
+        <img class="prog-card-bottle" src="fotos/bottles/bottle3.png" alt="">
+        <div class="prog-card-overlay"></div>
+        <div class="prog-card-content">
+          <div class="prog-card-name">NEURO / MOOD</div>
+          <div class="prog-card-promise">Focus · Mood · Clarity · Cognitive support</div>
+          <div class="prog-card-cta">
+            Learn More
+            <div class="prog-card-arrow"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="prog-card essentials reveal" style="transition-delay:.48s" onclick="showProgram('essentials')">
+        <img class="prog-card-bottle" src="fotos/bottles/bottle3.png" alt="">
+        <div class="prog-card-overlay"></div>
+        <div class="prog-card-content">
+          <div class="prog-card-name">ESSENTIALS</div>
+          <div class="prog-card-promise">Core support · Research supplies · Protocol basics</div>
           <div class="prog-card-cta">
             Learn More
             <div class="prog-card-arrow"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
@@ -605,7 +649,7 @@
         <div class="footer-logo-wrap">
           <img class="footer-logo-img" src="fotos/logo/logo fundo preto.JPG" alt="Neo Peptide">
         </div>
-        <p class="footer-desc">Medical-grade peptide programs for weight loss, longevity, and hormone optimization. Made in the USA. Built with integrity.</p>
+        <p class="footer-desc">Medical-grade peptide programs for weight loss, longevity, hormones, performance, skin, mood, and essentials. Made in the USA. Built with integrity.</p>
         <div class="footer-social">
           <a class="social-btn" href="https://instagram.com/neo_peptides" target="_blank" title="Instagram">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
@@ -618,10 +662,13 @@
       <div class="footer-col">
         <h5>Programs</h5>
         <ul>
-          <li><a onclick="showProgram('glp1')">GLP-1 / Weight Loss</a></li>
-          <li><a onclick="showProgram('longevity')">Longevity & Recovery</a></li>
-          <li><a onclick="showProgram('testosterone')">Testosterone / Hormone</a></li>
-          <li><a onclick="showProgram('microdose')">Microdosing</a></li>
+          <li><a onclick="showProgram('glp1')">Weight Loss / GLP</a></li>
+          <li><a onclick="showProgram('longevity')">Longevity</a></li>
+          <li><a onclick="showProgram('testosterone')">Hormone / GH</a></li>
+          <li><a onclick="showProgram('microdose')">Performance &amp; Recovery</a></li>
+          <li><a onclick="showProgram('skin')">Skin &amp; Beauty</a></li>
+          <li><a onclick="showProgram('neuro')">Neuro / Mood</a></li>
+          <li><a onclick="showProgram('essentials')">Essentials</a></li>
         </ul>
       </div>
       <div class="footer-col">
@@ -987,8 +1034,8 @@
 const PROGRAMS = {
   glp1: {
     id: 'glp1',
-    name: 'GLP-1 / Weight Loss',
-    eyebrow: 'GLP-1 / Weight Loss Program',
+    name: 'WEIGHT LOSS / GLP',
+    eyebrow: 'Weight Loss / GLP Program',
     headline: 'Reshape your body.<br>Reset your metabolism.',
     text: 'GLP-1 receptor agonists mimic a naturally occurring hormone that regulates hunger signals in the brain. The result is dramatically reduced appetite, improved insulin sensitivity, and sustainable fat loss — without the crash of restrictive diets.',
     pills: ['Appetite Control','Fat Metabolism','Blood Sugar','Cravings Reduction','Energy Stabilization'],
@@ -1004,8 +1051,8 @@ const PROGRAMS = {
   },
   longevity: {
     id: 'longevity',
-    name: 'Longevity & Recovery',
-    eyebrow: 'Longevity & Recovery Program',
+    name: 'LONGEVITY',
+    eyebrow: 'Longevity Program',
     headline: 'Age slower.<br>Recover faster.',
     text: 'NAD+ is the master coenzyme behind cellular energy, DNA repair, and healthy aging. As levels decline with age, so does performance, recovery, and resilience. Our longevity protocols replenish what time takes away.',
     pills: ['Energy Restoration','Sleep Architecture','Cellular Longevity','Cognitive Performance','DNA Repair'],
@@ -1019,8 +1066,8 @@ const PROGRAMS = {
   },
   testosterone: {
     id: 'testosterone',
-    name: 'Testosterone / Hormone',
-    eyebrow: 'Testosterone / Hormone Program',
+    name: 'HORMONE / GH',
+    eyebrow: 'Hormone / GH Program',
     headline: 'Reclaim your drive.<br>Optimize your hormones.',
     text: 'After 30, testosterone naturally declines 1–2% per year. The effects accumulate silently — fatigue, brain fog, lost motivation, reduced libido. Our protocols are precision optimization for men who take their biology seriously.',
     pills: ['Restored Energy','Lean Muscle','Libido & Drive','Mental Clarity','Mood Stability'],
@@ -1035,17 +1082,50 @@ const PROGRAMS = {
   },
   microdose: {
     id: 'microdose',
-    name: 'Microdosing / Light GLP-1',
-    eyebrow: 'Microdosing / Light GLP-1 Program',
-    headline: 'Start light.<br>Scale when ready.',
-    text: 'Not ready for a full GLP-1 protocol? Start with a precision microdose. Same science. Lower commitment. Real results — appetite control, steady energy, and mood balance without aggressive suppression.',
-    pills: ['Gentle Appetite Control','Steady Energy','Mood Balance','Minimal Side Effects'],
+    name: 'PERFORMANCE & RECOVERY',
+    eyebrow: 'Performance & Recovery Program',
+    headline: 'Train harder.<br>Recover smarter.',
+    text: 'Performance-focused peptide protocols are built around stamina, recovery, sleep quality, and body composition support. Designed for researchers studying resilience, output, and repair.',
+    pills: ['Recovery Support','Stamina','Sleep Quality','Body Composition'],
     bgClass: 'microdose',
     tagColor: '#7A5230',
     products: [
       {role:'Entry / Upsell',name:'Microdose Semaglutide',dose:'0.05–0.25 mg/wk',desc:'Low-dose GLP-1 · Appetite control · Energy support · Mood balance',price:149},
       {role:'Entry / Upsell',name:'Microdose Tirzepatide',dose:'0.5–2 mg/wk',desc:'Low-dose dual agonist · Gentle metabolic support · No aggressive side effects',price:169},
     ]
+  },
+  skin: {
+    id: 'skin',
+    name: 'SKIN & BEAUTY',
+    eyebrow: 'Skin & Beauty Program',
+    headline: 'Support skin quality.<br>Refine the glow.',
+    text: 'A focused category for skin, beauty, and visible repair research goals, with protocols centered on tissue quality, radiance, and cosmetic support.',
+    pills: ['Skin Quality','Beauty Support','Repair','Glow'],
+    bgClass: 'skin',
+    tagColor: '#B94875',
+    products: []
+  },
+  neuro: {
+    id: 'neuro',
+    name: 'NEURO / MOOD',
+    eyebrow: 'Neuro / Mood Program',
+    headline: 'Focus clearly.<br>Balance mood.',
+    text: 'Neuro and mood support protocols are organized for research around clarity, cognitive performance, stress response, and emotional balance.',
+    pills: ['Focus','Mood Balance','Clarity','Cognitive Support'],
+    bgClass: 'neuro',
+    tagColor: '#6845B2',
+    products: []
+  },
+  essentials: {
+    id: 'essentials',
+    name: 'ESSENTIALS',
+    eyebrow: 'Essentials Program',
+    headline: 'Core support.<br>Protocol basics.',
+    text: 'Essentials brings together foundational research supplies and core support products needed to complete a clean, organized protocol.',
+    pills: ['Core Support','Research Supplies','Protocol Basics'],
+    bgClass: 'essentials',
+    tagColor: '#59616B',
+    products: []
   }
 };
 
@@ -1072,6 +1152,9 @@ function showProgram(id) {
     longevity:   'linear-gradient(180deg,#EDF6FD 0%,#9EC8EE 55%,#4080C0 100%)',
     testosterone:'linear-gradient(180deg,#FDF5F5 0%,#E8AAAA 55%,#BC5555 100%)',
     microdose:   'linear-gradient(180deg,#FCF8EE 0%,#DEBB95 55%,#A87848 100%)',
+    skin:        'linear-gradient(180deg,#FFF3F8 0%,#F2A9C6 55%,#D45B8F 100%)',
+    neuro:       'linear-gradient(180deg,#F5F0FF 0%,#C8B4F0 55%,#7653C4 100%)',
+    essentials:  'linear-gradient(180deg,#F7F8FA 0%,#C7CDD5 55%,#6F7884 100%)',
   };
 
   // Build banner
@@ -1089,7 +1172,7 @@ function showProgram(id) {
   `;
 
   // Build product cards
-  document.getElementById('pvProductsGrid').innerHTML = p.products.map((pr,i) => `
+  document.getElementById('pvProductsGrid').innerHTML = p.products.length ? p.products.map((pr,i) => `
     <div class="product-card reveal" style="transition-delay:${i*0.07}s">
       <div class="product-role">${pr.role}</div>
       <div class="product-tag" style="color:${p.tagColor}">${p.name}</div>
@@ -1101,7 +1184,12 @@ function showProgram(id) {
       <div class="product-old">&nbsp;</div>
       <button class="btn-add" onclick="addToCart('${pr.name.replace(/'/g,"\\'")}',${pr.price},this)">Add to Cart</button>
     </div>
-  `).join('');
+  `).join('') : `
+    <div class="products-empty reveal">
+      <strong>${p.name} products coming soon</strong>
+      This category is ready on the site. Add product SKUs here when the catalog is finalized.
+    </div>
+  `;
 
   showView('product');
 
