@@ -534,9 +534,9 @@
     }
 
     /* ── NP AI CHAT ── */
-    #npChat-btn{position:fixed;bottom:24px;left:24px;z-index:800;width:56px;height:56px;border-radius:50%;background:var(--ink);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 24px rgba(0,0,0,.28);transition:transform .2s,box-shadow .2s}
+    #npChat-btn{position:fixed;bottom:88px;right:24px;z-index:800;width:56px;height:56px;border-radius:50%;background:var(--ink);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 24px rgba(0,0,0,.28);transition:transform .2s,box-shadow .2s}
     #npChat-btn:hover{transform:scale(1.08);box-shadow:0 12px 32px rgba(0,0,0,.35)}
-    #npChat-panel{position:fixed;bottom:92px;left:24px;z-index:800;width:360px;height:520px;background:#12121A;border-radius:20px;border:1px solid rgba(255,255,255,.08);display:flex;flex-direction:column;box-shadow:0 24px 64px rgba(0,0,0,.5);overflow:hidden;transform:scale(.92) translateY(20px);opacity:0;pointer-events:none;transition:transform .25s cubic-bezier(.34,1.2,.64,1),opacity .2s}
+    #npChat-panel{position:fixed;bottom:156px;right:24px;z-index:800;width:360px;height:520px;background:#12121A;border-radius:20px;border:1px solid rgba(255,255,255,.08);display:flex;flex-direction:column;box-shadow:0 24px 64px rgba(0,0,0,.5);overflow:hidden;transform:scale(.92) translateY(20px);opacity:0;pointer-events:none;transition:transform .25s cubic-bezier(.34,1.2,.64,1),opacity .2s}
     #npChat-panel.open{transform:scale(1) translateY(0);opacity:1;pointer-events:auto}
     .npc-header{padding:16px 20px;background:rgba(255,255,255,.04);border-bottom:1px solid rgba(255,255,255,.06);display:flex;align-items:center;gap:12px}
     .npc-avatar{width:36px;height:36px;border-radius:50%;background:var(--blue);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
@@ -564,7 +564,7 @@
     .npc-send{width:38px;height:38px;border-radius:10px;background:var(--blue);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s,transform .15s;flex-shrink:0}
     .npc-send:hover{background:#1045C8;transform:scale(1.05)}
     .npc-send:disabled{background:rgba(255,255,255,.1);cursor:not-allowed;transform:none}
-    @media(max-width:480px){#npChat-panel{left:12px;right:12px;width:auto;bottom:88px}}
+    @media(max-width:480px){#npChat-btn{bottom:80px;right:16px}#npChat-panel{left:12px;right:12px;width:auto;bottom:148px}}
   </style>
 </head>
 <body>
