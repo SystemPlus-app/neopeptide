@@ -64,11 +64,11 @@
     /* ── HERO ── */
     .hero{min-height:100vh;padding-top:92px;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;overflow:hidden;background:transparent}
     .hero::before{content:'';position:absolute;inset:0;background:none;pointer-events:none}
-    .hero-inner{position:relative;z-index:1;text-align:center;padding:0 24px;display:flex;flex-direction:column;align-items:center;margin-top:-20px}
+    .hero-inner{position:relative;z-index:1;text-align:center;padding:0 24px;display:flex;flex-direction:column;align-items:center;margin-top:-70px}
     .hero-label{font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:rgba(10,10,15,.38);margin-bottom:10px}
     .hero-label-flag{opacity:1;color:initial;filter:saturate(1.2);margin-right:8px}
     .hero-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(54px,9.5vw,132px);font-weight:900;color:var(--ink);letter-spacing:-.045em;line-height:.88;max-width:1140px;margin-bottom:0}
-    .hero-bottle{width:clamp(260px,34vw,460px);height:auto;filter:drop-shadow(0 48px 80px rgba(0,0,0,.18)) drop-shadow(0 8px 20px rgba(0,0,0,.1));margin:-10px 0 -60px;position:relative;z-index:2;transition:transform .6s cubic-bezier(.34,1.2,.64,1)}
+    .hero-bottle{width:clamp(260px,34vw,460px);height:auto;filter:drop-shadow(0 48px 80px rgba(0,0,0,.18)) drop-shadow(0 8px 20px rgba(0,0,0,.1));margin:-10px 0 -100px;position:relative;z-index:2;transition:transform .6s cubic-bezier(.34,1.2,.64,1)}
     .hero-bottle:hover{transform:translateY(-10px) scale(1.02)}
     .hero-actions{display:flex;gap:12px;justify-content:center;margin-top:0}
     .btn-hero{font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:700;padding:16px 42px;border-radius:100px;background:var(--ink);color:#fff;border:none;cursor:pointer;transition:transform .15s,box-shadow .15s;letter-spacing:-.01em}
@@ -359,6 +359,46 @@
     .legal-btn-accept:hover{filter:brightness(1.1);transform:translateY(-1px)}
     .legal-btn-decline{font-family:'Plus Jakarta Sans',sans-serif;font-size:12px;font-weight:700;padding:11px 18px;border:1.5px solid #ccc;border-radius:12px;cursor:pointer;background:#fff;color:#888;transition:background .15s,color .15s}
     .legal-btn-decline:hover{background:#f0f0f0;color:#444}
+
+    /* ── PRODUCT DETAIL MODAL ── */
+    .pdm-overlay{display:none;position:fixed;inset:0;z-index:300;background:rgba(0,0,0,.58);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);align-items:center;justify-content:center;padding:20px}
+    .pdm-overlay.open{display:flex}
+    .pdm{background:#fff;border-radius:24px;overflow:hidden;width:100%;max-width:960px;display:grid;grid-template-columns:1fr 400px;position:relative;max-height:88vh;box-shadow:0 40px 100px rgba(0,0,0,.32)}
+    .pdm-x{position:absolute;top:16px;right:16px;z-index:10;width:34px;height:34px;border-radius:50%;border:1.5px solid rgba(0,0,0,.12);background:rgba(255,255,255,.92);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .2s;color:var(--ink)}
+    .pdm-x:hover{background:#fff;border-color:rgba(0,0,0,.3)}
+    .pdm-left{position:relative;overflow:hidden;min-height:480px;background:#f9f9f9}
+    .pdm-slide{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .7s ease;pointer-events:none}
+    .pdm-slide.active{opacity:1;pointer-events:all}
+    .pdm-slide-img{width:62%;max-width:260px;height:auto;object-fit:contain;filter:drop-shadow(0 24px 48px rgba(0,0,0,.2));transition:transform .55s cubic-bezier(.34,1.1,.64,1)}
+    .pdm-left:hover .pdm-slide.active .pdm-slide-img{transform:scale(1.11) translateY(-8px)}
+    .pdm-dots{position:absolute;bottom:18px;left:50%;transform:translateX(-50%);display:flex;gap:7px;z-index:5}
+    .pdm-dot{width:7px;height:7px;border-radius:50%;background:rgba(0,0,0,.18);cursor:pointer;transition:all .25s;border:none;padding:0}
+    .pdm-dot.active{background:rgba(0,0,0,.58);width:20px;border-radius:4px}
+    .pdm-right{padding:34px 30px 28px;overflow-y:auto;display:flex;flex-direction:column;border-left:1.5px solid var(--border)}
+    .pdm-eyebrow{font-size:10px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+    .pdm-name{font-family:'Plus Jakarta Sans',sans-serif;font-size:26px;font-weight:900;letter-spacing:-.03em;color:var(--ink);margin-bottom:3px;line-height:1.1}
+    .pdm-sub{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:14px}
+    .pdm-desc{font-size:13px;color:var(--sub);line-height:1.75;margin-bottom:18px}
+    .pdm-price-row{display:flex;align-items:baseline;gap:8px;margin-bottom:20px}
+    .pdm-price{font-family:'Plus Jakarta Sans',sans-serif;font-size:32px;font-weight:900;color:var(--ink);letter-spacing:-.03em}
+    .pdm-from{font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.1em}
+    .pdm-sec-label{font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--sub);margin-bottom:8px}
+    .pdm-dpills{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:24px}
+    .pdm-dpill{padding:9px 18px;border-radius:100px;border:2px solid var(--border);font-size:13px;font-weight:700;cursor:pointer;background:#fff;color:var(--ink);transition:all .15s;font-family:'Plus Jakarta Sans',sans-serif}
+    .pdm-dpill:hover{border-color:rgba(0,0,0,.3)}
+    .pdm-dpill.active{border-color:var(--ink);background:var(--ink);color:#fff}
+    .pdm-bottom{margin-top:auto;display:flex;flex-direction:column;gap:10px;padding-top:16px;border-top:1.5px solid var(--border)}
+    .pdm-qty-row{display:grid;grid-template-columns:120px 1fr;gap:10px}
+    .pdm-qty{display:flex;align-items:center;border:2px solid var(--border);border-radius:12px;overflow:hidden}
+    .pdm-qty-btn{width:38px;height:48px;border:none;background:none;font-size:20px;cursor:pointer;color:var(--ink);transition:background .15s;display:flex;align-items:center;justify-content:center;line-height:1}
+    .pdm-qty-btn:hover{background:var(--cream)}
+    .pdm-qty-num{flex:1;text-align:center;font-family:'Plus Jakarta Sans',sans-serif;font-size:16px;font-weight:800;color:var(--ink)}
+    .pdm-add-btn{height:48px;background:var(--ink);color:#fff;font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;font-weight:700;border:none;border-radius:12px;cursor:pointer;transition:background .2s;display:flex;align-items:center;justify-content:center;gap:7px}
+    .pdm-add-btn:hover:not(:disabled){background:var(--blue)}
+    .pdm-add-btn:disabled{opacity:.32;cursor:not-allowed}
+    .pdm-trust{font-size:10.5px;color:var(--muted);text-align:center}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    @media(max-width:760px){.pdm{grid-template-columns:1fr;max-height:92vh}.pdm-left{min-height:280px}.pdm-right{padding:22px 18px}}
 
     /* ── CATALOG PRODUCT CARDS (pc2) ── */
     .products-grid2{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:16px}
@@ -1014,6 +1054,17 @@
   </div>
 </div>
 
+<!-- PRODUCT DETAIL MODAL -->
+<div id="pdmOverlay" class="pdm-overlay" onclick="if(event.target===this)closePDM()">
+  <div class="pdm" id="pdmBox">
+    <button class="pdm-x" onclick="closePDM()">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+    </button>
+    <div class="pdm-left" id="pdmLeft"></div>
+    <div class="pdm-right" id="pdmRight"></div>
+  </div>
+</div>
+
 <!-- MOBILE BAR -->
 <div class="mobile-bar" id="mobileBar">
   <button class="mb-primary" onclick="document.getElementById('programs').scrollIntoView({behavior:'smooth'});showView('home')">Explore Programs →</button>
@@ -1211,8 +1262,10 @@ function showProgram(id) {
 
   const grid = document.getElementById('pvProductsGrid');
   grid.className = 'products-grid2';
+  _pdmData = [];
 
   grid.innerHTML = p.products.map((pr, i) => {
+    _pdmData.push({product: pr, sectionId: id});
     const hasDoses = pr.doses && pr.doses.length > 0;
     const initPrice = hasDoses ? pr.doses[0].p : pr.price;
     const isOOS = pr.outOfStock || false;
@@ -1234,7 +1287,7 @@ function showProgram(id) {
           <div class="pc2-sub">${pr.sub}</div>
           ${isOOS ? '<span class="pc2-oos">Out of Stock</span>' : ''}
         </div>
-        <div class="pc2-img-wrap">
+        <div class="pc2-img-wrap" onclick="openPDM(${i})" style="cursor:pointer">
           <img class="pc2-img" src="${pr.img}" alt="${pr.name}" loading="lazy">
         </div>
         ${dosePills}
@@ -1275,6 +1328,154 @@ function addToCartPC2(btn) {
   const price = parseFloat(card.dataset.price);
   const fullName = dose ? name + ' ' + dose : name;
   addToCart(fullName, price, btn);
+}
+
+/* ═══════════════════════════════════════
+   PRODUCT DETAIL MODAL
+════════════════════════════════════════ */
+let _pdmData = [];
+let _pdmTimer = null;
+let _pdmSlide = 0;
+
+const PRODUCT_DESCS = {
+  'GLP-3 (RT)':                  'Research-grade triple GLP receptor agonist formulated for in-vitro metabolic, appetite regulation, and weight management studies.',
+  'GLP-1/GIP':                   'Dual GIP and GLP-1 receptor agonist for research into incretin signaling, insulin sensitivity, and metabolic homeostasis.',
+  'AOD 9604':                    'C-terminal fragment of hGH engineered for lipid metabolism and adipocyte research without IGF-1 interactions.',
+  'Cargrilintide':               'Acylated amylin analogue for research on satiety signaling, gastric motility, and glucose homeostasis.',
+  '5-Amino 1MQ':                 'NNMT inhibitor compound for metabolic research targeting adipogenesis and energy expenditure pathways.',
+  'SLU-PP-322':                  'ERRα/γ agonist for research on mitochondrial biogenesis, oxidative capacity, and metabolic performance.',
+  'Klow':                        'Proprietary metabolic support blend for research applications targeting weight regulation and appetite control.',
+  'Ipamorelin + CJC-1295':       'Synergistic GHRP/GHRH blend for research on pulsatile GH secretion, recovery, and body composition.',
+  'Ipamorelin':                  'Selective growth hormone secretagogue for research on GH pulse amplitude without cortisol or prolactin side effects.',
+  'CJC-1295 No DAC':             'Modified GHRH analogue for research on GH release, IGF-1 elevation, and anabolic signaling.',
+  'Tesamorelin':                 'Synthetic GHRH analogue for research on visceral adipose tissue reduction and GH/IGF-1 axis modulation.',
+  'Tesamorelin + Ipamorelin Blend': 'Synergistic GHRH/GHRP combination for amplified GH pulse research and recovery studies.',
+  'Sermorelin':                  'GHRH(1-29) fragment for research on GH secretion, sleep architecture, and anti-aging pathways.',
+  'GHRP-6':                      'Hexapeptide GH secretagogue for research on GH release, appetite stimulation, and anabolic signaling.',
+  'NAD+':                        'Coenzyme NAD+ for research on mitochondrial energy metabolism, DNA repair, and cellular aging mechanisms.',
+  'SS-31':                       'Mitochondria-targeted tetrapeptide for research on oxidative stress reduction and mitochondrial membrane stabilization.',
+  'Mots-C':                      'Mitochondrial-derived peptide for research on metabolic regulation, exercise adaptation, and insulin sensitivity.',
+  'VIP':                         'Vasoactive intestinal peptide for research on neuroprotection, immune modulation, and circadian rhythm.',
+  'KPV':                         'C-terminal tripeptide of α-MSH for research on anti-inflammatory pathways and gut barrier integrity.',
+  'TB-500 + BPC-157':            'Synergistic recovery blend for research on tissue repair, angiogenesis, and musculoskeletal healing.',
+  'TB-500':                      'Thymosin β4 fragment for research on actin regulation, wound healing, and anti-inflammatory signaling.',
+  'Glow Blend':                  'Proprietary peptide blend for research on collagen synthesis, skin barrier function, and photoprotection.',
+  'GHK-Cu':                      'Copper tripeptide complex for research on collagen remodeling, wound healing, and antioxidant activity.',
+  'Selank':                      'Anxiolytic peptide analogue for research on GABA-A modulation, stress response, and cognitive performance.',
+  'Bacteriostatic Water':        '0.9% benzyl alcohol preserved water for peptide reconstitution and research compound preparation.',
+};
+
+const _pdmGrads = {
+  glp1:        'radial-gradient(ellipse at 50% 55%,#fff 0%,#C8EDD8 48%,#3A8060 100%)',
+  longevity:   'radial-gradient(ellipse at 50% 55%,#fff 0%,#BCDAF0 48%,#2A60A0 100%)',
+  testosterone:'radial-gradient(ellipse at 50% 55%,#fff 0%,#EEC0C0 48%,#A03030 100%)',
+  microdose:   'radial-gradient(ellipse at 50% 55%,#fff 0%,#E8CFA8 48%,#885828 100%)',
+  skin:        'radial-gradient(ellipse at 50% 55%,#fff 0%,#F7C4D8 48%,#B83878 100%)',
+  neuro:       'radial-gradient(ellipse at 50% 55%,#fff 0%,#D8C8F8 48%,#5833A4 100%)',
+  essentials:  'radial-gradient(ellipse at 50% 55%,#fff 0%,#D0D5DB 48%,#505860 100%)',
+};
+
+function openPDM(idx) {
+  const { product: pr, sectionId } = _pdmData[idx];
+  const prog = PROGRAMS[sectionId];
+  const hasDoses = pr.doses && pr.doses.length > 0;
+  const hasMulti = hasDoses && pr.doses.length > 1;
+  const initPrice = hasDoses ? pr.doses[0].p : pr.price;
+  const isOOS = pr.outOfStock || false;
+  const priceStr = Number.isInteger(initPrice) ? initPrice : initPrice.toFixed(2);
+  const desc = PRODUCT_DESCS[pr.name] || '';
+
+  document.getElementById('pdmLeft').innerHTML = `
+    <div class="pdm-slide active">
+      <img class="pdm-slide-img" src="${pr.img}" alt="${pr.name}">
+    </div>
+    <div class="pdm-slide" style="background:${_pdmGrads[sectionId]||'#f0f0f0'}">
+      <img class="pdm-slide-img" src="${pr.img}" alt="${pr.name}">
+    </div>
+    <div class="pdm-dots">
+      <button class="pdm-dot active" onclick="goSlide(0)"></button>
+      <button class="pdm-dot" onclick="goSlide(1)"></button>
+    </div>`;
+
+  document.getElementById('pdmRight').innerHTML = `
+    <div class="pdm-eyebrow">${prog.name}</div>
+    <div class="pdm-name">${pr.name}</div>
+    <div class="pdm-sub">${pr.sub}</div>
+    ${desc ? `<p class="pdm-desc">${desc}</p>` : ''}
+    <div class="pdm-price-row">
+      ${hasMulti ? '<span class="pdm-from">FROM</span>' : ''}
+      <div class="pdm-price" id="pdmPrice">$${priceStr}</div>
+    </div>
+    ${hasDoses ? `
+      <div class="pdm-sec-label">Dosage</div>
+      <div class="pdm-dpills">
+        ${pr.doses.map((d,di)=>`<button class="pdm-dpill${di===0?' active':''}" data-dose="${d.l}" data-price="${d.p}" onclick="pdmSelectDose(this)">${d.l}</button>`).join('')}
+      </div>` : ''}
+    <div class="pdm-bottom">
+      <div class="pdm-qty-row">
+        <div class="pdm-qty">
+          <button class="pdm-qty-btn" onclick="pdmQty(-1)">−</button>
+          <div class="pdm-qty-num" id="pdmQtyNum">1</div>
+          <button class="pdm-qty-btn" onclick="pdmQty(1)">+</button>
+        </div>
+        <button class="pdm-add-btn" ${isOOS?'disabled':''} onclick="pdmAddCart('${pr.name.replace(/'/g,"\\'")}')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+          ${isOOS ? 'Out of Stock' : 'Add to Cart'}
+        </button>
+      </div>
+      <div class="pdm-trust">🔒 GMP Certified · ≥99% Purity · Ships in 48h · COA Guaranteed</div>
+    </div>`;
+
+  const box = document.getElementById('pdmBox');
+  box.dataset.price = initPrice;
+  box.dataset.qty = 1;
+  _pdmSlide = 0;
+  clearInterval(_pdmTimer);
+  _pdmTimer = setInterval(() => goSlide((_pdmSlide + 1) % 2), 5000);
+  document.getElementById('pdmOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closePDM() {
+  document.getElementById('pdmOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+  clearInterval(_pdmTimer);
+  _pdmTimer = null;
+}
+
+function goSlide(n) {
+  _pdmSlide = n;
+  document.querySelectorAll('.pdm-slide').forEach((s, i) => s.classList.toggle('active', i === n));
+  document.querySelectorAll('.pdm-dot').forEach((d, i) => d.classList.toggle('active', i === n));
+}
+
+function pdmSelectDose(btn) {
+  document.querySelectorAll('.pdm-dpill').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+  const price = parseFloat(btn.dataset.price);
+  document.getElementById('pdmBox').dataset.price = price;
+  document.getElementById('pdmPrice').textContent = '$' + (Number.isInteger(price) ? price : price.toFixed(2));
+}
+
+function pdmQty(delta) {
+  const box = document.getElementById('pdmBox');
+  const next = Math.max(1, parseInt(box.dataset.qty || 1) + delta);
+  box.dataset.qty = next;
+  document.getElementById('pdmQtyNum').textContent = next;
+}
+
+function pdmAddCart(name) {
+  const box = document.getElementById('pdmBox');
+  const activePill = document.querySelector('.pdm-dpill.active');
+  const dose = activePill ? activePill.dataset.dose : '';
+  const price = parseFloat(box.dataset.price);
+  const qty = parseInt(box.dataset.qty || 1);
+  const fullName = dose ? name + ' ' + dose : name;
+  const ex = cart.find(i => i.name === fullName);
+  if (ex) ex.qty += qty; else cart.push({name: fullName, price, qty});
+  refreshCart();
+  closePDM();
+  openCart();
 }
 
 function goToCheckout() {
@@ -1341,12 +1542,38 @@ function selectPayment(method) {
   document.getElementById('zelleDetail').classList.toggle('show', method === 'zelle');
 }
 
-function confirmOrder() {
+async function confirmOrder() {
   const total = cart.reduce((s,i)=>s+i.price*i.qty,0);
   const shippingVal = total >= 150 ? 0 : 9.99;
   const grand = total + shippingVal;
   const orderNum = 'NP-' + Date.now().toString().slice(-6);
-  const name = document.getElementById('f-name') ? document.getElementById('f-name').value : 'Customer';
+  const name    = document.getElementById('f-name')?.value   || '';
+  const email   = document.getElementById('f-email')?.value  || '';
+  const phone   = document.getElementById('f-phone')?.value  || '';
+  const street  = document.getElementById('f-street')?.value || '';
+  const city    = document.getElementById('f-city')?.value   || '';
+  const state   = document.getElementById('f-state')?.value  || '';
+  const zip     = document.getElementById('f-zip')?.value    || '';
+
+  const btn = document.getElementById('btnConfirm');
+  btn.disabled = true;
+  btn.innerHTML = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="animation:spin 1s linear infinite"><path d="M21 12a9 9 0 1 1-6.2-8.6"/></svg> Sending…';
+
+  try {
+    await fetch('/api/order', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({
+        customerEmail: email, customerName: name,
+        items: cart.map(i=>({name:i.name,price:i.price,qty:i.qty})),
+        total: total.toFixed(2),
+        shipping: shippingVal > 0 ? shippingVal.toFixed(2) : 'Free',
+        grand: grand.toFixed(2),
+        orderNum,
+        address: `${street}, ${city}, ${state} ${zip}`, phone
+      })
+    });
+  } catch(e) { /* fail silently — confirmation still shows */ }
 
   document.getElementById('confirmDetail').innerHTML = `
     <div class="confirm-row"><span>Order #</span><span>${orderNum}</span></div>
@@ -1355,7 +1582,6 @@ function confirmOrder() {
     <div class="confirm-row"><span>Shipping</span><span>${total >= 150 ? 'Free' : '$9.99'}</span></div>
     <div class="confirm-row"><span>Total Due via Zelle</span><span>$${grand.toFixed(2)}</span></div>
   `;
-
   showView('confirm');
 }
 
