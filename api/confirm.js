@@ -17,7 +17,7 @@ export default async function handler(req, res) {
       method: 'POST',
       headers: { 'Authorization': `Bearer ${KEY}`, 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        from: 'Neo Peptide USA <orders@neopeptideusa.com>',
+        from: process.env.RESEND_FROM || 'Neo Peptide USA <onboarding@resend.dev>',
         to: customerEmail,
         subject: `✅ Order ${orderNum} Confirmed — Ships Within 48h`,
         html: `<div style="font-family:sans-serif;max-width:560px;margin:0 auto;padding:32px 24px;color:#111">
