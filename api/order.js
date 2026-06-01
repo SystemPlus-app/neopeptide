@@ -16,7 +16,7 @@ export default async function handler(req, res) {
       <td style="padding:10px 0;border-bottom:1px solid #eee;text-align:right;font-size:14px;font-weight:700">$${(i.price * i.qty).toFixed(2)}</td>
     </tr>`).join('');
 
-  const FROM = process.env.RESEND_FROM || 'Neo Peptide USA <orders@neopeptidus.com>';
+  const FROM = process.env.RESEND_FROM || 'Neo Peptide USA <orders@neopeptideus.com>';
 
   async function send(to, subject, html) {
     const r = await fetch('https://api.resend.com/emails', {
