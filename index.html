@@ -1498,7 +1498,7 @@ function pdmAddCart(name) {
   const qty = parseInt(box.dataset.qty || 1);
   const fullName = dose ? name + ' ' + dose : name;
   const ex = cart.find(i => i.name === fullName);
-  if (ex) ex.qty += qty; else cart.push({name: fullName, price, qty});
+  if (ex) ex.qty += qty; else cart.push({name: fullName, price, qty, img: getProductImg(name)});
   refreshCart();
   closePDM();
   openCart();
@@ -1533,7 +1533,7 @@ function buildOrderSummary(containerId) {
     <p class="os-title">Order Summary</p>
     ${cart.map(i=>`
       <div class="os-item">
-        <div class="os-icon">💊</div>
+        <div class="os-icon">${i.img ? `<img src="${i.img}" style="width:34px;height:38px;object-fit:contain">` : '💊'}</div>
         <div class="os-info">
           <strong>${i.name}</strong>
           <span>Qty: ${i.qty}</span>
@@ -1616,9 +1616,18 @@ async function confirmOrder() {
 ════════════════════════════════════════ */
 let cart = [];
 
+function getProductImg(name) {
+  for (const prog of Object.values(PROGRAMS)) {
+    for (const pr of prog.products) {
+      if (name === pr.name || name.startsWith(pr.name + ' ')) return pr.img;
+    }
+  }
+  return null;
+}
+
 function addToCart(name, price, btn) {
   const ex = cart.find(i=>i.name===name);
-  if (ex) ex.qty++; else cart.push({name,price,qty:1});
+  if (ex) ex.qty++; else cart.push({name, price, qty:1, img: getProductImg(name)});
   refreshCart();
   openCart();
   if (btn && btn.innerHTML !== undefined) {
@@ -1649,7 +1658,7 @@ function refreshCart() {
   foot.style.display = '';
   body.innerHTML = cart.map(i=>`
     <div class="cart-item">
-      <div class="cart-item-icon">💊</div>
+      <div class="cart-item-icon">${i.img ? `<img src="${i.img}" style="width:36px;height:40px;object-fit:contain">` : '💊'}</div>
       <div class="cart-item-info"><strong>${i.name}</strong><span>Qty: ${i.qty}</span></div>
       <div class="cart-item-price">$${(i.price*i.qty).toFixed(2)}</div>
       <button class="cart-item-rm" onclick="removeItem('${i.name.replace(/'/g,"\\'")}')">✕</button>
