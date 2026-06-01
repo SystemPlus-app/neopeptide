@@ -43,11 +43,11 @@
     /* ── HEADER ── */
     header{position:fixed;top:0;left:0;right:0;z-index:100;height:92px;background:transparent;transition:background .4s,backdrop-filter .4s,border-color .4s;border-bottom:1px solid transparent}
     header.scrolled{background:transparent;backdrop-filter:none;-webkit-backdrop-filter:none;border-bottom-color:transparent}
-    .header-inner{max-width:1200px;margin:0 auto;height:100%;padding:0 clamp(20px,4vw,48px);display:flex;align-items:center}
+    .header-inner{max-width:1200px;margin:0 auto;height:100%;padding:0 clamp(20px,4vw,48px);display:flex;align-items:center;position:relative}
     .logo{display:flex;align-items:center;overflow:visible;align-self:stretch;flex-shrink:0;transition:opacity .2s}
     .logo:hover{opacity:.8}
     .logo-img{height:142px;width:auto}
-    nav{display:flex;gap:32px;flex:1;justify-content:center}
+    nav{display:flex;gap:32px;position:absolute;left:50%;transform:translateX(-50%);pointer-events:auto}
     nav a{font-size:13px;font-weight:500;letter-spacing:.01em;color:rgba(10,10,15,.62);transition:color .2s;cursor:pointer}
     nav a:hover{color:var(--ink)}
     .header-right{display:flex;align-items:center;gap:10px;flex-shrink:0}
