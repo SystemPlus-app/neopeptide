@@ -67,7 +67,13 @@ module.exports = async function handler(req, res) {
   if (!message) return res.status(400).json({ error: 'No message provided' });
 
   const apiKey = process.env.GEMINI_API_KEY;
-  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+  const isOAuthToken = apiKey && apiKey.startsWith('AQ.');
+  const url = isOAuthToken
+    ? 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent'
+    : `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+  const authHeader = isOAuthToken
+    ? { 'Authorization': `Bearer ${apiKey}` }
+    : {};
 
   const contents = [
     ...(Array.isArray(history) ? history.slice(-8) : []),
@@ -77,7 +83,7 @@ module.exports = async function handler(req, res) {
   try {
     const r = await fetch(url, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', ...authHeader },
       body: JSON.stringify({
         contents,
         systemInstruction: { parts: [{ text: SYSTEM_PROMPT }] },
@@ -87,7 +93,7 @@ module.exports = async function handler(req, res) {
 
     if (!r.ok) {
       const err = await r.json();
-      throw new Error(err.error?.message || `Gemini ${r.status}`);
+      throw new Error(err.error?.message || `Gemini HTTP ${r.status}`);
     }
 
     const json = await r.json();
@@ -99,8 +105,6 @@ module.exports = async function handler(req, res) {
 
   } catch (err) {
     console.error('[NP Gemini]', err.message);
-    return res.status(200).json({
-      reply: 'Thank you for reaching out. Our team will be in touch within a few hours.'
-    });
+    return res.status(200).json({ reply: `[DEBUG] ${err.message}` });
   }
 };

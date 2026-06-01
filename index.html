@@ -1895,7 +1895,7 @@ async function npSend() {
   npShowTyping();
 
   try {
-    var r = await fetch('/api/chat', {
+    var r = await fetch('/api/gemini', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ message: text, history: _npcHistory.slice(-8) })
