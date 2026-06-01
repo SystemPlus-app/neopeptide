@@ -50,7 +50,7 @@
     nav{display:flex;gap:32px;position:absolute;left:50%;transform:translateX(-50%);pointer-events:auto}
     nav a{font-size:13px;font-weight:500;letter-spacing:.01em;color:rgba(10,10,15,.62);transition:color .2s;cursor:pointer}
     nav a:hover{color:var(--ink)}
-    .header-right{display:flex;align-items:center;gap:10px;flex-shrink:0}
+    .header-right{display:flex;align-items:center;gap:10px;flex-shrink:0;margin-left:auto}
     .cart-btn{display:flex;align-items:center;gap:7px;font-size:13px;font-weight:600;color:var(--ink);background:none;border:none;cursor:pointer;padding:8px 14px;border-radius:12px;transition:background .2s;font-family:'Plus Jakarta Sans',sans-serif}
     .cart-btn:hover{background:rgba(0,0,0,.06)}
     .cart-count{min-width:20px;height:20px;border-radius:10px;background:var(--ink);color:#fff;font-size:10px;font-weight:800;display:flex;align-items:center;justify-content:center;padding:0 5px}
@@ -430,53 +430,80 @@
     /* ── RESPONSIVE ── */
     @media(max-width:1024px){
       nav{display:none}
-      .header-inner{padding:0 20px;justify-content:space-between}
-      .programs-section{padding:64px 24px}
+      .header-inner{padding:0 20px}
+      .programs-section{padding:64px 20px}
       .programs-top{grid-template-columns:1fr;gap:16px}
-      .programs-grid{grid-template-columns:1fr;gap:12px}
-      .prog-card{min-height:280px}
-      .before-after{padding:72px 24px}
+      .programs-grid{grid-template-columns:1fr 1fr;gap:12px}
+      .prog-card{min-height:260px}
+      .before-after{padding:72px 20px}
       .ba-grid{grid-template-columns:1fr}
-      .numbers{padding:64px 24px}
+      .numbers{padding:64px 20px}
       .numbers-inner{grid-template-columns:repeat(2,1fr)}
-      .quality{padding:72px 24px}
+      .quality{padding:72px 20px}
       .quality-grid{grid-template-columns:1fr}
       .footer-top{grid-template-columns:1fr 1fr}
       .mobile-bar{display:flex}
-      .cart-drawer{width:100%}
+      .cart-drawer{width:min(420px,100%)}
       .checkout-layout,.review-layout{grid-template-columns:1fr}
       .order-summary{position:static}
-      .checkout-view{padding:108px 24px 100px}
-      .pv-top{padding:108px 24px 0}
-      .pv-banner{padding:0 24px}
-      .pv-banner-inner{grid-template-columns:1fr;padding:40px 32px 0}
+      .checkout-view{padding:108px 20px 100px}
+      .pv-top{padding:108px 20px 0}
+      .pv-banner{padding:0 20px}
+      .pv-banner-inner{grid-template-columns:1fr;padding:40px 28px 0}
       .pv-bottle-wrap{display:none}
-      .pv-products{padding:44px 24px 64px}
+      .pv-products{padding:44px 20px 64px}
+      .products-grid2{grid-template-columns:repeat(2,1fr)}
     }
     @media(max-width:640px){
       .hero{padding-top:92px}
-      .hero-title{font-size:clamp(44px,13vw,72px)}
-      .hero-bottle{width:clamp(160px,58vw,260px)}
-      .hero-trust{font-size:9px;gap:0}
+      .hero-inner{margin-top:-40px}
+      .hero-title{font-size:clamp(40px,12vw,68px)}
+      .hero-bottle{width:clamp(200px,62vw,300px);margin:-8px 0 -70px}
+      .hero-trust{font-size:9px}
       .hero-trust span{padding:0 8px}
-      .programs-section{padding:48px 16px}
-      .prog-card{min-height:230px}
-      .prog-card-content{padding:20px 22px 26px}
+      .programs-section{padding:40px 14px}
+      .programs-grid{grid-template-columns:1fr;gap:10px}
+      .prog-card{min-height:220px}
+      .prog-card-content{padding:18px 20px 24px}
       .prog-card-name{font-size:16px}
       .numbers-inner{grid-template-columns:1fr 1fr}
-      .number-item{padding:28px 18px}
+      .number-item{padding:24px 16px}
+      .number-val{font-size:clamp(28px,8vw,40px)}
       .footer-top{grid-template-columns:1fr;gap:28px}
       footer{padding:48px 16px 100px}
-      .checkout-view{padding:100px 16px 100px}
-      .checkout-form-box{padding:24px 18px}
+      .checkout-view{padding:100px 14px 100px}
+      .checkout-form-box{padding:22px 16px}
       .form-row{grid-template-columns:1fr}
       .form-row.three{grid-template-columns:1fr 1fr}
-      .checkout-title{font-size:28px}
-      .final-cta{padding:80px 24px}
+      .checkout-title{font-size:26px}
+      .final-cta{padding:72px 20px}
+      .products-grid2{grid-template-columns:repeat(2,1fr);gap:10px}
+      .pc2-name{font-size:15px}
+      .pc2-price{font-size:18px}
+      .pc2-img-wrap{min-height:140px;padding:14px}
+      .pc2-img{width:120px;height:160px}
+      .pc2-dose-wrap{padding:0 12px 12px;gap:5px}
+      .dose-pill{font-size:11px;padding:5px 10px}
+      .pc2-foot{border-top-width:1px}
+      .pc2-price-side{padding:10px 12px}
+      .pc2-add-btn{font-size:10px;gap:4px;padding:10px 6px}
+      .pdm{grid-template-columns:1fr;border-radius:18px}
+      .pdm-left{min-height:260px}
+      .pdm-right{padding:20px 18px}
+      .pdm-name{font-size:22px}
+      .pdm-price{font-size:26px}
+      .section-h2{font-size:clamp(24px,6vw,36px)}
+      .pv-h1{font-size:clamp(26px,6vw,44px)}
+      .cart-btn span:not(.cart-count){display:none}
     }
-    @media(max-width:390px){
-      .hero-title{font-size:clamp(36px,14vw,54px)}
-      .hero-bottle{width:56vw}
+    @media(max-width:420px){
+      .products-grid2{grid-template-columns:1fr}
+      .hero-title{font-size:clamp(34px,13vw,54px)}
+      .hero-bottle{width:64vw;margin:-6px 0 -60px}
+      .hero-trust{flex-wrap:wrap;gap:4px;padding:8px 16px}
+      .hero-trust span{border-right:none;padding:0 8px}
+      .pc2-name{font-size:16px}
+      .pdm-qty-row{grid-template-columns:110px 1fr}
     }
   </style>
 </head>
