@@ -532,6 +532,39 @@
       .pc2-name{font-size:16px}
       .pdm-qty-row{grid-template-columns:110px 1fr}
     }
+
+    /* ── NP AI CHAT ── */
+    #npChat-btn{position:fixed;bottom:24px;left:24px;z-index:800;width:56px;height:56px;border-radius:50%;background:var(--ink);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 24px rgba(0,0,0,.28);transition:transform .2s,box-shadow .2s}
+    #npChat-btn:hover{transform:scale(1.08);box-shadow:0 12px 32px rgba(0,0,0,.35)}
+    #npChat-panel{position:fixed;bottom:92px;left:24px;z-index:800;width:360px;height:520px;background:#12121A;border-radius:20px;border:1px solid rgba(255,255,255,.08);display:flex;flex-direction:column;box-shadow:0 24px 64px rgba(0,0,0,.5);overflow:hidden;transform:scale(.92) translateY(20px);opacity:0;pointer-events:none;transition:transform .25s cubic-bezier(.34,1.2,.64,1),opacity .2s}
+    #npChat-panel.open{transform:scale(1) translateY(0);opacity:1;pointer-events:auto}
+    .npc-header{padding:16px 20px;background:rgba(255,255,255,.04);border-bottom:1px solid rgba(255,255,255,.06);display:flex;align-items:center;gap:12px}
+    .npc-avatar{width:36px;height:36px;border-radius:50%;background:var(--blue);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+    .npc-header-info{flex:1}
+    .npc-header-info strong{display:block;font-size:13px;font-weight:700;color:#E8E8F0;font-family:'Plus Jakarta Sans',sans-serif}
+    .npc-header-info span{font-size:11px;color:rgba(255,255,255,.38)}
+    .npc-close{background:none;border:none;cursor:pointer;color:rgba(255,255,255,.38);width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;transition:background .2s,color .2s}
+    .npc-close:hover{background:rgba(255,255,255,.08);color:#E8E8F0}
+    .npc-msgs{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:12px;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.08) transparent}
+    .npc-msg{display:flex;max-width:88%}
+    .npc-msg.user{align-self:flex-end;flex-direction:row-reverse}
+    .npc-msg.ai{align-self:flex-start}
+    .npc-bubble{padding:10px 14px;border-radius:14px;font-size:13px;line-height:1.58}
+    .npc-msg.ai .npc-bubble{background:rgba(255,255,255,.07);color:#D0D0E0;border-radius:4px 14px 14px 14px}
+    .npc-msg.user .npc-bubble{background:var(--blue);color:#fff;border-radius:14px 4px 14px 14px}
+    .npc-typing{display:flex;align-items:center;gap:4px;padding:4px 2px}
+    .npc-dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.35);animation:npcDot 1.2s infinite}
+    .npc-dot:nth-child(2){animation-delay:.2s}
+    .npc-dot:nth-child(3){animation-delay:.4s}
+    @keyframes npcDot{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-5px)}}
+    .npc-footer{padding:12px 16px;border-top:1px solid rgba(255,255,255,.06);display:flex;gap:8px;align-items:flex-end}
+    .npc-input{flex:1;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:10px 14px;font-size:13px;color:#E8E8F0;font-family:'Inter',sans-serif;outline:none;resize:none;max-height:80px;min-height:38px;transition:border-color .2s;line-height:1.4}
+    .npc-input:focus{border-color:var(--blue)}
+    .npc-input::placeholder{color:rgba(255,255,255,.22)}
+    .npc-send{width:38px;height:38px;border-radius:10px;background:var(--blue);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s,transform .15s;flex-shrink:0}
+    .npc-send:hover{background:#1045C8;transform:scale(1.05)}
+    .npc-send:disabled{background:rgba(255,255,255,.1);cursor:not-allowed;transform:none}
+    @media(max-width:480px){#npChat-panel{left:12px;right:12px;width:auto;bottom:88px}}
   </style>
 </head>
 <body>
@@ -1137,6 +1170,31 @@
       <button class="legal-btn-accept" onclick="legalAccept()">I Accept — I Acknowledge That I Am a Valid Researcher Over 21 Years of Age</button>
       <button class="legal-btn-decline" onclick="legalDecline()">I Decline</button>
     </div>
+  </div>
+</div>
+
+<!-- NP AI CHAT -->
+<button id="npChat-btn" onclick="npToggle()" title="Chat with NP Research AI" aria-label="Open AI chat">
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+</button>
+
+<div id="npChat-panel">
+  <div class="npc-header">
+    <div class="npc-avatar">⚗</div>
+    <div class="npc-header-info">
+      <strong>NP Research AI</strong>
+      <span>Ask about our peptide programs</span>
+    </div>
+    <button class="npc-close" onclick="npToggle()" aria-label="Close chat">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+    </button>
+  </div>
+  <div class="npc-msgs" id="npcMsgs"></div>
+  <div class="npc-footer">
+    <textarea class="npc-input" id="npcInput" placeholder="Ask about peptides, programs, shipping…" rows="1" onkeydown="npKey(event)" oninput="npAutosize(this)"></textarea>
+    <button class="npc-send" id="npcSend" onclick="npSend()" aria-label="Send">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>
+    </button>
   </div>
 </div>
 
@@ -1775,6 +1833,88 @@ if (footerEl && mobileBar) {
 })();
 function legalAccept(){ document.getElementById('legalOverlay').style.display='none'; document.body.style.overflow=''; }
 function legalDecline(){ window.location.href='https://www.google.com'; }
+
+/* ═══════════════════════════════════════
+   NP AI CHAT (Gemini)
+════════════════════════════════════════ */
+var _npcHistory = [];
+var _npcPending = false;
+var _npcOpen = false;
+
+(function(){
+  npAddMsg('ai', 'Welcome to Neo Peptide Research AI. I can help you explore our peptide programs, understand the science behind each compound, and find the right protocol for your research goals. What are you working on?');
+})();
+
+function npToggle() {
+  _npcOpen = !_npcOpen;
+  document.getElementById('npChat-panel').classList.toggle('open', _npcOpen);
+  if (_npcOpen) setTimeout(function(){ document.getElementById('npcInput').focus(); }, 260);
+}
+
+function npAddMsg(role, text) {
+  var msgs = document.getElementById('npcMsgs');
+  var div = document.createElement('div');
+  div.className = 'npc-msg ' + role;
+  div.innerHTML = '<div class="npc-bubble">' + text.replace(/\n/g,'<br>') + '</div>';
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function npShowTyping() {
+  var msgs = document.getElementById('npcMsgs');
+  var div = document.createElement('div');
+  div.className = 'npc-msg ai';
+  div.id = 'npcTyping';
+  div.innerHTML = '<div class="npc-bubble npc-typing"><div class="npc-dot"></div><div class="npc-dot"></div><div class="npc-dot"></div></div>';
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function npKey(e) {
+  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); npSend(); }
+}
+
+function npAutosize(el) {
+  el.style.height = 'auto';
+  el.style.height = Math.min(el.scrollHeight, 80) + 'px';
+}
+
+async function npSend() {
+  if (_npcPending) return;
+  var inp = document.getElementById('npcInput');
+  var text = inp.value.trim();
+  if (!text) return;
+
+  inp.value = '';
+  inp.style.height = '';
+  npAddMsg('user', text);
+  _npcHistory.push({ role: 'user', parts: [{ text: text }] });
+
+  _npcPending = true;
+  document.getElementById('npcSend').disabled = true;
+  npShowTyping();
+
+  try {
+    var r = await fetch('/api/gemini', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message: text, history: _npcHistory.slice(-8) })
+    });
+    var data = await r.json();
+    var typing = document.getElementById('npcTyping');
+    if (typing) typing.remove();
+    var reply = data.reply || 'Our team will follow up shortly.';
+    npAddMsg('ai', reply);
+    _npcHistory.push({ role: 'model', parts: [{ text: reply }] });
+  } catch(err) {
+    var typing2 = document.getElementById('npcTyping');
+    if (typing2) typing2.remove();
+    npAddMsg('ai', 'Sorry, I had trouble connecting. Please try again.');
+  }
+  _npcPending = false;
+  document.getElementById('npcSend').disabled = false;
+  document.getElementById('npcInput').focus();
+}
 </script>
 </body>
 </html>
