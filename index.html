@@ -1223,17 +1223,15 @@ const PROGRAMS = {
 /* ═══════════════════════════════════════
    NAVIGATION
 ════════════════════════════════════════ */
-function showView(name) {
+function showView(name, push = true) {
   document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
   const el = document.getElementById('view-' + name);
   if (el) { el.classList.add('active'); window.scrollTo({top:0,behavior:'smooth'}); }
-  // reset header scrolled state on home
-  if (name === 'home') {
-    window.dispatchEvent(new Event('scroll'));
-  }
+  if (name === 'home') window.dispatchEvent(new Event('scroll'));
+  if (push) history.pushState({ view: name }, '', name === 'home' ? location.pathname : '#' + name);
 }
 
-function showProgram(id) {
+function showProgram(id, push = true) {
   const p = PROGRAMS[id];
   if (!p) return;
 
@@ -1304,7 +1302,8 @@ function showProgram(id) {
       </div>`;
   }).join('');
 
-  showView('product');
+  showView('product', false);
+  history.pushState({ view: 'product', programId: id }, '', '#' + id);
   setTimeout(()=>{
     document.querySelectorAll('#view-product .reveal').forEach(el=>revealObs.observe(el));
   },50);
@@ -1643,6 +1642,21 @@ function openCart()  { document.getElementById('cartOverlay').classList.add('ope
 function closeCart() { document.getElementById('cartOverlay').classList.remove('open'); document.getElementById('cartDrawer').classList.remove('open'); document.body.style.overflow=''; }
 
 /* ═══════════════════════════════════════
+   BROWSER HISTORY (back/forward)
+════════════════════════════════════════ */
+history.replaceState({ view: 'home' }, '', location.pathname);
+
+window.addEventListener('popstate', function(e) {
+  const s = e.state;
+  if (!s) { showView('home', false); return; }
+  if (s.view === 'product' && s.programId) {
+    showProgram(s.programId, false);
+  } else {
+    showView(s.view || 'home', false);
+  }
+});
+
+/* ═══════════════════════════════════════
    HEADER SCROLL
 ════════════════════════════════════════ */
 const hdr = document.getElementById('header');
@@ -1693,12 +1707,10 @@ if (footerEl && mobileBar) {
    LEGAL
 ════════════════════════════════════════ */
 (function(){
-  if(!localStorage.getItem('neopeptide_legal_accepted')){
-    var o=document.getElementById('legalOverlay');
-    o.style.display='flex'; document.body.style.overflow='hidden';
-  }
+  var o=document.getElementById('legalOverlay');
+  o.style.display='flex'; document.body.style.overflow='hidden';
 })();
-function legalAccept(){ localStorage.setItem('neopeptide_legal_accepted','1'); document.getElementById('legalOverlay').style.display='none'; document.body.style.overflow=''; }
+function legalAccept(){ document.getElementById('legalOverlay').style.display='none'; document.body.style.overflow=''; }
 function legalDecline(){ window.location.href='https://www.google.com'; }
 </script>
 </body>
