@@ -450,6 +450,32 @@
     .pc2-add-btn:hover:not(:disabled){background:rgba(0,0,0,.04)}
     .pc2-add-btn:disabled{color:var(--muted);cursor:not-allowed}
 
+    /* ── CATALOG VIEW ── */
+    .cat-view{padding:108px 48px 80px;min-height:100vh}
+    .cat-view-inner{max-width:1400px;margin:0 auto}
+    .cat-hero{text-align:center;padding:40px 0 48px}
+    .cat-hero-label{font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--blue);margin-bottom:12px}
+    .cat-hero-title{font-size:clamp(36px,5vw,64px);font-weight:900;color:var(--ink);letter-spacing:-.04em;margin-bottom:12px}
+    .cat-hero-sub{font-size:15px;color:var(--sub);max-width:460px;margin:0 auto;line-height:1.7}
+    .cat-color-nav{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:52px}
+    .cat-nav-btn{display:flex;align-items:center;gap:7px;padding:7px 16px;border-radius:100px;border:1.5px solid var(--border);background:var(--white);font-size:11px;font-weight:700;letter-spacing:.02em;color:var(--ink);cursor:pointer;transition:all .2s;font-family:'Plus Jakarta Sans',sans-serif}
+    .cat-nav-btn:hover{border-color:var(--ink);transform:translateY(-1px)}
+    .cat-section{margin-bottom:56px}
+    .cat-section-header{display:flex;align-items:center;gap:14px;margin-bottom:22px;padding:22px 26px;border-radius:18px;color:#fff}
+    .cat-section-header.glp1        {background:radial-gradient(135deg,#B0DCC0 0%,#2E7D52 100%)}
+    .cat-section-header.longevity   {background:radial-gradient(135deg,#A4CCEE 0%,#1A3878 100%)}
+    .cat-section-header.testosterone{background:radial-gradient(135deg,#ECA8A8 0%,#7A1A1A 100%)}
+    .cat-section-header.microdose   {background:radial-gradient(135deg,#ECD4A0 0%,#7A4E18 100%)}
+    .cat-section-header.skin        {background:radial-gradient(135deg,#F5BDD2 0%,#8C2F58 100%)}
+    .cat-section-header.neuro       {background:radial-gradient(135deg,#C9B4F4 0%,#3D236F 100%)}
+    .cat-section-header.essentials  {background:radial-gradient(135deg,#D8DCE2 0%,#303641 100%)}
+    .cat-cap-dot{width:22px;height:22px;border-radius:50%;flex-shrink:0}
+    .cat-section-info h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(15px,2vw,20px);font-weight:800;letter-spacing:-.02em;margin-bottom:3px}
+    .cat-section-info p{font-size:12px;opacity:.7}
+    .cat-back-btn{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:var(--sub);background:none;border:none;cursor:pointer;padding:0 0 32px;transition:color .2s;font-family:'Plus Jakarta Sans',sans-serif}
+    .cat-back-btn:hover{color:var(--ink)}
+    @media(max-width:768px){.cat-view{padding:100px 16px 80px}.cat-section-header{padding:16px 18px}}
+
     /* ── REVEAL ── */
     .reveal{opacity:0;transform:translateY(20px);transition:opacity .7s,transform .7s}
     .reveal.in{opacity:1;transform:none}
@@ -603,7 +629,7 @@
       <h1 class="hero-title reveal" style="transition-delay:.08s">The Neo Peptide<br>Difference.</h1>
       <img class="hero-bottle reveal" style="transition-delay:.18s" src="fotos/bottles/apresentacao.png" alt="Neo Peptide">
       <div class="hero-actions reveal" style="transition-delay:.28s">
-        <button class="btn-hero" onclick="window.location.href='catalog.html'">Explore Catalog</button>
+        <button class="btn-hero" onclick="renderCatalog();showView('catalog')">Explore Catalog</button>
       </div>
       <div class="hero-trust reveal" style="transition-delay:.36s">
         <span>GMP Certified</span>
@@ -850,6 +876,27 @@
   </footer>
 
 </div><!-- end view-home -->
+
+<!-- ═══════════════════════════════════════
+     VIEW: CATALOG
+════════════════════════════════════════ -->
+<div id="view-catalog" class="view">
+  <div class="cat-view">
+    <div class="cat-view-inner">
+      <button class="cat-back-btn" onclick="showView('home')">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        Back to Home
+      </button>
+      <div class="cat-hero">
+        <p class="cat-hero-label">Neo Peptide — Full Collection</p>
+        <h1 class="cat-hero-title">Product Catalog</h1>
+        <p class="cat-hero-sub">All compounds organized by bottle color. GMP certified · ≥99% purity · Ships in 48h.</p>
+      </div>
+      <nav class="cat-color-nav" id="catColorNav"></nav>
+      <div id="catSections"></div>
+    </div>
+  </div>
+</div>
 
 <!-- ═══════════════════════════════════════
      VIEW: PRODUCT
@@ -1154,7 +1201,7 @@
 
 <!-- MOBILE BAR -->
 <div class="mobile-bar" id="mobileBar">
-  <button class="mb-primary" onclick="window.location.href='catalog.html'">Explore Catalog →</button>
+  <button class="mb-primary" onclick="renderCatalog();showView('catalog')">Explore Catalog →</button>
   <button class="mb-ghost" onclick="openCart()">Cart (<span id="mobileCartCount">0</span>)</button>
 </div>
 
@@ -1331,6 +1378,75 @@ const PROGRAMS = {
     ]
   }
 };
+
+/* ═══════════════════════════════════════
+   CATALOG
+════════════════════════════════════════ */
+const _CAT_COLORS = {
+  glp1:         { dot:'#3EAD62', label:'Green Cap — Fat Loss / GLP',      sub:'Weight management, GLP-1 agonists &amp; metabolic support' },
+  longevity:    { dot:'#2C6CB0', label:'Blue Cap — Longevity',            sub:'Cellular energy, DNA repair &amp; healthy aging peptides' },
+  testosterone: { dot:'#C03030', label:'Red Cap — Hormone / GH',          sub:'GH secretagogues, releasing blends &amp; peptides' },
+  microdose:    { dot:'#C09040', label:'Gold Cap — Performance &amp; Recovery', sub:'Tissue repair, stamina &amp; recovery peptide blends' },
+  skin:         { dot:'#D86A9B', label:'Pink Cap — Skin &amp; Beauty',    sub:'Collagen synthesis, skin barrier &amp; repair peptides' },
+  neuro:        { dot:'#7A58C8', label:'Purple Cap — Neuro / Mood',       sub:'Cognitive support, focus &amp; anxiolytic peptides' },
+  essentials:   { dot:'#8A8FA0', label:'Silver Cap — Essentials',         sub:'Reconstitution solutions &amp; core research supplies' },
+};
+
+function renderCatalog() {
+  const nav = document.getElementById('catColorNav');
+  const sections = document.getElementById('catSections');
+  nav.innerHTML = '';
+  sections.innerHTML = '';
+  _pdmData = [];
+  let globalIdx = 0;
+
+  Object.values(PROGRAMS).forEach(prog => {
+    const c = _CAT_COLORS[prog.id];
+    nav.innerHTML += `<button class="cat-nav-btn" onclick="document.getElementById('cat-sec-${prog.id}').scrollIntoView({behavior:'smooth'})">
+      <span class="cat-cap-dot" style="background:${c.dot};border:2px solid rgba(0,0,0,.1)"></span>${c.label}
+    </button>`;
+
+    const cards = prog.products.map((pr) => {
+      const idx = globalIdx++;
+      _pdmData.push({product: pr, sectionId: prog.id});
+      const hasDoses = pr.doses && pr.doses.length > 0;
+      const initPrice = hasDoses ? pr.doses[0].p : pr.price;
+      const isOOS = pr.outOfStock || false;
+      const hasMulti = hasDoses && pr.doses.length > 1;
+      const dosePills = hasDoses ? `<div class="pc2-dose-wrap">${pr.doses.map((d,di)=>`<button class="dose-pill${di===0?' active':''}" data-dose="${d.l}" data-price="${d.p}" onclick="selectDose(this)">${d.l}</button>`).join('')}</div>` : '';
+      const priceStr = Number.isInteger(initPrice) ? initPrice : initPrice.toFixed(2);
+      return `<div class="pc2" data-price="${initPrice}">
+        <div class="pc2-top">
+          <div class="pc2-name">${pr.name}</div>
+          <div class="pc2-sub">${pr.sub}</div>
+          ${isOOS ? '<span class="pc2-oos">Out of Stock</span>' : ''}
+        </div>
+        <div class="pc2-img-wrap" onclick="openPDM(${idx})" style="cursor:pointer">
+          <img class="pc2-img" src="${pr.img}" alt="${pr.name}" loading="lazy">
+        </div>
+        ${dosePills}
+        <div class="pc2-foot">
+          <div class="pc2-price-side">
+            <div class="pc2-from">${hasMulti ? 'FROM' : 'PRICE'}</div>
+            <div class="pc2-price">$${priceStr}</div>
+          </div>
+          <button class="pc2-add-btn" ${isOOS ? 'disabled' : ''} onclick="addToCartPC2(this)">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+            ${isOOS ? 'OUT OF STOCK' : 'ADD TO CART'}
+          </button>
+        </div>
+      </div>`;
+    }).join('');
+
+    sections.innerHTML += `<div class="cat-section" id="cat-sec-${prog.id}">
+      <div class="cat-section-header ${prog.id}">
+        <span class="cat-cap-dot" style="background:${c.dot};border:2.5px solid rgba(255,255,255,.5)"></span>
+        <div class="cat-section-info"><h3>${c.label}</h3><p>${c.sub}</p></div>
+      </div>
+      <div class="products-grid2">${cards}</div>
+    </div>`;
+  });
+}
 
 /* ═══════════════════════════════════════
    NAVIGATION
