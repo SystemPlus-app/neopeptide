@@ -603,7 +603,7 @@
       <h1 class="hero-title reveal" style="transition-delay:.08s">The Neo Peptide<br>Difference.</h1>
       <img class="hero-bottle reveal" style="transition-delay:.18s" src="fotos/bottles/apresentacao.png" alt="Neo Peptide">
       <div class="hero-actions reveal" style="transition-delay:.28s">
-        <button class="btn-hero" onclick="document.getElementById('programs').scrollIntoView({behavior:'smooth'})">Explore Programs</button>
+        <button class="btn-hero" onclick="window.location.href='catalog.html'">Explore Catalog</button>
       </div>
       <div class="hero-trust reveal" style="transition-delay:.36s">
         <span>GMP Certified</span>
@@ -1154,7 +1154,7 @@
 
 <!-- MOBILE BAR -->
 <div class="mobile-bar" id="mobileBar">
-  <button class="mb-primary" onclick="document.getElementById('programs').scrollIntoView({behavior:'smooth'});showView('home')">Explore Programs →</button>
+  <button class="mb-primary" onclick="window.location.href='catalog.html'">Explore Catalog →</button>
   <button class="mb-ghost" onclick="openCart()">Cart (<span id="mobileCartCount">0</span>)</button>
 </div>
 
@@ -1233,7 +1233,7 @@ const PROGRAMS = {
     products: [
       { name:'GLP-3 (RT)',               sub:'TRIPLE RECEPTOR AGONIST',    img:pImg('GLP-3 (RT)'),                 doses:[{l:'10mg',p:80},{l:'15mg',p:125},{l:'20mg',p:155}] },
       { name:'GLP-1/GIP',                sub:'DUAL GIP+GLP-1 AGONIST',     img:pImg('GLP-1:GIP'),                  doses:[{l:'20mg',p:150},{l:'30mg',p:210}] },
-      { name:'AOD 9604',                 sub:'FAT LOSS FRAGMENT',           img:pImg('AOD 9604'),                   doses:[] , price:45 },
+      { name:'AOD 9604',                 sub:'FAT LOSS FRAGMENT',           img:pImg('AOD 9604'),                   doses:[{l:'5mg',p:45}] },
       { name:'Cargrilintide',            sub:'AMYLIN ANALOGUE PEPTIDE',     img:pImg('Cargrilintide'),              doses:[{l:'5mg',p:60}] },
       { name:'5-Amino 1MQ',             sub:'NNMT INHIBITOR',              img:pImg('5-Amino 1MQ'),                doses:[{l:'50mg',p:75}] },
       { name:'SLU-PP-322',              sub:'ERR AGONIST',                 img:pImg('SLU-PP-322'),                 doses:[{l:'5mg',p:70}] },
@@ -1266,13 +1266,13 @@ const PROGRAMS = {
     bgClass: 'testosterone',
     bannerImg: pImg('Tesamorelin'),
     products: [
-      { name:'Ipamorelin + CJC-1295', sub:'GH RELEASING BLEND',    img:pImg('Ipamorelin + CJC-1295'),       doses:[], price:59 },
+      { name:'Ipamorelin + CJC-1295', sub:'GH RELEASING BLEND',    img:pImg('Ipamorelin + CJC-1295'),       doses:[{l:'10mg',p:59}] },
       { name:'Ipamorelin',            sub:'GH RELEASING PEPTIDE',   img:pImg('Ipamorelin'),                  doses:[{l:'5mg',p:40}] },
       { name:'CJC-1295 No DAC',       sub:'GROWTH HORMONE PEPTIDE', img:pImg('CJC-1295 No DAC'),             doses:[{l:'5mg',p:35}] },
       { name:'Tesamorelin',           sub:'GH RELEASING FACTOR',    img:pImg('Tesamorelin'),                 doses:[{l:'5mg',p:45},{l:'10mg',p:80},{l:'15mg',p:115}] },
-      { name:'Tesamorelin + Ipamorelin Blend', sub:'GH SYNERGY BLEND', img:pImg('tesamorelin + Ipamorelin Blend'), doses:[], price:110 },
+      { name:'Tesamorelin + Ipamorelin Blend', sub:'GH SYNERGY BLEND', img:pImg('tesamorelin + Ipamorelin Blend'), doses:[{l:'6mg',p:110}] },
       { name:'Sermorelin',            sub:'GH SECRETAGOGUE PEPTIDE', img:pImg('Sermorelin'),                 doses:[{l:'5mg',p:45}] },
-      { name:'GHRP-6',               sub:'GROWTH HORMONE PEPTIDE',  img:pImg('GHRP-6'),                     doses:[], price:55 },
+      { name:'GHRP-6',               sub:'GROWTH HORMONE PEPTIDE',  img:pImg('GHRP-6'),                     doses:[{l:'5mg',p:55}] },
     ]
   },
   microdose: {
@@ -1299,7 +1299,7 @@ const PROGRAMS = {
     bgClass: 'skin',
     bannerImg: pImg('Glow Blend'),
     products: [
-      { name:'Glow Blend', sub:'GHK-Cu / BPC-157 / TB-500',        img:pImg('Glow Blend'), doses:[], price:100 },
+      { name:'Glow Blend', sub:'GHK-Cu / BPC-157 / TB-500',        img:pImg('Glow Blend'), doses:[{l:'5mg',p:100}] },
       { name:'Klow 80mg',  sub:'BPC-157 / GHK-Cu / TB-500 / KPV', img:pImg('KLOW2'),      doses:[{l:'80mg',p:130}] },
       { name:'GHK-Cu',     sub:'COPPER PEPTIDE COMPLEX',           img:pImg('GHK-Cu'),     doses:[{l:'100mg',p:55}] },
     ]
@@ -1327,7 +1327,7 @@ const PROGRAMS = {
     bgClass: 'essentials',
     bannerImg: pImg('Bacteriostatic Water'),
     products: [
-      { name:'Bacteriostatic Water', sub:'RECONSTITUTION SOLUTION', img:pImg('Bacteriostatic Water'), doses:[], price:10 },
+      { name:'Bacteriostatic Water', sub:'RECONSTITUTION SOLUTION', img:pImg('Bacteriostatic Water'), doses:[{l:'10ml',p:10},{l:'30ml',p:20}] },
     ]
   }
 };

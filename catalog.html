@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Neo Peptide — Full Catalog</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --cream:   #F5F0EB;
+      --cream2:  #EDE8E0;
+      --white:   #FFFFFF;
+      --ink:     #0A0A0F;
+      --text:    #1A1A22;
+      --sub:     #55555F;
+      --muted:   #8A8A98;
+      --border:  #DDD8D0;
+      --blue:    #1855E8;
+      --site-bg:
+        radial-gradient(ellipse at 8% 22%,rgba(155,210,240,.62) 0%,transparent 44%),
+        radial-gradient(ellipse at 92% 18%,rgba(240,195,210,.55) 0%,transparent 42%),
+        radial-gradient(ellipse at 82% 88%,rgba(175,230,195,.50) 0%,transparent 40%),
+        radial-gradient(ellipse at 18% 85%,rgba(215,195,245,.42) 0%,transparent 38%),
+        radial-gradient(ellipse at 50% 50%,rgba(245,240,235,.8) 0%,transparent 60%),
+        #F5F0EB;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth;overflow-x:hidden}
+    body{background:var(--site-bg);color:var(--text);font-family:'Inter',sans-serif;overflow-x:hidden;-webkit-font-smoothing:antialiased;min-height:100vh}
+    h1,h2,h3,h4{font-family:'Plus Jakarta Sans',sans-serif;line-height:1.05;letter-spacing:-0.03em}
+    img{display:block}
+    a{text-decoration:none}
+
+    /* HEADER */
+    header{position:sticky;top:0;z-index:100;height:72px;background:rgba(245,240,235,.88);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border-bottom:1px solid var(--border)}
+    .header-inner{max-width:1400px;margin:0 auto;height:100%;padding:0 clamp(20px,4vw,48px);display:flex;align-items:center;justify-content:space-between;gap:20px}
+    .back-link{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:var(--sub);transition:color .2s;cursor:pointer;border:none;background:none;font-family:'Inter',sans-serif}
+    .back-link:hover{color:var(--ink)}
+    .back-link svg{transition:transform .2s}
+    .back-link:hover svg{transform:translateX(-3px)}
+    .logo-img{height:56px;width:auto}
+    .cart-btn{display:flex;align-items:center;gap:7px;font-size:13px;font-weight:600;color:var(--ink);background:var(--white);border:1.5px solid var(--border);cursor:pointer;padding:8px 18px;border-radius:100px;transition:all .2s;font-family:'Plus Jakarta Sans',sans-serif}
+    .cart-btn:hover{border-color:var(--ink)}
+    .cart-count{min-width:20px;height:20px;border-radius:10px;background:var(--ink);color:#fff;font-size:10px;font-weight:800;display:flex;align-items:center;justify-content:center;padding:0 5px}
+    .cart-count.pop{animation:pop .35s cubic-bezier(.34,1.56,.64,1)}
+    @keyframes pop{0%,100%{transform:scale(1)}50%{transform:scale(1.45)}}
+
+    /* HERO */
+    .catalog-hero{padding:72px 48px 52px;text-align:center}
+    .catalog-hero-label{font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--blue);margin-bottom:14px}
+    .catalog-hero-title{font-size:clamp(40px,6vw,80px);font-weight:900;color:var(--ink);letter-spacing:-.045em;margin-bottom:14px}
+    .catalog-hero-sub{font-size:16px;color:var(--sub);max-width:480px;margin:0 auto;line-height:1.7}
+
+    /* COLOR NAV */
+    .color-nav{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;padding:0 48px 52px}
+    .color-nav-btn{display:flex;align-items:center;gap:8px;padding:8px 18px;border-radius:100px;border:1.5px solid var(--border);background:var(--white);font-size:12px;font-weight:700;letter-spacing:.04em;color:var(--ink);cursor:pointer;transition:all .2s;font-family:'Plus Jakarta Sans',sans-serif}
+    .color-nav-btn:hover{border-color:var(--ink);transform:translateY(-1px)}
+    .color-dot{width:12px;height:12px;border-radius:50%;flex-shrink:0}
+
+    /* COLOR SECTIONS */
+    .catalog-section{padding:0 clamp(20px,4vw,48px) 72px;max-width:1400px;margin:0 auto}
+    .section-anchor{scroll-margin-top:88px}
+    .section-header{display:flex;align-items:center;gap:16px;margin-bottom:32px;padding:28px 32px;border-radius:20px;color:#fff}
+    .section-header.green  {background:radial-gradient(135deg,#B0DCC0 0%,#2E7D52 100%)}
+    .section-header.blue   {background:radial-gradient(135deg,#A4CCEE 0%,#1A3878 100%)}
+    .section-header.red    {background:radial-gradient(135deg,#ECA8A8 0%,#7A1A1A 100%)}
+    .section-header.gold   {background:radial-gradient(135deg,#ECD4A0 0%,#7A4E18 100%)}
+    .section-header.pink   {background:radial-gradient(135deg,#F5BDD2 0%,#8C2F58 100%)}
+    .section-header.purple {background:radial-gradient(135deg,#C9B4F4 0%,#3D236F 100%)}
+    .section-header.silver {background:radial-gradient(135deg,#D8DCE2 0%,#303641 100%)}
+    .section-cap-dot{width:28px;height:28px;border-radius:50%;border:3px solid rgba(255,255,255,.6);flex-shrink:0}
+    .cap-green  {background:#3EAD62}
+    .cap-blue   {background:#2C6CB0}
+    .cap-red    {background:#C03030}
+    .cap-gold   {background:#C09040}
+    .cap-pink   {background:#D86A9B}
+    .cap-purple {background:#7A58C8}
+    .cap-silver {background:#8A8FA0}
+    .section-header-text h2{font-size:clamp(18px,2.2vw,26px);font-weight:800;letter-spacing:-.02em;margin-bottom:4px}
+    .section-header-text p{font-size:13px;opacity:.72}
+
+    /* PRODUCT GRID */
+    .products-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px}
+
+    /* PRODUCT CARD */
+    .product-card{background:var(--white);border-radius:20px;border:1.5px solid var(--border);display:flex;flex-direction:column;overflow:hidden;transition:border-color .2s,box-shadow .25s,transform .2s}
+    .product-card:hover{border-color:rgba(24,85,232,.2);box-shadow:0 10px 36px rgba(0,0,0,.09);transform:translateY(-3px)}
+    .pc-img-wrap{display:flex;align-items:center;justify-content:center;padding:28px 20px 10px;background:var(--cream);min-height:180px;cursor:pointer}
+    .pc-img{width:120px;height:160px;object-fit:contain;filter:drop-shadow(0 10px 22px rgba(0,0,0,.14));transition:transform .4s cubic-bezier(.34,1.1,.64,1)}
+    .product-card:hover .pc-img{transform:translateY(-6px) scale(1.04)}
+    .pc-body{padding:18px 20px 22px;display:flex;flex-direction:column;flex:1}
+    .pc-sub{font-size:9px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:5px}
+    .pc-name{font-family:'Plus Jakarta Sans',sans-serif;font-size:16px;font-weight:800;color:var(--ink);margin-bottom:10px;line-height:1.2}
+    .pc-divider{height:1px;background:var(--border);margin-bottom:14px}
+    .pc-bottom{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:auto}
+    .pc-price-label{font-size:9px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:2px}
+    .pc-price{font-family:'Plus Jakarta Sans',sans-serif;font-size:22px;font-weight:800;color:var(--ink)}
+    .pc-dose-select{font-size:12px;font-weight:600;color:var(--ink);border:1.5px solid var(--border);border-radius:9px;padding:6px 10px;background:var(--cream);cursor:pointer;font-family:'Inter',sans-serif;margin-bottom:8px;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='7' viewBox='0 0 10 7'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%238A8A98' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;padding-right:28px;width:100%}
+    .btn-add{font-family:'Plus Jakarta Sans',sans-serif;font-size:12px;font-weight:700;padding:11px 18px;border-radius:10px;background:var(--ink);color:#fff;border:none;cursor:pointer;transition:background .2s,transform .15s;white-space:nowrap;flex-shrink:0}
+    .btn-add:hover{background:var(--blue);transform:translateY(-1px)}
+    .btn-add.full-w{width:100%;margin-top:10px}
+    .out-of-stock{font-size:12px;font-weight:600;color:var(--muted);padding:10px;text-align:center;background:var(--cream2);border-radius:10px;width:100%;margin-top:8px}
+
+    /* CART OVERLAY */
+    .cart-overlay{position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.45);backdrop-filter:blur(4px);display:none;align-items:flex-end;justify-content:flex-end}
+    .cart-overlay.open{display:flex}
+    .cart-panel{background:#fff;width:min(440px,100vw);height:100vh;display:flex;flex-direction:column;box-shadow:-20px 0 60px rgba(0,0,0,.18)}
+    .cart-header{padding:24px 28px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+    .cart-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:22px;font-weight:800;color:var(--ink)}
+    .cart-close{width:36px;height:36px;border-radius:50%;border:1.5px solid var(--border);background:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:18px;color:var(--sub);transition:all .2s}
+    .cart-close:hover{background:var(--cream);color:var(--ink)}
+    .cart-items{flex:1;overflow-y:auto;padding:20px 28px}
+    .cart-empty{text-align:center;padding:60px 0;color:var(--muted);font-size:14px}
+    .cart-item{display:flex;align-items:center;gap:14px;padding:16px 0;border-bottom:1px solid var(--border)}
+    .cart-item:last-child{border-bottom:none}
+    .cart-item-img{width:44px;height:50px;object-fit:contain}
+    .cart-item-info{flex:1}
+    .cart-item-name{font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;font-weight:700;color:var(--ink);margin-bottom:3px}
+    .cart-item-qty{font-size:12px;color:var(--muted)}
+    .cart-item-price{font-family:'Plus Jakarta Sans',sans-serif;font-size:16px;font-weight:800;color:var(--ink)}
+    .cart-footer{padding:24px 28px;border-top:1px solid var(--border)}
+    .cart-total-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
+    .cart-total-label{font-size:13px;color:var(--sub)}
+    .cart-total-val{font-family:'Plus Jakarta Sans',sans-serif;font-size:24px;font-weight:800;color:var(--ink)}
+    .btn-checkout{width:100%;font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:700;padding:17px;border-radius:14px;background:var(--ink);color:#fff;border:none;cursor:pointer;transition:background .2s,transform .15s}
+    .btn-checkout:hover{background:var(--blue);transform:translateY(-1px)}
+
+    /* FOOTER */
+    footer{background:transparent;border-top:1px solid var(--border);padding:48px;text-align:center}
+    .footer-note{font-size:11px;color:var(--muted);line-height:1.8;max-width:700px;margin:0 auto}
+
+    /* MOBILE */
+    @media(max-width:600px){
+      .catalog-hero{padding:48px 24px 36px}
+      .color-nav{padding:0 24px 36px}
+      .catalog-section{padding:0 20px 56px}
+      .section-header{padding:20px 22px}
+      footer{padding:36px 24px}
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <button class="back-link" onclick="window.location.href='index.html'">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8l5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Back to Home
+    </button>
+    <a href="index.html"><img class="logo-img" src="fotos/logo/logo transparente.png" alt="Neo Peptide"></a>
+    <button class="cart-btn" onclick="openCart()">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+      Cart&nbsp;<span class="cart-count" id="cartCount">0</span>
+    </button>
+  </div>
+</header>
+
+<!-- HERO -->
+<div class="catalog-hero">
+  <p class="catalog-hero-label">Neo Peptide — Full Collection</p>
+  <h1 class="catalog-hero-title">Explore Catalog</h1>
+  <p class="catalog-hero-sub">All research compounds, organized by bottle color. GMP certified · ≥99% purity · Ships in 48h.</p>
+</div>
+
+<!-- COLOR NAV -->
+<nav class="color-nav" aria-label="Jump to color">
+  <button class="color-nav-btn" onclick="document.getElementById('green').scrollIntoView({behavior:'smooth'})"><span class="color-dot cap-green"></span>Green — Fat Loss</button>
+  <button class="color-nav-btn" onclick="document.getElementById('blue').scrollIntoView({behavior:'smooth'})"><span class="color-dot cap-blue"></span>Blue — Longevity</button>
+  <button class="color-nav-btn" onclick="document.getElementById('red').scrollIntoView({behavior:'smooth'})"><span class="color-dot cap-red"></span>Red — Hormone / GH</button>
+  <button class="color-nav-btn" onclick="document.getElementById('gold').scrollIntoView({behavior:'smooth'})"><span class="color-dot cap-gold"></span>Gold — Recovery</button>
+  <button class="color-nav-btn" onclick="document.getElementById('pink').scrollIntoView({behavior:'smooth'})"><span class="color-dot cap-pink"></span>Pink — Skin & Beauty</button>
+  <button class="color-nav-btn" onclick="document.getElementById('purple').scrollIntoView({behavior:'smooth'})"><span class="color-dot cap-purple"></span>Purple — Neuro</button>
+  <button class="color-nav-btn" onclick="document.getElementById('silver').scrollIntoView({behavior:'smooth'})"><span class="color-dot cap-silver"></span>Silver — Essentials</button>
+</nav>
+
+<!-- ══ GREEN — FAT LOSS / GLP ══ -->
+<section class="catalog-section" id="green">
+  <div class="section-anchor"></div>
+  <div class="section-header green">
+    <span class="section-cap-dot cap-green"></span>
+    <div class="section-header-text">
+      <h2>Green Cap — Fat Loss / GLP</h2>
+      <p>Weight management, GLP-1 receptor agonists &amp; metabolic support</p>
+    </div>
+  </div>
+  <div class="products-grid" id="grid-green"></div>
+</section>
+
+<!-- ══ BLUE — LONGEVITY ══ -->
+<section class="catalog-section" id="blue">
+  <div class="section-anchor"></div>
+  <div class="section-header blue">
+    <span class="section-cap-dot cap-blue"></span>
+    <div class="section-header-text">
+      <h2>Blue Cap — Longevity</h2>
+      <p>Cellular energy, DNA repair &amp; healthy aging peptides</p>
+    </div>
+  </div>
+  <div class="products-grid" id="grid-blue"></div>
+</section>
+
+<!-- ══ RED — HORMONE / GH ══ -->
+<section class="catalog-section" id="red">
+  <div class="section-anchor"></div>
+  <div class="section-header red">
+    <span class="section-cap-dot cap-red"></span>
+    <div class="section-header-text">
+      <h2>Red Cap — Hormone / GH</h2>
+      <p>Growth hormone secretagogues, GH releasing blends &amp; peptides</p>
+    </div>
+  </div>
+  <div class="products-grid" id="grid-red"></div>
+</section>
+
+<!-- ══ GOLD — PERFORMANCE & RECOVERY ══ -->
+<section class="catalog-section" id="gold">
+  <div class="section-anchor"></div>
+  <div class="section-header gold">
+    <span class="section-cap-dot cap-gold"></span>
+    <div class="section-header-text">
+      <h2>Gold Cap — Performance &amp; Recovery</h2>
+      <p>Tissue repair, stamina &amp; recovery peptide blends</p>
+    </div>
+  </div>
+  <div class="products-grid" id="grid-gold"></div>
+</section>
+
+<!-- ══ PINK — SKIN & BEAUTY ══ -->
+<section class="catalog-section" id="pink">
+  <div class="section-anchor"></div>
+  <div class="section-header pink">
+    <span class="section-cap-dot cap-pink"></span>
+    <div class="section-header-text">
+      <h2>Pink Cap — Skin &amp; Beauty</h2>
+      <p>Collagen synthesis, skin barrier &amp; repair peptides</p>
+    </div>
+  </div>
+  <div class="products-grid" id="grid-pink"></div>
+</section>
+
+<!-- ══ PURPLE — NEURO / MOOD ══ -->
+<section class="catalog-section" id="purple">
+  <div class="section-anchor"></div>
+  <div class="section-header purple">
+    <span class="section-cap-dot cap-purple"></span>
+    <div class="section-header-text">
+      <h2>Purple Cap — Neuro / Mood</h2>
+      <p>Cognitive support, focus &amp; anxiolytic peptides</p>
+    </div>
+  </div>
+  <div class="products-grid" id="grid-purple"></div>
+</section>
+
+<!-- ══ SILVER — ESSENTIALS ══ -->
+<section class="catalog-section" id="silver">
+  <div class="section-anchor"></div>
+  <div class="section-header silver">
+    <span class="section-cap-dot cap-silver"></span>
+    <div class="section-header-text">
+      <h2>Silver Cap — Essentials</h2>
+      <p>Reconstitution solutions &amp; core research supplies</p>
+    </div>
+  </div>
+  <div class="products-grid" id="grid-silver"></div>
+</section>
+
+<footer>
+  <p class="footer-note">For research purposes only. Not intended for human consumption. These products have not been evaluated by the FDA and are not intended to diagnose, treat, cure, or prevent any disease.</p>
+</footer>
+
+<!-- CART OVERLAY -->
+<div class="cart-overlay" id="cartOverlay" onclick="closeCartOutside(event)">
+  <div class="cart-panel">
+    <div class="cart-header">
+      <span class="cart-title">Your Cart</span>
+      <button class="cart-close" onclick="closeCart()">✕</button>
+    </div>
+    <div class="cart-items" id="cartItems">
+      <p class="cart-empty">Your cart is empty.</p>
+    </div>
+    <div class="cart-footer">
+      <div class="cart-total-row">
+        <span class="cart-total-label">Total</span>
+        <span class="cart-total-val" id="cartTotal">$0</span>
+      </div>
+      <button class="btn-checkout" onclick="goCheckout()">Proceed to Checkout →</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const _B = 'fotos/bottles/produtos%20bottle%20/';
+function pImg(n){ return _B + encodeURIComponent(n) + '.png'; }
+
+const COLOR_GROUPS = [
+  {
+    id: 'green',
+    products: [
+      { name:'GLP-3 (RT)',     sub:'TRIPLE RECEPTOR AGONIST',   img:pImg('GLP-3 (RT)'),    doses:[{l:'10mg',p:80},{l:'15mg',p:125},{l:'20mg',p:155}] },
+      { name:'GLP-1/GIP',     sub:'DUAL GIP+GLP-1 AGONIST',    img:pImg('GLP-1:GIP'),     doses:[{l:'20mg',p:150},{l:'30mg',p:210}] },
+      { name:'AOD 9604',      sub:'FAT LOSS FRAGMENT',          img:pImg('AOD 9604'),      doses:[{l:'5mg',p:45}] },
+      { name:'Cargrilintide', sub:'AMYLIN ANALOGUE PEPTIDE',    img:pImg('Cargrilintide'), doses:[{l:'5mg',p:60}] },
+      { name:'5-Amino 1MQ',  sub:'NNMT INHIBITOR',             img:pImg('5-Amino 1MQ'),   doses:[{l:'50mg',p:75}] },
+      { name:'SLU-PP-322',   sub:'ERR AGONIST',                img:pImg('SLU-PP-322'),    doses:[{l:'5mg',p:70}] },
+    ]
+  },
+  {
+    id: 'blue',
+    products: [
+      { name:'NAD+',   sub:'CELLULAR ENERGY COENZYME',      img:pImg('NAD+'),   doses:[{l:'500mg',p:80},{l:'1000mg',p:120}] },
+      { name:'SS-31',  sub:'MITOCHONDRIAL PEPTIDE',          img:pImg('SS-31'),  doses:[{l:'10mg',p:49}] },
+      { name:'Mots-C', sub:'MITOCHONDRIAL DERIVED PEPTIDE',  img:pImg('Mots-C'), doses:[{l:'10mg',p:43}] },
+      { name:'VIP',    sub:'VASOACTIVE INTESTINAL PEPTIDE',  img:pImg('VIP'),    doses:[{l:'10mg',p:60}] },
+      { name:'KPV',    sub:'ANTI-INFLAMMATORY TRIPEPTIDE',   img:pImg('KPV'),    doses:[{l:'10mg',p:65}] },
+    ]
+  },
+  {
+    id: 'red',
+    products: [
+      { name:'Ipamorelin + CJC-1295',        sub:'GH RELEASING BLEND',    img:pImg('Ipamorelin + CJC-1295'),          doses:[{l:'10mg',p:59}] },
+      { name:'Ipamorelin',                   sub:'GH RELEASING PEPTIDE',  img:pImg('Ipamorelin'),                     doses:[{l:'5mg',p:40}] },
+      { name:'CJC-1295 No DAC',              sub:'GROWTH HORMONE PEPTIDE',img:pImg('CJC-1295 No DAC'),                doses:[{l:'5mg',p:35}] },
+      { name:'Tesamorelin',                  sub:'GH RELEASING FACTOR',   img:pImg('Tesamorelin'),                    doses:[{l:'5mg',p:45},{l:'10mg',p:80},{l:'15mg',p:115}] },
+      { name:'Tesamorelin + Ipamorelin Blend',sub:'GH SYNERGY BLEND',     img:pImg('tesamorelin + Ipamorelin Blend'), doses:[{l:'6mg',p:110}] },
+      { name:'Sermorelin',                   sub:'GH SECRETAGOGUE PEPTIDE',img:pImg('Sermorelin'),                    doses:[{l:'5mg',p:45}] },
+      { name:'GHRP-6',                       sub:'GROWTH HORMONE PEPTIDE',img:pImg('GHRP-6'),                        doses:[{l:'5mg',p:55}] },
+    ]
+  },
+  {
+    id: 'gold',
+    products: [
+      { name:'TB-500 + BPC-157', sub:'RECOVERY PEPTIDE BLEND',   img:pImg('TB-500 + BPC-157'), doses:[{l:'10mg',p:60}] },
+      { name:'TB-500',           sub:'THYMOSIN BETA-4 FRAGMENT', img:pImg('TB-500'),           doses:[{l:'5mg',p:55}], outOfStock:true },
+    ]
+  },
+  {
+    id: 'pink',
+    products: [
+      { name:'Glow Blend', sub:'GHK-Cu / BPC-157 / TB-500',        img:pImg('Glow Blend'), doses:[{l:'5mg',p:100}] },
+      { name:'Klow 80mg',  sub:'BPC-157 / GHK-Cu / TB-500 / KPV', img:pImg('KLOW2'),      doses:[{l:'80mg',p:130}] },
+      { name:'GHK-Cu',     sub:'COPPER PEPTIDE COMPLEX',           img:pImg('GHK-Cu'),     doses:[{l:'100mg',p:55}] },
+    ]
+  },
+  {
+    id: 'purple',
+    products: [
+      { name:'Selank', sub:'ANXIOLYTIC PEPTIDE', img:pImg('Selank'), doses:[{l:'5mg',p:32.90}] },
+    ]
+  },
+  {
+    id: 'silver',
+    products: [
+      { name:'Bacteriostatic Water', sub:'RECONSTITUTION SOLUTION', img:pImg('Bacteriostatic Water'), doses:[{l:'10ml',p:10},{l:'30ml',p:20}] },
+    ]
+  }
+];
+
+/* ── CART ── */
+let cart = JSON.parse(localStorage.getItem('np_cart') || '[]');
+
+function saveCart(){ localStorage.setItem('np_cart', JSON.stringify(cart)); }
+
+function addToCart(name, price, img) {
+  const ex = cart.find(i => i.name === name);
+  if (ex) ex.qty++;
+  else cart.push({ name, price, qty: 1, img });
+  saveCart();
+  renderCart();
+  popCartCount();
+  openCart();
+}
+
+function popCartCount(){
+  const el = document.getElementById('cartCount');
+  el.classList.remove('pop');
+  void el.offsetWidth;
+  el.classList.add('pop');
+}
+
+function renderCart(){
+  const total = cart.reduce((s,i)=>s+i.price*i.qty,0);
+  document.getElementById('cartCount').textContent = cart.reduce((s,i)=>s+i.qty,0);
+  document.getElementById('cartTotal').textContent = '$' + total.toFixed(2).replace(/\.00$/,'');
+  const el = document.getElementById('cartItems');
+  if (!cart.length){ el.innerHTML='<p class="cart-empty">Your cart is empty.</p>'; return; }
+  el.innerHTML = cart.map(i=>`
+    <div class="cart-item">
+      ${i.img ? `<img class="cart-item-img" src="${i.img}" alt="${i.name}">` : ''}
+      <div class="cart-item-info">
+        <div class="cart-item-name">${i.name}</div>
+        <div class="cart-item-qty">Qty: ${i.qty}</div>
+      </div>
+      <div class="cart-item-price">$${(i.price*i.qty).toFixed(2).replace(/\.00$/,'')}</div>
+    </div>`).join('');
+}
+
+function openCart(){ document.getElementById('cartOverlay').classList.add('open'); renderCart(); }
+function closeCart(){ document.getElementById('cartOverlay').classList.remove('open'); }
+function closeCartOutside(e){ if(e.target===document.getElementById('cartOverlay')) closeCart(); }
+function goCheckout(){
+  saveCart();
+  window.location.href = 'index.html#checkout';
+}
+
+/* ── RENDER GRIDS ── */
+function renderGroups(){
+  COLOR_GROUPS.forEach(group => {
+    const grid = document.getElementById('grid-' + group.id);
+    if (!grid) return;
+    grid.innerHTML = group.products.map(pr => {
+      const hasDoses = pr.doses && pr.doses.length > 0;
+      const singleDose = hasDoses && pr.doses.length === 1;
+      const multiDose = hasDoses && pr.doses.length > 1;
+      const firstPrice = hasDoses ? pr.doses[0].p : (pr.price || 0);
+      const selectId = 'sel_' + pr.name.replace(/[^a-z0-9]/gi,'_');
+
+      let priceSection = '';
+      if (multiDose) {
+        priceSection = `
+          <select class="pc-dose-select" id="${selectId}" onchange="updatePrice(this,'${pr.name.replace(/'/g,"\\'")}','${pr.img}')">
+            ${pr.doses.map(d=>`<option value="${d.p}" data-label="${d.l}">${d.l} — $${d.p}</option>`).join('')}
+          </select>
+          <div class="pc-bottom">
+            <div><div class="pc-price-label">Price</div><div class="pc-price" id="price_${selectId}">$${firstPrice}</div></div>
+            <button class="btn-add" onclick="addFromSelect('${selectId}','${pr.name.replace(/'/g,"\\'")}','${pr.img}')">Add to Cart</button>
+          </div>`;
+      } else if (singleDose) {
+        priceSection = `
+          <div class="pc-bottom">
+            <div>
+              <div class="pc-price-label">Price · ${pr.doses[0].l}</div>
+              <div class="pc-price">$${firstPrice}</div>
+            </div>
+            ${pr.outOfStock
+              ? `<span class="out-of-stock" style="max-width:120px">Out of Stock</span>`
+              : `<button class="btn-add" onclick="addToCart('${pr.name.replace(/'/g,"\\'")} ${pr.doses[0].l}',${firstPrice},'${pr.img}')">Add</button>`
+            }
+          </div>`;
+      } else {
+        priceSection = `
+          <div class="pc-bottom">
+            <div><div class="pc-price-label">Price</div><div class="pc-price">$${pr.price||0}</div></div>
+            ${pr.outOfStock
+              ? `<span class="out-of-stock" style="max-width:120px">Out of Stock</span>`
+              : `<button class="btn-add" onclick="addToCart('${pr.name.replace(/'/g,"\\'")}',${pr.price||0},'${pr.img}')">Add</button>`
+            }
+          </div>`;
+      }
+
+      return `
+        <div class="product-card">
+          <div class="pc-img-wrap">
+            <img class="pc-img" src="${pr.img}" alt="${pr.name}" loading="lazy">
+          </div>
+          <div class="pc-body">
+            <div class="pc-sub">${pr.sub}</div>
+            <div class="pc-name">${pr.name}</div>
+            <div class="pc-divider"></div>
+            ${priceSection}
+          </div>
+        </div>`;
+    }).join('');
+  });
+}
+
+function updatePrice(sel, name, img){
+  const priceEl = document.getElementById('price_' + sel.id);
+  if (priceEl) priceEl.textContent = '$' + sel.value;
+}
+
+function addFromSelect(selectId, name, img){
+  const sel = document.getElementById(selectId);
+  const price = parseFloat(sel.value);
+  const label = sel.options[sel.selectedIndex].dataset.label;
+  addToCart(name + ' ' + label, price, img);
+}
+
+renderGroups();
+renderCart();
+</script>
+</body>
+</html>
