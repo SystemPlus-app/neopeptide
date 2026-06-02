@@ -1410,8 +1410,8 @@ function renderCatalog() {
       const isOOS = pr.outOfStock || false;
       const hasMulti = hasDoses && pr.doses.length > 1;
       const priceStr = Number.isInteger(initPrice) ? initPrice : initPrice.toFixed(2);
-      const doseBadges = hasDoses ? `<div class="cat-dose-list">${pr.doses.map(d=>`<span class="cat-dose-badge">${d.l} · $${Number.isInteger(d.p)?d.p:d.p.toFixed(2)}</span>`).join('')}</div>` : '';
-      return `<div class="pc2" data-price="${initPrice}">
+      const dosePills = hasDoses ? `<div class="pc2-dose-wrap">${pr.doses.map((d,di)=>`<button class="dose-pill${di===0?' active':''}" data-dose="${d.l}" data-price="${d.p}" onclick="selectDose(this)">${d.l}</button>`).join('')}</div>` : '';
+      return `<div class="pc2 reveal" data-price="${initPrice}">
         <div class="pc2-top">
           <div class="pc2-name">${pr.name}</div>
           <div class="pc2-sub">${pr.sub}</div>
@@ -1420,7 +1420,7 @@ function renderCatalog() {
         <div class="pc2-img-wrap" onclick="openPDM(${idx})" style="cursor:pointer">
           <img class="pc2-img" src="${pr.img}" alt="${pr.name}" loading="lazy">
         </div>
-        ${doseBadges}
+        ${dosePills}
         <div class="pc2-foot">
           <div class="pc2-price-side">
             <div class="pc2-from">${hasMulti ? 'FROM' : 'PRICE'}</div>
@@ -1452,7 +1452,7 @@ function showView(name, push = true) {
   const el = document.getElementById('view-' + name);
   if (el) { el.classList.add('active'); window.scrollTo({top:0,behavior:'smooth'}); }
   if (name === 'home') window.dispatchEvent(new Event('scroll'));
-  if (name === 'catalog') { try { renderCatalog(); } catch(e) { console.error('renderCatalog error:', e); } }
+  if (name === 'catalog') { try { renderCatalog(); setTimeout(()=>{ document.querySelectorAll('#view-catalog .reveal').forEach(el=>revealObs.observe(el)); },50); } catch(e) { console.error('renderCatalog error:', e); } }
   if (push) history.pushState({ view: name }, '', name === 'home' ? location.pathname : '#' + name);
 }
 
