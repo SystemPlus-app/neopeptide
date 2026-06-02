@@ -629,7 +629,7 @@
       <h1 class="hero-title reveal" style="transition-delay:.08s">The Neo Peptide<br>Difference.</h1>
       <img class="hero-bottle reveal" style="transition-delay:.18s" src="fotos/bottles/apresentacao.png" alt="Neo Peptide">
       <div class="hero-actions reveal" style="transition-delay:.28s">
-        <button class="btn-hero" onclick="renderCatalog();showView('catalog')">Explore Catalog</button>
+        <button class="btn-hero" onclick="showView('catalog')">Explore Catalog</button>
       </div>
       <div class="hero-trust reveal" style="transition-delay:.36s">
         <span>GMP Certified</span>
@@ -1201,7 +1201,7 @@
 
 <!-- MOBILE BAR -->
 <div class="mobile-bar" id="mobileBar">
-  <button class="mb-primary" onclick="renderCatalog();showView('catalog')">Explore Catalog →</button>
+  <button class="mb-primary" onclick="showView('catalog')">Explore Catalog →</button>
   <button class="mb-ghost" onclick="openCart()">Cart (<span id="mobileCartCount">0</span>)</button>
 </div>
 
@@ -1456,6 +1456,7 @@ function showView(name, push = true) {
   const el = document.getElementById('view-' + name);
   if (el) { el.classList.add('active'); window.scrollTo({top:0,behavior:'smooth'}); }
   if (name === 'home') window.dispatchEvent(new Event('scroll'));
+  if (name === 'catalog') { try { renderCatalog(); } catch(e) { console.error('renderCatalog error:', e); } }
   if (push) history.pushState({ view: name }, '', name === 'home' ? location.pathname : '#' + name);
 }
 
