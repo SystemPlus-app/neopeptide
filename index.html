@@ -474,6 +474,8 @@
     .cat-section-info p{font-size:12px;opacity:.7}
     .cat-back-btn{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:var(--sub);background:none;border:none;cursor:pointer;padding:0 0 32px;transition:color .2s;font-family:'Plus Jakarta Sans',sans-serif}
     .cat-back-btn:hover{color:var(--ink)}
+    .cat-dose-list{display:flex;flex-wrap:wrap;gap:5px;padding:0 18px 14px}
+    .cat-dose-badge{padding:4px 11px;border-radius:100px;border:1.5px solid var(--border);font-size:11px;font-weight:600;color:var(--sub);background:var(--cream);white-space:nowrap}
     @media(max-width:768px){.cat-view{padding:100px 16px 80px}.cat-section-header{padding:16px 18px}}
 
     /* ── REVEAL ── */
@@ -1408,6 +1410,7 @@ function renderCatalog() {
       const isOOS = pr.outOfStock || false;
       const hasMulti = hasDoses && pr.doses.length > 1;
       const priceStr = Number.isInteger(initPrice) ? initPrice : initPrice.toFixed(2);
+      const doseBadges = hasDoses ? `<div class="cat-dose-list">${pr.doses.map(d=>`<span class="cat-dose-badge">${d.l} · $${Number.isInteger(d.p)?d.p:d.p.toFixed(2)}</span>`).join('')}</div>` : '';
       return `<div class="pc2" data-price="${initPrice}">
         <div class="pc2-top">
           <div class="pc2-name">${pr.name}</div>
@@ -1417,6 +1420,7 @@ function renderCatalog() {
         <div class="pc2-img-wrap" onclick="openPDM(${idx})" style="cursor:pointer">
           <img class="pc2-img" src="${pr.img}" alt="${pr.name}" loading="lazy">
         </div>
+        ${doseBadges}
         <div class="pc2-foot">
           <div class="pc2-price-side">
             <div class="pc2-from">${hasMulti ? 'FROM' : 'PRICE'}</div>
