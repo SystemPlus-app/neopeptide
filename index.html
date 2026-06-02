@@ -1392,18 +1392,13 @@ const _CAT_COLORS = {
 };
 
 function renderCatalog() {
-  const nav = document.getElementById('catColorNav');
   const sections = document.getElementById('catSections');
-  nav.innerHTML = '';
   sections.innerHTML = '';
   _pdmData = [];
   let globalIdx = 0;
 
   Object.values(PROGRAMS).forEach(prog => {
     const c = _CAT_COLORS[prog.id];
-    nav.innerHTML += `<button class="cat-nav-btn" onclick="document.getElementById('cat-sec-${prog.id}').scrollIntoView({behavior:'smooth'})">
-      <span class="cat-cap-dot" style="background:${c.dot};border:2px solid rgba(0,0,0,.1)"></span>${c.label}
-    </button>`;
 
     const cards = prog.products.map((pr) => {
       const idx = globalIdx++;
@@ -1412,7 +1407,6 @@ function renderCatalog() {
       const initPrice = hasDoses ? pr.doses[0].p : pr.price;
       const isOOS = pr.outOfStock || false;
       const hasMulti = hasDoses && pr.doses.length > 1;
-      const dosePills = hasDoses ? `<div class="pc2-dose-wrap">${pr.doses.map((d,di)=>`<button class="dose-pill${di===0?' active':''}" data-dose="${d.l}" data-price="${d.p}" onclick="selectDose(this)">${d.l}</button>`).join('')}</div>` : '';
       const priceStr = Number.isInteger(initPrice) ? initPrice : initPrice.toFixed(2);
       return `<div class="pc2" data-price="${initPrice}">
         <div class="pc2-top">
@@ -1423,7 +1417,6 @@ function renderCatalog() {
         <div class="pc2-img-wrap" onclick="openPDM(${idx})" style="cursor:pointer">
           <img class="pc2-img" src="${pr.img}" alt="${pr.name}" loading="lazy">
         </div>
-        ${dosePills}
         <div class="pc2-foot">
           <div class="pc2-price-side">
             <div class="pc2-from">${hasMulti ? 'FROM' : 'PRICE'}</div>
