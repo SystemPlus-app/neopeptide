@@ -481,6 +481,10 @@
     /* ── REVEAL ── */
     .reveal{opacity:0;transform:translateY(20px);transition:opacity .7s,transform .7s}
     .reveal.in{opacity:1;transform:none}
+    .reveal.split-reveal{opacity:1;transform:none;transition:none}
+    .split-word{display:inline-block;opacity:0;filter:blur(8px);transform:translate3d(0,20px,0);transition:opacity .72s cubic-bezier(.16,1,.3,1),filter .72s cubic-bezier(.16,1,.3,1),transform .72s cubic-bezier(.16,1,.3,1);transition-delay:calc(var(--split-base-delay,0s) + (var(--word-index) * 58ms));will-change:opacity,filter,transform}
+    .split-reveal.in .split-word{opacity:1;filter:blur(0);transform:translate3d(0,0,0)}
+    @media(prefers-reduced-motion:reduce){.split-word{opacity:1;filter:none;transform:none;transition:none}}
 
     /* ── RESPONSIVE ── */
     @media(max-width:1024px){
@@ -628,7 +632,7 @@
   <section class="hero">
     <div class="hero-inner">
       <p class="hero-label reveal"><span class="hero-label-flag">🇺🇸</span>Premium Research Compounds · USA Made</p>
-      <h1 class="hero-title reveal" style="transition-delay:.08s">The Neo Peptide<br>Difference.</h1>
+      <h1 class="hero-title reveal split-reveal" style="--split-base-delay:.08s">The Neo Peptide<br>Difference.</h1>
       <img class="hero-bottle reveal" style="transition-delay:.18s" src="fotos/bottles/apresentacao.png" alt="Neo Peptide">
       <div class="hero-actions reveal" style="transition-delay:.28s">
         <button class="btn-hero" onclick="showView('catalog')">Explore Catalog</button>
@@ -647,7 +651,7 @@
     <div class="programs-top">
       <div>
         <p class="section-label reveal">Our Programs</p>
-        <h2 class="section-h2 reveal" style="transition-delay:.08s">A peptide program<br>that works for you.</h2>
+        <h2 class="section-h2 reveal split-reveal" style="--split-base-delay:.08s">A peptide program<br>that works for you.</h2>
       </div>
       <p class="section-sub reveal" style="transition-delay:.15s">Seven targeted programs designed around specific goals — each with pharmaceutical-grade compounds and a Certificate of Analysis.</p>
     </div>
@@ -752,7 +756,7 @@
     <div class="ba-wrap">
       <div class="ba-header">
         <p class="section-label reveal">Transformations</p>
-        <h2 class="section-h2 reveal" style="transition-delay:.08s">The difference<br>is visible.</h2>
+        <h2 class="section-h2 reveal split-reveal" style="--split-base-delay:.08s">The difference<br>is visible.</h2>
       </div>
       <div class="ba-grid reveal" style="transition-delay:.12s">
         <div class="ba-panel ba-before">
@@ -796,7 +800,7 @@
     <div class="quality-inner">
       <div style="margin-bottom:56px">
         <p class="section-label reveal">Our Standards</p>
-        <h2 class="section-h2 reveal" style="transition-delay:.08s">No shortcuts.<br>No exceptions.</h2>
+        <h2 class="section-h2 reveal split-reveal" style="--split-base-delay:.08s">No shortcuts.<br>No exceptions.</h2>
       </div>
       <div class="quality-grid">
         <div class="quality-item reveal"><div class="quality-num">01</div><div class="quality-title">HPLC + Mass Spectrometry</div><p class="quality-text">Every batch undergoes high-performance liquid chromatography and mass spectrometry analysis. Identity and purity confirmed before any compound ships.</p></div>
@@ -811,7 +815,7 @@
   <section class="final-cta">
     <div class="final-glow"></div>
     <p class="final-label reveal">Start Today</p>
-    <h2 class="final-h2 reveal" style="transition-delay:.08s">Your transformation starts with one decision.</h2>
+    <h2 class="final-h2 reveal split-reveal" style="--split-base-delay:.08s">Your transformation starts with one decision.</h2>
     <p class="final-sub reveal" style="transition-delay:.16s">Thousands of people have already made the switch. GMP certified, shipped in 48 hours, COA guaranteed on every order.</p>
     <div class="final-actions reveal" style="transition-delay:.24s">
       <button class="btn-lg" onclick="document.getElementById('programs').scrollIntoView({behavior:'smooth'})">Choose Your Program</button>
@@ -1452,7 +1456,7 @@ function showView(name, push = true) {
   const el = document.getElementById('view-' + name);
   if (el) { el.classList.add('active'); window.scrollTo({top:0,behavior:'smooth'}); }
   if (name === 'home') window.dispatchEvent(new Event('scroll'));
-  if (name === 'catalog') { try { renderCatalog(); setTimeout(()=>{ document.querySelectorAll('#view-catalog .reveal').forEach(el=>revealObs.observe(el)); },50); } catch(e) { console.error('renderCatalog error:', e); } }
+  if (name === 'catalog') { try { renderCatalog(); setTimeout(()=>{ observeReveals(document.getElementById('view-catalog')); },50); } catch(e) { console.error('renderCatalog error:', e); } }
   if (push) history.pushState({ view: name }, '', name === 'home' ? location.pathname : '#' + name);
 }
 
@@ -1474,7 +1478,7 @@ function showProgram(id, push = true) {
   document.getElementById('pvBannerInner').innerHTML = `
     <div>
       <p class="pv-eyebrow">${p.eyebrow}</p>
-      <h1 class="pv-h1">${p.headline}</h1>
+      <h1 class="pv-h1 reveal split-reveal">${p.headline}</h1>
       <p class="pv-text">${p.text}</p>
       <div class="pv-pills">${p.pills.map(pi=>`<span class="pv-pill">${pi}</span>`).join('')}</div>
     </div>
@@ -1530,7 +1534,7 @@ function showProgram(id, push = true) {
   showView('product', false);
   history.pushState({ view: 'product', programId: id }, '', '#' + id);
   setTimeout(()=>{
-    document.querySelectorAll('#view-product .reveal').forEach(el=>revealObs.observe(el));
+    observeReveals(document.getElementById('view-product'));
   },50);
 }
 
@@ -1899,10 +1903,50 @@ window.addEventListener('scroll',()=>{ hdr.classList.toggle('scrolled',window.sc
 /* ═══════════════════════════════════════
    REVEAL OBSERVER
 ════════════════════════════════════════ */
+function initSplitReveal(root=document){
+  root.querySelectorAll('.split-reveal:not([data-split-ready])').forEach(el=>{
+    const nodes = Array.from(el.childNodes);
+    let wordIndex = 0;
+    el.innerHTML = '';
+
+    nodes.forEach(node=>{
+      if(node.nodeType === Node.ELEMENT_NODE && node.tagName === 'BR'){
+        el.appendChild(document.createElement('br'));
+        return;
+      }
+
+      const text = node.textContent || '';
+      text.split(/(\s+)/).forEach(part=>{
+        if(!part)return;
+        if(/\s+/.test(part)){
+          el.appendChild(document.createTextNode(part));
+          return;
+        }
+
+        const span = document.createElement('span');
+        span.className = 'split-word';
+        span.style.setProperty('--word-index', wordIndex++);
+        span.textContent = part;
+        el.appendChild(span);
+      });
+    });
+
+    el.dataset.splitReady = 'true';
+  });
+}
+
 const revealObs = new IntersectionObserver(entries=>{
   entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); revealObs.unobserve(e.target); } });
 },{threshold:0.1});
-document.querySelectorAll('.reveal').forEach(el=>revealObs.observe(el));
+let legalAccepted = false;
+
+function observeReveals(root=document){
+  if(!legalAccepted)return;
+  initSplitReveal(root);
+  root.querySelectorAll('.reveal:not(.in)').forEach(el=>revealObs.observe(el));
+}
+
+initSplitReveal();
 
 /* ═══════════════════════════════════════
    COUNTERS
@@ -1944,7 +1988,12 @@ if (footerEl && mobileBar) {
   var o=document.getElementById('legalOverlay');
   o.style.display='flex'; document.body.style.overflow='hidden';
 })();
-function legalAccept(){ document.getElementById('legalOverlay').style.display='none'; document.body.style.overflow=''; }
+function legalAccept(){
+  document.getElementById('legalOverlay').style.display='none';
+  document.body.style.overflow='';
+  legalAccepted = true;
+  requestAnimationFrame(()=>observeReveals());
+}
 function legalDecline(){ window.location.href='https://www.google.com'; }
 
 /* ═══════════════════════════════════════
