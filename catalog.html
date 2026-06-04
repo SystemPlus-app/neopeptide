@@ -65,19 +65,21 @@
     .section-header{display:flex;align-items:center;gap:16px;margin-bottom:32px;padding:28px 32px;border-radius:20px;color:#fff}
     .section-header.green  {background:radial-gradient(135deg,#B0DCC0 0%,#2E7D52 100%)}
     .section-header.blue   {background:radial-gradient(135deg,#A4CCEE 0%,#1A3878 100%)}
-    .section-header.red    {background:radial-gradient(135deg,#ECA8A8 0%,#7A1A1A 100%)}
+    .section-header.red    {background:radial-gradient(135deg,#C85858 0%,#3E0606 100%)}
     .section-header.gold   {background:radial-gradient(135deg,#ECD4A0 0%,#7A4E18 100%)}
     .section-header.pink   {background:radial-gradient(135deg,#F5BDD2 0%,#8C2F58 100%)}
     .section-header.purple {background:radial-gradient(135deg,#C9B4F4 0%,#3D236F 100%)}
-    .section-header.silver {background:radial-gradient(135deg,#D8DCE2 0%,#303641 100%)}
+    .section-header.silver {background:radial-gradient(135deg,#FFCF9A 0%,#782808 100%)}
+    .section-header.crimson{background:radial-gradient(135deg,#FF8CAA 0%,#640018 100%)}
     .section-cap-dot{width:28px;height:28px;border-radius:50%;border:3px solid rgba(255,255,255,.6);flex-shrink:0}
     .cap-green  {background:#3EAD62}
     .cap-blue   {background:#2C6CB0}
-    .cap-red    {background:#C03030}
+    .cap-red    {background:#880E0E}
     .cap-gold   {background:#C09040}
     .cap-pink   {background:#D86A9B}
     .cap-purple {background:#7A58C8}
-    .cap-silver {background:#8A8FA0}
+    .cap-silver {background:#D86010}
+    .cap-crimson{background:#C0103A}
     .section-header-text h2{font-size:clamp(18px,2.2vw,26px);font-weight:800;letter-spacing:-.02em;margin-bottom:4px}
     .section-header-text p{font-size:13px;opacity:.72}
 
@@ -172,7 +174,8 @@
   <button class="color-nav-btn" onclick="document.getElementById('gold').scrollIntoView({behavior:'smooth'})"><span class="color-dot cap-gold"></span>Gold — Recovery</button>
   <button class="color-nav-btn" onclick="document.getElementById('pink').scrollIntoView({behavior:'smooth'})"><span class="color-dot cap-pink"></span>Pink — Skin & Beauty</button>
   <button class="color-nav-btn" onclick="document.getElementById('purple').scrollIntoView({behavior:'smooth'})"><span class="color-dot cap-purple"></span>Purple — Neuro</button>
-  <button class="color-nav-btn" onclick="document.getElementById('silver').scrollIntoView({behavior:'smooth'})"><span class="color-dot cap-silver"></span>Silver — Essentials</button>
+  <button class="color-nav-btn" onclick="document.getElementById('silver').scrollIntoView({behavior:'smooth'})"><span class="color-dot cap-silver"></span>Orange — Essentials</button>
+  <button class="color-nav-btn" onclick="document.getElementById('crimson').scrollIntoView({behavior:'smooth'})"><span class="color-dot cap-crimson"></span>Crimson — Sexual Wellness</button>
 </nav>
 
 <!-- ══ GREEN — FAT LOSS / GLP ══ -->
@@ -253,17 +256,30 @@
   <div class="products-grid" id="grid-purple"></div>
 </section>
 
-<!-- ══ SILVER — ESSENTIALS ══ -->
+<!-- ══ SILVER/ORANGE — ESSENTIALS ══ -->
 <section class="catalog-section" id="silver">
   <div class="section-anchor"></div>
   <div class="section-header silver">
     <span class="section-cap-dot cap-silver"></span>
     <div class="section-header-text">
-      <h2>Silver Cap — Essentials</h2>
+      <h2>Orange Cap — Essentials</h2>
       <p>Reconstitution solutions &amp; core research supplies</p>
     </div>
   </div>
   <div class="products-grid" id="grid-silver"></div>
+</section>
+
+<!-- ══ CRIMSON — SEXUAL WELLNESS / LIBIDO ══ -->
+<section class="catalog-section" id="crimson">
+  <div class="section-anchor"></div>
+  <div class="section-header crimson">
+    <span class="section-cap-dot cap-crimson"></span>
+    <div class="section-header-text">
+      <h2>Crimson Cap — Sexual Wellness / Libido</h2>
+      <p>Melanocortin agonists &amp; libido support peptides</p>
+    </div>
+  </div>
+  <div class="products-grid" id="grid-crimson"></div>
 </section>
 
 <footer>
@@ -346,13 +362,21 @@ const COLOR_GROUPS = [
   {
     id: 'purple',
     products: [
-      { name:'Selank', sub:'ANXIOLYTIC PEPTIDE', img:pImg('Selank'), doses:[{l:'5mg',p:32.90}] },
+      { name:'Selank',   sub:'ANXIOLYTIC PEPTIDE',         img:pImg('Selank'),   doses:[{l:'5mg',p:32.90}] },
+      { name:'Pinealon', sub:'NEUROPROTECTIVE PEPTIDE',    img:pImg('Pinealon'), doses:[{l:'10mg',p:50}] },
+      { name:'Semax',    sub:'NOOTROPIC PEPTIDE ANALOGUE', img:pImg('Semax'),    doses:[{l:'10mg',p:59}] },
     ]
   },
   {
     id: 'silver',
     products: [
       { name:'Bacteriostatic Water', sub:'RECONSTITUTION SOLUTION', img:pImg('Bacteriostatic Water'), doses:[{l:'10ml',p:10},{l:'30ml',p:20}] },
+    ]
+  },
+  {
+    id: 'crimson',
+    products: [
+      { name:'PT-141', sub:'MELANOCORTIN RECEPTOR AGONIST', img:pImg('PT-141'), doses:[{l:'10mg',p:59}] },
     ]
   }
 ];

@@ -117,11 +117,12 @@
     .prog-card:hover{transform:translateY(-5px);box-shadow:0 32px 72px rgba(0,0,0,.22)}
     .prog-card.glp1      {background:radial-gradient(ellipse at 72% 42%,#B0DCC0 0%,#4A9E6A 35%,#1A5A38 100%)}
     .prog-card.longevity {background:radial-gradient(ellipse at 72% 42%,#A4CCEE 0%,#3E7CC0 35%,#1A3878 100%)}
-    .prog-card.testosterone{background:radial-gradient(ellipse at 72% 42%,#ECA8A8 0%,#C25050 35%,#7A1A1A 100%)}
+    .prog-card.testosterone{background:radial-gradient(ellipse at 72% 42%,#C85858 0%,#880E0E 35%,#3E0606 100%)}
     .prog-card.microdose {background:radial-gradient(ellipse at 72% 42%,#ECD4A0 0%,#C09040 35%,#7A4E18 100%)}
     .prog-card.skin     {background:radial-gradient(ellipse at 72% 42%,#F5BDD2 0%,#D86A9B 35%,#8C2F58 100%)}
     .prog-card.neuro    {background:radial-gradient(ellipse at 72% 42%,#C9B4F4 0%,#7A58C8 35%,#3D236F 100%)}
-    .prog-card.essentials{background:radial-gradient(ellipse at 72% 42%,#D8DCE2 0%,#7C858F 35%,#303641 100%)}
+    .prog-card.essentials{background:radial-gradient(ellipse at 72% 42%,#FFD4A0 0%,#D86010 35%,#782808 100%)}
+    .prog-card.sexual   {background:radial-gradient(ellipse at 72% 42%,#FF7090 0%,#C0103A 35%,#640018 100%)}
     .prog-card-bottle{position:absolute;right:-2%;bottom:0;top:-10%;width:50%;height:118%;object-fit:contain;object-position:center bottom;filter:drop-shadow(-10px 10px 28px rgba(0,0,0,.28));transition:transform .4s cubic-bezier(.34,1.1,.64,1);z-index:1}
     .prog-card:hover .prog-card-bottle{transform:scale(1.06) translateY(-8px)}
     .prog-card-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.6) 0%,rgba(0,0,0,.12) 40%,transparent 68%);z-index:2}
@@ -468,7 +469,8 @@
     .cat-section-header.microdose   {background:radial-gradient(135deg,#ECD4A0 0%,#7A4E18 100%)}
     .cat-section-header.skin        {background:radial-gradient(135deg,#F5BDD2 0%,#8C2F58 100%)}
     .cat-section-header.neuro       {background:radial-gradient(135deg,#C9B4F4 0%,#3D236F 100%)}
-    .cat-section-header.essentials  {background:radial-gradient(135deg,#D8DCE2 0%,#303641 100%)}
+    .cat-section-header.essentials  {background:radial-gradient(135deg,#FFCF9A 0%,#782808 100%)}
+    .cat-section-header.sexual      {background:radial-gradient(135deg,#FF8CAA 0%,#640018 100%)}
     .cat-cap-dot{width:22px;height:22px;border-radius:50%;flex-shrink:0}
     .cat-section-info h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(15px,2vw,20px);font-weight:800;letter-spacing:-.02em;margin-bottom:3px}
     .cat-section-info p{font-size:12px;opacity:.7}
@@ -653,7 +655,7 @@
         <p class="section-label reveal">Our Programs</p>
         <h2 class="section-h2 reveal split-reveal" style="--split-base-delay:.08s">A peptide program<br>that works for you.</h2>
       </div>
-      <p class="section-sub reveal" style="transition-delay:.15s">Seven targeted programs designed around specific goals — each with pharmaceutical-grade compounds and a Certificate of Analysis.</p>
+      <p class="section-sub reveal" style="transition-delay:.15s">Eight targeted programs designed around specific goals — each with pharmaceutical-grade compounds and a Certificate of Analysis.</p>
     </div>
     <div class="programs-grid">
 
@@ -741,6 +743,19 @@
         <div class="prog-card-content">
           <div class="prog-card-name">ESSENTIALS</div>
           <div class="prog-card-promise">Core support · Research supplies · Protocol basics</div>
+          <div class="prog-card-cta">
+            Learn More
+            <div class="prog-card-arrow"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="prog-card sexual reveal" style="transition-delay:.56s" onclick="showProgram('sexual')">
+        <img class="prog-card-bottle" src="fotos/bottles/produtos%20bottle%20/PT-141.png" alt="">
+        <div class="prog-card-overlay"></div>
+        <div class="prog-card-content">
+          <div class="prog-card-name">SEXUAL WELLNESS / LIBIDO</div>
+          <div class="prog-card-promise">Desire · Arousal · Sexual function · Intimacy support</div>
           <div class="prog-card-cta">
             Learn More
             <div class="prog-card-arrow"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
@@ -851,6 +866,7 @@
           <li><a onclick="showProgram('skin')">Skin &amp; Beauty</a></li>
           <li><a onclick="showProgram('neuro')">Neuro / Mood</a></li>
           <li><a onclick="showProgram('essentials')">Essentials</a></li>
+          <li><a onclick="showProgram('sexual')">Sexual Wellness / Libido</a></li>
         </ul>
       </div>
       <div class="footer-col">
@@ -1366,7 +1382,9 @@ const PROGRAMS = {
     bgClass: 'neuro',
     bannerImg: pImg('Selank'),
     products: [
-      { name:'Selank', sub:'ANXIOLYTIC PEPTIDE', img:pImg('Selank'), doses:[{l:'5mg',p:32.90}] },
+      { name:'Selank',   sub:'ANXIOLYTIC PEPTIDE',        img:pImg('Selank'),   doses:[{l:'5mg',p:32.90}] },
+      { name:'Pinealon', sub:'NEUROPROTECTIVE PEPTIDE',   img:pImg('Pinealon'), doses:[{l:'10mg',p:50}] },
+      { name:'Semax',    sub:'NOOTROPIC PEPTIDE ANALOGUE',img:pImg('Semax'),    doses:[{l:'10mg',p:59}] },
     ]
   },
   essentials: {
@@ -1381,6 +1399,19 @@ const PROGRAMS = {
     products: [
       { name:'Bacteriostatic Water', sub:'RECONSTITUTION SOLUTION', img:pImg('Bacteriostatic Water'), doses:[{l:'10ml',p:10},{l:'30ml',p:20}] },
     ]
+  },
+  sexual: {
+    id: 'sexual',
+    name: 'SEXUAL WELLNESS / LIBIDO',
+    eyebrow: 'Sexual Wellness / Libido Program',
+    headline: 'Restore desire.<br>Enhance intimacy.',
+    text: 'PT-141 (Bremelanotide) activates melanocortin receptors in the brain to support sexual arousal and desire in both men and women — a centrally acting approach to libido and sexual function research.',
+    pills: ['Libido','Desire','Sexual Function','Arousal'],
+    bgClass: 'sexual',
+    bannerImg: pImg('PT-141'),
+    products: [
+      { name:'PT-141', sub:'MELANOCORTIN RECEPTOR AGONIST', img:pImg('PT-141'), doses:[{l:'10mg',p:59}] },
+    ]
   }
 };
 
@@ -1394,7 +1425,8 @@ const _CAT_COLORS = {
   microdose:    { dot:'#C09040', label:'Performance &amp; Recovery',sub:'Tissue repair, stamina &amp; recovery peptide blends' },
   skin:         { dot:'#D86A9B', label:'Skin &amp; Beauty',        sub:'Collagen synthesis, skin barrier &amp; repair peptides' },
   neuro:        { dot:'#7A58C8', label:'Neuro / Mood',             sub:'Cognitive support, focus &amp; anxiolytic peptides' },
-  essentials:   { dot:'#8A8FA0', label:'Essentials',               sub:'Reconstitution solutions &amp; core research supplies' },
+  essentials:   { dot:'#D86010', label:'Essentials',               sub:'Reconstitution solutions &amp; core research supplies' },
+  sexual:       { dot:'#C0103A', label:'Sexual Wellness / Libido', sub:'Melanocortin agonists &amp; libido support peptides' },
 };
 
 function renderCatalog() {
@@ -1467,11 +1499,12 @@ function showProgram(id, push = true) {
   const bannerBg = {
     glp1:        'linear-gradient(180deg,#F2FBF5 0%,#A4D8B8 55%,#5A9E7A 100%)',
     longevity:   'linear-gradient(180deg,#EDF6FD 0%,#9EC8EE 55%,#4080C0 100%)',
-    testosterone:'linear-gradient(180deg,#FDF5F5 0%,#E8AAAA 55%,#BC5555 100%)',
+    testosterone:'linear-gradient(180deg,#FDF0F0 0%,#CC7070 55%,#7A1010 100%)',
     microdose:   'linear-gradient(180deg,#FCF8EE 0%,#DEBB95 55%,#A87848 100%)',
     skin:        'linear-gradient(180deg,#FFF3F8 0%,#F2A9C6 55%,#D45B8F 100%)',
     neuro:       'linear-gradient(180deg,#F5F0FF 0%,#C8B4F0 55%,#7653C4 100%)',
-    essentials:  'linear-gradient(180deg,#F7F8FA 0%,#C7CDD5 55%,#6F7884 100%)',
+    essentials:  'linear-gradient(180deg,#FFF8EE 0%,#FFBF70 55%,#C05010 100%)',
+    sexual:      'linear-gradient(180deg,#FFF0F4 0%,#F498B8 55%,#A81030 100%)',
   };
 
   document.getElementById('pvBannerInner').style.background = bannerBg[id];
@@ -1590,17 +1623,21 @@ const PRODUCT_DESCS = {
   'Glow Blend':                  'Proprietary peptide blend for research on collagen synthesis, skin barrier function, and photoprotection.',
   'GHK-Cu':                      'Copper tripeptide complex for research on collagen remodeling, wound healing, and antioxidant activity.',
   'Selank':                      'Anxiolytic peptide analogue for research on GABA-A modulation, stress response, and cognitive performance.',
+  'Pinealon':                    'Tripeptide derived from the pineal gland for research on neuroprotection, circadian rhythm regulation, and cognitive longevity.',
+  'Semax':                       'Synthetic ACTH analogue nootropic peptide for research on cognitive enhancement, memory consolidation, and neuroprotection.',
   'Bacteriostatic Water':        '0.9% benzyl alcohol preserved water for peptide reconstitution and research compound preparation.',
+  'PT-141':                      'Bremelanotide melanocortin receptor agonist for research on central sexual arousal pathways, libido, and sexual function in both male and female models.',
 };
 
 const _pdmGrads = {
   glp1:        'radial-gradient(ellipse at 50% 55%,#fff 0%,#C8EDD8 48%,#3A8060 100%)',
   longevity:   'radial-gradient(ellipse at 50% 55%,#fff 0%,#BCDAF0 48%,#2A60A0 100%)',
-  testosterone:'radial-gradient(ellipse at 50% 55%,#fff 0%,#EEC0C0 48%,#A03030 100%)',
+  testosterone:'radial-gradient(ellipse at 50% 55%,#fff 0%,#D09090 48%,#700808 100%)',
   microdose:   'radial-gradient(ellipse at 50% 55%,#fff 0%,#E8CFA8 48%,#885828 100%)',
   skin:        'radial-gradient(ellipse at 50% 55%,#fff 0%,#F7C4D8 48%,#B83878 100%)',
   neuro:       'radial-gradient(ellipse at 50% 55%,#fff 0%,#D8C8F8 48%,#5833A4 100%)',
-  essentials:  'radial-gradient(ellipse at 50% 55%,#fff 0%,#D0D5DB 48%,#505860 100%)',
+  essentials:  'radial-gradient(ellipse at 50% 55%,#fff 0%,#FFCC90 48%,#B84808 100%)',
+  sexual:      'radial-gradient(ellipse at 50% 55%,#fff 0%,#F0A8C0 48%,#880828 100%)',
 };
 
 function openPDM(idx) {
