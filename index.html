@@ -91,7 +91,7 @@
     /* ── HERO ── */
     .hero{min-height:100vh;padding-top:92px;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;overflow:hidden;background:transparent}
     .hero::before{content:'';position:absolute;inset:0;background:none;pointer-events:none}
-    .hero-inner{position:relative;z-index:1;text-align:center;padding:0 24px;display:flex;flex-direction:column;align-items:center;margin-top:-70px}
+    .hero-inner{position:relative;z-index:1;text-align:center;padding:0 24px;display:flex;flex-direction:column;align-items:center;margin-top:0}
     .hero-label{font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:rgba(10,10,15,.38);margin-bottom:10px}
     .hero-label-flag{opacity:1;color:initial;filter:saturate(1.2);margin-right:8px}
     .hero-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(54px,9.5vw,132px);font-weight:900;color:var(--ink);letter-spacing:-.045em;line-height:.88;max-width:1140px;margin-bottom:0}
@@ -517,7 +517,7 @@
     }
     @media(max-width:640px){
       .hero{padding-top:92px}
-      .hero-inner{margin-top:-40px}
+      .hero-inner{margin-top:0}
       .hero-title{font-size:clamp(40px,12vw,68px)}
       .hero-bottle{width:clamp(200px,62vw,300px);margin:-8px 0 -70px}
       .hero-trust{font-size:9px}
