@@ -104,6 +104,18 @@
     .hero-trust span{padding:0 14px;border-right:1px solid rgba(0,0,0,.1)}
     .hero-trust span:last-child{border-right:none}
 
+    /* ── BASELINE SECTION ── */
+    .baseline-section{background:transparent;padding:80px 24px 60px}
+    .baseline-inner{max-width:820px;margin:0 auto;text-align:center}
+    .baseline-label{font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--blue);margin-bottom:18px}
+    .baseline-title{font-family:Georgia,'Times New Roman',serif;font-size:clamp(44px,6vw,78px);font-weight:700;color:var(--ink);letter-spacing:-.025em;line-height:1.06;margin-bottom:20px}
+    .baseline-sub{font-size:16px;color:var(--sub);line-height:1.75;margin-bottom:36px;max-width:500px;margin-left:auto;margin-right:auto}
+    .baseline-tags{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:40px}
+    .baseline-tag{padding:10px 22px;border-radius:100px;border:1.5px solid rgba(0,0,0,.13);background:rgba(255,255,255,.55);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);font-size:13px;font-weight:600;color:var(--text)}
+    .baseline-cta{display:inline-flex;align-items:center;font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;font-weight:700;letter-spacing:.1em;padding:18px 48px;border-radius:100px;background:var(--ink);color:#fff;text-decoration:none;margin-bottom:22px;transition:transform .15s,box-shadow .15s}
+    .baseline-cta:hover{transform:translateY(-2px);box-shadow:0 14px 40px rgba(0,0,0,.22)}
+    .baseline-trust{font-size:12px;color:var(--muted)}
+
     /* ── PROGRAMS SECTION ── */
     .programs-section{background:transparent;padding:40px 24px 80px}
     .programs-top{max-width:1600px;margin:0 auto 40px;display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:end}
@@ -496,6 +508,7 @@
       .programs-top{grid-template-columns:1fr;gap:16px}
       .programs-grid{grid-template-columns:1fr 1fr;gap:12px}
       .prog-card{min-height:260px}
+      .baseline-section{padding:60px 20px 40px}
       .before-after{padding:72px 20px}
       .ba-grid{grid-template-columns:1fr}
       .numbers{padding:64px 20px}
@@ -553,6 +566,10 @@
       .pdm-right{padding:20px 18px}
       .pdm-name{font-size:22px}
       .pdm-price{font-size:26px}
+      .baseline-section{padding:48px 16px 32px}
+      .baseline-tags{gap:8px}
+      .baseline-tag{font-size:12px;padding:8px 16px}
+      .baseline-cta{padding:16px 36px;font-size:12px}
       .section-h2{font-size:clamp(24px,6vw,36px)}
       .pv-h1{font-size:clamp(26px,6vw,44px)}
       .cart-btn span:not(.cart-count){display:none}
@@ -613,6 +630,7 @@
       <a onclick="showView('home');scrollTo('#programs')">Programs</a>
       <a onclick="showProgram('longevity')">Longevity</a>
       <a onclick="showProgram('testosterone')">Hormone / GH</a>
+      <a onclick="showView('labtests')">Lab Tests</a>
       <a href="mailto:neopeptides@outlook.com">Contact</a>
     </nav>
     <div class="header-right">
@@ -645,6 +663,24 @@
         <span>Ships in 48h</span>
         <span>COA Every Batch</span>
       </div>
+    </div>
+  </section>
+
+  <!-- BASELINE -->
+  <section class="baseline-section">
+    <div class="baseline-inner">
+      <p class="baseline-label reveal">Before You Optimize</p>
+      <h2 class="baseline-title reveal split-reveal" style="--split-base-delay:.06s">Know Your Baseline.</h2>
+      <p class="baseline-sub reveal" style="transition-delay:.12s">Every effective protocol starts with data. Before you begin —<br>measure what matters.</p>
+      <div class="baseline-tags reveal" style="transition-delay:.18s">
+        <span class="baseline-tag">Testosterone &amp; Hormones</span>
+        <span class="baseline-tag">NAD+ &amp; Cellular Health</span>
+        <span class="baseline-tag">Metabolic Markers</span>
+        <span class="baseline-tag">Inflammation Panels</span>
+        <span class="baseline-tag">IGF-1 &amp; Growth Hormone</span>
+      </div>
+      <a href="https://www.ultalabtests.com/partners/neowellness" target="_blank" rel="noopener" class="baseline-cta reveal" style="transition-delay:.24s">ORDER YOUR PANEL →</a>
+      <p class="baseline-trust reveal" style="transition-delay:.30s">Partnered with Ulta Lab Tests · 2,100+ labs nationwide · No doctor required</p>
     </div>
   </section>
 
@@ -953,6 +989,80 @@
       </div>
     </div>
   </div>
+
+  <!-- BASELINE CTA (bottom of every program) -->
+  <section class="baseline-section">
+    <div class="baseline-inner">
+      <p class="baseline-label">Before You Optimize</p>
+      <h2 class="baseline-title">Know Your Baseline.</h2>
+      <p class="baseline-sub">Every effective protocol starts with data. Before you begin —<br>measure what matters.</p>
+      <div class="baseline-tags">
+        <span class="baseline-tag">Testosterone &amp; Hormones</span>
+        <span class="baseline-tag">NAD+ &amp; Cellular Health</span>
+        <span class="baseline-tag">Metabolic Markers</span>
+        <span class="baseline-tag">Inflammation Panels</span>
+        <span class="baseline-tag">IGF-1 &amp; Growth Hormone</span>
+      </div>
+      <a href="https://www.ultalabtests.com/partners/neowellness" target="_blank" rel="noopener" class="baseline-cta">ORDER YOUR PANEL →</a>
+      <p class="baseline-trust">Partnered with Ulta Lab Tests · 2,100+ labs nationwide · No doctor required</p>
+    </div>
+  </section>
+</div>
+
+<!-- ═══════════════════════════════════════
+     VIEW: LAB TESTS
+════════════════════════════════════════ -->
+<div id="view-labtests" class="view">
+  <div style="padding-top:92px;padding-bottom:0;background:transparent">
+    <div style="max-width:1200px;margin:0 auto;padding:32px clamp(20px,4vw,48px) 0">
+      <button class="back-btn" onclick="showView('home')">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+        Back to Home
+      </button>
+    </div>
+  </div>
+
+  <section class="baseline-section" style="padding-top:48px;padding-bottom:80px">
+    <div class="baseline-inner">
+      <p class="baseline-label reveal">Before You Optimize</p>
+      <h1 class="baseline-title reveal split-reveal" style="--split-base-delay:.06s">Know Your Baseline.</h1>
+      <p class="baseline-sub reveal" style="transition-delay:.12s">Every effective protocol starts with data. Before you begin —<br>measure what matters.</p>
+      <div class="baseline-tags reveal" style="transition-delay:.18s">
+        <span class="baseline-tag">Testosterone &amp; Hormones</span>
+        <span class="baseline-tag">NAD+ &amp; Cellular Health</span>
+        <span class="baseline-tag">Metabolic Markers</span>
+        <span class="baseline-tag">Inflammation Panels</span>
+        <span class="baseline-tag">IGF-1 &amp; Growth Hormone</span>
+      </div>
+      <a href="https://www.ultalabtests.com/partners/neowellness" target="_blank" rel="noopener" class="baseline-cta reveal" style="transition-delay:.24s">ORDER YOUR PANEL →</a>
+      <p class="baseline-trust reveal" style="transition-delay:.30s">Partnered with Ulta Lab Tests · 2,100+ labs nationwide · No doctor required</p>
+    </div>
+  </section>
+
+  <!-- WHY TEST GRID -->
+  <section style="background:transparent;padding:0 clamp(20px,4vw,48px) 100px">
+    <div style="max-width:960px;margin:0 auto">
+      <p class="section-label reveal" style="text-align:center;margin-bottom:12px">Why It Matters</p>
+      <h2 class="section-h2 reveal split-reveal" style="text-align:center;margin-bottom:48px;--split-base-delay:.05s">Optimize with precision,<br>not guesswork.</h2>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:2px" class="reveal" style="transition-delay:.1s">
+        <div class="quality-item">
+          <div class="quality-num">01</div>
+          <div class="quality-title">Know Your Hormones</div>
+          <p class="quality-text">Testosterone, estrogen, DHEA, cortisol — understand where you stand before starting any peptide protocol.</p>
+        </div>
+        <div class="quality-item">
+          <div class="quality-num">02</div>
+          <div class="quality-title">Track Cellular Health</div>
+          <p class="quality-text">NAD+ levels, metabolic markers, and inflammation panels reveal what's aging you from the inside out.</p>
+        </div>
+        <div class="quality-item">
+          <div class="quality-num">03</div>
+          <div class="quality-title">Measure Your Progress</div>
+          <p class="quality-text">Re-test after 90 days on your program. Data shows what's working — and what needs adjusting.</p>
+        </div>
+      </div>
+    </div>
+  </section>
 </div>
 
 <!-- ═══════════════════════════════════════
@@ -1500,6 +1610,7 @@ function showView(name, push = true) {
   if (el) { el.classList.add('active'); window.scrollTo({top:0,behavior:'smooth'}); }
   if (name === 'home') window.dispatchEvent(new Event('scroll'));
   if (name === 'catalog') { try { renderCatalog(); setTimeout(()=>{ observeReveals(document.getElementById('view-catalog')); },50); } catch(e) { console.error('renderCatalog error:', e); } }
+  if (name === 'labtests') { setTimeout(()=>{ observeReveals(document.getElementById('view-labtests')); },50); }
   if (push) history.pushState({ view: name }, '', name === 'home' ? location.pathname : '#' + name);
 }
 
