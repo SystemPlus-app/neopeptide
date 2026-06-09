@@ -155,6 +155,7 @@
     .prog-card:hover .prog-card-cta{color:#fff;gap:13px}
     .prog-card-arrow{width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,.15);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.28);display:flex;align-items:center;justify-content:center;transition:background .2s,transform .2s}
     .prog-card:hover .prog-card-arrow{background:rgba(255,255,255,.28);transform:translateX(3px)}
+    .prog-oos-badge{position:absolute;top:18px;right:18px;z-index:4;font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;background:rgba(220,38,38,.85);color:#fff;padding:5px 12px;border-radius:100px;backdrop-filter:blur(4px)}
 
     /* ── BEFORE / AFTER ── */
     .before-after{background:transparent;padding:100px 48px}
@@ -1696,6 +1697,7 @@ function showProgram(id, push = true) {
 
   showView('product', false);
   history.pushState({ view: 'product', programId: id }, '', '#' + id);
+  applyInventoryToGrid(id);
   setTimeout(()=>{
     observeReveals(document.getElementById('view-product'));
   },50);
@@ -2243,6 +2245,53 @@ async function npSend() {
   _npcPending = false;
   document.getElementById('npcSend').disabled = false;
   document.getElementById('npcInput').focus();
+}
+
+/* ═══════════════════════════════════════
+   INVENTORY — OOS FROM SUPABASE
+════════════════════════════════════════ */
+var _inventory = {};
+
+(async function loadInventory() {
+  try {
+    const r = await fetch('/api/inventory');
+    if (!r.ok) return;
+    const rows = await r.json();
+    if (!Array.isArray(rows)) return;
+    rows.forEach(row => { _inventory[row.slug] = row.available; });
+    applyInventoryToCards();
+  } catch (_) {}
+})();
+
+function applyInventoryToCards() {
+  Object.keys(_inventory).forEach(slug => {
+    if (_inventory[slug] !== false) return;
+    const card = document.querySelector(`.prog-card.${slug}`);
+    if (card && !card.querySelector('.prog-oos-badge')) {
+      const badge = document.createElement('div');
+      badge.className = 'prog-oos-badge';
+      badge.textContent = 'Out of Stock';
+      card.appendChild(badge);
+    }
+  });
+}
+
+function applyInventoryToGrid(programId) {
+  if (_inventory[programId] === false) {
+    document.querySelectorAll('#pvProductsGrid .pc2').forEach(card => {
+      if (!card.querySelector('.pc2-oos')) {
+        const top = card.querySelector('.pc2-top');
+        if (top) {
+          const badge = document.createElement('span');
+          badge.className = 'pc2-oos';
+          badge.textContent = 'Out of Stock';
+          top.appendChild(badge);
+        }
+      }
+      const btn = card.querySelector('.pc2-add-btn');
+      if (btn) { btn.disabled = true; btn.textContent = 'OUT OF STOCK'; }
+    });
+  }
 }
 </script>
 </body>

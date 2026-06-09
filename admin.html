@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Neo Peptide — Admin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --ink:#0A0A0F;--text:#1A1A22;--sub:#55555F;--muted:#8A8A98;
+      --border:#DDD8D0;--cream:#F5F0EB;--cream2:#EDE8E0;--white:#fff;
+      --blue:#1855E8;--green:#16A34A;--red:#DC2626;
+    }
+    html{height:100%}
+    body{font-family:'Inter',sans-serif;background:var(--cream);color:var(--text);min-height:100vh;-webkit-font-smoothing:antialiased}
+    h1,h2,h3{font-family:'Plus Jakarta Sans',sans-serif;letter-spacing:-.02em}
+
+    /* ── LOGIN ── */
+    #login-screen{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:24px}
+    .login-box{background:var(--white);border-radius:24px;padding:48px 40px;width:100%;max-width:400px;border:1.5px solid var(--border);box-shadow:0 20px 60px rgba(0,0,0,.06)}
+    .login-logo{font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:32px}
+    .login-title{font-size:26px;font-weight:800;color:var(--ink);margin-bottom:6px}
+    .login-sub{font-size:14px;color:var(--muted);margin-bottom:32px}
+    .field{display:flex;flex-direction:column;gap:6px;margin-bottom:16px}
+    .field label{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--sub)}
+    .field input{padding:13px 16px;border:1.5px solid var(--border);border-radius:12px;font-size:14px;color:var(--ink);font-family:'Inter',sans-serif;background:var(--cream);outline:none;transition:border-color .2s}
+    .field input:focus{border-color:var(--blue);background:#fff}
+    .btn-login{width:100%;font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;font-weight:700;padding:15px;border-radius:12px;background:var(--ink);color:#fff;border:none;cursor:pointer;margin-top:8px;transition:background .2s}
+    .btn-login:hover{background:#222}
+    .login-err{font-size:13px;color:var(--red);margin-top:10px;display:none;text-align:center}
+
+    /* ── DASHBOARD ── */
+    #dashboard{display:none;min-height:100vh}
+    .dash-header{background:var(--white);border-bottom:1.5px solid var(--border);padding:0 clamp(20px,4vw,48px);height:68px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:10}
+    .dash-logo{font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;font-weight:800;color:var(--ink);letter-spacing:-.01em}
+    .dash-logo span{color:var(--muted);font-weight:500}
+    .btn-logout{font-family:'Plus Jakarta Sans',sans-serif;font-size:12px;font-weight:700;padding:8px 18px;border-radius:100px;background:var(--cream2);color:var(--sub);border:none;cursor:pointer;transition:background .2s}
+    .btn-logout:hover{background:var(--border)}
+    .dash-body{max-width:720px;margin:0 auto;padding:48px clamp(16px,4vw,48px) 80px}
+    .dash-title{font-size:22px;font-weight:800;color:var(--ink);margin-bottom:4px}
+    .dash-sub{font-size:14px;color:var(--muted);margin-bottom:36px}
+    .inventory-list{display:flex;flex-direction:column;gap:10px;margin-bottom:32px}
+    .inv-row{background:var(--white);border:1.5px solid var(--border);border-radius:16px;padding:18px 22px;display:flex;align-items:center;justify-content:space-between;gap:16px;transition:border-color .2s}
+    .inv-row.changed{border-color:var(--blue)}
+    .inv-name{font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:700;color:var(--ink)}
+    .inv-slug{font-size:11px;color:var(--muted);margin-top:2px;font-family:monospace}
+    .toggle-wrap{display:flex;align-items:center;gap:10px;flex-shrink:0}
+    .toggle-label{font-size:12px;font-weight:600;min-width:80px;text-align:right}
+    .toggle-label.available{color:var(--green)}
+    .toggle-label.oos{color:var(--red)}
+    .toggle{position:relative;width:48px;height:26px;flex-shrink:0}
+    .toggle input{opacity:0;width:0;height:0;position:absolute}
+    .toggle-slider{position:absolute;inset:0;background:#DDD8D0;border-radius:13px;cursor:pointer;transition:background .25s}
+    .toggle-slider::before{content:'';position:absolute;width:20px;height:20px;left:3px;top:3px;background:#fff;border-radius:50%;transition:transform .25s;box-shadow:0 1px 4px rgba(0,0,0,.15)}
+    .toggle input:checked + .toggle-slider{background:var(--green)}
+    .toggle input:checked + .toggle-slider::before{transform:translateX(22px)}
+    .btn-save{font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;font-weight:700;padding:16px 48px;border-radius:12px;background:var(--ink);color:#fff;border:none;cursor:pointer;transition:background .2s,transform .15s,opacity .2s;display:flex;align-items:center;gap:10px}
+    .btn-save:hover{background:var(--blue);transform:translateY(-1px)}
+    .btn-save:disabled{opacity:.4;cursor:not-allowed;transform:none}
+    .save-status{font-size:13px;color:var(--muted);margin-left:16px}
+    .save-row{display:flex;align-items:center}
+    .loading-bar{height:2px;background:var(--blue);position:fixed;top:0;left:0;width:0;transition:width .4s;z-index:999}
+  </style>
+</head>
+<body>
+
+<div class="loading-bar" id="loadingBar"></div>
+
+<!-- LOGIN -->
+<div id="login-screen">
+  <div class="login-box">
+    <div class="login-logo">Neo Peptide USA</div>
+    <h1 class="login-title">Admin Panel</h1>
+    <p class="login-sub">Inventory management</p>
+    <div class="field">
+      <label>Password</label>
+      <input type="password" id="pwInput" placeholder="Enter admin password" autocomplete="current-password">
+    </div>
+    <button class="btn-login" onclick="doLogin()">Sign In</button>
+    <p class="login-err" id="loginErr">Incorrect password. Try again.</p>
+  </div>
+</div>
+
+<!-- DASHBOARD -->
+<div id="dashboard">
+  <header class="dash-header">
+    <div class="dash-logo">Neo Peptide <span>/ Admin</span></div>
+    <button class="btn-logout" onclick="logout()">Sign Out</button>
+  </header>
+  <div class="dash-body">
+    <h2 class="dash-title">Inventory</h2>
+    <p class="dash-sub">Toggle availability for each program. Hit Save to apply changes to the live site.</p>
+    <div class="inventory-list" id="inventoryList">
+      <div style="color:var(--muted);font-size:14px;padding:20px 0">Loading inventory…</div>
+    </div>
+    <div class="save-row">
+      <button class="btn-save" id="saveBtn" onclick="saveChanges()" disabled>
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13"/><polyline points="7 3 7 8 15 8"/></svg>
+        Save Changes
+      </button>
+      <span class="save-status" id="saveStatus"></span>
+    </div>
+  </div>
+</div>
+
+<script>
+  let _token = null;
+  let _original = {};
+  let _current  = {};
+
+  // ── RESTORE SESSION ──────────────────────────────
+  window.addEventListener('DOMContentLoaded', () => {
+    const t = localStorage.getItem('np_admin_token');
+    if (t) { _token = t; showDashboard(); }
+
+    document.getElementById('pwInput').addEventListener('keydown', e => {
+      if (e.key === 'Enter') doLogin();
+    });
+  });
+
+  // ── LOGIN ────────────────────────────────────────
+  async function doLogin() {
+    const pw = document.getElementById('pwInput').value.trim();
+    if (!pw) return;
+    setLoading(true);
+    try {
+      const r = await fetch('/api/admin-login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ password: pw }),
+      });
+      const d = await r.json();
+      if (!r.ok) throw new Error(d.error);
+      _token = d.token;
+      localStorage.setItem('np_admin_token', _token);
+      showDashboard();
+    } catch {
+      document.getElementById('loginErr').style.display = 'block';
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  function logout() {
+    localStorage.removeItem('np_admin_token');
+    _token = null;
+    document.getElementById('dashboard').style.display = 'none';
+    document.getElementById('login-screen').style.display = 'flex';
+    document.getElementById('pwInput').value = '';
+  }
+
+  // ── DASHBOARD ────────────────────────────────────
+  async function showDashboard() {
+    document.getElementById('login-screen').style.display = 'none';
+    document.getElementById('dashboard').style.display = 'block';
+    await loadInventory();
+  }
+
+  async function loadInventory() {
+    setLoading(true);
+    try {
+      const r = await fetch('/api/inventory');
+      const data = await r.json();
+      if (!Array.isArray(data)) throw new Error('Bad response');
+      data.forEach(row => {
+        _original[row.slug] = row.available;
+        _current[row.slug]  = row.available;
+      });
+      renderList(data);
+    } catch (e) {
+      document.getElementById('inventoryList').innerHTML =
+        `<div style="color:var(--red);font-size:14px">Failed to load inventory. Check Supabase configuration.</div>`;
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  function renderList(rows) {
+    const el = document.getElementById('inventoryList');
+    el.innerHTML = rows.map(row => `
+      <div class="inv-row" id="row-${row.slug}">
+        <div>
+          <div class="inv-name">${row.product_name}</div>
+          <div class="inv-slug">${row.slug}</div>
+        </div>
+        <div class="toggle-wrap">
+          <span class="toggle-label ${row.available ? 'available' : 'oos'}" id="lbl-${row.slug}">
+            ${row.available ? 'Available' : 'Out of Stock'}
+          </span>
+          <label class="toggle">
+            <input type="checkbox" ${row.available ? 'checked' : ''}
+              onchange="onToggle('${row.slug}', this.checked)">
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  function onToggle(slug, checked) {
+    _current[slug] = checked;
+    const lbl = document.getElementById('lbl-' + slug);
+    const row = document.getElementById('row-' + slug);
+    lbl.textContent = checked ? 'Available' : 'Out of Stock';
+    lbl.className   = 'toggle-label ' + (checked ? 'available' : 'oos');
+    const hasChanges = Object.keys(_current).some(k => _current[k] !== _original[k]);
+    document.getElementById('saveBtn').disabled = !hasChanges;
+    row.classList.toggle('changed', _current[slug] !== _original[slug]);
+  }
+
+  async function saveChanges() {
+    const btn    = document.getElementById('saveBtn');
+    const status = document.getElementById('saveStatus');
+    btn.disabled = true;
+    status.textContent = 'Saving…';
+    setLoading(true);
+
+    const changed = Object.keys(_current).filter(k => _current[k] !== _original[k]);
+
+    try {
+      await Promise.all(changed.map(slug =>
+        fetch('/api/inventory', {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${_token}`,
+          },
+          body: JSON.stringify({ slug, available: _current[slug] }),
+        }).then(r => { if (!r.ok) throw new Error('Failed: ' + slug); })
+      ));
+
+      changed.forEach(slug => {
+        _original[slug] = _current[slug];
+        document.getElementById('row-' + slug)?.classList.remove('changed');
+      });
+
+      status.textContent = '✓ Saved';
+      setTimeout(() => { status.textContent = ''; }, 3000);
+    } catch {
+      status.textContent = '✗ Error saving. Try again.';
+      status.style.color = 'var(--red)';
+      btn.disabled = false;
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  // ── UTILS ────────────────────────────────────────
+  function setLoading(on) {
+    const bar = document.getElementById('loadingBar');
+    bar.style.width = on ? '70%' : '100%';
+    if (!on) setTimeout(() => { bar.style.width = '0'; bar.style.transition = 'none'; }, 400);
+    else bar.style.transition = 'width .4s';
+  }
+</script>
+</body>
+</html>
