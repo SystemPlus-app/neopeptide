@@ -11,7 +11,7 @@ async function decrementInventory(items) {
       if (!dose || !productName) continue;
 
       const r = await fetch(
-        `${BASE}/rest/v1/inventory?product_name=eq.${encodeURIComponent(productName)}&dose=eq.${encodeURIComponent(dose)}&select=id,quantity`,
+        `${BASE}/rest/v1/inventory?product_name=eq.${encodeURIComponent(productName)}&dose=eq.${encodeURIComponent(dose)}&select=id,quantity,auto_disable`,
         { headers: { apikey: KEY, Authorization: `Bearer ${KEY}` } }
       );
       const rows = await r.json();
@@ -19,6 +19,8 @@ async function decrementInventory(items) {
 
       const row = rows[0];
       const newQty = Math.max(0, row.quantity - item.qty);
+      const patch = { quantity: newQty, updated_at: new Date().toISOString() };
+      if (newQty === 0 && row.auto_disable !== false) patch.available = false;
       await fetch(`${BASE}/rest/v1/inventory?id=eq.${row.id}`, {
         method: 'PATCH',
         headers: {
@@ -27,7 +29,7 @@ async function decrementInventory(items) {
           'Content-Type': 'application/json',
           Prefer: 'return=minimal',
         },
-        body: JSON.stringify({ quantity: newQty, updated_at: new Date().toISOString() }),
+        body: JSON.stringify(patch),
       });
     } catch (_) {}
   }

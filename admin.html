@@ -72,6 +72,9 @@
     .toggle-txt{font-size:9px;font-weight:700;letter-spacing:.04em}
     .toggle-txt.available{color:var(--green)}
     .toggle-txt.oos{color:var(--red)}
+    .auto-off-wrap{display:flex;align-items:center;gap:4px;margin-top:4px;cursor:pointer}
+    .auto-off-wrap input{width:12px;height:12px;cursor:pointer;accent-color:var(--blue)}
+    .auto-off-txt{font-size:9px;font-weight:600;color:var(--muted);white-space:nowrap}
 
     /* SAVE BAR */
     .save-bar{position:fixed;bottom:0;left:0;right:0;background:var(--white);border-top:1.5px solid var(--border);padding:14px clamp(16px,4vw,48px);display:flex;align-items:center;gap:14px;z-index:20}
@@ -239,6 +242,12 @@
                   <span class="toggle-txt ${sku.available ? 'available' : 'oos'}" id="ttxt-${sku.id}">
                     ${sku.available ? 'In Stock' : 'Out of Stock'}
                   </span>
+                  <label class="auto-off-wrap" title="Automatically mark as Out of Stock when quantity reaches 0">
+                    <input type="checkbox" ${sku.auto_disable !== false ? 'checked' : ''}
+                      data-id="${sku.id}"
+                      onchange="onAutoDisable(this)">
+                    <span class="auto-off-txt">Auto off at 0</span>
+                  </label>
                 </div>
               </div>
             `).join('')}
@@ -290,6 +299,22 @@
     row.classList.toggle('oos-row', !checked);
     ttxt.textContent = checked ? 'In Stock' : 'Out of Stock';
     ttxt.className   = 'toggle-txt ' + (checked ? 'available' : 'oos');
+    updateSaveBar();
+  }
+
+  function onAutoDisable(checkbox) {
+    const id      = parseInt(checkbox.dataset.id);
+    const checked = checkbox.checked;
+    const orig    = _rows.find(r => r.id === id);
+    if (!orig) return;
+    if (!_changes[id]) _changes[id] = {};
+    const origVal = orig.auto_disable !== false;
+    if (checked !== origVal) {
+      _changes[id].auto_disable = checked;
+    } else {
+      delete _changes[id].auto_disable;
+      if (Object.keys(_changes[id]).length === 0) delete _changes[id];
+    }
     updateSaveBar();
   }
 

@@ -37,13 +37,14 @@ export default async function handler(req, res) {
 
   if (req.method === 'PUT') {
     if (!verifyAuth(req)) return res.status(401).json({ error: 'Unauthorized' });
-    const { id, available, price, quantity } = req.body || {};
+    const { id, available, price, quantity, auto_disable } = req.body || {};
     if (!id) return res.status(400).json({ error: 'id required' });
 
     const patch = { updated_at: new Date().toISOString() };
-    if (available !== undefined) patch.available = available;
-    if (price     !== undefined) patch.price     = price;
-    if (quantity  !== undefined) patch.quantity  = quantity;
+    if (available     !== undefined) patch.available     = available;
+    if (price         !== undefined) patch.price         = price;
+    if (quantity      !== undefined) patch.quantity      = quantity;
+    if (auto_disable  !== undefined) patch.auto_disable  = auto_disable;
 
     const r = await sb(`/inventory?id=eq.${id}`, {
       method: 'PATCH',
