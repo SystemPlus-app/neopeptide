@@ -1,21 +1,66 @@
+const BASE = process.env.SUPABASE_URL;
+const KEY  = process.env.SUPABASE_ANON_KEY;
+
+async function decrementInventory(items) {
+  if (!BASE || !KEY || !items?.length) return;
+  for (const item of items) {
+    try {
+      const parts = item.name.trim().split(' ');
+      const dose = parts[parts.length - 1];
+      const productName = parts.slice(0, -1).join(' ');
+      if (!dose || !productName) continue;
+
+      const r = await fetch(
+        `${BASE}/rest/v1/inventory?product_name=eq.${encodeURIComponent(productName)}&dose=eq.${encodeURIComponent(dose)}&select=id,quantity`,
+        { headers: { apikey: KEY, Authorization: `Bearer ${KEY}` } }
+      );
+      const rows = await r.json();
+      if (!Array.isArray(rows) || !rows.length) continue;
+
+      const row = rows[0];
+      const newQty = Math.max(0, row.quantity - item.qty);
+      await fetch(`${BASE}/rest/v1/inventory?id=eq.${row.id}`, {
+        method: 'PATCH',
+        headers: {
+          apikey: KEY,
+          Authorization: `Bearer ${KEY}`,
+          'Content-Type': 'application/json',
+          Prefer: 'return=minimal',
+        },
+        body: JSON.stringify({ quantity: newQty, updated_at: new Date().toISOString() }),
+      });
+    } catch (_) {}
+  }
+}
+
 export default async function handler(req, res) {
   const { t } = req.query;
   if (!t) return res.status(400).send('<p>Invalid confirmation link.</p>');
 
-  let orderNum, customerEmail;
+  let orderNum, customerEmail, items = null;
   try {
     const decoded = Buffer.from(t, 'base64url').toString();
-    [orderNum, customerEmail] = decoded.split('||');
+    try {
+      const parsed = JSON.parse(decoded);
+      orderNum      = parsed.orderNum;
+      customerEmail = parsed.email;
+      items         = parsed.items;
+    } catch {
+      [orderNum, customerEmail] = decoded.split('||');
+    }
     if (!orderNum || !customerEmail) throw new Error('bad token');
   } catch {
     return res.status(400).send('<p>Invalid or expired confirmation link.</p>');
   }
 
-  const KEY = process.env.RESEND_API_KEY;
-  if (KEY && customerEmail) {
+  // Decrement inventory for each item
+  await decrementInventory(items);
+
+  const KEY_EMAIL = process.env.RESEND_API_KEY;
+  if (KEY_EMAIL && customerEmail) {
     await fetch('https://api.resend.com/emails', {
       method: 'POST',
-      headers: { 'Authorization': `Bearer ${KEY}`, 'Content-Type': 'application/json' },
+      headers: { 'Authorization': `Bearer ${KEY_EMAIL}`, 'Content-Type': 'application/json' },
       body: JSON.stringify({
         from: process.env.RESEND_FROM || 'Neo Peptide USA <orders@neopeptideus.com>',
         to: customerEmail,
@@ -64,7 +109,7 @@ export default async function handler(req, res) {
     <p class="sub">The customer has been notified and their order is being prepared for shipment.</p>
     <div class="badge">Order ${orderNum}</div>
     <p class="note">A confirmation email has been sent to the customer. The order will ship within 48 hours.</p>
-    <a class="home" href="https://neopeptide.vercel.app">Back to Site</a>
+    <a class="home" href="https://www.neopeptideus.com">Back to Site</a>
   </div>
 </body>
 </html>`);

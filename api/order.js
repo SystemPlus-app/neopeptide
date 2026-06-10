@@ -6,7 +6,8 @@ export default async function handler(req, res) {
   if (!KEY) return res.status(500).json({ error: 'Email service not configured' });
 
   const origin = req.headers.origin || 'https://neopeptide.vercel.app';
-  const token  = Buffer.from(`${orderNum}||${customerEmail}`).toString('base64url');
+  const tokenData = JSON.stringify({ v: 2, orderNum, email: customerEmail, items: items.map(i => ({ name: i.name, qty: i.qty })) });
+  const token = Buffer.from(tokenData).toString('base64url');
   const confirmUrl = `${origin}/api/confirm?t=${token}`;
 
   const rowsHtml = items.map(i => `
