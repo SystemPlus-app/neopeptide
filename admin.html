@@ -14,14 +14,13 @@
       --border:#DDD8D0;--cream:#F5F0EB;--cream2:#EDE8E0;--white:#fff;
       --blue:#1855E8;--green:#16A34A;--red:#DC2626;
     }
-    html{height:100%}
     body{font-family:'Inter',sans-serif;background:var(--cream);color:var(--text);min-height:100vh;-webkit-font-smoothing:antialiased}
     h1,h2,h3{font-family:'Plus Jakarta Sans',sans-serif;letter-spacing:-.02em}
 
-    /* ── LOGIN ── */
+    /* LOGIN */
     #login-screen{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:24px}
     .login-box{background:var(--white);border-radius:24px;padding:48px 40px;width:100%;max-width:400px;border:1.5px solid var(--border);box-shadow:0 20px 60px rgba(0,0,0,.06)}
-    .login-logo{font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:32px}
+    .login-logo{font-size:13px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:32px;font-family:'Plus Jakarta Sans',sans-serif}
     .login-title{font-size:26px;font-weight:800;color:var(--ink);margin-bottom:6px}
     .login-sub{font-size:14px;color:var(--muted);margin-bottom:32px}
     .field{display:flex;flex-direction:column;gap:6px;margin-bottom:16px}
@@ -32,50 +31,63 @@
     .btn-login:hover{background:#222}
     .login-err{font-size:13px;color:var(--red);margin-top:10px;display:none;text-align:center}
 
-    /* ── DASHBOARD ── */
-    #dashboard{display:none;min-height:100vh}
+    /* DASHBOARD */
+    #dashboard{display:none;min-height:100vh;padding-bottom:90px}
     .dash-header{background:var(--white);border-bottom:1.5px solid var(--border);padding:0 clamp(20px,4vw,48px);height:68px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:10}
-    .dash-logo{font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;font-weight:800;color:var(--ink);letter-spacing:-.01em}
+    .dash-logo{font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;font-weight:800;color:var(--ink)}
     .dash-logo span{color:var(--muted);font-weight:500}
-    .btn-logout{font-family:'Plus Jakarta Sans',sans-serif;font-size:12px;font-weight:700;padding:8px 18px;border-radius:100px;background:var(--cream2);color:var(--sub);border:none;cursor:pointer;transition:background .2s}
-    .btn-logout:hover{background:var(--border)}
-    .dash-body{max-width:780px;margin:0 auto;padding:48px clamp(16px,4vw,48px) 100px}
+    .btn-logout{font-family:'Plus Jakarta Sans',sans-serif;font-size:12px;font-weight:700;padding:8px 18px;border-radius:100px;background:var(--cream2);color:var(--sub);border:none;cursor:pointer}
+    .dash-body{max-width:900px;margin:0 auto;padding:40px clamp(16px,4vw,48px) 40px}
     .dash-title{font-size:22px;font-weight:800;color:var(--ink);margin-bottom:4px}
     .dash-sub{font-size:14px;color:var(--muted);margin-bottom:36px}
 
-    /* ── PROGRAM GROUP ── */
-    .prog-group{margin-bottom:28px}
-    .prog-group-header{font-family:'Plus Jakarta Sans',sans-serif;font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);padding:0 4px;margin-bottom:8px}
-    .inv-list{display:flex;flex-direction:column;gap:6px}
+    /* PROGRAM GROUP */
+    .prog-group{margin-bottom:32px;background:var(--white);border:1.5px solid var(--border);border-radius:18px;overflow:hidden}
+    .prog-group-header{padding:14px 20px;background:var(--cream2);border-bottom:1.5px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+    .prog-group-name{font-family:'Plus Jakarta Sans',sans-serif;font-size:12px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--sub)}
 
-    /* ── PRODUCT ROW ── */
-    .inv-row{background:var(--white);border:1.5px solid var(--border);border-radius:14px;padding:14px 18px;display:flex;align-items:center;justify-content:space-between;gap:16px;transition:border-color .2s}
-    .inv-row.changed{border-color:var(--blue)}
-    .inv-row.oos{background:#FEF2F2}
-    .inv-row.oos{border-color:#FECACA}
-    .inv-name{font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;font-weight:700;color:var(--ink)}
-    .toggle-wrap{display:flex;align-items:center;gap:10px;flex-shrink:0}
-    .toggle-label{font-size:11px;font-weight:700;min-width:88px;text-align:right;letter-spacing:.02em}
-    .toggle-label.available{color:var(--green)}
-    .toggle-label.oos{color:var(--red)}
-    .toggle{position:relative;width:44px;height:24px;flex-shrink:0}
+    /* PRODUCT BLOCK */
+    .product-block{border-bottom:1px solid var(--border)}
+    .product-block:last-child{border-bottom:none}
+    .product-name-row{padding:12px 20px 6px;font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;font-weight:700;color:var(--ink)}
+
+    /* SKU ROW */
+    .sku-row{display:grid;grid-template-columns:80px 1fr 1fr 1fr 100px;align-items:center;gap:12px;padding:8px 20px 10px;border-top:1px solid rgba(0,0,0,.04)}
+    .sku-row.oos-row{background:#FEF9F9}
+    .sku-dose{font-family:'Plus Jakarta Sans',sans-serif;font-size:12px;font-weight:700;color:var(--sub);background:var(--cream2);padding:4px 10px;border-radius:100px;text-align:center;width:fit-content}
+    .sku-label{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+    .sku-input{width:100%;padding:8px 10px;border:1.5px solid var(--border);border-radius:9px;font-size:13px;font-weight:600;color:var(--ink);font-family:'Inter',sans-serif;background:var(--cream);outline:none;transition:border-color .2s}
+    .sku-input:focus{border-color:var(--blue);background:#fff}
+    .sku-input.changed{border-color:var(--blue);background:#F0F4FF}
+    .price-wrap{position:relative}
+    .price-wrap .currency{position:absolute;left:9px;top:50%;transform:translateY(-50%);font-size:13px;font-weight:600;color:var(--muted);pointer-events:none}
+    .price-wrap .sku-input{padding-left:20px}
+    .toggle-wrap{display:flex;flex-direction:column;align-items:center;gap:4px}
+    .toggle{position:relative;width:40px;height:22px;flex-shrink:0}
     .toggle input{opacity:0;width:0;height:0;position:absolute}
-    .toggle-slider{position:absolute;inset:0;background:#DDD8D0;border-radius:12px;cursor:pointer;transition:background .25s}
-    .toggle-slider::before{content:'';position:absolute;width:18px;height:18px;left:3px;top:3px;background:#fff;border-radius:50%;transition:transform .25s;box-shadow:0 1px 4px rgba(0,0,0,.15)}
+    .toggle-slider{position:absolute;inset:0;background:#DDD8D0;border-radius:11px;cursor:pointer;transition:background .25s}
+    .toggle-slider::before{content:'';position:absolute;width:16px;height:16px;left:3px;top:3px;background:#fff;border-radius:50%;transition:transform .25s;box-shadow:0 1px 4px rgba(0,0,0,.15)}
     .toggle input:checked + .toggle-slider{background:var(--green)}
-    .toggle input:checked + .toggle-slider::before{transform:translateX(20px)}
+    .toggle input:checked + .toggle-slider::before{transform:translateX(18px)}
+    .toggle-txt{font-size:9px;font-weight:700;letter-spacing:.04em}
+    .toggle-txt.available{color:var(--green)}
+    .toggle-txt.oos{color:var(--red)}
 
-    /* ── SAVE ── */
-    .save-bar{position:fixed;bottom:0;left:0;right:0;background:var(--white);border-top:1.5px solid var(--border);padding:16px clamp(16px,4vw,48px);display:flex;align-items:center;gap:16px;z-index:20}
-    .btn-save{font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;font-weight:700;padding:14px 40px;border-radius:12px;background:var(--ink);color:#fff;border:none;cursor:pointer;transition:background .2s,transform .15s,opacity .2s;display:flex;align-items:center;gap:8px}
+    /* SAVE BAR */
+    .save-bar{position:fixed;bottom:0;left:0;right:0;background:var(--white);border-top:1.5px solid var(--border);padding:14px clamp(16px,4vw,48px);display:flex;align-items:center;gap:14px;z-index:20}
+    .btn-save{font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;font-weight:700;padding:13px 36px;border-radius:12px;background:var(--ink);color:#fff;border:none;cursor:pointer;display:flex;align-items:center;gap:8px;transition:background .2s,transform .15s,opacity .2s}
     .btn-save:hover{background:var(--blue);transform:translateY(-1px)}
-    .btn-save:disabled{opacity:.38;cursor:not-allowed;transform:none}
-    .save-status{font-size:13px;color:var(--muted)}
-    .changes-badge{font-size:11px;font-weight:800;background:var(--blue);color:#fff;padding:3px 9px;border-radius:100px;display:none}
+    .btn-save:disabled{opacity:.35;cursor:not-allowed;transform:none}
+    .changes-badge{font-size:11px;font-weight:800;background:var(--blue);color:#fff;padding:3px 10px;border-radius:100px;display:none}
     .changes-badge.show{display:inline-block}
+    .save-status{font-size:13px;color:var(--muted)}
 
-    .loading-bar{height:2px;background:var(--blue);position:fixed;top:0;left:0;width:0;transition:width .4s;z-index:999}
-    .err-msg{color:var(--red);font-size:14px;padding:20px 0}
+    .loading-bar{height:2px;background:var(--blue);position:fixed;top:0;left:0;width:0;z-index:999}
+
+    @media(max-width:640px){
+      .sku-row{grid-template-columns:70px 1fr 1fr;row-gap:8px}
+      .toggle-wrap{grid-column:3;grid-row:1}
+    }
   </style>
 </head>
 <body>
@@ -105,10 +117,8 @@
   </header>
   <div class="dash-body">
     <h2 class="dash-title">Inventory</h2>
-    <p class="dash-sub">Toggle each product. Changes are saved immediately when you click Save.</p>
-    <div id="inventoryList">
-      <div style="color:var(--muted);font-size:14px;padding:20px 0">Loading…</div>
-    </div>
+    <p class="dash-sub">Edit price, quantity, and availability per dose. Hit Save to apply to the live site.</p>
+    <div id="inventoryList"><div style="color:var(--muted);font-size:14px;padding:20px 0">Loading…</div></div>
   </div>
 
   <div class="save-bar">
@@ -122,9 +132,9 @@
 </div>
 
 <script>
-  let _token    = null;
-  let _original = {};
-  let _current  = {};
+  let _token   = null;
+  let _rows    = [];   // original rows from DB
+  let _changes = {};   // id → { available?, price?, quantity? }
 
   window.addEventListener('DOMContentLoaded', () => {
     const t = localStorage.getItem('np_admin_token');
@@ -141,8 +151,7 @@
     document.getElementById('loginErr').style.display = 'none';
     try {
       const r = await fetch('/api/admin-login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ password: pw }),
       });
       const d = await r.json();
@@ -150,17 +159,13 @@
       _token = d.token;
       localStorage.setItem('np_admin_token', _token);
       showDashboard();
-    } catch {
-      document.getElementById('loginErr').style.display = 'block';
-    } finally {
-      setLoading(false);
-    }
+    } catch { document.getElementById('loginErr').style.display = 'block'; }
+    finally { setLoading(false); }
   }
 
   function logout() {
     localStorage.removeItem('np_admin_token');
-    _token = null;
-    _original = {}; _current = {};
+    _token = null; _rows = []; _changes = {};
     document.getElementById('dashboard').style.display = 'none';
     document.getElementById('login-screen').style.display = 'flex';
     document.getElementById('pwInput').value = '';
@@ -177,65 +182,120 @@
     try {
       const r = await fetch('/api/inventory');
       const data = await r.json();
-      if (!Array.isArray(data)) throw new Error('Bad response');
-      _original = {}; _current = {};
-      data.forEach(row => {
-        _original[row.slug] = row.available;
-        _current[row.slug]  = row.available;
-      });
+      if (!Array.isArray(data)) throw new Error();
+      _rows = data;
+      _changes = {};
       renderList(data);
     } catch {
       document.getElementById('inventoryList').innerHTML =
-        '<div class="err-msg">Failed to load inventory. Check Supabase configuration.</div>';
-    } finally {
-      setLoading(false);
-    }
+        '<div style="color:var(--red);font-size:14px;padding:20px 0">Failed to load inventory. Check Supabase configuration.</div>';
+    } finally { setLoading(false); }
   }
 
   function renderList(rows) {
-    // group by program
-    const groups = {};
-    rows.forEach(row => {
-      if (!groups[row.program]) groups[row.program] = [];
-      groups[row.program].push(row);
+    // group by program → product
+    const progs = {};
+    rows.forEach(r => {
+      if (!progs[r.program]) progs[r.program] = {};
+      if (!progs[r.program][r.product_name]) progs[r.program][r.product_name] = [];
+      progs[r.program][r.product_name].push(r);
     });
 
-    const html = Object.entries(groups).map(([prog, products]) => `
+    const html = Object.entries(progs).map(([prog, products]) => `
       <div class="prog-group">
-        <div class="prog-group-header">${prog}</div>
-        <div class="inv-list">
-          ${products.map(row => `
-            <div class="inv-row${row.available ? '' : ' oos'}" id="row-${row.slug}">
-              <div class="inv-name">${row.product_name}</div>
-              <div class="toggle-wrap">
-                <span class="toggle-label ${row.available ? 'available' : 'oos'}" id="lbl-${row.slug}">
-                  ${row.available ? 'In Stock' : 'Out of Stock'}
-                </span>
-                <label class="toggle">
-                  <input type="checkbox" ${row.available ? 'checked' : ''}
-                    onchange="onToggle('${row.slug}', this.checked)">
-                  <span class="toggle-slider"></span>
-                </label>
-              </div>
-            </div>
-          `).join('')}
+        <div class="prog-group-header">
+          <span class="prog-group-name">${prog}</span>
         </div>
+        ${Object.entries(products).map(([prodName, skus]) => `
+          <div class="product-block">
+            <div class="product-name-row">${prodName}</div>
+            ${skus.map(sku => `
+              <div class="sku-row${sku.available ? '' : ' oos-row'}" id="skurow-${sku.id}">
+                <div><span class="sku-dose">${sku.dose}</span></div>
+                <div>
+                  <div class="sku-label">Price</div>
+                  <div class="price-wrap">
+                    <span class="currency">$</span>
+                    <input class="sku-input" type="number" step="0.01" min="0"
+                      value="${Number(sku.price).toFixed(2)}"
+                      data-id="${sku.id}" data-field="price"
+                      onchange="onFieldChange(this)">
+                  </div>
+                </div>
+                <div>
+                  <div class="sku-label">Qty</div>
+                  <input class="sku-input" type="number" step="1" min="0"
+                    value="${sku.quantity}"
+                    data-id="${sku.id}" data-field="quantity"
+                    onchange="onFieldChange(this)">
+                </div>
+                <div class="toggle-wrap">
+                  <label class="toggle">
+                    <input type="checkbox" ${sku.available ? 'checked' : ''}
+                      data-id="${sku.id}"
+                      onchange="onToggle(this)">
+                    <span class="toggle-slider"></span>
+                  </label>
+                  <span class="toggle-txt ${sku.available ? 'available' : 'oos'}" id="ttxt-${sku.id}">
+                    ${sku.available ? 'In Stock' : 'Out of Stock'}
+                  </span>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        `).join('')}
       </div>
     `).join('');
 
     document.getElementById('inventoryList').innerHTML = html;
   }
 
-  function onToggle(slug, checked) {
-    _current[slug] = checked;
-    const lbl = document.getElementById('lbl-' + slug);
-    const row = document.getElementById('row-' + slug);
-    lbl.textContent = checked ? 'In Stock' : 'Out of Stock';
-    lbl.className   = 'toggle-label ' + (checked ? 'available' : 'oos');
-    row.classList.toggle('oos', !checked);
-    row.classList.toggle('changed', _current[slug] !== _original[slug]);
-    const n = Object.keys(_current).filter(k => _current[k] !== _original[k]).length;
-    const btn = document.getElementById('saveBtn');
+  function onFieldChange(input) {
+    const id    = parseInt(input.dataset.id);
+    const field = input.dataset.field;
+    const val   = field === 'price' ? parseFloat(input.value) : parseInt(input.value);
+    const orig  = _rows.find(r => r.id === id);
+    if (!orig) return;
+
+    if (!_changes[id]) _changes[id] = {};
+
+    if (val !== orig[field]) {
+      _changes[id][field] = val;
+      input.classList.add('changed');
+    } else {
+      delete _changes[id][field];
+      input.classList.remove('changed');
+      if (Object.keys(_changes[id]).length === 0) delete _changes[id];
+    }
+    updateSaveBar();
+  }
+
+  function onToggle(checkbox) {
+    const id      = parseInt(checkbox.dataset.id);
+    const checked = checkbox.checked;
+    const orig    = _rows.find(r => r.id === id);
+    if (!orig) return;
+
+    if (!_changes[id]) _changes[id] = {};
+
+    if (checked !== orig.available) {
+      _changes[id].available = checked;
+    } else {
+      delete _changes[id].available;
+      if (Object.keys(_changes[id]).length === 0) delete _changes[id];
+    }
+
+    const row  = document.getElementById('skurow-' + id);
+    const ttxt = document.getElementById('ttxt-'   + id);
+    row.classList.toggle('oos-row', !checked);
+    ttxt.textContent = checked ? 'In Stock' : 'Out of Stock';
+    ttxt.className   = 'toggle-txt ' + (checked ? 'available' : 'oos');
+    updateSaveBar();
+  }
+
+  function updateSaveBar() {
+    const n     = Object.keys(_changes).length;
+    const btn   = document.getElementById('saveBtn');
     const badge = document.getElementById('changesBadge');
     btn.disabled = n === 0;
     badge.textContent = `${n} change${n !== 1 ? 's' : ''}`;
@@ -245,40 +305,44 @@
   async function saveChanges() {
     const btn    = document.getElementById('saveBtn');
     const status = document.getElementById('saveStatus');
-    const badge  = document.getElementById('changesBadge');
     btn.disabled = true;
     status.textContent = 'Saving…';
+    status.style.color = 'var(--muted)';
     setLoading(true);
 
-    const changed = Object.keys(_current).filter(k => _current[k] !== _original[k]);
+    const entries = Object.entries(_changes);
     try {
-      await Promise.all(changed.map(slug =>
+      await Promise.all(entries.map(([id, patch]) =>
         fetch('/api/inventory', {
           method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${_token}`,
-          },
-          body: JSON.stringify({ slug, available: _current[slug] }),
-        }).then(r => { if (!r.ok) throw new Error('Failed: ' + slug); })
+          headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${_token}` },
+          body: JSON.stringify({ id: parseInt(id), ...patch }),
+        }).then(r => { if (!r.ok) throw new Error('Failed id=' + id); })
       ));
 
-      changed.forEach(slug => {
-        _original[slug] = _current[slug];
-        document.getElementById('row-' + slug)?.classList.remove('changed');
+      // commit to local state
+      entries.forEach(([id, patch]) => {
+        const row = _rows.find(r => r.id === parseInt(id));
+        if (row) Object.assign(row, patch);
+        // remove changed highlights
+        Object.keys(patch).forEach(field => {
+          if (field !== 'available') {
+            const inp = document.querySelector(`input[data-id="${id}"][data-field="${field}"]`);
+            if (inp) inp.classList.remove('changed');
+          }
+        });
       });
 
-      badge.classList.remove('show');
+      _changes = {};
+      updateSaveBar();
       status.textContent = '✓ Saved successfully';
       status.style.color = 'var(--green)';
-      setTimeout(() => { status.textContent = ''; status.style.color = ''; }, 3000);
+      setTimeout(() => { status.textContent = ''; }, 3000);
     } catch {
       status.textContent = '✗ Error saving. Try again.';
       status.style.color = 'var(--red)';
-      btn.disabled = false;
-    } finally {
-      setLoading(false);
-    }
+      updateSaveBar();
+    } finally { setLoading(false); }
   }
 
   function setLoading(on) {

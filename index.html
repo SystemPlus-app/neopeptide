@@ -466,6 +466,7 @@
     .dose-pill{padding:6px 13px;border-radius:100px;border:1.5px solid var(--border);font-size:12px;font-weight:600;cursor:pointer;background:#fff;color:var(--ink);transition:all .15s;font-family:'Inter',sans-serif}
     .dose-pill:hover{border-color:rgba(0,0,0,.3)}
     .dose-pill.active{border-color:var(--ink);background:var(--ink);color:#fff}
+    .dose-pill.oos-dose{opacity:.38;cursor:not-allowed;text-decoration:line-through;pointer-events:none}
     .pc2-foot{display:grid;grid-template-columns:1fr 1fr;border-top:1.5px solid var(--border)}
     .pc2-price-side{padding:14px 18px;border-right:1.5px solid var(--border)}
     .pc2-from{font-size:9px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:2px}
@@ -1697,7 +1698,7 @@ function showProgram(id, push = true) {
 
   showView('product', false);
   history.pushState({ view: 'product', programId: id }, '', '#' + id);
-  applyInventoryToGrid(id);
+  applyInventoryToGrid();
   setTimeout(()=>{
     observeReveals(document.getElementById('view-product'));
   },50);
@@ -2248,10 +2249,10 @@ async function npSend() {
 }
 
 /* ═══════════════════════════════════════
-   INVENTORY — OOS FROM SUPABASE (per-product)
+   INVENTORY — per-SKU (product + dose)
 ════════════════════════════════════════ */
-var _inventory = {};   // slug → available
-var _invByName = {};   // lowercase product_name → available
+// _inv: { "product name|dose" → { available, price, quantity } }
+var _inv = {};
 
 (async function loadInventory() {
   try {
@@ -2260,36 +2261,73 @@ var _invByName = {};   // lowercase product_name → available
     const rows = await r.json();
     if (!Array.isArray(rows)) return;
     rows.forEach(row => {
-      _inventory[row.slug] = row.available;
-      _invByName[row.product_name.toLowerCase()] = row.available;
+      const key = (row.product_name + '|' + row.dose).toLowerCase();
+      _inv[key] = { available: row.available, price: row.price, quantity: row.quantity };
     });
-    applyInventoryToCards();
   } catch (_) {}
 })();
 
-function applyInventoryToCards() {
-  // homepage program cards: mark OOS if every product in the program is OOS
-  // (we don't know program membership here, so skip for now)
-}
-
-function applyInventoryToGrid(programId) {
+function applyInventoryToGrid() {
   document.querySelectorAll('#pvProductsGrid .pc2').forEach(card => {
     const nameEl = card.querySelector('.pc2-name');
     if (!nameEl) return;
-    const name = nameEl.textContent.trim().toLowerCase();
-    const available = _invByName[name];
-    if (available === false) {
-      const top = card.querySelector('.pc2-top');
-      if (top && !top.querySelector('.pc2-oos')) {
-        const badge = document.createElement('span');
-        badge.className = 'pc2-oos';
-        badge.textContent = 'Out of Stock';
-        top.appendChild(badge);
+    const productName = nameEl.textContent.trim().toLowerCase();
+
+    // update each dose pill
+    card.querySelectorAll('.dose-pill').forEach(pill => {
+      const dose = pill.dataset.dose ? pill.dataset.dose.toLowerCase() : '';
+      const key  = productName + '|' + dose;
+      const sku  = _inv[key];
+      if (!sku) return;
+
+      // override price on pill
+      if (sku.price !== undefined) {
+        pill.dataset.price = sku.price;
+        if (pill.classList.contains('active')) {
+          const priceEl = card.querySelector('.pc2-price');
+          if (priceEl) priceEl.textContent = '$' + (Number.isInteger(sku.price) ? sku.price : sku.price.toFixed(2));
+        }
       }
-      const btn = card.querySelector('.pc2-add-btn');
-      if (btn) { btn.disabled = true; btn.innerHTML = 'OUT OF STOCK'; }
+
+      // mark OOS dose pill
+      if (sku.available === false) {
+        pill.classList.add('oos-dose');
+        pill.title = 'Out of Stock';
+        // if this dose was selected, move to next available
+        if (pill.classList.contains('active')) {
+          const next = Array.from(card.querySelectorAll('.dose-pill'))
+            .find(p => !p.classList.contains('oos-dose'));
+          if (next) next.click(); else markProductOOS(card);
+        }
+      }
+    });
+
+    // if product has no doses (single SKU), check by product name alone
+    const hasDoses = card.querySelectorAll('.dose-pill').length > 0;
+    if (!hasDoses) {
+      const allOOS = Object.entries(_inv)
+        .filter(([k]) => k.startsWith(productName + '|'))
+        .every(([, v]) => v.available === false);
+      if (allOOS) markProductOOS(card);
+    }
+
+    // if ALL doses are OOS, mark product
+    if (hasDoses) {
+      const doses = Array.from(card.querySelectorAll('.dose-pill'));
+      if (doses.length > 0 && doses.every(p => p.classList.contains('oos-dose')))
+        markProductOOS(card);
     }
   });
+}
+
+function markProductOOS(card) {
+  const top = card.querySelector('.pc2-top');
+  if (top && !top.querySelector('.pc2-oos')) {
+    const b = document.createElement('span');
+    b.className = 'pc2-oos'; b.textContent = 'Out of Stock'; top.appendChild(b);
+  }
+  const btn = card.querySelector('.pc2-add-btn');
+  if (btn) { btn.disabled = true; btn.innerHTML = 'OUT OF STOCK'; }
 }
 </script>
 </body>
