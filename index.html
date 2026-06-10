@@ -2248,9 +2248,10 @@ async function npSend() {
 }
 
 /* ═══════════════════════════════════════
-   INVENTORY — OOS FROM SUPABASE
+   INVENTORY — OOS FROM SUPABASE (per-product)
 ════════════════════════════════════════ */
-var _inventory = {};
+var _inventory = {};   // slug → available
+var _invByName = {};   // lowercase product_name → available
 
 (async function loadInventory() {
   try {
@@ -2258,40 +2259,37 @@ var _inventory = {};
     if (!r.ok) return;
     const rows = await r.json();
     if (!Array.isArray(rows)) return;
-    rows.forEach(row => { _inventory[row.slug] = row.available; });
+    rows.forEach(row => {
+      _inventory[row.slug] = row.available;
+      _invByName[row.product_name.toLowerCase()] = row.available;
+    });
     applyInventoryToCards();
   } catch (_) {}
 })();
 
 function applyInventoryToCards() {
-  Object.keys(_inventory).forEach(slug => {
-    if (_inventory[slug] !== false) return;
-    const card = document.querySelector(`.prog-card.${slug}`);
-    if (card && !card.querySelector('.prog-oos-badge')) {
-      const badge = document.createElement('div');
-      badge.className = 'prog-oos-badge';
-      badge.textContent = 'Out of Stock';
-      card.appendChild(badge);
-    }
-  });
+  // homepage program cards: mark OOS if every product in the program is OOS
+  // (we don't know program membership here, so skip for now)
 }
 
 function applyInventoryToGrid(programId) {
-  if (_inventory[programId] === false) {
-    document.querySelectorAll('#pvProductsGrid .pc2').forEach(card => {
-      if (!card.querySelector('.pc2-oos')) {
-        const top = card.querySelector('.pc2-top');
-        if (top) {
-          const badge = document.createElement('span');
-          badge.className = 'pc2-oos';
-          badge.textContent = 'Out of Stock';
-          top.appendChild(badge);
-        }
+  document.querySelectorAll('#pvProductsGrid .pc2').forEach(card => {
+    const nameEl = card.querySelector('.pc2-name');
+    if (!nameEl) return;
+    const name = nameEl.textContent.trim().toLowerCase();
+    const available = _invByName[name];
+    if (available === false) {
+      const top = card.querySelector('.pc2-top');
+      if (top && !top.querySelector('.pc2-oos')) {
+        const badge = document.createElement('span');
+        badge.className = 'pc2-oos';
+        badge.textContent = 'Out of Stock';
+        top.appendChild(badge);
       }
       const btn = card.querySelector('.pc2-add-btn');
-      if (btn) { btn.disabled = true; btn.textContent = 'OUT OF STOCK'; }
-    });
-  }
+      if (btn) { btn.disabled = true; btn.innerHTML = 'OUT OF STOCK'; }
+    }
+  });
 }
 </script>
 </body>

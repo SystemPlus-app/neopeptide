@@ -39,30 +39,43 @@
     .dash-logo span{color:var(--muted);font-weight:500}
     .btn-logout{font-family:'Plus Jakarta Sans',sans-serif;font-size:12px;font-weight:700;padding:8px 18px;border-radius:100px;background:var(--cream2);color:var(--sub);border:none;cursor:pointer;transition:background .2s}
     .btn-logout:hover{background:var(--border)}
-    .dash-body{max-width:720px;margin:0 auto;padding:48px clamp(16px,4vw,48px) 80px}
+    .dash-body{max-width:780px;margin:0 auto;padding:48px clamp(16px,4vw,48px) 100px}
     .dash-title{font-size:22px;font-weight:800;color:var(--ink);margin-bottom:4px}
     .dash-sub{font-size:14px;color:var(--muted);margin-bottom:36px}
-    .inventory-list{display:flex;flex-direction:column;gap:10px;margin-bottom:32px}
-    .inv-row{background:var(--white);border:1.5px solid var(--border);border-radius:16px;padding:18px 22px;display:flex;align-items:center;justify-content:space-between;gap:16px;transition:border-color .2s}
+
+    /* ── PROGRAM GROUP ── */
+    .prog-group{margin-bottom:28px}
+    .prog-group-header{font-family:'Plus Jakarta Sans',sans-serif;font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);padding:0 4px;margin-bottom:8px}
+    .inv-list{display:flex;flex-direction:column;gap:6px}
+
+    /* ── PRODUCT ROW ── */
+    .inv-row{background:var(--white);border:1.5px solid var(--border);border-radius:14px;padding:14px 18px;display:flex;align-items:center;justify-content:space-between;gap:16px;transition:border-color .2s}
     .inv-row.changed{border-color:var(--blue)}
-    .inv-name{font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:700;color:var(--ink)}
-    .inv-slug{font-size:11px;color:var(--muted);margin-top:2px;font-family:monospace}
+    .inv-row.oos{background:#FEF2F2}
+    .inv-row.oos{border-color:#FECACA}
+    .inv-name{font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;font-weight:700;color:var(--ink)}
     .toggle-wrap{display:flex;align-items:center;gap:10px;flex-shrink:0}
-    .toggle-label{font-size:12px;font-weight:600;min-width:80px;text-align:right}
+    .toggle-label{font-size:11px;font-weight:700;min-width:88px;text-align:right;letter-spacing:.02em}
     .toggle-label.available{color:var(--green)}
     .toggle-label.oos{color:var(--red)}
-    .toggle{position:relative;width:48px;height:26px;flex-shrink:0}
+    .toggle{position:relative;width:44px;height:24px;flex-shrink:0}
     .toggle input{opacity:0;width:0;height:0;position:absolute}
-    .toggle-slider{position:absolute;inset:0;background:#DDD8D0;border-radius:13px;cursor:pointer;transition:background .25s}
-    .toggle-slider::before{content:'';position:absolute;width:20px;height:20px;left:3px;top:3px;background:#fff;border-radius:50%;transition:transform .25s;box-shadow:0 1px 4px rgba(0,0,0,.15)}
+    .toggle-slider{position:absolute;inset:0;background:#DDD8D0;border-radius:12px;cursor:pointer;transition:background .25s}
+    .toggle-slider::before{content:'';position:absolute;width:18px;height:18px;left:3px;top:3px;background:#fff;border-radius:50%;transition:transform .25s;box-shadow:0 1px 4px rgba(0,0,0,.15)}
     .toggle input:checked + .toggle-slider{background:var(--green)}
-    .toggle input:checked + .toggle-slider::before{transform:translateX(22px)}
-    .btn-save{font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;font-weight:700;padding:16px 48px;border-radius:12px;background:var(--ink);color:#fff;border:none;cursor:pointer;transition:background .2s,transform .15s,opacity .2s;display:flex;align-items:center;gap:10px}
+    .toggle input:checked + .toggle-slider::before{transform:translateX(20px)}
+
+    /* ── SAVE ── */
+    .save-bar{position:fixed;bottom:0;left:0;right:0;background:var(--white);border-top:1.5px solid var(--border);padding:16px clamp(16px,4vw,48px);display:flex;align-items:center;gap:16px;z-index:20}
+    .btn-save{font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;font-weight:700;padding:14px 40px;border-radius:12px;background:var(--ink);color:#fff;border:none;cursor:pointer;transition:background .2s,transform .15s,opacity .2s;display:flex;align-items:center;gap:8px}
     .btn-save:hover{background:var(--blue);transform:translateY(-1px)}
-    .btn-save:disabled{opacity:.4;cursor:not-allowed;transform:none}
-    .save-status{font-size:13px;color:var(--muted);margin-left:16px}
-    .save-row{display:flex;align-items:center}
+    .btn-save:disabled{opacity:.38;cursor:not-allowed;transform:none}
+    .save-status{font-size:13px;color:var(--muted)}
+    .changes-badge{font-size:11px;font-weight:800;background:var(--blue);color:#fff;padding:3px 9px;border-radius:100px;display:none}
+    .changes-badge.show{display:inline-block}
+
     .loading-bar{height:2px;background:var(--blue);position:fixed;top:0;left:0;width:0;transition:width .4s;z-index:999}
+    .err-msg{color:var(--red);font-size:14px;padding:20px 0}
   </style>
 </head>
 <body>
@@ -92,40 +105,40 @@
   </header>
   <div class="dash-body">
     <h2 class="dash-title">Inventory</h2>
-    <p class="dash-sub">Toggle availability for each program. Hit Save to apply changes to the live site.</p>
-    <div class="inventory-list" id="inventoryList">
-      <div style="color:var(--muted);font-size:14px;padding:20px 0">Loading inventory…</div>
+    <p class="dash-sub">Toggle each product. Changes are saved immediately when you click Save.</p>
+    <div id="inventoryList">
+      <div style="color:var(--muted);font-size:14px;padding:20px 0">Loading…</div>
     </div>
-    <div class="save-row">
-      <button class="btn-save" id="saveBtn" onclick="saveChanges()" disabled>
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13"/><polyline points="7 3 7 8 15 8"/></svg>
-        Save Changes
-      </button>
-      <span class="save-status" id="saveStatus"></span>
-    </div>
+  </div>
+
+  <div class="save-bar">
+    <button class="btn-save" id="saveBtn" onclick="saveChanges()" disabled>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13"/><polyline points="7 3 7 8 15 8"/></svg>
+      Save Changes
+    </button>
+    <span class="changes-badge" id="changesBadge">0 changes</span>
+    <span class="save-status" id="saveStatus"></span>
   </div>
 </div>
 
 <script>
-  let _token = null;
+  let _token    = null;
   let _original = {};
   let _current  = {};
 
-  // ── RESTORE SESSION ──────────────────────────────
   window.addEventListener('DOMContentLoaded', () => {
     const t = localStorage.getItem('np_admin_token');
     if (t) { _token = t; showDashboard(); }
-
     document.getElementById('pwInput').addEventListener('keydown', e => {
       if (e.key === 'Enter') doLogin();
     });
   });
 
-  // ── LOGIN ────────────────────────────────────────
   async function doLogin() {
     const pw = document.getElementById('pwInput').value.trim();
     if (!pw) return;
     setLoading(true);
+    document.getElementById('loginErr').style.display = 'none';
     try {
       const r = await fetch('/api/admin-login', {
         method: 'POST',
@@ -147,12 +160,12 @@
   function logout() {
     localStorage.removeItem('np_admin_token');
     _token = null;
+    _original = {}; _current = {};
     document.getElementById('dashboard').style.display = 'none';
     document.getElementById('login-screen').style.display = 'flex';
     document.getElementById('pwInput').value = '';
   }
 
-  // ── DASHBOARD ────────────────────────────────────
   async function showDashboard() {
     document.getElementById('login-screen').style.display = 'none';
     document.getElementById('dashboard').style.display = 'block';
@@ -165,61 +178,79 @@
       const r = await fetch('/api/inventory');
       const data = await r.json();
       if (!Array.isArray(data)) throw new Error('Bad response');
+      _original = {}; _current = {};
       data.forEach(row => {
         _original[row.slug] = row.available;
         _current[row.slug]  = row.available;
       });
       renderList(data);
-    } catch (e) {
+    } catch {
       document.getElementById('inventoryList').innerHTML =
-        `<div style="color:var(--red);font-size:14px">Failed to load inventory. Check Supabase configuration.</div>`;
+        '<div class="err-msg">Failed to load inventory. Check Supabase configuration.</div>';
     } finally {
       setLoading(false);
     }
   }
 
   function renderList(rows) {
-    const el = document.getElementById('inventoryList');
-    el.innerHTML = rows.map(row => `
-      <div class="inv-row" id="row-${row.slug}">
-        <div>
-          <div class="inv-name">${row.product_name}</div>
-          <div class="inv-slug">${row.slug}</div>
-        </div>
-        <div class="toggle-wrap">
-          <span class="toggle-label ${row.available ? 'available' : 'oos'}" id="lbl-${row.slug}">
-            ${row.available ? 'Available' : 'Out of Stock'}
-          </span>
-          <label class="toggle">
-            <input type="checkbox" ${row.available ? 'checked' : ''}
-              onchange="onToggle('${row.slug}', this.checked)">
-            <span class="toggle-slider"></span>
-          </label>
+    // group by program
+    const groups = {};
+    rows.forEach(row => {
+      if (!groups[row.program]) groups[row.program] = [];
+      groups[row.program].push(row);
+    });
+
+    const html = Object.entries(groups).map(([prog, products]) => `
+      <div class="prog-group">
+        <div class="prog-group-header">${prog}</div>
+        <div class="inv-list">
+          ${products.map(row => `
+            <div class="inv-row${row.available ? '' : ' oos'}" id="row-${row.slug}">
+              <div class="inv-name">${row.product_name}</div>
+              <div class="toggle-wrap">
+                <span class="toggle-label ${row.available ? 'available' : 'oos'}" id="lbl-${row.slug}">
+                  ${row.available ? 'In Stock' : 'Out of Stock'}
+                </span>
+                <label class="toggle">
+                  <input type="checkbox" ${row.available ? 'checked' : ''}
+                    onchange="onToggle('${row.slug}', this.checked)">
+                  <span class="toggle-slider"></span>
+                </label>
+              </div>
+            </div>
+          `).join('')}
         </div>
       </div>
     `).join('');
+
+    document.getElementById('inventoryList').innerHTML = html;
   }
 
   function onToggle(slug, checked) {
     _current[slug] = checked;
     const lbl = document.getElementById('lbl-' + slug);
     const row = document.getElementById('row-' + slug);
-    lbl.textContent = checked ? 'Available' : 'Out of Stock';
+    lbl.textContent = checked ? 'In Stock' : 'Out of Stock';
     lbl.className   = 'toggle-label ' + (checked ? 'available' : 'oos');
-    const hasChanges = Object.keys(_current).some(k => _current[k] !== _original[k]);
-    document.getElementById('saveBtn').disabled = !hasChanges;
+    row.classList.toggle('oos', !checked);
     row.classList.toggle('changed', _current[slug] !== _original[slug]);
+    const n = Object.keys(_current).filter(k => _current[k] !== _original[k]).length;
+    const btn = document.getElementById('saveBtn');
+    const badge = document.getElementById('changesBadge');
+    btn.disabled = n === 0;
+    badge.textContent = `${n} change${n !== 1 ? 's' : ''}`;
+    badge.classList.toggle('show', n > 0);
   }
 
   async function saveChanges() {
     const btn    = document.getElementById('saveBtn');
     const status = document.getElementById('saveStatus');
+    const badge  = document.getElementById('changesBadge');
     btn.disabled = true;
     status.textContent = 'Saving…';
     setLoading(true);
 
     const changed = Object.keys(_current).filter(k => _current[k] !== _original[k]);
-
     try {
       await Promise.all(changed.map(slug =>
         fetch('/api/inventory', {
@@ -237,8 +268,10 @@
         document.getElementById('row-' + slug)?.classList.remove('changed');
       });
 
-      status.textContent = '✓ Saved';
-      setTimeout(() => { status.textContent = ''; }, 3000);
+      badge.classList.remove('show');
+      status.textContent = '✓ Saved successfully';
+      status.style.color = 'var(--green)';
+      setTimeout(() => { status.textContent = ''; status.style.color = ''; }, 3000);
     } catch {
       status.textContent = '✗ Error saving. Try again.';
       status.style.color = 'var(--red)';
@@ -248,12 +281,11 @@
     }
   }
 
-  // ── UTILS ────────────────────────────────────────
   function setLoading(on) {
     const bar = document.getElementById('loadingBar');
+    bar.style.transition = on ? 'width .4s' : 'none';
     bar.style.width = on ? '70%' : '100%';
-    if (!on) setTimeout(() => { bar.style.width = '0'; bar.style.transition = 'none'; }, 400);
-    else bar.style.transition = 'width .4s';
+    if (!on) setTimeout(() => { bar.style.width = '0'; }, 400);
   }
 </script>
 </body>
