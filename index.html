@@ -523,10 +523,10 @@
       .programs-top{grid-template-columns:1fr;gap:16px}
       .programs-grid{grid-template-columns:1fr 1fr;gap:12px}
       .prog-card{min-height:260px}
-      .lab-banner{min-height:clamp(430px,62vw,600px);background:url('fotos/lab2.png') 58% center/auto 100% no-repeat;display:flex;align-items:center}
-      .lab-overlay{display:block;background:linear-gradient(to right,#F5F0EB 0%,rgba(245,240,235,.96) 19%,rgba(245,240,235,.62) 42%,rgba(245,240,235,.08) 66%,transparent 82%)}
-      .lab-content{max-width:min(52vw,440px);padding:64px 20px 56px}
-      .lab-mobile-img{display:none}
+      .lab-banner{min-height:auto;background:none;display:flex;flex-direction:column;align-items:stretch}
+      .lab-overlay{display:none}
+      .lab-content{order:2;max-width:100%;padding:42px 20px 48px;text-align:left}
+      .lab-mobile-img{order:1;display:block;width:100%;height:min(72vh,680px);object-fit:cover;object-position:center top}
       .baseline-section{padding:60px 20px 40px}
       .before-after{padding:72px 20px}
       .ba-grid{grid-template-columns:1fr}
@@ -554,11 +554,11 @@
       .hero-bottle{width:clamp(200px,62vw,300px);margin:-8px 0 -70px}
       .hero-trust{font-size:9px}
       .hero-trust span{padding:0 8px}
-      .lab-banner{min-height:470px;background-position:60% center}
-      .lab-content{max-width:58vw;padding:52px 16px 44px}
+      .lab-banner{min-height:auto}
+      .lab-content{max-width:100%;padding:38px 16px 44px}
       .lab-eyebrow{font-size:10px;letter-spacing:.16em;margin-bottom:12px}
       .lab-heading{font-size:clamp(36px,10.5vw,46px);line-height:1.02;margin-bottom:14px}
-      .lab-sub{font-size:13px;line-height:1.55;margin-bottom:28px;max-width:220px}
+      .lab-sub{font-size:13px;line-height:1.55;margin-bottom:28px;max-width:300px}
       .lab-btn{font-size:11px;padding:14px 24px;letter-spacing:.06em}
       .programs-section{padding:40px 14px}
       .programs-grid{grid-template-columns:1fr;gap:10px}
@@ -605,10 +605,10 @@
       .hero-bottle{width:64vw;margin:-6px 0 -60px}
       .hero-trust{flex-wrap:wrap;gap:4px;padding:8px 16px}
       .hero-trust span{border-right:none;padding:0 8px}
-      .lab-banner{min-height:455px;background-position:61% center}
-      .lab-content{max-width:60vw}
+      .lab-banner{min-height:auto}
+      .lab-content{max-width:100%}
       .lab-heading{font-size:clamp(34px,11vw,42px)}
-      .lab-sub{font-size:12.5px;max-width:205px}
+      .lab-sub{font-size:12.5px;max-width:285px}
       .lab-btn{padding:13px 20px}
       .pc2-name{font-size:16px}
       .pdm-qty-row{grid-template-columns:110px 1fr}
@@ -705,7 +705,7 @@
       <p class="lab-sub reveal" style="transition-delay:.12s">Every effective protocol starts with data. Before you begin — measure what matters.</p>
       <a href="https://www.ultalabtests.com/partners/neowellness" target="_blank" rel="noopener" class="lab-btn reveal" style="transition-delay:.20s">Order Your Panel →</a>
     </div>
-    <img class="lab-mobile-img" src="fotos/lab2.png" alt="Lab tests">
+    <img class="lab-mobile-img" src="fotos/lab cellphone.png" alt="Lab tests">
   </section>
 
   <!-- PROGRAMS -->
