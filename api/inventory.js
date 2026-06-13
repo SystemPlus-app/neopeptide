@@ -25,7 +25,7 @@ function verifyAuth(req) {
 
 export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET,POST,PUT,OPTIONS');
+  res.setHeader('Access-Control-Allow-Methods', 'GET,POST,PUT,DELETE,OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type,Authorization');
   if (req.method === 'OPTIONS') return res.status(200).end();
 
@@ -80,6 +80,14 @@ export default async function handler(req, res) {
     }, true);
     const data = await r.json();
     return res.status(r.status).json({ ok: true, data });
+  }
+
+  if (req.method === 'DELETE') {
+    if (!verifyAuth(req)) return res.status(401).json({ error: 'Unauthorized' });
+    const { id } = req.body || {};
+    if (!id) return res.status(400).json({ error: 'id required' });
+    const r = await sb(`/inventory?id=eq.${id}`, { method: 'DELETE' }, true);
+    return res.status(r.ok ? 200 : r.status).json({ ok: r.ok });
   }
 
   res.status(405).end();

@@ -197,6 +197,19 @@
       const r = await fetch('/api/inventory');
       const data = await r.json();
       if (!Array.isArray(data)) throw new Error();
+      if (_token) {
+        const changed = await ensureRequiredSkus(data);
+        if (changed) {
+          const r2 = await fetch('/api/inventory');
+          const data2 = await r2.json();
+          if (Array.isArray(data2)) {
+            _rows = data2;
+            _changes = {};
+            renderList(_rows);
+            return;
+          }
+        }
+      }
       _rows = mergeRequiredSkus(data);
       _changes = {};
       renderList(_rows);
@@ -204,6 +217,42 @@
       document.getElementById('inventoryList').innerHTML =
         '<div style="color:var(--red);font-size:14px;padding:20px 0">Failed to load inventory. Check Supabase configuration.</div>';
     } finally { setLoading(false); }
+  }
+
+  async function ensureRequiredSkus(data) {
+    let changed = false;
+    for (const sku of REQUIRED_SKUS) {
+      const key = `${sku.product_name}|${sku.dose}`.toLowerCase();
+      const existing = data.find(r =>
+        `${r.product_name}|${r.dose}`.toLowerCase() === key
+      );
+      if (!existing) {
+        await fetch('/api/inventory', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${_token}` },
+          body: JSON.stringify(sku),
+        });
+        changed = true;
+      } else if (existing.program !== sku.program) {
+        await fetch('/api/inventory', {
+          method: 'DELETE',
+          headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${_token}` },
+          body: JSON.stringify({ id: existing.id }),
+        });
+        await fetch('/api/inventory', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${_token}` },
+          body: JSON.stringify({
+            ...sku,
+            price: existing.price,
+            quantity: existing.quantity,
+            available: existing.available,
+          }),
+        });
+        changed = true;
+      }
+    }
+    return changed;
   }
 
   function mergeRequiredSkus(rows) {
