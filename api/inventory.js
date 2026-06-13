@@ -44,9 +44,12 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: 'program, product_name, and dose required' });
     }
 
+    const product_slug = product_name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+
     const payload = {
       program,
       product_name,
+      product_slug,
       dose,
       price: price ?? 0,
       quantity: quantity ?? 0,
