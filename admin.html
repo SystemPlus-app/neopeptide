@@ -87,7 +87,25 @@
 
     .loading-bar{height:2px;background:var(--blue);position:fixed;top:0;left:0;width:0;z-index:999}
 
+    /* ADD SKU */
+    .add-sku-section{margin-top:32px;background:var(--white);border:1.5px solid var(--border);border-radius:18px;overflow:hidden}
+    .add-sku-header{padding:14px 20px;background:var(--cream2);border-bottom:1.5px solid var(--border);display:flex;align-items:center;justify-content:space-between;cursor:pointer;user-select:none}
+    .add-sku-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:12px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--sub)}
+    .add-sku-body{padding:20px;display:none}
+    .add-sku-body.open{display:block}
+    .add-sku-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px}
+    .add-field{display:flex;flex-direction:column;gap:5px}
+    .add-field label{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+    .add-field input,.add-field select{padding:9px 11px;border:1.5px solid var(--border);border-radius:9px;font-size:13px;font-weight:600;color:var(--ink);font-family:'Inter',sans-serif;background:var(--cream);outline:none;transition:border-color .2s}
+    .add-field input:focus,.add-field select:focus{border-color:var(--blue);background:#fff}
+    .btn-add-sku{font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;font-weight:700;padding:11px 28px;border-radius:10px;background:var(--blue);color:#fff;border:none;cursor:pointer;transition:opacity .2s}
+    .btn-add-sku:hover{opacity:.85}
+    .btn-add-sku:disabled{opacity:.35;cursor:not-allowed}
+    .add-sku-status{font-size:13px;color:var(--muted);margin-left:12px}
+
     @media(max-width:640px){
+      .add-sku-grid{grid-template-columns:1fr}
+    }
       .sku-row{grid-template-columns:70px 1fr 1fr;row-gap:8px}
       .toggle-wrap{grid-column:3;grid-row:1}
     }
@@ -122,6 +140,35 @@
     <h2 class="dash-title">Inventory</h2>
     <p class="dash-sub">Edit price, quantity, and availability per dose. Hit Save to apply to the live site.</p>
     <div id="inventoryList"><div style="color:var(--muted);font-size:14px;padding:20px 0">Loading…</div></div>
+
+    <div class="add-sku-section">
+      <div class="add-sku-header" onclick="toggleAddSku()">
+        <span class="add-sku-title">+ Add New SKU</span>
+        <span id="addSkuChevron" style="font-size:12px;color:var(--muted)">▼</span>
+      </div>
+      <div class="add-sku-body" id="addSkuBody">
+        <div class="add-sku-grid">
+          <div class="add-field" style="grid-column:1/-1">
+            <label>Program</label>
+            <input id="newProgram" placeholder="e.g. HORMONE / GH">
+          </div>
+          <div class="add-field" style="grid-column:1/-1">
+            <label>Product Name</label>
+            <input id="newProduct" placeholder="e.g. Tesamorelin">
+          </div>
+          <div class="add-field">
+            <label>Dose</label>
+            <input id="newDose" placeholder="e.g. 20mg">
+          </div>
+          <div class="add-field">
+            <label>Price ($)</label>
+            <input id="newPrice" type="number" min="0" step="0.01" placeholder="0.00">
+          </div>
+        </div>
+        <button class="btn-add-sku" id="addSkuBtn" onclick="addSku()">Add SKU</button>
+        <span class="add-sku-status" id="addSkuStatus"></span>
+      </div>
+    </div>
   </div>
 
   <div class="save-bar">
@@ -376,6 +423,52 @@
     bar.style.transition = on ? 'width .4s' : 'none';
     bar.style.width = on ? '70%' : '100%';
     if (!on) setTimeout(() => { bar.style.width = '0'; }, 400);
+  }
+
+  function toggleAddSku() {
+    const body = document.getElementById('addSkuBody');
+    const chevron = document.getElementById('addSkuChevron');
+    const open = body.classList.toggle('open');
+    chevron.textContent = open ? '▲' : '▼';
+  }
+
+  async function addSku() {
+    const program  = document.getElementById('newProgram').value.trim();
+    const product  = document.getElementById('newProduct').value.trim();
+    const dose     = document.getElementById('newDose').value.trim();
+    const price    = parseFloat(document.getElementById('newPrice').value) || 0;
+    const status   = document.getElementById('addSkuStatus');
+    const btn      = document.getElementById('addSkuBtn');
+
+    if (!program || !product || !dose) {
+      status.textContent = 'Fill in Program, Product Name, and Dose.';
+      status.style.color = 'var(--red)';
+      return;
+    }
+
+    btn.disabled = true;
+    status.textContent = 'Adding…';
+    status.style.color = 'var(--muted)';
+
+    try {
+      const r = await fetch('/api/inventory', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${_token}` },
+        body: JSON.stringify({ program, product_name: product, dose, price, quantity: 0, available: false, auto_disable: true }),
+      });
+      if (!r.ok) throw new Error();
+      status.textContent = '✓ Added! Reloading…';
+      status.style.color = 'var(--green)';
+      document.getElementById('newProgram').value = '';
+      document.getElementById('newProduct').value = '';
+      document.getElementById('newDose').value = '';
+      document.getElementById('newPrice').value = '';
+      await loadInventory();
+      setTimeout(() => { status.textContent = ''; }, 3000);
+    } catch {
+      status.textContent = '✗ Error. Check credentials and try again.';
+      status.style.color = 'var(--red)';
+    } finally { btn.disabled = false; }
   }
 </script>
 </body>
