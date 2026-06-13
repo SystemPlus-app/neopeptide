@@ -138,6 +138,17 @@
   let _token   = null;
   let _rows    = [];   // original rows from DB
   let _changes = {};   // id → { available?, price?, quantity? }
+  const REQUIRED_SKUS = [
+    {
+      program: 'HORMONE / GH',
+      product_name: 'Tesamorelin',
+      dose: '20mg',
+      price: 150,
+      quantity: 0,
+      available: false,
+      auto_disable: true,
+    },
+  ];
 
   window.addEventListener('DOMContentLoaded', () => {
     const t = localStorage.getItem('np_admin_token');
@@ -186,6 +197,8 @@
       const r = await fetch('/api/inventory');
       const data = await r.json();
       if (!Array.isArray(data)) throw new Error();
+      const inserted = await ensureRequiredSkus(data);
+      if (inserted) return loadInventory();
       _rows = data;
       _changes = {};
       renderList(data);
@@ -193,6 +206,22 @@
       document.getElementById('inventoryList').innerHTML =
         '<div style="color:var(--red);font-size:14px;padding:20px 0">Failed to load inventory. Check Supabase configuration.</div>';
     } finally { setLoading(false); }
+  }
+
+  async function ensureRequiredSkus(rows) {
+    if (!_token) return false;
+    const existing = new Set(rows.map(r => `${r.product_name}|${r.dose}`.toLowerCase()));
+    const missing = REQUIRED_SKUS.filter(sku => !existing.has(`${sku.product_name}|${sku.dose}`.toLowerCase()));
+    if (!missing.length) return false;
+
+    await Promise.all(missing.map(sku =>
+      fetch('/api/inventory', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${_token}` },
+        body: JSON.stringify(sku),
+      }).then(r => { if (!r.ok) throw new Error('Failed to create SKU'); })
+    ));
+    return true;
   }
 
   function renderList(rows) {
