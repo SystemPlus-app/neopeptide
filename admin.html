@@ -456,7 +456,10 @@
         headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${_token}` },
         body: JSON.stringify({ program, product_name: product, dose, price, quantity: 0, available: false, auto_disable: true }),
       });
-      if (!r.ok) throw new Error();
+      if (!r.ok) {
+        const d = await r.json().catch(() => ({}));
+        throw new Error(`HTTP ${r.status}: ${d.error || JSON.stringify(d)}`);
+      }
       status.textContent = '✓ Added! Reloading…';
       status.style.color = 'var(--green)';
       document.getElementById('newProgram').value = '';
@@ -465,8 +468,8 @@
       document.getElementById('newPrice').value = '';
       await loadInventory();
       setTimeout(() => { status.textContent = ''; }, 3000);
-    } catch {
-      status.textContent = '✗ Error. Check credentials and try again.';
+    } catch(e) {
+      status.textContent = '✗ ' + e.message;
       status.style.color = 'var(--red)';
     } finally { btn.disabled = false; }
   }
