@@ -454,7 +454,7 @@
       const r = await fetch('/api/inventory', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${_token}` },
-        body: JSON.stringify({ program, product_name: product, dose, price, quantity: 0, available: false, auto_disable: true }),
+        body: JSON.stringify({ program, product_name: product, dose, price, quantity: 0, available: false }),
       });
       if (!r.ok) {
         const d = await r.json().catch(() => ({}));
