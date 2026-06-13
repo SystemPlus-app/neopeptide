@@ -197,11 +197,14 @@
       const r = await fetch('/api/inventory');
       const data = await r.json();
       if (!Array.isArray(data)) throw new Error();
-      const inserted = await ensureRequiredSkus(data);
-      if (inserted) return loadInventory();
       _rows = data;
       _changes = {};
       renderList(data);
+      ensureRequiredSkus(data)
+        .then(inserted => {
+          if (inserted) loadInventory();
+        })
+        .catch(err => console.warn('Auto SKU bootstrap skipped:', err));
     } catch {
       document.getElementById('inventoryList').innerHTML =
         '<div style="color:var(--red);font-size:14px;padding:20px 0">Failed to load inventory. Check Supabase configuration.</div>';

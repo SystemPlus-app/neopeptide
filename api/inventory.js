@@ -1,12 +1,14 @@
 const BASE = process.env.SUPABASE_URL;
-const KEY  = process.env.SUPABASE_ANON_KEY;
+const ANON_KEY = process.env.SUPABASE_ANON_KEY;
+const SERVICE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
-function sb(path, opts = {}) {
+function sb(path, opts = {}, useServiceKey = false) {
+  const key = useServiceKey && SERVICE_KEY ? SERVICE_KEY : ANON_KEY;
   return fetch(`${BASE}/rest/v1${path}`, {
     ...opts,
     headers: {
-      apikey: KEY,
-      Authorization: `Bearer ${KEY}`,
+      apikey: key,
+      Authorization: `Bearer ${key}`,
       'Content-Type': 'application/json',
       Prefer: 'return=representation',
       ...(opts.headers || {}),
@@ -27,7 +29,7 @@ export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type,Authorization');
   if (req.method === 'OPTIONS') return res.status(200).end();
 
-  if (!BASE || !KEY) return res.status(500).json({ error: 'Supabase not configured' });
+  if (!BASE || !ANON_KEY) return res.status(500).json({ error: 'Supabase not configured' });
 
   if (req.method === 'GET') {
     const r = await sb('/inventory?select=*&order=id');
@@ -56,7 +58,7 @@ export default async function handler(req, res) {
     const r = await sb('/inventory', {
       method: 'POST',
       body: JSON.stringify(payload),
-    });
+    }, true);
     const data = await r.json();
     return res.status(r.status).json({ ok: r.ok, data });
   }
@@ -75,7 +77,7 @@ export default async function handler(req, res) {
     const r = await sb(`/inventory?id=eq.${id}`, {
       method: 'PATCH',
       body: JSON.stringify(patch),
-    });
+    }, true);
     const data = await r.json();
     return res.status(r.status).json({ ok: true, data });
   }
