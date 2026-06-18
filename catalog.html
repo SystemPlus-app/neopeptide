@@ -442,13 +442,14 @@ function renderGroups(){
 
       let priceSection = '';
       if (multiDose) {
+        const pn = pr.name.replace(/'/g,"\\'");
         priceSection = `
-          <select class="pc-dose-select" id="${selectId}" onchange="updatePrice(this,'${pr.name.replace(/'/g,"\\'")}','${pr.img}')">
-            ${pr.doses.map(d=>`<option value="${d.p}" data-label="${d.l}">${d.l} — $${d.p}</option>`).join('')}
+          <select class="pc-dose-select" id="${selectId}" data-product="${pr.name}" onchange="updatePrice(this,'${pn}','${pr.img}')">
+            ${pr.doses.map(d=>`<option value="${d.p}" data-label="${d.l}" data-dose="${d.l}">${d.l} — $${d.p}</option>`).join('')}
           </select>
           <div class="pc-bottom">
             <div><div class="pc-price-label">Price</div><div class="pc-price" id="price_${selectId}">$${firstPrice}</div></div>
-            <button class="btn-add" onclick="addFromSelect('${selectId}','${pr.name.replace(/'/g,"\\'")}','${pr.img}')">Add to Cart</button>
+            <button class="btn-add" id="addbtn_${selectId}" onclick="addFromSelect('${selectId}','${pn}','${pr.img}')">Add to Cart</button>
           </div>`;
       } else if (singleDose) {
         priceSection = `
@@ -459,7 +460,7 @@ function renderGroups(){
             </div>
             ${pr.outOfStock
               ? `<span class="out-of-stock" style="max-width:120px">Out of Stock</span>`
-              : `<button class="btn-add" onclick="addToCart('${pr.name.replace(/'/g,"\\'")} ${pr.doses[0].l}',${firstPrice},'${pr.img}')">Add</button>`
+              : `<button class="btn-add" data-product="${pr.name}" data-dose="${pr.doses[0].l}" onclick="addToCart('${pr.name.replace(/'/g,"\\'")} ${pr.doses[0].l}',${firstPrice},'${pr.img}')">Add</button>`
             }
           </div>`;
       } else {
@@ -503,6 +504,69 @@ function addFromSelect(selectId, name, img){
 
 renderGroups();
 renderCart();
+
+/* ── INVENTORY ── */
+var _inv = {};
+
+(async function loadInventory() {
+  try {
+    const r = await fetch('/api/inventory');
+    if (!r.ok) return;
+    const rows = await r.json();
+    if (!Array.isArray(rows)) return;
+    rows.forEach(row => {
+      const key = (row.product_name + '|' + row.dose).toLowerCase();
+      _inv[key] = { available: row.available };
+    });
+    applyInventoryToCatalog();
+  } catch (_) {}
+})();
+
+function applyInventoryToCatalog() {
+  // multi-dose selects
+  document.querySelectorAll('.pc-dose-select[data-product]').forEach(sel => {
+    const productName = sel.dataset.product.toLowerCase();
+    let firstAvailable = null;
+    let allOOS = true;
+
+    Array.from(sel.options).forEach(opt => {
+      const dose = (opt.dataset.dose || opt.dataset.label || '').toLowerCase();
+      const sku  = _inv[productName + '|' + dose];
+      if (sku && sku.available === false) {
+        opt.disabled = true;
+        opt.textContent = opt.dataset.label + ' — Out of Stock';
+      } else {
+        allOOS = false;
+        if (!firstAvailable) firstAvailable = opt;
+      }
+    });
+
+    // if current selection is OOS, pick first available
+    if (sel.options[sel.selectedIndex]?.disabled && firstAvailable) {
+      firstAvailable.selected = true;
+      sel.dispatchEvent(new Event('change'));
+    }
+
+    // if every dose is OOS, disable the add button
+    if (allOOS) {
+      const btn = document.getElementById('addbtn_' + sel.id);
+      if (btn) { btn.disabled = true; btn.textContent = 'Out of Stock'; btn.style.cssText = 'opacity:.4;cursor:not-allowed'; }
+    }
+  });
+
+  // single-dose buttons
+  document.querySelectorAll('.btn-add[data-product][data-dose]').forEach(btn => {
+    const key = (btn.dataset.product + '|' + btn.dataset.dose).toLowerCase();
+    const sku = _inv[key];
+    if (sku && sku.available === false) {
+      const span = document.createElement('span');
+      span.className = 'out-of-stock';
+      span.style.maxWidth = '120px';
+      span.textContent = 'Out of Stock';
+      btn.replaceWith(span);
+    }
+  });
+}
 </script>
 </body>
 </html>
