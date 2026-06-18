@@ -454,6 +454,7 @@
     .pdm-dpill{padding:9px 18px;border-radius:100px;border:2px solid var(--border);font-size:13px;font-weight:700;cursor:pointer;background:#fff;color:var(--ink);transition:all .15s;font-family:'Plus Jakarta Sans',sans-serif}
     .pdm-dpill:hover{border-color:rgba(0,0,0,.3)}
     .pdm-dpill.active{border-color:var(--ink);background:var(--ink);color:#fff}
+    .pdm-dpill.oos-dose{opacity:.35;cursor:not-allowed;text-decoration:line-through;pointer-events:none}
     .pdm-bottom{margin-top:auto;display:flex;flex-direction:column;gap:10px;padding-top:16px;border-top:1.5px solid var(--border)}
     .pdm-qty-row{display:grid;grid-template-columns:120px 1fr;gap:10px}
     .pdm-qty{display:flex;align-items:center;border:2px solid var(--border);border-radius:12px;overflow:hidden}
@@ -1937,6 +1938,34 @@ function openPDM(idx) {
   _pdmSlide = 0;
   document.getElementById('pdmOverlay').classList.add('open');
   document.body.style.overflow = 'hidden';
+
+  if (hasDoses && Object.keys(_inv).length) {
+    const pnLower = pr.name.toLowerCase();
+    let firstAvail = null;
+    let allOOS = true;
+    document.querySelectorAll('.pdm-dpill').forEach(pill => {
+      const sku = _inv[pnLower + '|' + (pill.dataset.dose || '').toLowerCase()];
+      if (sku && sku.available === false) {
+        pill.classList.add('oos-dose');
+        pill.disabled = true;
+      } else {
+        allOOS = false;
+        if (!firstAvail) firstAvail = pill;
+      }
+    });
+    const activePill = document.querySelector('.pdm-dpill.active');
+    if (activePill && activePill.classList.contains('oos-dose') && firstAvail) {
+      document.querySelectorAll('.pdm-dpill').forEach(p => p.classList.remove('active'));
+      firstAvail.classList.add('active');
+      const p = parseFloat(firstAvail.dataset.price);
+      box.dataset.price = p;
+      document.getElementById('pdmPrice').textContent = '$' + (Number.isInteger(p) ? p : p.toFixed(2));
+    }
+    if (allOOS) {
+      const addBtn = document.querySelector('.pdm-add-btn');
+      if (addBtn) { addBtn.disabled = true; addBtn.innerHTML = 'Out of Stock'; }
+    }
+  }
 }
 
 function closePDM() {
