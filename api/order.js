@@ -95,6 +95,10 @@ export default async function handler(req, res) {
         <p style="margin:0 0 5px;font-size:14px"><strong>Amount:</strong> $${grand}</p>
         <p style="margin:0;font-size:13px;color:#555">Include your order number <strong>${orderNum}</strong> in the memo field.</p>
       </div>
+      <div style="background:#FFF7ED;border-radius:12px;padding:18px 22px;margin-bottom:22px;border:1px solid #FED7AA">
+        <p style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#EA580C;margin:0 0 8px">📸 Next Step — Send Payment Screenshot</p>
+        <p style="margin:0;font-size:14px;color:#111;line-height:1.6">After sending your Zelle payment, please <strong>reply to this email</strong> with a screenshot of the payment confirmation so we can verify and process your order faster.</p>
+      </div>
       <p style="color:#888;font-size:12px;line-height:1.6;margin:0">Once payment is confirmed you will receive a confirmation email and your order will ship within 48 hours.<br>Questions? Reply to this email or contact <a href="mailto:Support@neopeptideus.com" style="color:#1855E8">Support@neopeptideus.com</a>.</p>
       <hr style="border:none;border-top:1px solid #eee;margin:22px 0">
       <p style="color:#ccc;font-size:11px;margin:0;line-height:1.6">For research use only. Not for human consumption. © 2025 Neo Peptide USA</p>
