@@ -127,6 +127,16 @@
     .add-coupon-body{padding:20px;display:none}
     .add-coupon-body.open{display:block}
     .add-coupon-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px}
+    /* MONTHLY STATS */
+    .stats-table{width:100%;border-collapse:collapse;background:var(--white);border-radius:18px;overflow:hidden;border:1.5px solid var(--border)}
+    .stats-table th{background:var(--cream2);padding:10px 16px;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-align:left;border-bottom:1.5px solid var(--border)}
+    .stats-table th:not(:first-child){text-align:center}
+    .stats-table td{padding:12px 16px;font-size:13px;border-top:1px solid rgba(0,0,0,.05);color:var(--text)}
+    .stats-table td:not(:first-child){text-align:center;font-weight:700}
+    .stats-table td:first-child{font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;color:var(--ink)}
+    .stats-table .total-col{color:var(--blue)}
+    .stats-table tr:hover td{background:var(--cream)}
+    .stats-empty{padding:28px 20px;color:var(--muted);font-size:14px;text-align:center}
     @media(max-width:640px){
       .coupon-table-head,.coupon-row{grid-template-columns:1fr 70px 64px 80px 28px}
       .add-coupon-grid{grid-template-columns:1fr}
@@ -228,6 +238,11 @@
         <span class="add-sku-status" id="addCouponStatus"></span>
       </div>
     </div>
+
+    <!-- MONTHLY STATS -->
+    <h2 class="section-title">Monthly Usage</h2>
+    <p class="section-sub">How many times each coupon was used per month.</p>
+    <div id="statsWrap"><div class="stats-empty">Loading…</div></div>
   </div>
 
   <div class="save-bar">
@@ -283,7 +298,7 @@
   async function showDashboard() {
     document.getElementById('login-screen').style.display = 'none';
     document.getElementById('dashboard').style.display = 'block';
-    await Promise.all([loadInventory(), loadCoupons()]);
+    await Promise.all([loadInventory(), loadCoupons(), loadStats()]);
   }
 
   async function loadInventory() {
@@ -533,6 +548,46 @@
     } finally { btn.disabled = false; }
   }
 
+  /* ── MONTHLY STATS ───────────────────────────────── */
+  async function loadStats() {
+    const wrap = document.getElementById('statsWrap');
+    try {
+      const r = await fetch('/api/coupons?stats=true', { headers: { Authorization: `Bearer ${_token}` } });
+      const data = await r.json();
+      const months = Object.keys(data).sort().reverse();
+      if (!months.length) { wrap.innerHTML = '<div class="stats-empty">No coupon uses recorded yet.</div>'; return; }
+
+      // collect all coupon codes that appear in any month
+      const codes = [...new Set(months.flatMap(m => Object.keys(data[m])))].sort();
+
+      const monthLabel = key => {
+        const [y, m] = key.split('-');
+        return new Date(y, m - 1, 1).toLocaleString('en-US', { month: 'long', year: 'numeric' });
+      };
+
+      wrap.innerHTML = `
+        <table class="stats-table">
+          <thead>
+            <tr>
+              <th>Month</th>
+              ${codes.map(c => `<th>${c}</th>`).join('')}
+              <th class="total-col">Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${months.map(m => {
+              const rowTotal = codes.reduce((s, c) => s + (data[m][c] || 0), 0);
+              return `<tr>
+                <td>${monthLabel(m)}</td>
+                ${codes.map(c => `<td>${data[m][c] || '—'}</td>`).join('')}
+                <td class="total-col">${rowTotal}</td>
+              </tr>`;
+            }).join('')}
+          </tbody>
+        </table>`;
+    } catch { wrap.innerHTML = '<div class="stats-empty">Failed to load stats.</div>'; }
+  }
+
   /* ── COUPONS ─────────────────────────────────────── */
   let _coupons = [];
 
@@ -614,7 +669,7 @@
       status.style.color = 'var(--green)';
       document.getElementById('newCouponCode').value = '';
       document.getElementById('newCouponPct').value  = '';
-      await loadCoupons();
+      await Promise.all([loadCoupons(), loadStats()]);
       setTimeout(() => { status.textContent = ''; }, 3000);
     } catch(e) {
       status.textContent = '✗ ' + e.message;

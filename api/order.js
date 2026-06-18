@@ -4,18 +4,29 @@ const SUPABASE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABA
 async function incrementCouponUses(code) {
   if (!BASE || !SUPABASE_KEY || !code) return;
   try {
+    // increment total counter
     const r = await fetch(`${BASE}/rest/v1/coupons?code=eq.${encodeURIComponent(code)}&select=id,uses`, {
       headers: { apikey: SUPABASE_KEY, Authorization: `Bearer ${SUPABASE_KEY}` },
     });
     const rows = await r.json();
-    if (!Array.isArray(rows) || !rows.length) return;
-    await fetch(`${BASE}/rest/v1/coupons?id=eq.${rows[0].id}`, {
-      method: 'PATCH',
+    if (Array.isArray(rows) && rows.length) {
+      await fetch(`${BASE}/rest/v1/coupons?id=eq.${rows[0].id}`, {
+        method: 'PATCH',
+        headers: {
+          apikey: SUPABASE_KEY, Authorization: `Bearer ${SUPABASE_KEY}`,
+          'Content-Type': 'application/json', Prefer: 'return=minimal',
+        },
+        body: JSON.stringify({ uses: (rows[0].uses || 0) + 1 }),
+      });
+    }
+    // log individual use for monthly reporting
+    await fetch(`${BASE}/rest/v1/coupon_uses`, {
+      method: 'POST',
       headers: {
         apikey: SUPABASE_KEY, Authorization: `Bearer ${SUPABASE_KEY}`,
         'Content-Type': 'application/json', Prefer: 'return=minimal',
       },
-      body: JSON.stringify({ uses: (rows[0].uses || 0) + 1 }),
+      body: JSON.stringify({ code: code.toUpperCase() }),
     });
   } catch (_) {}
 }

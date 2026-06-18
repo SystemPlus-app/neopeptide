@@ -40,6 +40,22 @@ export default async function handler(req, res) {
     return res.status(200).json(data[0]);
   }
 
+  // Admin: monthly usage stats
+  if (req.method === 'GET' && req.query.stats) {
+    if (!verifyAuth(req)) return res.status(401).json({ error: 'Unauthorized' });
+    const r = await sb('/coupon_uses?select=code,used_at&order=used_at.desc&limit=5000');
+    const rows = await r.json();
+    if (!Array.isArray(rows)) return res.status(500).json({ error: 'Failed to load stats' });
+    const byMonth = {};
+    rows.forEach(row => {
+      const d = new Date(row.used_at);
+      const key = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
+      if (!byMonth[key]) byMonth[key] = {};
+      byMonth[key][row.code] = (byMonth[key][row.code] || 0) + 1;
+    });
+    return res.status(200).json(byMonth);
+  }
+
   // Admin: list all coupons
   if (req.method === 'GET') {
     if (!verifyAuth(req)) return res.status(401).json({ error: 'Unauthorized' });
