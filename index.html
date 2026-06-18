@@ -480,6 +480,13 @@
     .pdm-dpill:hover{border-color:rgba(0,0,0,.3)}
     .pdm-dpill.active{border-color:var(--ink);background:var(--ink);color:#fff}
     .pdm-dpill.oos-dose{opacity:.35;cursor:not-allowed;text-decoration:line-through;pointer-events:none}
+    .pc2-coa-btn{position:absolute;bottom:10px;right:10px;background:rgba(255,255,255,.92);border:1.5px solid var(--border);border-radius:8px;padding:4px 10px;font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--sub);cursor:pointer;backdrop-filter:blur(4px);transition:border-color .15s,color .15s;z-index:2}
+    .pc2-coa-btn:hover{border-color:#1855E8;color:#1855E8}
+    .coa-lightbox{display:none;position:fixed;inset:0;z-index:10000;background:rgba(0,0,0,.88);align-items:center;justify-content:center;padding:20px}
+    .coa-lightbox.open{display:flex}
+    .coa-lightbox img{max-width:min(700px,95vw);max-height:90vh;object-fit:contain;border-radius:12px;box-shadow:0 24px 80px rgba(0,0,0,.6)}
+    .coa-lightbox-close{position:absolute;top:18px;right:18px;background:rgba(255,255,255,.15);border:none;border-radius:50%;width:40px;height:40px;cursor:pointer;color:#fff;font-size:20px;display:flex;align-items:center;justify-content:center;transition:background .15s}
+    .coa-lightbox-close:hover{background:rgba(255,255,255,.3)}
     .pdm-bottom{margin-top:auto;display:flex;flex-direction:column;gap:10px;padding-top:16px;border-top:1.5px solid var(--border)}
     .pdm-qty-row{display:grid;grid-template-columns:120px 1fr;gap:10px}
     .pdm-qty{display:flex;align-items:center;border:2px solid var(--border);border-radius:12px;overflow:hidden}
@@ -1459,6 +1466,12 @@
   </div>
 </div>
 
+<!-- COA LIGHTBOX -->
+<div id="coaLightbox" class="coa-lightbox" onclick="if(event.target===this)closeCOA()">
+  <button class="coa-lightbox-close" onclick="closeCOA()">✕</button>
+  <img id="coaLightboxImg" src="" alt="Certificate of Analysis">
+</div>
+
 <!-- LEAD CAPTURE POPUP -->
 <div id="leadPopupOverlay" class="lead-overlay">
   <div class="lead-box">
@@ -1739,8 +1752,9 @@ function renderCatalog() {
           <div class="pc2-sub">${pr.sub}</div>
           ${isOOS ? '<span class="pc2-oos">Out of Stock</span>' : ''}
         </div>
-        <div class="pc2-img-wrap" onclick="openPDM(${idx})" style="cursor:pointer">
+        <div class="pc2-img-wrap" onclick="openPDM(${idx})" style="cursor:pointer;position:relative">
           <img class="pc2-img" src="${pr.img}" alt="${pr.name}" loading="lazy">
+          ${_coaMap[_slugify(pr.name)] ? `<button class="pc2-coa-btn" onclick="event.stopPropagation();openCOA('${_coaMap[_slugify(pr.name)]}')" title="View Certificate of Analysis">COA</button>` : ''}
         </div>
         ${dosePills}
         <div class="pc2-foot">
@@ -1938,23 +1952,28 @@ function openPDM(idx) {
   const priceStr = Number.isInteger(initPrice) ? initPrice : initPrice.toFixed(2);
   const desc = PRODUCT_DESCS[pr.name] || '';
 
+  const coaUrl = _coaMap[_slugify(pr.name)] || null;
+  const pdmSlides = coaUrl ? 2 : 1;
+
   const pdmLeft = document.getElementById('pdmLeft');
   pdmLeft.innerHTML = `
     <div class="pdm-slide active" style="background:#f9f9f9">
       <img class="pdm-slide-img" src="${pr.img}" alt="${pr.name}">
     </div>
-    <div class="pdm-slide" style="background:${_pdmGrads[sectionId]||'#f0f0f0'}">
-      <img class="pdm-slide-img" src="${pr.img}" alt="${pr.name}">
-    </div>
-    <button class="pdm-arrow pdm-arrow-prev" onclick="goSlide((_pdmSlide+1)%2)" aria-label="Previous image">
+    ${coaUrl ? `
+    <div class="pdm-slide" style="background:#f9f9f9;display:flex;align-items:center;justify-content:center;padding:16px">
+      <img class="pdm-slide-img" src="${coaUrl}" alt="COA — ${pr.name}" style="object-fit:contain;max-height:100%">
+    </div>` : ''}
+    ${pdmSlides > 1 ? `
+    <button class="pdm-arrow pdm-arrow-prev" onclick="goSlide((_pdmSlide+1)%${pdmSlides})" aria-label="Previous image">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
     </button>
-    <button class="pdm-arrow pdm-arrow-next" onclick="goSlide((_pdmSlide+1)%2)" aria-label="Next image">
+    <button class="pdm-arrow pdm-arrow-next" onclick="goSlide((_pdmSlide+1)%${pdmSlides})" aria-label="Next image">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
-    </button>
+    </button>` : ''}
     <div class="pdm-dots">
       <button class="pdm-dot active" onclick="goSlide(0)"></button>
-      <button class="pdm-dot" onclick="goSlide(1)"></button>
+      ${coaUrl ? `<button class="pdm-dot" onclick="goSlide(1)"></button>` : ''}
     </div>`;
 
   let _swipeStartX = null;
@@ -1962,7 +1981,7 @@ function openPDM(idx) {
   pdmLeft.addEventListener('touchend', e => {
     if (_swipeStartX === null) return;
     const dx = e.changedTouches[0].clientX - _swipeStartX;
-    if (Math.abs(dx) > 44) goSlide((_pdmSlide + 1) % 2);
+    if (Math.abs(dx) > 44) { const total = document.querySelectorAll('.pdm-slide').length; goSlide((_pdmSlide + 1) % total); }
     _swipeStartX = null;
   }, {passive:true});
 
@@ -2494,6 +2513,31 @@ async function npSend() {
   _npcPending = false;
   document.getElementById('npcSend').disabled = false;
   document.getElementById('npcInput').focus();
+}
+
+/* ═══════════════════════════════════════
+   COA
+════════════════════════════════════════ */
+var _coaMap = {};
+function _slugify(name) {
+  return name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+}
+(async function loadCOAs() {
+  try {
+    const r = await fetch('/api/coa');
+    if (r.ok) _coaMap = await r.json();
+  } catch (_) {}
+})();
+
+function openCOA(url) {
+  const ov = document.getElementById('coaLightbox');
+  document.getElementById('coaLightboxImg').src = url;
+  ov.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeCOA() {
+  document.getElementById('coaLightbox').classList.remove('open');
+  document.body.style.overflow = '';
 }
 
 /* ═══════════════════════════════════════
