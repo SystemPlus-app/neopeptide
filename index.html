@@ -426,6 +426,31 @@
     .legal-btn-accept:hover{filter:brightness(1.1);transform:translateY(-1px)}
     .legal-btn-decline{font-family:'Plus Jakarta Sans',sans-serif;font-size:12px;font-weight:700;padding:11px 18px;border:1.5px solid #ccc;border-radius:12px;cursor:pointer;background:#fff;color:#888;transition:background .15s,color .15s}
     .legal-btn-decline:hover{background:#f0f0f0;color:#444}
+    /* Lead capture popup */
+    .lead-overlay{display:none;position:fixed;inset:0;z-index:9998;background:rgba(0,0,0,.65);align-items:center;justify-content:center;padding:16px}
+    .lead-overlay.open{display:flex}
+    .lead-box{background:#fff;border-radius:22px;max-width:420px;width:100%;overflow:hidden;box-shadow:0 24px 64px rgba(0,0,0,.35);position:relative;animation:leadIn .35s cubic-bezier(.34,1.2,.64,1)}
+    @keyframes leadIn{from{opacity:0;transform:translateY(24px) scale(.97)}to{opacity:1;transform:none}}
+    .lead-close{position:absolute;top:14px;right:14px;background:none;border:none;cursor:pointer;color:#888;line-height:1;padding:4px;border-radius:50%;transition:background .15s}
+    .lead-close:hover{background:#f0f0f0;color:#111}
+    .lead-header{background:linear-gradient(135deg,#0A0A10 0%,#1855E8 100%);padding:32px 28px 28px;text-align:center}
+    .lead-badge{display:inline-block;background:rgba(255,255,255,.15);color:#fff;font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;padding:4px 12px;border-radius:100px;margin-bottom:12px}
+    .lead-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:26px;font-weight:900;color:#fff;margin:0 0 6px;letter-spacing:-.02em}
+    .lead-sub{font-size:13px;color:rgba(255,255,255,.72);margin:0;line-height:1.5}
+    .lead-body{padding:24px 28px 28px}
+    .lead-field{margin-bottom:14px}
+    .lead-field label{display:block;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#888;margin-bottom:5px}
+    .lead-field input{width:100%;border:1.5px solid #e0e0e0;border-radius:10px;padding:12px 14px;font-size:14px;font-family:'Inter',sans-serif;color:#111;outline:none;transition:border-color .15s;box-sizing:border-box}
+    .lead-field input:focus{border-color:#1855E8}
+    .lead-submit{width:100%;background:#0A0A10;color:#fff;border:none;border-radius:12px;padding:15px;font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;font-weight:700;cursor:pointer;transition:background .2s;margin-top:4px}
+    .lead-submit:hover:not(:disabled){background:#1855E8}
+    .lead-submit:disabled{opacity:.5;cursor:not-allowed}
+    .lead-disclaimer{font-size:11px;color:#aaa;text-align:center;margin-top:12px;line-height:1.5}
+    .lead-success{display:none;padding:32px 28px;text-align:center}
+    .lead-success-icon{font-size:48px;margin-bottom:12px}
+    .lead-success-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:20px;font-weight:800;margin:0 0 8px}
+    .lead-coupon-code{font-size:28px;font-weight:900;font-family:monospace;letter-spacing:.1em;background:#0A0A10;color:#fff;border-radius:12px;padding:14px 24px;display:inline-block;margin:14px 0}
+    .lead-success-note{font-size:13px;color:#555;line-height:1.6;margin:0}
 
     /* ── PRODUCT DETAIL MODAL ── */
     .pdm-overlay{display:none;position:fixed;inset:0;z-index:300;background:rgba(0,0,0,.58);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);align-items:center;justify-content:center;padding:20px}
@@ -1434,6 +1459,44 @@
   </div>
 </div>
 
+<!-- LEAD CAPTURE POPUP -->
+<div id="leadPopupOverlay" class="lead-overlay">
+  <div class="lead-box">
+    <button class="lead-close" onclick="closeLeadPopup()" aria-label="Close">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+    </button>
+    <div class="lead-header">
+      <div class="lead-badge">Exclusive Offer</div>
+      <h2 class="lead-title">Get 10% Off</h2>
+      <p class="lead-sub">Enter your details and we'll send your discount code instantly.</p>
+    </div>
+    <div class="lead-body">
+      <form id="leadForm" onsubmit="submitLeadForm(event)">
+        <div class="lead-field">
+          <label for="leadName">Full Name</label>
+          <input id="leadName" type="text" placeholder="Your name" required autocomplete="name">
+        </div>
+        <div class="lead-field">
+          <label for="leadPhone">Phone</label>
+          <input id="leadPhone" type="tel" placeholder="+1 (555) 000-0000" autocomplete="tel">
+        </div>
+        <div class="lead-field">
+          <label for="leadEmail">Email Address</label>
+          <input id="leadEmail" type="email" placeholder="you@email.com" required autocomplete="email">
+        </div>
+        <button class="lead-submit" id="leadSubmitBtn" type="submit">Send My Coupon →</button>
+        <p class="lead-disclaimer">No spam. Unsubscribe at any time.</p>
+      </form>
+      <div class="lead-success" id="leadSuccess">
+        <div class="lead-success-icon">🎉</div>
+        <div class="lead-success-title">Your coupon is on the way!</div>
+        <div class="lead-coupon-code" id="leadCouponCode"></div>
+        <p class="lead-success-note">Use this code at checkout for 10% off.<br>Check your email for your personal code.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- MOBILE BAR -->
 <div class="mobile-bar" id="mobileBar">
   <button class="mb-primary" onclick="showView('catalog')">Explore Catalog →</button>
@@ -2308,8 +2371,48 @@ function legalAccept(){
   document.body.style.overflow='';
   legalAccepted = true;
   requestAnimationFrame(()=>observeReveals());
+  if (!localStorage.getItem('np_lead_shown')) {
+    setTimeout(showLeadPopup, 10000);
+  }
 }
 function legalDecline(){ window.location.href='https://www.google.com'; }
+
+/* ── LEAD CAPTURE POPUP ── */
+function showLeadPopup() {
+  if (localStorage.getItem('np_lead_shown')) return;
+  document.getElementById('leadPopupOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeLeadPopup() {
+  document.getElementById('leadPopupOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+  localStorage.setItem('np_lead_shown', '1');
+}
+async function submitLeadForm(e) {
+  e.preventDefault();
+  const name  = document.getElementById('leadName').value.trim();
+  const phone = document.getElementById('leadPhone').value.trim();
+  const email = document.getElementById('leadEmail').value.trim();
+  const btn   = document.getElementById('leadSubmitBtn');
+  btn.disabled = true;
+  btn.textContent = 'Sending…';
+  try {
+    const r = await fetch('/api/lead-coupon', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name, phone, email }),
+    });
+    const data = await r.json();
+    localStorage.setItem('np_lead_shown', '1');
+    document.getElementById('leadForm').style.display = 'none';
+    const success = document.getElementById('leadSuccess');
+    success.style.display = 'block';
+    if (data.code) document.getElementById('leadCouponCode').textContent = data.code;
+  } catch (_) {
+    btn.disabled = false;
+    btn.textContent = 'Send My Coupon →';
+  }
+}
 
 /* ═══════════════════════════════════════
    NP AI CHAT (Gemini)

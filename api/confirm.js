@@ -77,7 +77,7 @@ export default async function handler(req, res) {
             <div style="display:flex;justify-content:space-between;margin-bottom:8px;font-size:14px"><span style="font-weight:600">Order #</span><span>${orderNum}</span></div>
             <div style="display:flex;justify-content:space-between;font-size:14px"><span style="font-weight:600">Ships within</span><span style="color:#15803D;font-weight:700">48 hours</span></div>
           </div>
-          <p style="color:#555;text-align:center;margin:0 0 22px;font-size:14px;line-height:1.7">You will receive tracking information once your order ships.<br>Questions? Contact <a href="mailto:neopeptides@outlook.com" style="color:#1855E8">neopeptides@outlook.com</a>.</p>
+          <p style="color:#555;text-align:center;margin:0 0 22px;font-size:14px;line-height:1.7">You will receive tracking information once your order ships.<br>Questions? Contact <a href="mailto:Support@neopeptideus.com" style="color:#1855E8">Support@neopeptideus.com</a>.</p>
           <hr style="border:none;border-top:1px solid #eee;margin:20px 0">
           <p style="color:#ccc;font-size:11px;margin:0;text-align:center;line-height:1.6">For research use only. Not for human consumption. © 2025 Neo Peptide USA</p>
         </div>`

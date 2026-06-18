@@ -10,13 +10,17 @@ async function incrementCouponUses(code) {
     });
     const rows = await r.json();
     if (Array.isArray(rows) && rows.length) {
+      const newUses = (rows[0].uses || 0) + 1;
+      const patch = { uses: newUses };
+      // deactivate after first use so coupon can only be used once
+      if (newUses >= 1) patch.active = false;
       await fetch(`${BASE}/rest/v1/coupons?id=eq.${rows[0].id}`, {
         method: 'PATCH',
         headers: {
           apikey: SUPABASE_KEY, Authorization: `Bearer ${SUPABASE_KEY}`,
           'Content-Type': 'application/json', Prefer: 'return=minimal',
         },
-        body: JSON.stringify({ uses: (rows[0].uses || 0) + 1 }),
+        body: JSON.stringify(patch),
       });
     }
     // log individual use for monthly reporting
@@ -50,7 +54,7 @@ export default async function handler(req, res) {
       <td style="padding:10px 0;border-bottom:1px solid #eee;text-align:right;font-size:14px;font-weight:700">$${(i.price * i.qty).toFixed(2)}</td>
     </tr>`).join('');
 
-  const FROM = process.env.RESEND_FROM || 'Neo Peptide USA <orders@neopeptideus.com>';
+  const FROM = process.env.RESEND_FROM || 'Neo Peptide USA <Support@neopeptideus.com>';
 
   async function send(to, subject, html) {
     const r = await fetch('https://api.resend.com/emails', {
@@ -87,18 +91,18 @@ export default async function handler(req, res) {
       </div>
       <div style="background:#EDF4FF;border-radius:12px;padding:18px 22px;margin-bottom:22px;border:1px solid #C8D8F8">
         <p style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#1855E8;margin:0 0 10px">Zelle Payment Instructions</p>
-        <p style="margin:0 0 5px;font-size:14px"><strong>Send to:</strong> neopeptides@outlook.com</p>
+        <p style="margin:0 0 5px;font-size:14px"><strong>Send to:</strong> Support@neopeptideus.com</p>
         <p style="margin:0 0 5px;font-size:14px"><strong>Amount:</strong> $${grand}</p>
         <p style="margin:0;font-size:13px;color:#555">Include your order number <strong>${orderNum}</strong> in the memo field.</p>
       </div>
-      <p style="color:#888;font-size:12px;line-height:1.6;margin:0">Once payment is confirmed you will receive a confirmation email and your order will ship within 48 hours.<br>Questions? Reply to this email or contact <a href="mailto:neopeptides@outlook.com" style="color:#1855E8">neopeptides@outlook.com</a>.</p>
+      <p style="color:#888;font-size:12px;line-height:1.6;margin:0">Once payment is confirmed you will receive a confirmation email and your order will ship within 48 hours.<br>Questions? Reply to this email or contact <a href="mailto:Support@neopeptideus.com" style="color:#1855E8">Support@neopeptideus.com</a>.</p>
       <hr style="border:none;border-top:1px solid #eee;margin:22px 0">
       <p style="color:#ccc;font-size:11px;margin:0;line-height:1.6">For research use only. Not for human consumption. © 2025 Neo Peptide USA</p>
     </div>`
   );
 
   // ── Email to store ─────────────────────────────────────────────
-  await send('neopeptides@outlook.com', `🛒 New Order ${orderNum} — ${customerName} — $${grand}`,
+  await send('Support@neopeptideus.com', `🛒 New Order ${orderNum} — ${customerName} — $${grand}`,
     `<div style="font-family:sans-serif;max-width:560px;margin:0 auto;padding:32px 24px;color:#111">
       <h2 style="font-size:22px;font-weight:800;margin:0 0 4px">New Order: ${orderNum}</h2>
       <p style="color:#888;font-size:13px;margin:0 0 22px">${new Date().toLocaleString()}</p>
