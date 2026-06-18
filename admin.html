@@ -105,9 +105,31 @@
 
     @media(max-width:640px){
       .add-sku-grid{grid-template-columns:1fr}
-    }
       .sku-row{grid-template-columns:70px 1fr 1fr;row-gap:8px}
       .toggle-wrap{grid-column:3;grid-row:1}
+    }
+
+    /* COUPONS */
+    .section-title{font-size:22px;font-weight:800;color:var(--ink);margin:48px 0 4px}
+    .section-sub{font-size:14px;color:var(--muted);margin-bottom:24px}
+    .coupon-table{background:var(--white);border:1.5px solid var(--border);border-radius:18px;overflow:hidden}
+    .coupon-table-head{display:grid;grid-template-columns:1fr 90px 80px 90px 36px;gap:12px;padding:10px 20px;background:var(--cream2);border-bottom:1.5px solid var(--border)}
+    .coupon-table-head span{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+    .coupon-row{display:grid;grid-template-columns:1fr 90px 80px 90px 36px;gap:12px;align-items:center;padding:12px 20px;border-top:1px solid rgba(0,0,0,.05)}
+    .coupon-code{font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;font-weight:800;color:var(--ink);letter-spacing:.04em}
+    .coupon-pct{font-size:14px;font-weight:700;color:var(--blue)}
+    .coupon-uses{font-size:14px;font-weight:600;color:var(--sub);text-align:center}
+    .coupon-empty{padding:28px 20px;color:var(--muted);font-size:14px;text-align:center}
+    .btn-del-coupon{width:28px;height:28px;border-radius:7px;border:1.5px solid var(--border);background:none;color:var(--muted);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:13px;transition:all .2s}
+    .btn-del-coupon:hover{border-color:var(--red);color:var(--red)}
+    .add-coupon-section{margin-top:16px;background:var(--white);border:1.5px solid var(--border);border-radius:18px;overflow:hidden}
+    .add-coupon-header{padding:14px 20px;background:var(--cream2);border-bottom:1.5px solid var(--border);display:flex;align-items:center;justify-content:space-between;cursor:pointer;user-select:none}
+    .add-coupon-body{padding:20px;display:none}
+    .add-coupon-body.open{display:block}
+    .add-coupon-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px}
+    @media(max-width:640px){
+      .coupon-table-head,.coupon-row{grid-template-columns:1fr 70px 64px 80px 28px}
+      .add-coupon-grid{grid-template-columns:1fr}
     }
   </style>
 </head>
@@ -171,6 +193,43 @@
     </div>
   </div>
 
+    <!-- COUPONS SECTION -->
+    <h2 class="section-title">Coupons</h2>
+    <p class="section-sub">Create and manage discount coupons. Each code gives a % off the subtotal.</p>
+
+    <div class="coupon-table">
+      <div class="coupon-table-head">
+        <span>Code</span>
+        <span>Discount</span>
+        <span style="text-align:center">Uses</span>
+        <span style="text-align:center">Status</span>
+        <span></span>
+      </div>
+      <div id="couponList"><div class="coupon-empty">Loading…</div></div>
+    </div>
+
+    <div class="add-coupon-section">
+      <div class="add-coupon-header" onclick="toggleAddCoupon()">
+        <span class="add-sku-title">+ Add New Coupon</span>
+        <span id="addCouponChevron" style="font-size:12px;color:var(--muted)">▼</span>
+      </div>
+      <div class="add-coupon-body" id="addCouponBody">
+        <div class="add-coupon-grid">
+          <div class="add-field">
+            <label>Code</label>
+            <input id="newCouponCode" placeholder="e.g. PEDRO" oninput="this.value=this.value.toUpperCase()">
+          </div>
+          <div class="add-field">
+            <label>Discount (%)</label>
+            <input id="newCouponPct" type="number" min="1" max="100" placeholder="e.g. 10">
+          </div>
+        </div>
+        <button class="btn-add-sku" id="addCouponBtn" onclick="addCoupon()">Create Coupon</button>
+        <span class="add-sku-status" id="addCouponStatus"></span>
+      </div>
+    </div>
+  </div>
+
   <div class="save-bar">
     <button class="btn-save" id="saveBtn" onclick="saveChanges()" disabled>
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13"/><polyline points="7 3 7 8 15 8"/></svg>
@@ -224,7 +283,7 @@
   async function showDashboard() {
     document.getElementById('login-screen').style.display = 'none';
     document.getElementById('dashboard').style.display = 'block';
-    await loadInventory();
+    await Promise.all([loadInventory(), loadCoupons()]);
   }
 
   async function loadInventory() {
@@ -467,6 +526,95 @@
       document.getElementById('newDose').value = '';
       document.getElementById('newPrice').value = '';
       await loadInventory();
+      setTimeout(() => { status.textContent = ''; }, 3000);
+    } catch(e) {
+      status.textContent = '✗ ' + e.message;
+      status.style.color = 'var(--red)';
+    } finally { btn.disabled = false; }
+  }
+
+  /* ── COUPONS ─────────────────────────────────────── */
+  let _coupons = [];
+
+  async function loadCoupons() {
+    try {
+      const r = await fetch('/api/coupons', { headers: { Authorization: `Bearer ${_token}` } });
+      _coupons = await r.json();
+      renderCoupons();
+    } catch { document.getElementById('couponList').innerHTML = '<div class="coupon-empty">Failed to load coupons.</div>'; }
+  }
+
+  function renderCoupons() {
+    const el = document.getElementById('couponList');
+    if (!_coupons.length) { el.innerHTML = '<div class="coupon-empty">No coupons yet. Create one below.</div>'; return; }
+    el.innerHTML = _coupons.map(c => `
+      <div class="coupon-row" id="cprow-${c.id}">
+        <div class="coupon-code">${c.code}</div>
+        <div class="coupon-pct">${c.discount_pct}% off</div>
+        <div class="coupon-uses">${c.uses || 0}</div>
+        <div class="toggle-wrap">
+          <label class="toggle">
+            <input type="checkbox" ${c.active ? 'checked' : ''} onchange="toggleCoupon(${c.id}, this.checked)">
+            <span class="toggle-slider"></span>
+          </label>
+          <span class="toggle-txt ${c.active ? 'available' : 'oos'}" id="ctxt-${c.id}">${c.active ? 'Active' : 'Inactive'}</span>
+        </div>
+        <button class="btn-del-coupon" onclick="deleteCoupon(${c.id})" title="Delete">✕</button>
+      </div>`).join('');
+  }
+
+  async function toggleCoupon(id, active) {
+    const txt = document.getElementById('ctxt-' + id);
+    if (txt) { txt.textContent = active ? 'Active' : 'Inactive'; txt.className = 'toggle-txt ' + (active ? 'available' : 'oos'); }
+    await fetch('/api/coupons', {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${_token}` },
+      body: JSON.stringify({ id, active }),
+    });
+    const c = _coupons.find(c => c.id === id);
+    if (c) c.active = active;
+  }
+
+  async function deleteCoupon(id) {
+    if (!confirm('Delete this coupon?')) return;
+    await fetch('/api/coupons', {
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${_token}` },
+      body: JSON.stringify({ id }),
+    });
+    _coupons = _coupons.filter(c => c.id !== id);
+    renderCoupons();
+  }
+
+  function toggleAddCoupon() {
+    const body    = document.getElementById('addCouponBody');
+    const chevron = document.getElementById('addCouponChevron');
+    const open    = body.classList.toggle('open');
+    chevron.textContent = open ? '▲' : '▼';
+  }
+
+  async function addCoupon() {
+    const code    = document.getElementById('newCouponCode').value.trim().toUpperCase();
+    const pct     = parseInt(document.getElementById('newCouponPct').value);
+    const status  = document.getElementById('addCouponStatus');
+    const btn     = document.getElementById('addCouponBtn');
+    if (!code || !pct || pct < 1 || pct > 100) {
+      status.textContent = 'Fill in a valid code and discount (1–100%).';
+      status.style.color = 'var(--red)'; return;
+    }
+    btn.disabled = true;
+    try {
+      const r = await fetch('/api/coupons', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${_token}` },
+        body: JSON.stringify({ code, discount_pct: pct }),
+      });
+      if (!r.ok) { const d = await r.json(); throw new Error(d.error || 'Error'); }
+      status.textContent = '✓ Coupon created!';
+      status.style.color = 'var(--green)';
+      document.getElementById('newCouponCode').value = '';
+      document.getElementById('newCouponPct').value  = '';
+      await loadCoupons();
       setTimeout(() => { status.textContent = ''; }, 3000);
     } catch(e) {
       status.textContent = '✗ ' + e.message;

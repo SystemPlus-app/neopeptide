@@ -310,6 +310,19 @@
     .os-row.total{margin-top:16px;padding-top:16px;border-top:1.5px solid var(--border)}
     .os-row.total span{font-size:14px;font-weight:700;color:var(--ink)}
     .os-row.total strong{font-family:'Plus Jakarta Sans',sans-serif;font-size:24px;font-weight:900;color:var(--ink)}
+    .os-row.discount span,.os-row.discount strong{color:#16A34A}
+    .coupon-block{border:1.5px solid var(--border);border-radius:16px;padding:20px}
+    .coupon-block-title{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--sub);margin-bottom:12px}
+    .coupon-row{display:flex;gap:8px}
+    .coupon-input{flex:1;padding:10px 14px;border:1.5px solid var(--border);border-radius:10px;font-size:14px;font-weight:600;color:var(--ink);font-family:'Inter',sans-serif;background:var(--cream);outline:none;text-transform:uppercase;transition:border-color .2s}
+    .coupon-input:focus{border-color:var(--blue);background:#fff}
+    .coupon-input.valid{border-color:#16A34A;background:#F0FDF4}
+    .coupon-apply-btn{font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;font-weight:700;padding:10px 18px;border-radius:10px;background:var(--ink);color:#fff;border:none;cursor:pointer;white-space:nowrap;transition:opacity .2s}
+    .coupon-apply-btn:hover{opacity:.8}
+    .coupon-apply-btn:disabled{opacity:.4;cursor:not-allowed}
+    .coupon-feedback{font-size:12px;margin-top:8px;min-height:16px}
+    .coupon-feedback.ok{color:#16A34A}
+    .coupon-feedback.err{color:#DC2626}
 
     /* ── CHECKOUT REVIEW ── */
     .review-layout{display:grid;grid-template-columns:1fr 380px;gap:28px;align-items:start}
@@ -1238,6 +1251,16 @@
       </div>
       <div class="review-layout">
         <div class="review-box">
+          <!-- COUPON -->
+          <div class="coupon-block">
+            <div class="coupon-block-title">Coupon Code</div>
+            <div class="coupon-row">
+              <input class="coupon-input" id="couponInput" type="text" placeholder="Enter code" maxlength="32" oninput="this.value=this.value.toUpperCase()">
+              <button class="coupon-apply-btn" id="couponApplyBtn" onclick="applyCoupon()">Apply</button>
+            </div>
+            <div class="coupon-feedback" id="couponFeedback"></div>
+          </div>
+
           <!-- ACKNOWLEDGMENT -->
           <div class="ack-block">
             <div class="ack-header">
@@ -1969,10 +1992,12 @@ function goToReview(e) {
 }
 
 function buildOrderSummary(containerId) {
-  const total = cart.reduce((s,i)=>s+i.price*i.qty,0);
-  const shipping = total >= 150 ? 'Free' : '$9.99';
-  const shippingVal = total >= 150 ? 0 : 9.99;
-  const grand = total + shippingVal;
+  const subtotal = cart.reduce((s,i)=>s+i.price*i.qty,0);
+  const discountAmt = _coupon ? Math.round(subtotal * _coupon.discount_pct) / 100 : 0;
+  const discountedSubtotal = subtotal - discountAmt;
+  const shippingVal = discountedSubtotal >= 150 ? 0 : 9.99;
+  const shipping = shippingVal === 0 ? 'Free' : '$9.99';
+  const grand = discountedSubtotal + shippingVal;
 
   const container = document.getElementById(containerId);
   container.innerHTML = `
@@ -1988,16 +2013,18 @@ function buildOrderSummary(containerId) {
       </div>
     `).join('')}
     <div class="os-divider"></div>
-    <div class="os-row"><span>Subtotal</span><strong>$${total.toFixed(2)}</strong></div>
+    <div class="os-row"><span>Subtotal</span><strong>$${subtotal.toFixed(2)}</strong></div>
+    ${_coupon ? `<div class="os-row discount"><span>Coupon (${_coupon.code} −${_coupon.discount_pct}%)</span><strong>−$${discountAmt.toFixed(2)}</strong></div>` : ''}
     <div class="os-row"><span>Shipping</span><strong>${shipping}</strong></div>
     <div class="os-row total"><span>Total</span><strong>$${grand.toFixed(2)}</strong></div>
   `;
 }
 
 function updateZelleAmount() {
-  const total = cart.reduce((s,i)=>s+i.price*i.qty,0);
-  const shippingVal = total >= 150 ? 0 : 9.99;
-  document.getElementById('zelleAmount').textContent = '$' + (total+shippingVal).toFixed(2);
+  const subtotal = cart.reduce((s,i)=>s+i.price*i.qty,0);
+  const discountAmt = _coupon ? Math.round(subtotal * _coupon.discount_pct) / 100 : 0;
+  const shippingVal = (subtotal - discountAmt) >= 150 ? 0 : 9.99;
+  document.getElementById('zelleAmount').textContent = '$' + (subtotal - discountAmt + shippingVal).toFixed(2);
 }
 
 function checkAck() {
@@ -2015,7 +2042,9 @@ function selectPayment(method) {
 }
 
 async function confirmOrder() {
-  const total = cart.reduce((s,i)=>s+i.price*i.qty,0);
+  const subtotal = cart.reduce((s,i)=>s+i.price*i.qty,0);
+  const discountAmt = _coupon ? Math.round(subtotal * _coupon.discount_pct) / 100 : 0;
+  const total = subtotal - discountAmt;
   const shippingVal = total >= 150 ? 0 : 9.99;
   const grand = total + shippingVal;
   const orderNum = 'NP-' + Date.now().toString().slice(-6);
@@ -2038,11 +2067,14 @@ async function confirmOrder() {
       body: JSON.stringify({
         customerEmail: email, customerName: name,
         items: cart.map(i=>({name:i.name,price:i.price,qty:i.qty})),
-        total: total.toFixed(2),
+        total: subtotal.toFixed(2),
         shipping: shippingVal > 0 ? shippingVal.toFixed(2) : 'Free',
         grand: grand.toFixed(2),
         orderNum,
-        address: `${street}, ${city}, ${state} ${zip}`, phone
+        address: `${street}, ${city}, ${state} ${zip}`, phone,
+        couponCode: _coupon?.code || null,
+        discountPct: _coupon?.discount_pct || null,
+        discountAmt: discountAmt > 0 ? discountAmt.toFixed(2) : null
       })
     });
   } catch(e) { /* fail silently — confirmation still shows */ }
@@ -2051,9 +2083,11 @@ async function confirmOrder() {
     <div class="confirm-row"><span>Order #</span><span>${orderNum}</span></div>
     <div class="confirm-row"><span>Name</span><span>${name}</span></div>
     <div class="confirm-row"><span>Items</span><span>${cart.length} item(s)</span></div>
-    <div class="confirm-row"><span>Shipping</span><span>${total >= 150 ? 'Free' : '$9.99'}</span></div>
+    <div class="confirm-row"><span>Shipping</span><span>${shippingVal === 0 ? 'Free' : '$9.99'}</span></div>
+    ${_coupon ? `<div class="confirm-row" style="color:#16A34A"><span>Coupon (${_coupon.code})</span><span>−${_coupon.discount_pct}%</span></div>` : ''}
     <div class="confirm-row"><span>Total Due via Zelle</span><span>$${grand.toFixed(2)}</span></div>
   `;
+  resetCoupon();
   showView('confirm');
 }
 
@@ -2320,6 +2354,61 @@ async function npSend() {
   _npcPending = false;
   document.getElementById('npcSend').disabled = false;
   document.getElementById('npcInput').focus();
+}
+
+/* ═══════════════════════════════════════
+   COUPONS
+════════════════════════════════════════ */
+var _coupon = null; // { code, discount_pct }
+
+async function applyCoupon() {
+  const input = document.getElementById('couponInput');
+  const btn   = document.getElementById('couponApplyBtn');
+  const fb    = document.getElementById('couponFeedback');
+  const code  = input.value.trim().toUpperCase();
+  if (!code) return;
+
+  // remove existing coupon
+  if (_coupon && _coupon.code === code) {
+    _coupon = null;
+    input.classList.remove('valid');
+    input.value = '';
+    fb.className = 'coupon-feedback';
+    fb.textContent = '';
+    buildOrderSummary('orderSummary2');
+    updateZelleAmount();
+    return;
+  }
+
+  btn.disabled = true;
+  fb.className = 'coupon-feedback';
+  fb.textContent = 'Checking…';
+  try {
+    const r = await fetch('/api/coupons?code=' + encodeURIComponent(code));
+    if (!r.ok) throw new Error();
+    const data = await r.json();
+    _coupon = { code: data.code, discount_pct: data.discount_pct };
+    input.classList.add('valid');
+    fb.className = 'coupon-feedback ok';
+    fb.textContent = `✓ ${data.discount_pct}% discount applied!`;
+    buildOrderSummary('orderSummary2');
+    updateZelleAmount();
+  } catch {
+    _coupon = null;
+    input.classList.remove('valid');
+    fb.className = 'coupon-feedback err';
+    fb.textContent = 'Invalid or inactive coupon.';
+  } finally {
+    btn.disabled = false;
+  }
+}
+
+function resetCoupon() {
+  _coupon = null;
+  const input = document.getElementById('couponInput');
+  const fb    = document.getElementById('couponFeedback');
+  if (input) { input.value = ''; input.classList.remove('valid'); }
+  if (fb)    { fb.className = 'coupon-feedback'; fb.textContent = ''; }
 }
 
 /* ═══════════════════════════════════════

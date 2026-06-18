@@ -1,7 +1,29 @@
+const BASE = process.env.SUPABASE_URL;
+const SUPABASE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_ANON_KEY;
+
+async function incrementCouponUses(code) {
+  if (!BASE || !SUPABASE_KEY || !code) return;
+  try {
+    const r = await fetch(`${BASE}/rest/v1/coupons?code=eq.${encodeURIComponent(code)}&select=id,uses`, {
+      headers: { apikey: SUPABASE_KEY, Authorization: `Bearer ${SUPABASE_KEY}` },
+    });
+    const rows = await r.json();
+    if (!Array.isArray(rows) || !rows.length) return;
+    await fetch(`${BASE}/rest/v1/coupons?id=eq.${rows[0].id}`, {
+      method: 'PATCH',
+      headers: {
+        apikey: SUPABASE_KEY, Authorization: `Bearer ${SUPABASE_KEY}`,
+        'Content-Type': 'application/json', Prefer: 'return=minimal',
+      },
+      body: JSON.stringify({ uses: (rows[0].uses || 0) + 1 }),
+    });
+  } catch (_) {}
+}
+
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
-  const { customerEmail, customerName, items, total, shipping, grand, orderNum, address, phone } = req.body;
+  const { customerEmail, customerName, items, total, shipping, grand, orderNum, address, phone, couponCode, discountPct, discountAmt } = req.body;
   const KEY = process.env.RESEND_API_KEY;
   if (!KEY) return res.status(500).json({ error: 'Email service not configured' });
 
@@ -46,6 +68,7 @@ export default async function handler(req, res) {
         <div style="margin-top:14px;padding-top:14px;border-top:2px solid #e0e0e0;display:flex;justify-content:space-between;align-items:center">
           <span style="font-size:13px;color:#555">Shipping</span><span style="font-size:13px">${shipping}</span>
         </div>
+        ${couponCode ? `<div style="display:flex;justify-content:space-between;align-items:center;margin-top:6px"><span style="font-size:13px;color:#16A34A">Coupon (${couponCode} −${discountPct}%)</span><span style="font-size:13px;color:#16A34A">−$${discountAmt}</span></div>` : ''}
         <div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px">
           <span style="font-size:15px;font-weight:800">Total Due</span>
           <span style="font-size:20px;font-weight:900;font-family:monospace">$${grand}</span>
@@ -85,6 +108,7 @@ export default async function handler(req, res) {
         </table>
         <div style="margin-top:14px;padding-top:14px;border-top:2px solid #e0e0e0">
           <div style="display:flex;justify-content:space-between;margin-bottom:6px;font-size:13px"><span>Shipping</span><span>${shipping}</span></div>
+          ${couponCode ? `<div style="display:flex;justify-content:space-between;margin-bottom:6px;font-size:13px;color:#16A34A"><span>Coupon (${couponCode} −${discountPct}%)</span><span>−$${discountAmt}</span></div>` : ''}
           <div style="display:flex;justify-content:space-between;font-size:18px;font-weight:900"><span>Total</span><span>$${grand}</span></div>
         </div>
       </div>
@@ -96,6 +120,8 @@ export default async function handler(req, res) {
       <p style="color:#aaa;font-size:12px;text-align:center;margin:0">Clicking the button sends the customer a payment confirmation email and marks the order as confirmed.</p>
     </div>`
   );
+
+  if (couponCode) await incrementCouponUses(couponCode);
 
   res.status(200).json({ success: true });
 }
