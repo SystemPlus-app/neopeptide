@@ -2338,6 +2338,9 @@ var _inv = {};
       const key = (row.product_name + '|' + row.dose).toLowerCase();
       _inv[key] = { available: row.available, price: row.price, quantity: row.quantity };
     });
+    // Re-apply if product grid is already visible (race condition fix)
+    const grid = document.getElementById('pvProductsGrid');
+    if (grid && grid.querySelector('.pc2')) applyInventoryToGrid();
   } catch (_) {}
 })();
 
