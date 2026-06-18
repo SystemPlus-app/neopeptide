@@ -50,13 +50,17 @@
     .product-block{border-bottom:1px solid var(--border)}
     .product-block:last-child{border-bottom:none}
     .product-name-row{padding:12px 20px 6px;font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;font-weight:700;color:var(--ink);display:flex;align-items:center;gap:12px}
-    .coa-wrap{display:flex;align-items:center;gap:8px;margin-left:auto}
-    .coa-thumb{width:36px;height:36px;object-fit:cover;border-radius:6px;border:1.5px solid var(--border);cursor:pointer}
+    .coa-wrap{display:flex;align-items:center;gap:10px;margin-left:auto}
+    .coa-box{width:52px;height:52px;border-radius:8px;border:1.5px dashed var(--border);background:var(--cream2);display:flex;align-items:center;justify-content:center;overflow:hidden;cursor:pointer;flex-shrink:0;transition:border-color .15s}
+    .coa-box:hover{border-color:#1855E8}
+    .coa-box img{width:100%;height:100%;object-fit:cover;border-radius:7px}
+    .coa-box .coa-placeholder{font-size:18px;color:var(--border);user-select:none}
     .coa-upload-btn{font-size:11px;font-weight:700;padding:5px 11px;border-radius:8px;border:1.5px solid var(--border);background:var(--cream2);color:var(--sub);cursor:pointer;white-space:nowrap;transition:border-color .15s,color .15s}
     .coa-upload-btn:hover{border-color:#1855E8;color:#1855E8}
     .coa-del-btn{font-size:11px;font-weight:700;padding:5px 10px;border-radius:8px;border:1.5px solid #FECACA;background:#FEF2F2;color:#DC2626;cursor:pointer;white-space:nowrap;transition:opacity .15s}
     .coa-del-btn:hover{opacity:.7}
     .coa-uploading{font-size:11px;color:var(--sub)}
+    .coa-err{font-size:11px;color:#DC2626}
 
     /* SKU ROW */
     .sku-row{display:grid;grid-template-columns:80px 1fr 1fr 1fr 100px;align-items:center;gap:12px;padding:8px 20px 10px;border-top:1px solid rgba(0,0,0,.04)}
@@ -356,13 +360,18 @@
             <div class="product-name-row">
               <span>${prodName}</span>
               <div class="coa-wrap" id="coa-wrap-${sl}">
-                <span class="coa-uploading" id="coa-status-${sl}" style="display:none">Uploading…</span>
-                <img class="coa-thumb" id="coa-thumb-${sl}" style="display:none"
-                  onclick="window.open(this.src,'_blank')" title="View COA">
-                <button class="coa-del-btn" id="coa-del-${sl}" style="display:none"
-                  onclick="deleteCOA('${sl}')">✕ Delete COA</button>
-                <button class="coa-upload-btn" id="coa-btn-${sl}"
-                  onclick="document.getElementById('coa-file-${sl}').click()">📄 Upload COA</button>
+                <div class="coa-box" id="coa-box-${sl}" onclick="coaBoxClick('${sl}')" title="Click to view or upload COA">
+                  <span class="coa-placeholder" id="coa-placeholder-${sl}">📄</span>
+                  <img id="coa-thumb-${sl}" style="display:none" alt="COA">
+                </div>
+                <div style="display:flex;flex-direction:column;gap:5px;align-items:flex-start">
+                  <span class="coa-uploading" id="coa-status-${sl}" style="display:none">Uploading…</span>
+                  <span class="coa-err" id="coa-err-${sl}" style="display:none"></span>
+                  <button class="coa-upload-btn" id="coa-btn-${sl}"
+                    onclick="document.getElementById('coa-file-${sl}').click()">📄 Upload COA</button>
+                  <button class="coa-del-btn" id="coa-del-${sl}" style="display:none"
+                    onclick="deleteCOA('${sl}')">✕ Delete</button>
+                </div>
                 <input type="file" id="coa-file-${sl}" accept="image/*"
                   style="display:none" onchange="uploadCOA('${sl}',this)">
               </div>
@@ -424,20 +433,31 @@
     } catch (_) {}
   }
 
-  function setCOAThumb(sl, url) {
+  function coaBoxClick(sl) {
     const thumb = document.getElementById('coa-thumb-' + sl);
-    const del   = document.getElementById('coa-del-' + sl);
-    const btn   = document.getElementById('coa-btn-' + sl);
+    if (thumb && thumb.style.display !== 'none' && thumb.src) {
+      window.open(thumb.src, '_blank');
+    }
+  }
+
+  function setCOAThumb(sl, url) {
+    const thumb       = document.getElementById('coa-thumb-' + sl);
+    const placeholder = document.getElementById('coa-placeholder-' + sl);
+    const del         = document.getElementById('coa-del-' + sl);
+    const btn         = document.getElementById('coa-btn-' + sl);
     if (!thumb) return;
     if (url) {
       thumb.src = url;
-      thumb.style.display = 'block';
-      del.style.display   = 'block';
-      btn.textContent     = '📄 Replace COA';
+      thumb.style.display       = 'block';
+      placeholder.style.display = 'none';
+      del.style.display         = 'inline-block';
+      btn.textContent           = '📄 Replace';
     } else {
-      thumb.style.display = 'none';
-      del.style.display   = 'none';
-      btn.textContent     = '📄 Upload COA';
+      thumb.src = '';
+      thumb.style.display       = 'none';
+      placeholder.style.display = 'block';
+      del.style.display         = 'none';
+      btn.textContent           = '📄 Upload COA';
     }
   }
 
@@ -445,6 +465,8 @@
     const file = input.files[0];
     if (!file) return;
     const status = document.getElementById('coa-status-' + sl);
+    const errEl  = document.getElementById('coa-err-' + sl);
+    errEl.style.display = 'none';
     status.style.display = 'inline';
     try {
       const data = await new Promise((res, rej) => {
@@ -458,9 +480,17 @@
         headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + _token },
         body: JSON.stringify({ slug: sl, data, contentType: file.type || 'image/jpeg' }),
       });
-      const res = await r.json();
-      if (res.url) setCOAThumb(sl, res.url + '?t=' + Date.now());
-    } catch (e) { alert('Upload failed: ' + e.message); }
+      const result = await r.json();
+      if (result.url) {
+        setCOAThumb(sl, result.url + '?t=' + Date.now());
+      } else {
+        errEl.textContent = result.error || 'Upload failed';
+        errEl.style.display = 'inline';
+      }
+    } catch (e) {
+      errEl.textContent = 'Error: ' + e.message;
+      errEl.style.display = 'inline';
+    }
     finally { status.style.display = 'none'; input.value = ''; }
   }
 
