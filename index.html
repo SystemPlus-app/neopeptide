@@ -1702,7 +1702,7 @@ function showView(name, push = true) {
   const el = document.getElementById('view-' + name);
   if (el) { el.classList.add('active'); window.scrollTo({top:0,behavior:'smooth'}); }
   if (name === 'home') window.dispatchEvent(new Event('scroll'));
-  if (name === 'catalog') { try { renderCatalog(); setTimeout(()=>{ observeReveals(document.getElementById('view-catalog')); },50); } catch(e) { console.error('renderCatalog error:', e); } }
+  if (name === 'catalog') { try { renderCatalog(); applyInventoryToGrid(); setTimeout(()=>{ observeReveals(document.getElementById('view-catalog')); },50); } catch(e) { console.error('renderCatalog error:', e); } }
   if (name === 'labtests') { setTimeout(()=>{ observeReveals(document.getElementById('view-labtests')); },50); }
   if (push) history.pushState({ view: name }, '', name === 'home' ? location.pathname : '#' + name);
 }
@@ -2427,14 +2427,13 @@ var _inv = {};
       const key = (row.product_name + '|' + row.dose).toLowerCase();
       _inv[key] = { available: row.available, price: row.price, quantity: row.quantity };
     });
-    // Re-apply if product grid is already visible (race condition fix)
-    const grid = document.getElementById('pvProductsGrid');
-    if (grid && grid.querySelector('.pc2')) applyInventoryToGrid();
+    // Re-apply to any visible grid (race condition fix)
+    if (document.querySelector('.pc2')) applyInventoryToGrid();
   } catch (_) {}
 })();
 
 function applyInventoryToGrid() {
-  document.querySelectorAll('#pvProductsGrid .pc2').forEach(card => {
+  document.querySelectorAll('.pc2').forEach(card => {
     const nameEl = card.querySelector('.pc2-name');
     if (!nameEl) return;
     const productName = nameEl.textContent.trim().toLowerCase();
