@@ -569,16 +569,16 @@
       wrap.innerHTML = `
         <table class="stats-table">
           <thead><tr>
-            <th>Month</th>
-            ${codes.map(c => `<th>${c}</th>`).join('')}
+            <th>Coupon</th>
+            ${months.map(m => `<th>${monthLabel(m)}</th>`).join('')}
             <th class="total-col">Total</th>
           </tr></thead>
           <tbody>
-            ${months.map(m => {
-              const rowTotal = codes.reduce((s, c) => s + (data[m][c] || 0), 0);
+            ${codes.map(c => {
+              const rowTotal = months.reduce((s, m) => s + (data[m][c] || 0), 0);
               return `<tr>
-                <td>${monthLabel(m)}</td>
-                ${codes.map(c => `<td>${data[m][c] || '—'}</td>`).join('')}
+                <td>${c}</td>
+                ${months.map(m => `<td>${data[m][c] || '—'}</td>`).join('')}
                 <td class="total-col">${rowTotal}</td>
               </tr>`;
             }).join('')}
