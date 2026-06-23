@@ -446,6 +446,9 @@
     .lead-submit:hover:not(:disabled){background:#1855E8}
     .lead-submit:disabled{opacity:.5;cursor:not-allowed}
     .lead-disclaimer{font-size:11px;color:#aaa;text-align:center;margin-top:12px;line-height:1.5}
+    .lead-consent-row{display:flex;align-items:flex-start;gap:9px;margin-bottom:14px;cursor:pointer}
+    .lead-consent-row input[type=checkbox]{width:16px;height:16px;margin-top:2px;flex-shrink:0;accent-color:#1855E8;cursor:pointer}
+    .lead-consent-row span{font-size:12px;color:#555;line-height:1.5}
     .lead-success{display:none;padding:32px 28px;text-align:center}
     .lead-success-icon{font-size:48px;margin-bottom:12px}
     .lead-success-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:20px;font-weight:800;margin:0 0 8px}
@@ -481,7 +484,11 @@
     .pdm-dpill.active{border-color:var(--ink);background:var(--ink);color:#fff}
     .pdm-dpill.oos-dose{opacity:.35;cursor:not-allowed;text-decoration:line-through;pointer-events:none}
     .pc2-coa-btn{position:absolute;bottom:10px;right:10px;background:rgba(255,255,255,.92);border:1.5px solid var(--border);border-radius:8px;padding:4px 10px;font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--sub);cursor:pointer;backdrop-filter:blur(4px);transition:border-color .15s,color .15s;z-index:2}
-    .pc2-coa-btn:hover{border-color:#1855E8;color:#1855E8}
+    .pc2-coa-btn:hover:not(:disabled){border-color:#1855E8;color:#1855E8}
+    .pc2-coa-btn:disabled,.pc2-coa-btn.inactive{opacity:.35;cursor:not-allowed}
+    .pdm-coa-btn{display:flex;align-items:center;gap:7px;width:100%;padding:10px 14px;border:1.5px solid var(--border);border-radius:10px;background:#fff;font-family:'Plus Jakarta Sans',sans-serif;font-size:12px;font-weight:700;color:var(--sub);cursor:pointer;transition:border-color .15s,color .15s;letter-spacing:.02em}
+    .pdm-coa-btn:hover:not(:disabled){border-color:#1855E8;color:#1855E8}
+    .pdm-coa-btn:disabled{opacity:.35;cursor:not-allowed}
     .coa-lightbox{display:none;position:fixed;inset:0;z-index:10000;background:rgba(0,0,0,.88);align-items:center;justify-content:center;padding:20px}
     .coa-lightbox.open{display:flex}
     .coa-lightbox img{max-width:min(700px,95vw);max-height:90vh;object-fit:contain;border-radius:12px;box-shadow:0 24px 80px rgba(0,0,0,.6)}
@@ -1335,7 +1342,7 @@
             </div>
             <div class="zelle-detail show" id="zelleDetail">
               <div class="zelle-detail-title">Zelle Payment Instructions</div>
-              <div class="zelle-detail-row"><strong>Send to</strong> neopeptides@outlook.com</div>
+              <div class="zelle-detail-row"><strong>Send to</strong> Support@neopeptideus.com</div>
               <div class="zelle-detail-row"><strong>Memo</strong> Your order # will be provided</div>
               <div class="zelle-amount" id="zelleAmount">$0.00</div>
             </div>
@@ -1497,14 +1504,18 @@
           <label for="leadEmail">Email Address</label>
           <input id="leadEmail" type="email" placeholder="you@email.com" required autocomplete="email">
         </div>
+        <label class="lead-consent-row">
+          <input type="checkbox" id="leadConsent" required>
+          <span>I agree to receive promotional emails from Neo Peptide USA</span>
+        </label>
         <button class="lead-submit" id="leadSubmitBtn" type="submit">Send My Coupon →</button>
         <p class="lead-disclaimer">No spam. Unsubscribe at any time.</p>
       </form>
       <div class="lead-success" id="leadSuccess">
         <div class="lead-success-icon">🎉</div>
-        <div class="lead-success-title">Your coupon is on the way!</div>
+        <div class="lead-success-title" id="leadSuccessTitle">Your coupon is on the way!</div>
         <div class="lead-coupon-code" id="leadCouponCode"></div>
-        <p class="lead-success-note">Use this code at checkout for 10% off.<br>Check your email for your personal code.</p>
+        <p class="lead-success-note" id="leadSuccessNote">Use this code at checkout for 10% off.<br>Check your email for your personal code.</p>
       </div>
     </div>
   </div>
@@ -1754,7 +1765,7 @@ function renderCatalog() {
         </div>
         <div class="pc2-img-wrap" onclick="openPDM(${idx})" style="cursor:pointer;position:relative">
           <img class="pc2-img" src="${pr.img}" alt="${pr.name}" loading="lazy">
-          ${_coaMap[_slugify(pr.name)] ? `<button class="pc2-coa-btn" onclick="event.stopPropagation();openCOA('${_coaMap[_slugify(pr.name)]}')" title="View Certificate of Analysis">COA</button>` : ''}
+          <button class="pc2-coa-btn${_coaMap[_slugify(pr.name)] ? '' : ' inactive'}" data-slug="${_slugify(pr.name)}" ${_coaMap[_slugify(pr.name)] ? `onclick="event.stopPropagation();openCOA('${_coaMap[_slugify(pr.name)]}')"` : 'disabled onclick="event.stopPropagation()"'} title="Certificate of Analysis">COA</button>
         </div>
         ${dosePills}
         <div class="pc2-foot">
@@ -1848,8 +1859,9 @@ function showProgram(id, push = true) {
           <div class="pc2-sub">${pr.sub}</div>
           ${isOOS ? '<span class="pc2-oos">Out of Stock</span>' : ''}
         </div>
-        <div class="pc2-img-wrap" onclick="openPDM(${i})" style="cursor:pointer">
+        <div class="pc2-img-wrap" onclick="openPDM(${i})" style="cursor:pointer;position:relative">
           <img class="pc2-img" src="${pr.img}" alt="${pr.name}" loading="lazy">
+          <button class="pc2-coa-btn${_coaMap[_slugify(pr.name)] ? '' : ' inactive'}" data-slug="${_slugify(pr.name)}" ${_coaMap[_slugify(pr.name)] ? `onclick="event.stopPropagation();openCOA('${_coaMap[_slugify(pr.name)]}')"` : 'disabled onclick="event.stopPropagation()"'} title="Certificate of Analysis">COA</button>
         </div>
         ${dosePills}
         <div class="pc2-foot">
@@ -1868,8 +1880,10 @@ function showProgram(id, push = true) {
   showView('product', false);
   history.pushState({ view: 'product', programId: id }, '', '#' + id);
   applyInventoryToGrid();
+  _applyCOAButtons();
   setTimeout(()=>{
     observeReveals(document.getElementById('view-product'));
+    _applyCOAButtons();
   },50);
 }
 
@@ -2011,6 +2025,10 @@ function openPDM(idx) {
           ${isOOS ? 'Out of Stock' : 'Add to Cart'}
         </button>
       </div>
+      <button class="pdm-coa-btn" ${coaUrl ? `onclick="openCOA('${coaUrl}')"` : 'disabled'}>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+        ${coaUrl ? 'Certificate of Analysis' : 'COA Not Yet Available'}
+      </button>
       <div class="pdm-trust">🔒 GMP Certified · ≥99% Purity · Ships in 48h · COA Guaranteed</div>
     </div>`;
 
@@ -2093,6 +2111,12 @@ function pdmAddCart(name) {
 }
 
 function goToCheckout() {
+  if (!localStorage.getItem('np_lead_submitted')) {
+    _pendingCheckout = true;
+    closeCart();
+    showLeadPopup();
+    return;
+  }
   closeCart();
   buildOrderSummary('orderSummary1');
   showView('checkout-1');
@@ -2390,23 +2414,40 @@ function legalAccept(){
   document.body.style.overflow='';
   legalAccepted = true;
   requestAnimationFrame(()=>observeReveals());
-  if (!localStorage.getItem('np_lead_shown')) {
+  if (!localStorage.getItem('np_lead_submitted')) {
     setTimeout(showLeadPopup, 10000);
   }
 }
 function legalDecline(){ window.location.href='https://www.google.com'; }
 
 /* ── LEAD CAPTURE POPUP ── */
+var _pendingCheckout = false;
+
 function showLeadPopup() {
-  if (localStorage.getItem('np_lead_shown')) return;
-  document.getElementById('leadPopupOverlay').classList.add('open');
+  if (localStorage.getItem('np_lead_submitted')) return;
+  const overlay = document.getElementById('leadPopupOverlay');
+  if (overlay.classList.contains('open')) return;
+  // Reset form to initial state each time
+  document.getElementById('leadForm').style.display = '';
+  document.getElementById('leadSuccess').style.display = 'none';
+  const btn = document.getElementById('leadSubmitBtn');
+  btn.disabled = false;
+  btn.textContent = 'Send My Coupon →';
+  document.getElementById('leadConsent').checked = false;
+  overlay.classList.add('open');
   document.body.style.overflow = 'hidden';
 }
+
 function closeLeadPopup() {
   document.getElementById('leadPopupOverlay').classList.remove('open');
   document.body.style.overflow = '';
-  localStorage.setItem('np_lead_shown', '1');
+  if (_pendingCheckout) {
+    _pendingCheckout = false;
+    buildOrderSummary('orderSummary1');
+    showView('checkout-1');
+  }
 }
+
 async function submitLeadForm(e) {
   e.preventDefault();
   const name  = document.getElementById('leadName').value.trim();
@@ -2422,11 +2463,27 @@ async function submitLeadForm(e) {
       body: JSON.stringify({ name, phone, email }),
     });
     const data = await r.json();
-    localStorage.setItem('np_lead_shown', '1');
+    localStorage.setItem('np_lead_submitted', '1');
     document.getElementById('leadForm').style.display = 'none';
-    const success = document.getElementById('leadSuccess');
-    success.style.display = 'block';
-    if (data.code) document.getElementById('leadCouponCode').textContent = data.code;
+    document.getElementById('leadSuccess').style.display = 'block';
+    if (data.duplicate) {
+      document.getElementById('leadSuccessTitle').textContent = "You're already registered!";
+      document.getElementById('leadSuccessNote').textContent = 'Check your email for your original discount code.';
+      document.getElementById('leadCouponCode').textContent = '';
+    } else {
+      document.getElementById('leadSuccessTitle').textContent = 'Your coupon is on the way!';
+      document.getElementById('leadSuccessNote').innerHTML = 'Use this code at checkout for 10% off.<br>Check your email for your personal code.';
+      if (data.code) document.getElementById('leadCouponCode').textContent = data.code;
+    }
+    if (_pendingCheckout) {
+      setTimeout(() => {
+        _pendingCheckout = false;
+        document.getElementById('leadPopupOverlay').classList.remove('open');
+        document.body.style.overflow = '';
+        buildOrderSummary('orderSummary1');
+        showView('checkout-1');
+      }, 2500);
+    }
   } catch (_) {
     btn.disabled = false;
     btn.textContent = 'Send My Coupon →';
@@ -2522,10 +2579,37 @@ var _coaMap = {};
 function _slugify(name) {
   return name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 }
+function _applyCOAButtons() {
+  document.querySelectorAll('.pc2').forEach(card => {
+    const imgWrap = card.querySelector('.pc2-img-wrap');
+    if (!imgWrap) return;
+    const name = card.querySelector('.pc2-name')?.textContent?.trim();
+    if (!name) return;
+    const sl = _slugify(name);
+    const coaUrl = _coaMap[sl];
+    let btn = imgWrap.querySelector('.pc2-coa-btn');
+    if (!btn) {
+      imgWrap.style.position = 'relative';
+      btn = document.createElement('button');
+      btn.className = 'pc2-coa-btn inactive';
+      btn.dataset.slug = sl;
+      btn.title = 'Certificate of Analysis';
+      btn.textContent = 'COA';
+      btn.disabled = true;
+      btn.addEventListener('click', e => e.stopPropagation());
+      imgWrap.appendChild(btn);
+    }
+    if (coaUrl && btn.disabled) {
+      btn.disabled = false;
+      btn.classList.remove('inactive');
+      btn.onclick = e => { e.stopPropagation(); openCOA(coaUrl); };
+    }
+  });
+}
 (async function loadCOAs() {
   try {
     const r = await fetch('/api/coa');
-    if (r.ok) _coaMap = await r.json();
+    if (r.ok) { _coaMap = await r.json(); _applyCOAButtons(); }
   } catch (_) {}
 })();
 

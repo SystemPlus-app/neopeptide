@@ -1,11 +1,24 @@
-const BASE = process.env.SUPABASE_URL;
+const BASE        = process.env.SUPABASE_URL;
+const ANON_KEY    = process.env.SUPABASE_ANON_KEY;
 const SERVICE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
 const RESEND_KEY  = process.env.RESEND_API_KEY;
 const FROM        = process.env.RESEND_FROM || 'Neo Peptide USA <Support@neopeptideus.com>';
 
+// Requires a `leads` table in Supabase:
+// CREATE TABLE leads (id bigserial PRIMARY KEY, email text UNIQUE NOT NULL, name text, phone text, code text, created_at timestamptz DEFAULT now());
+
 function genCode() {
   const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
   return 'NEO' + Array.from({ length: 6 }, () => chars[Math.floor(Math.random() * chars.length)]).join('');
+}
+
+async function sendEmail(to, subject, html) {
+  if (!RESEND_KEY) return;
+  await fetch('https://api.resend.com/emails', {
+    method: 'POST',
+    headers: { Authorization: `Bearer ${RESEND_KEY}`, 'Content-Type': 'application/json' },
+    body: JSON.stringify({ from: FROM, to, subject, html }),
+  });
 }
 
 export default async function handler(req, res) {
@@ -18,31 +31,56 @@ export default async function handler(req, res) {
   const { name, phone, email } = req.body || {};
   if (!name || !email) return res.status(400).json({ error: 'name and email required' });
 
+  const dbKey = SERVICE_KEY || ANON_KEY;
+
+  // Check if email already registered
+  if (BASE && dbKey) {
+    try {
+      const check = await fetch(
+        `${BASE}/rest/v1/leads?email=eq.${encodeURIComponent(email)}&select=email&limit=1`,
+        { headers: { apikey: dbKey, Authorization: `Bearer ${dbKey}` } }
+      );
+      if (check.ok) {
+        const rows = await check.json();
+        if (Array.isArray(rows) && rows.length > 0) {
+          return res.status(200).json({ ok: true, duplicate: true });
+        }
+      }
+    } catch (_) {}
+  }
+
   const code = genCode();
 
-  // Save coupon to Supabase
-  if (BASE && SERVICE_KEY) {
+  // Save lead to leads table (email unique)
+  if (BASE && dbKey) {
+    try {
+      await fetch(`${BASE}/rest/v1/leads`, {
+        method: 'POST',
+        headers: {
+          apikey: dbKey,
+          Authorization: `Bearer ${dbKey}`,
+          'Content-Type': 'application/json',
+          Prefer: 'return=minimal',
+        },
+        body: JSON.stringify({ email, name, phone, code }),
+      });
+    } catch (_) {}
+  }
+
+  // Save coupon to coupons table
+  if (BASE && dbKey) {
     try {
       await fetch(`${BASE}/rest/v1/coupons`, {
         method: 'POST',
         headers: {
-          apikey: SERVICE_KEY,
-          Authorization: `Bearer ${SERVICE_KEY}`,
+          apikey: dbKey,
+          Authorization: `Bearer ${dbKey}`,
           'Content-Type': 'application/json',
           Prefer: 'return=minimal',
         },
         body: JSON.stringify({ code, discount_pct: 10, uses: 0, active: true }),
       });
     } catch (_) {}
-  }
-
-  async function sendEmail(to, subject, html) {
-    if (!RESEND_KEY) return;
-    await fetch('https://api.resend.com/emails', {
-      method: 'POST',
-      headers: { Authorization: `Bearer ${RESEND_KEY}`, 'Content-Type': 'application/json' },
-      body: JSON.stringify({ from: FROM, to, subject, html }),
-    });
   }
 
   // Email to customer with coupon
@@ -64,7 +102,7 @@ export default async function handler(req, res) {
         </div>
         <p style="color:#888;font-size:12px;text-align:center;line-height:1.6;margin:0">Enter the code at checkout. Valid for one purchase only.<br>Questions? <a href="mailto:Support@neopeptideus.com" style="color:#1855E8">Support@neopeptideus.com</a></p>
         <hr style="border:none;border-top:1px solid #eee;margin:22px 0">
-        <p style="color:#ccc;font-size:11px;text-align:center;margin:0">For research use only. Not for human consumption. © 2025 Neo Peptide USA</p>
+        <p style="color:#ccc;font-size:11px;text-align:center;margin:0">You are receiving this email because you subscribed to promotions on neopeptideus.com.<br>For research use only. Not for human consumption. © 2025 Neo Peptide USA</p>
       </div>`
     );
   } catch (_) {}
