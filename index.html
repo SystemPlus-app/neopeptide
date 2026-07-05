@@ -68,9 +68,9 @@
     img{display:block}
 
     /* ── HEADER ── */
-    header{position:fixed;top:0;left:0;right:0;z-index:100;height:92px;background:transparent;transition:background .4s,backdrop-filter .4s,border-color .4s;border-bottom:1px solid transparent}
+    header{position:fixed;top:0;left:0;right:0;z-index:100;background:transparent;transition:background .4s,backdrop-filter .4s,border-color .4s;border-bottom:1px solid transparent}
     header.scrolled{background:transparent;backdrop-filter:none;-webkit-backdrop-filter:none;border-bottom-color:transparent}
-    .header-inner{max-width:1200px;margin:0 auto;height:100%;padding:0 clamp(20px,4vw,48px);display:flex;align-items:center;position:relative}
+    .header-inner{max-width:1200px;margin:0 auto;height:92px;padding:0 clamp(20px,4vw,48px);display:flex;align-items:center;position:relative}
     .logo{display:flex;align-items:center;overflow:visible;align-self:stretch;flex-shrink:0;transition:opacity .2s}
     .logo:hover{opacity:.8}
     .logo-img{height:142px;width:auto}
@@ -89,7 +89,7 @@
     .view.active{display:block}
 
     /* ── HERO ── */
-    .hero{min-height:100vh;padding-top:92px;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;overflow:hidden;background:transparent}
+    .hero{min-height:100vh;padding-top:var(--header-h,92px);display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;overflow:hidden;background:transparent}
     .hero::before{content:'';position:absolute;inset:0;background:none;pointer-events:none}
     .hero-inner{position:relative;z-index:1;text-align:center;padding:0 24px;display:flex;flex-direction:column;align-items:center;margin-top:0}
     .hero-label{font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:rgba(10,10,15,.38);margin-bottom:10px}
@@ -230,7 +230,7 @@
     .footer-disclaimer{max-width:1200px;margin:18px auto 0;font-size:10px;color:var(--border);line-height:1.7}
 
     /* ── PRODUCT VIEW ── */
-    .pv-top{padding:118px 48px 0;background:transparent}
+    .pv-top{padding:calc(var(--header-h,92px) + 26px) 48px 0;background:transparent}
     .back-btn{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:var(--sub);background:none;border:none;cursor:pointer;padding:10px 0;transition:color .2s;font-family:'Plus Jakarta Sans',sans-serif;letter-spacing:.01em}
     .back-btn:hover{color:var(--ink)}
     .pv-banner{padding:0 48px}
@@ -264,7 +264,7 @@
     .btn-add:hover{background:var(--blue);transform:translateY(-1px)}
 
     /* ── CHECKOUT ── */
-    .checkout-view{min-height:100vh;padding:118px 48px 80px;background:transparent}
+    .checkout-view{min-height:100vh;padding:calc(var(--header-h,92px) + 26px) 48px 80px;background:transparent}
     .checkout-inner{max-width:1040px;margin:0 auto}
     .checkout-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:42px;font-weight:900;letter-spacing:-.035em;color:var(--ink);margin:16px 0 6px}
     .checkout-sub{font-size:14px;color:var(--sub);margin-bottom:36px}
@@ -360,7 +360,7 @@
     .btn-confirm:disabled{opacity:.32;cursor:not-allowed;transform:none}
 
     /* ── CONFIRMATION ── */
-    .confirm-view{min-height:100vh;padding:118px 48px 80px;background:transparent;display:flex;align-items:center;justify-content:center}
+    .confirm-view{min-height:100vh;padding:calc(var(--header-h,92px) + 26px) 48px 80px;background:transparent;display:flex;align-items:center;justify-content:center}
     .confirm-box{background:var(--white);border-radius:28px;padding:64px 52px;max-width:560px;width:100%;text-align:center;border:1.5px solid var(--border);box-shadow:0 40px 80px rgba(0,0,0,.07)}
     .confirm-icon{font-size:60px;margin-bottom:24px}
     .confirm-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:32px;font-weight:900;letter-spacing:-.03em;color:var(--ink);margin-bottom:14px}
@@ -544,7 +544,7 @@
     .pc2-add-btn:disabled{color:var(--muted);cursor:not-allowed}
 
     /* ── CATALOG VIEW ── */
-    .cat-view{padding:108px 48px 80px;min-height:100vh}
+    .cat-view{padding:calc(var(--header-h,92px) + 16px) 48px 80px;min-height:100vh}
     .cat-view-inner{max-width:1400px;margin:0 auto}
     .cat-hero{text-align:center;padding:40px 0 48px}
     .cat-hero-label{font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--blue);margin-bottom:12px}
@@ -570,7 +570,7 @@
     .cat-back-btn:hover{color:var(--ink)}
     .cat-dose-list{display:flex;flex-wrap:wrap;gap:5px;padding:0 18px 14px}
     .cat-dose-badge{padding:4px 11px;border-radius:100px;border:1.5px solid var(--border);font-size:11px;font-weight:600;color:var(--sub);background:var(--cream);white-space:nowrap}
-    @media(max-width:768px){.cat-view{padding:100px 16px 80px}.cat-section-header{padding:16px 18px}}
+    @media(max-width:768px){.cat-view{padding:calc(var(--header-h,92px) + 8px) 16px 80px}.cat-section-header{padding:16px 18px}}
 
     /* ── REVEAL ── */
     .reveal{opacity:0;transform:translateY(20px);transition:opacity .7s,transform .7s}
@@ -604,8 +604,8 @@
       .cart-drawer{width:min(420px,100%)}
       .checkout-layout,.review-layout{grid-template-columns:1fr}
       .order-summary{position:static}
-      .checkout-view{padding:108px 20px 100px}
-      .pv-top{padding:108px 20px 0}
+      .checkout-view{padding:calc(var(--header-h,92px) + 16px) 20px 100px}
+      .pv-top{padding:calc(var(--header-h,92px) + 16px) 20px 0}
       .pv-banner{padding:0 20px}
       .pv-banner-inner{grid-template-columns:1fr;padding:40px 28px 0}
       .pv-bottle-wrap{display:none}
@@ -613,7 +613,7 @@
       .products-grid2{grid-template-columns:repeat(2,1fr)}
     }
     @media(max-width:640px){
-      .hero{min-height:78vh;padding-top:92px}
+      .hero{min-height:78vh;padding-top:var(--header-h,92px)}
       .hero-inner{margin-top:0}
       .hero-title{font-size:clamp(40px,12vw,68px)}
       .hero-bottle{width:clamp(200px,62vw,300px);margin:-8px 0 -70px}
@@ -635,12 +635,12 @@
       .number-val{font-size:clamp(28px,8vw,40px)}
       .footer-top{grid-template-columns:1fr;gap:28px}
       footer{padding:48px 16px 100px}
-      .checkout-view{padding:100px 14px 100px}
+      .checkout-view{padding:calc(var(--header-h,92px) + 8px) 14px 100px}
       .checkout-form-box{padding:22px 16px}
       .form-row{grid-template-columns:1fr}
       .form-row.three{grid-template-columns:1fr 1fr}
       .checkout-title{font-size:26px}
-      .confirm-view{padding:96px 14px 96px;align-items:flex-start}
+      .confirm-view{padding:calc(var(--header-h,92px) + 4px) 14px 96px;align-items:flex-start}
       .confirm-box{padding:34px 18px;border-radius:20px}
       .confirm-icon{font-size:48px;margin-bottom:18px}
       .confirm-title{font-size:27px}
@@ -1120,7 +1120,7 @@
      VIEW: LAB TESTS
 ════════════════════════════════════════ -->
 <div id="view-labtests" class="view">
-  <div style="padding-top:92px;padding-bottom:0;background:transparent">
+  <div style="padding-top:var(--header-h,92px);padding-bottom:0;background:transparent">
     <div style="max-width:1200px;margin:0 auto;padding:32px clamp(20px,4vw,48px) 0">
       <button class="back-btn" onclick="showView('home')">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
@@ -2332,6 +2332,14 @@ window.addEventListener('popstate', function(e) {
 ════════════════════════════════════════ */
 const hdr = document.getElementById('header');
 window.addEventListener('scroll',()=>{ hdr.classList.toggle('scrolled',window.scrollY>60); },{passive:true});
+
+function updateHeaderHeight(){
+  document.documentElement.style.setProperty('--header-h', hdr.offsetHeight+'px');
+}
+updateHeaderHeight();
+window.addEventListener('resize', updateHeaderHeight);
+window.addEventListener('orientationchange', updateHeaderHeight);
+if(document.fonts && document.fonts.ready){ document.fonts.ready.then(updateHeaderHeight); }
 
 /* ═══════════════════════════════════════
    REVEAL OBSERVER
