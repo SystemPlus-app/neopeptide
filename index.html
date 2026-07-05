@@ -367,7 +367,19 @@
     .confirm-sub{font-size:15px;color:var(--sub);line-height:1.7;margin-bottom:32px}
     .confirm-detail{background:var(--cream);border-radius:14px;padding:20px 24px;text-align:left;margin-bottom:32px}
     .confirm-row{display:flex;justify-content:space-between;font-size:13px;color:var(--sub);margin-bottom:8px}
-    .confirm-row:last-child{margin-bottom:0;font-weight:700;color:var(--ink);font-size:14px;padding-top:10px;border-top:1px solid var(--border)}
+    .confirm-row.total{margin-bottom:0;font-weight:700;color:var(--ink);font-size:14px;padding-top:10px;border-top:1px solid var(--border)}
+    .confirm-zelle{margin-top:16px;padding:18px;background:#EDF4FF;border:1px solid #B8D0F8;border-radius:14px}
+    .confirm-zelle-title{font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);margin-bottom:14px}
+    .confirm-zelle-grid{display:grid;grid-template-columns:1fr 128px;gap:18px;align-items:center}
+    .confirm-zelle-data{display:flex;flex-direction:column;gap:8px}
+    .confirm-zelle-row{display:flex;justify-content:space-between;gap:14px;font-size:13px;color:var(--text);line-height:1.4}
+    .confirm-zelle-row strong{font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--sub);white-space:nowrap}
+    .confirm-zelle-row span{text-align:right;font-weight:700;color:var(--ink);word-break:break-word}
+    .confirm-zelle-qr{width:128px;height:128px;border-radius:12px;background:#fff;border:1px solid rgba(24,85,232,.16);padding:8px;object-fit:contain}
+    .confirm-zelle-note{font-size:11px;line-height:1.5;color:var(--sub);margin-top:12px}
+    .confirm-zelle-alerts{display:flex;flex-direction:column;gap:8px;margin-top:14px}
+    .confirm-zelle-alert{font-size:11px;line-height:1.5;color:#5F4218;background:#FFF7ED;border:1px solid #FED7AA;border-radius:10px;padding:10px 12px}
+    .confirm-zelle-alert strong{color:#111;font-weight:800}
     .btn-home{font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:700;padding:16px 44px;border-radius:100px;background:var(--ink);color:#fff;border:none;cursor:pointer;transition:transform .15s}
     .btn-home:hover{transform:translateY(-2px)}
 
@@ -628,6 +640,17 @@
       .form-row{grid-template-columns:1fr}
       .form-row.three{grid-template-columns:1fr 1fr}
       .checkout-title{font-size:26px}
+      .confirm-view{padding:96px 14px 96px;align-items:flex-start}
+      .confirm-box{padding:34px 18px;border-radius:20px}
+      .confirm-icon{font-size:48px;margin-bottom:18px}
+      .confirm-title{font-size:27px}
+      .confirm-sub{font-size:13px;margin-bottom:22px}
+      .confirm-detail{padding:16px;margin-bottom:24px}
+      .confirm-row{font-size:12px;gap:12px}
+      .confirm-zelle{padding:14px}
+      .confirm-zelle-grid{grid-template-columns:1fr;gap:14px}
+      .confirm-zelle-qr{width:156px;height:156px;margin:0 auto}
+      .confirm-zelle-row{font-size:12px}
       .final-cta{padding:72px 20px}
       .products-grid2{grid-template-columns:repeat(2,1fr);gap:10px}
       .pc2-name{font-size:15px}
@@ -1651,6 +1674,7 @@ const PROGRAMS = {
       { name:'Tesamorelin 12mg + Ipamorelin Blend 6mg', sub:'GH SYNERGY BLEND', img:pImg('tesamorelin + Ipamorelin Blend'), doses:[{l:'18mg',p:110}] },
       { name:'Sermorelin',            sub:'GH SECRETAGOGUE PEPTIDE', img:pImg('Sermorelin'),                 doses:[{l:'5mg',p:45}] },
       { name:'GHRP-6',               sub:'GROWTH HORMONE PEPTIDE',  img:pImg('GHRP-6'),                     doses:[{l:'5mg',p:55}] },
+      { name:'IGF-1LR3',             sub:'IGF-1 ANALOGUE PEPTIDE',  img:pImg('IGF-1LR3 atualizada'),        doses:[{l:'1mg',p:0},{l:'0.1mg',p:0}] },
     ]
   },
   microdose: {
@@ -1665,6 +1689,7 @@ const PROGRAMS = {
     products: [
       { name:'TB-500 + BPC-157', sub:'RECOVERY PEPTIDE BLEND',      img:pImg('TB-500 + BPC-157'), doses:[{l:'10mg',p:60}] },
       { name:'TB-500',           sub:'THYMOSIN BETA-4 FRAGMENT',     img:pImg('TB-500'),           doses:[], price:55, outOfStock:true },
+      { name:'Glutathione',      sub:'ANTIOXIDANT SUPPORT',          img:pImg('Glutathione atualizado'),    doses:[{l:'1500mg',p:0}] },
     ]
   },
   skin: {
@@ -1929,6 +1954,7 @@ const PRODUCT_DESCS = {
   'Tesamorelin 12mg + Ipamorelin Blend 6mg': 'Synergistic GHRH/GHRP combination for amplified GH pulse research and recovery studies.',
   'Sermorelin':                  'GHRH(1-29) fragment for research on GH secretion, sleep architecture, and anti-aging pathways.',
   'GHRP-6':                      'Hexapeptide GH secretagogue for research on GH release, appetite stimulation, and anabolic signaling.',
+  'IGF-1LR3':                    'Long R3 IGF-1 analogue for research on IGF-1 receptor signaling, cellular growth pathways, and protein synthesis.',
   'NAD+':                        'Coenzyme NAD+ for research on mitochondrial energy metabolism, DNA repair, and cellular aging mechanisms.',
   'SS-31':                       'Mitochondria-targeted tetrapeptide for research on oxidative stress reduction and mitochondrial membrane stabilization.',
   'Mots-C':                      'Mitochondrial-derived peptide for research on metabolic regulation, exercise adaptation, and insulin sensitivity.',
@@ -1936,6 +1962,7 @@ const PRODUCT_DESCS = {
   'KPV':                         'C-terminal tripeptide of α-MSH for research on anti-inflammatory pathways and gut barrier integrity.',
   'TB-500 + BPC-157':            'Synergistic recovery blend for research on tissue repair, angiogenesis, and musculoskeletal healing.',
   'TB-500':                      'Thymosin β4 fragment for research on actin regulation, wound healing, and anti-inflammatory signaling.',
+  'Glutathione':                 'Tripeptide antioxidant for research on oxidative stress response, cellular detoxification pathways, and redox balance.',
   'Glow Blend':                  'Proprietary peptide blend for research on collagen synthesis, skin barrier function, and photoprotection.',
   'GHK-Cu':                      'Copper tripeptide complex for research on collagen remodeling, wound healing, and antioxidant activity.',
   'Selank':                      'Anxiolytic peptide analogue for research on GABA-A modulation, stress response, and cognitive performance.',
@@ -2228,7 +2255,23 @@ async function confirmOrder() {
     <div class="confirm-row"><span>Items</span><span>${cart.length} item(s)</span></div>
     <div class="confirm-row"><span>Shipping</span><span>${shippingVal === 0 ? 'Free' : '$9.99'}</span></div>
     ${_coupon ? `<div class="confirm-row" style="color:#16A34A"><span>Coupon (${_coupon.code})</span><span>−${_coupon.discount_pct}%</span></div>` : ''}
-    <div class="confirm-row"><span>Total Due via Zelle</span><span>$${grand.toFixed(2)}</span></div>
+    <div class="confirm-row total"><span>Total Due via Zelle</span><span>$${grand.toFixed(2)}</span></div>
+    <div class="confirm-zelle">
+      <div class="confirm-zelle-title">Zelle Payment Details</div>
+      <div class="confirm-zelle-grid">
+        <div class="confirm-zelle-data">
+          <div class="confirm-zelle-row"><strong>Send to</strong><span>Support@neopeptideus.com</span></div>
+          <div class="confirm-zelle-row"><strong>Memo</strong><span>${orderNum}</span></div>
+          <div class="confirm-zelle-row"><strong>Amount</strong><span>$${grand.toFixed(2)}</span></div>
+        </div>
+        <img class="confirm-zelle-qr" src="fotos/qr%20code.jpg" alt="Zelle QR code">
+      </div>
+      <p class="confirm-zelle-note">Please include your order number in the memo and send a screenshot of the payment confirmation.</p>
+      <div class="confirm-zelle-alerts">
+        <div class="confirm-zelle-alert"><strong>Payment confirmation required:</strong> Your order will only be shipped after the Zelle payment has been confirmed.</div>
+        <div class="confirm-zelle-alert"><strong>Zelle memo:</strong> Please do not mention peptides or product names in the Zelle payment note. Use only your order number.</div>
+      </div>
+    </div>
   `;
   resetCoupon();
   showView('confirm');
@@ -2463,13 +2506,14 @@ async function submitLeadForm(e) {
       body: JSON.stringify({ name, phone, email }),
     });
     const data = await r.json();
+    if (!r.ok) throw new Error(data.error || 'Could not create coupon');
     localStorage.setItem('np_lead_submitted', '1');
     document.getElementById('leadForm').style.display = 'none';
     document.getElementById('leadSuccess').style.display = 'block';
     if (data.duplicate) {
       document.getElementById('leadSuccessTitle').textContent = "You're already registered!";
-      document.getElementById('leadSuccessNote').textContent = 'Check your email for your original discount code.';
-      document.getElementById('leadCouponCode').textContent = '';
+      document.getElementById('leadSuccessNote').textContent = data.code ? 'Use your original discount code at checkout.' : 'Check your email for your original discount code.';
+      document.getElementById('leadCouponCode').textContent = data.code || '';
     } else {
       document.getElementById('leadSuccessTitle').textContent = 'Your coupon is on the way!';
       document.getElementById('leadSuccessNote').innerHTML = 'Use this code at checkout for 10% off.<br>Check your email for your personal code.';
@@ -2487,6 +2531,7 @@ async function submitLeadForm(e) {
   } catch (_) {
     btn.disabled = false;
     btn.textContent = 'Send My Coupon →';
+    alert('We could not create your coupon right now. Please try again.');
   }
 }
 

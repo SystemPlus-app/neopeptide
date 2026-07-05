@@ -21,6 +21,20 @@ async function sendEmail(to, subject, html) {
   });
 }
 
+async function createCoupon(code, dbKey) {
+  const r = await fetch(`${BASE}/rest/v1/coupons`, {
+    method: 'POST',
+    headers: {
+      apikey: dbKey,
+      Authorization: `Bearer ${dbKey}`,
+      'Content-Type': 'application/json',
+      Prefer: 'return=minimal',
+    },
+    body: JSON.stringify({ code, discount_pct: 10, uses: 0, active: true }),
+  });
+  if (!r.ok) throw new Error(await r.text());
+}
+
 export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST,OPTIONS');
@@ -32,55 +46,61 @@ export default async function handler(req, res) {
   if (!name || !email) return res.status(400).json({ error: 'name and email required' });
 
   const dbKey = SERVICE_KEY || ANON_KEY;
+  if (!BASE || !dbKey) return res.status(500).json({ error: 'Coupon service is not configured' });
 
   // Check if email already registered
-  if (BASE && dbKey) {
-    try {
-      const check = await fetch(
-        `${BASE}/rest/v1/leads?email=eq.${encodeURIComponent(email)}&select=email&limit=1`,
-        { headers: { apikey: dbKey, Authorization: `Bearer ${dbKey}` } }
-      );
-      if (check.ok) {
-        const rows = await check.json();
-        if (Array.isArray(rows) && rows.length > 0) {
-          return res.status(200).json({ ok: true, duplicate: true });
+  try {
+    const check = await fetch(
+      `${BASE}/rest/v1/leads?email=eq.${encodeURIComponent(email)}&select=email,code&limit=1`,
+      { headers: { apikey: dbKey, Authorization: `Bearer ${dbKey}` } }
+    );
+    if (check.ok) {
+      const rows = await check.json();
+      if (Array.isArray(rows) && rows.length > 0) {
+        const existingCode = rows[0].code || null;
+        if (existingCode) {
+          const couponCheck = await fetch(
+            `${BASE}/rest/v1/coupons?code=eq.${encodeURIComponent(existingCode)}&select=code&limit=1`,
+            { headers: { apikey: dbKey, Authorization: `Bearer ${dbKey}` } }
+          );
+          const coupons = couponCheck.ok ? await couponCheck.json() : [];
+          if (Array.isArray(coupons) && coupons.length === 0) await createCoupon(existingCode, dbKey);
         }
+        return res.status(200).json({ ok: true, duplicate: true, code: existingCode });
       }
-    } catch (_) {}
+    }
+  } catch (_) {
+    return res.status(500).json({ error: 'Could not check lead status' });
   }
 
   const code = genCode();
 
   // Save lead to leads table (email unique)
-  if (BASE && dbKey) {
-    try {
-      await fetch(`${BASE}/rest/v1/leads`, {
-        method: 'POST',
-        headers: {
-          apikey: dbKey,
-          Authorization: `Bearer ${dbKey}`,
-          'Content-Type': 'application/json',
-          Prefer: 'return=minimal',
-        },
-        body: JSON.stringify({ email, name, phone, code }),
-      });
-    } catch (_) {}
+  try {
+    const leadRes = await fetch(`${BASE}/rest/v1/leads`, {
+      method: 'POST',
+      headers: {
+        apikey: dbKey,
+        Authorization: `Bearer ${dbKey}`,
+        'Content-Type': 'application/json',
+        Prefer: 'return=minimal',
+      },
+      body: JSON.stringify({ email, name, phone, code }),
+    });
+    if (!leadRes.ok) throw new Error(await leadRes.text());
+  } catch (_) {
+    return res.status(500).json({ error: 'Could not save lead' });
   }
 
   // Save coupon to coupons table
-  if (BASE && dbKey) {
-    try {
-      await fetch(`${BASE}/rest/v1/coupons`, {
-        method: 'POST',
-        headers: {
-          apikey: dbKey,
-          Authorization: `Bearer ${dbKey}`,
-          'Content-Type': 'application/json',
-          Prefer: 'return=minimal',
-        },
-        body: JSON.stringify({ code, discount_pct: 10, uses: 0, active: true }),
-      });
-    } catch (_) {}
+  try {
+    await createCoupon(code, dbKey);
+  } catch (_) {
+    await fetch(`${BASE}/rest/v1/leads?email=eq.${encodeURIComponent(email)}`, {
+      method: 'DELETE',
+      headers: { apikey: dbKey, Authorization: `Bearer ${dbKey}` },
+    }).catch(() => {});
+    return res.status(500).json({ error: 'Could not create coupon' });
   }
 
   // Email to customer with coupon

@@ -16,6 +16,14 @@ function sb(path, opts = {}, useServiceKey = false) {
   });
 }
 
+async function createLeadCoupon(code) {
+  return sb('/coupons', {
+    method: 'POST',
+    headers: { Prefer: 'return=representation' },
+    body: JSON.stringify({ code, discount_pct: 10, uses: 0, active: true }),
+  }, true);
+}
+
 function verifyAuth(req) {
   const auth = (req.headers.authorization || '').replace('Bearer ', '');
   try {
@@ -34,10 +42,23 @@ export default async function handler(req, res) {
   // Public: validate a single coupon by code
   if (req.method === 'GET' && req.query.code) {
     const code = req.query.code.trim().toUpperCase();
-    const r = await sb(`/coupons?code=eq.${encodeURIComponent(code)}&active=eq.true&select=code,discount_pct`);
-    const data = await r.json();
-    if (!Array.isArray(data) || !data.length) return res.status(404).json({ error: 'Invalid or inactive coupon' });
-    return res.status(200).json(data[0]);
+    const r = await sb(`/coupons?code=eq.${encodeURIComponent(code)}&select=code,discount_pct,active&limit=1`, {}, true);
+    const data = await r.json().catch(() => null);
+    if (!r.ok) return res.status(r.status).json({ error: 'Could not validate coupon' });
+    if (Array.isArray(data) && data.length) {
+      if (!data[0].active) return res.status(404).json({ error: 'Invalid or inactive coupon' });
+      return res.status(200).json({ code: data[0].code, discount_pct: data[0].discount_pct });
+    }
+
+    const leadRes = await sb(`/leads?code=eq.${encodeURIComponent(code)}&select=code&limit=1`, {}, true);
+    const leads = await leadRes.json().catch(() => null);
+    if (!leadRes.ok || !Array.isArray(leads) || !leads.length) {
+      return res.status(404).json({ error: 'Invalid or inactive coupon' });
+    }
+
+    const createRes = await createLeadCoupon(code);
+    if (!createRes.ok) return res.status(createRes.status).json({ error: 'Could not activate coupon' });
+    return res.status(200).json({ code, discount_pct: 10 });
   }
 
   // Admin: monthly usage stats
