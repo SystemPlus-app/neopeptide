@@ -828,7 +828,7 @@
     <div class="programs-grid">
 
       <div class="prog-card glp1 reveal" onclick="showProgram('glp1')">
-        <img class="prog-card-bottle" src="fotos/bottles/produtos%20bottle%20/GLP-3%20(RT).png" alt="">
+        <img class="prog-card-bottle" src="fotos/bottles/produtos%20bottle%20/NP%20-%20RT3.png" alt="">
         <div class="prog-card-overlay"></div>
         <div class="prog-card-content">
           <div class="prog-card-name" data-cat="glp1"></div>
@@ -1588,14 +1588,14 @@ const PROGRAMS = {
     id: 'glp1',
     name: CATEGORY_NAMES.glp1,
     eyebrow: CATEGORY_NAMES.glp1,
-    headline: 'Reshape your body.<br>Reset your metabolism.',
-    text: 'GLP-1 receptor agonists mimic a naturally occurring hormone that regulates hunger signals in the brain. The result is dramatically reduced appetite, improved insulin sensitivity, and sustainable fat loss — without the crash of restrictive diets.',
-    pills: ['Appetite Control','Fat Metabolism','Blood Sugar','Cravings Reduction','Energy Stabilization'],
+    headline: 'Incretin Signaling.<br>Metabolic Pathway Analysis.',
+    text: 'Research compounds in this category are studied in laboratory settings for their interaction with incretin-related pathways, including GLP-1, GIP, and glucagon receptor signaling. These compounds are commonly referenced in preclinical and analytical research involving metabolic regulation, cellular signaling, receptor activity, and biomarker observation.',
+    pills: ['Incretin Signaling','Metabolic Pathway Research','Glucose-Related Biomarker Studies','Receptor Activity Studies','Cellular Energy Signaling'],
     bgClass: 'glp1',
-    bannerImg: pImg('GLP-3 (RT)'),
+    bannerImg: pImg('NP - RT3'),
     products: [
-      { name:'GLP-3 (RT)',               sub:'TRIPLE RECEPTOR AGONIST',    img:pImg('GLP-3 (RT)'),                 doses:[{l:'10mg',p:80},{l:'15mg',p:125},{l:'20mg',p:155}] },
-      { name:'GLP-1/GIP',                sub:'DUAL GIP+GLP-1 AGONIST',     img:pImg('GLP-1:GIP'),                  doses:[{l:'20mg',p:150},{l:'30mg',p:210}] },
+      { name:'NP - RT3',               sub:'TRIPLE RECEPTOR AGONIST',    img:pImg('NP - RT3'),                 doses:[{l:'10mg',p:80},{l:'15mg',p:125},{l:'20mg',p:155}] },
+      { name:'NP - TZ2',                sub:'DUAL GIP+GLP-1 AGONIST',     img:pImg('NP - TZ2'),                  doses:[{l:'20mg',p:150},{l:'30mg',p:210}] },
       { name:'AOD 9604',                 sub:'FAT LOSS FRAGMENT',           img:pImg('AOD 9604'),                   doses:[{l:'5mg',p:45}] },
       { name:'Cargrilintide',            sub:'AMYLIN ANALOGUE PEPTIDE',     img:pImg('Cargrilintide'),              doses:[{l:'5mg',p:60}] },
       { name:'5-Amino 1MQ',             sub:'NNMT INHIBITOR',              img:pImg('5-Amino 1MQ'),                doses:[{l:'50mg',p:75}] },
@@ -1606,9 +1606,9 @@ const PROGRAMS = {
     id: 'longevity',
     name: CATEGORY_NAMES.longevity,
     eyebrow: CATEGORY_NAMES.longevity,
-    headline: 'Age slower.<br>Recover faster.',
-    text: 'NAD+ is the master coenzyme behind cellular energy, DNA repair, and healthy aging. As levels decline with age, so does performance, recovery, and resilience. Our longevity protocols replenish what time takes away.',
-    pills: ['Energy Restoration','Sleep Architecture','Cellular Longevity','Cognitive Performance','DNA Repair'],
+    headline: 'Cellular Pathway Studies.<br>Regenerative Biology Research.',
+    text: 'Research compounds in this category are studied in laboratory and preclinical models involving cellular signaling, oxidative stress pathways, mitochondrial function, DNA-related research markers, and tissue-response biology. These compounds are supplied for analytical and in-vitro research use only and are not intended for human or veterinary application.',
+    pills: ['Cellular Energy Pathways','Circadian Pathway Research','Cellular Aging Models','Neurocellular Research','DNA-Related Biomarker Studies'],
     bgClass: 'longevity',
     bannerImg: pImg('NAD+'),
     products: [
@@ -1623,9 +1623,9 @@ const PROGRAMS = {
     id: 'testosterone',
     name: CATEGORY_NAMES.testosterone,
     eyebrow: CATEGORY_NAMES.testosterone,
-    headline: 'Reclaim your drive.<br>Optimize your hormones.',
-    text: 'Growth hormone secretagogues stimulate your body\'s natural GH pulse. The result is improved body composition, deeper sleep, faster recovery, and restored energy — without suppressing endogenous production.',
-    pills: ['GH Release','Lean Muscle','Deep Sleep','Recovery','Hormone Balance'],
+    headline: 'GH Pathway Studies.<br>Endocrine Signaling Analysis.',
+    text: 'Research compounds in this category are studied in laboratory and preclinical models involving growth hormone signaling, pituitary-axis research, neuroendocrine pathway behavior, receptor activity, and related biomarker observation. These compounds are supplied strictly for analytical and in-vitro research purposes only and are not intended for human or veterinary application.',
+    pills: ['GH Signaling','Tissue-Related Biomarker Studies','Circadian Pathway Research','Tissue Response Models','Endocrine Biomarker Analysis'],
     bgClass: 'testosterone',
     bannerImg: pImg('Tesamorelin'),
     products: [
@@ -1643,9 +1643,9 @@ const PROGRAMS = {
     id: 'microdose',
     name: CATEGORY_NAMES.microdose,
     eyebrow: CATEGORY_NAMES.microdose,
-    headline: 'Train harder.<br>Recover smarter.',
-    text: 'Performance-focused peptide protocols are built around stamina, recovery, sleep quality, and body composition support. Designed for researchers studying resilience, output, and repair.',
-    pills: ['Recovery Support','Stamina','Sleep Quality','Body Composition'],
+    headline: 'Tissue Pathway Studies.<br>Repair Biology Models.',
+    text: 'Research compounds in this category are studied in laboratory and preclinical models involving tissue-response pathways, cellular repair signaling, extracellular matrix activity, inflammatory markers, and recovery-related biomarker observation. These compounds are supplied strictly for analytical and in-vitro research purposes only and are not intended for human or veterinary application.',
+    pills: ['Tissue Response Models','Cellular Stress Pathways','Circadian Pathway Research','Tissue Biomarker Studies'],
     bgClass: 'microdose',
     bannerImg: pImg('TB-500 + BPC-157'),
     products: [
@@ -1910,8 +1910,8 @@ let _pdmTimer = null;
 let _pdmSlide = 0;
 
 const PRODUCT_DESCS = {
-  'GLP-3 (RT)':                  'Research-grade triple GLP receptor agonist formulated for in-vitro metabolic, appetite regulation, and weight management studies.',
-  'GLP-1/GIP':                   'Dual GIP and GLP-1 receptor agonist for research into incretin signaling, insulin sensitivity, and metabolic homeostasis.',
+  'NP - RT3':                  'Research-grade triple GLP receptor agonist formulated for in-vitro metabolic, appetite regulation, and weight management studies.',
+  'NP - TZ2':                   'Dual GIP and GLP-1 receptor agonist for research into incretin signaling, insulin sensitivity, and metabolic homeostasis.',
   'AOD 9604':                    'C-terminal fragment of hGH engineered for lipid metabolism and adipocyte research without IGF-1 interactions.',
   'Cargrilintide':               'Acylated amylin analogue for research on satiety signaling, gastric motility, and glucose homeostasis.',
   '5-Amino 1MQ':                 'NNMT inhibitor compound for metabolic research targeting adipogenesis and energy expenditure pathways.',
