@@ -1,0 +1,1042 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Neo Peptide Research Quiz</title>
+  <meta name="description" content="Match laboratory research objectives with Neo Peptide compound reference data.">
+  <meta name="robots" content="noindex, follow">
+  <link rel="canonical" href="https://www.neopeptideus.com/quiz.html">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --cream: #F5F0EB;
+      --cream2: #EDE8E0;
+      --white: #FFFFFF;
+      --ink: #0A0A0F;
+      --text: #1A1A22;
+      --sub: #55555F;
+      --muted: #8A8A98;
+      --border: #DDD8D0;
+      --blue: #1855E8;
+      --blue-lt: rgba(24, 85, 232, .08);
+      --dark: #0A0A10;
+      --green: #4A9E6A;
+      --shadow: 0 28px 80px rgba(10, 10, 15, .12);
+      --site-bg:
+        radial-gradient(ellipse at 8% 22%, rgba(155, 210, 240, .62) 0%, transparent 44%),
+        radial-gradient(ellipse at 92% 18%, rgba(240, 195, 210, .55) 0%, transparent 42%),
+        radial-gradient(ellipse at 82% 88%, rgba(175, 230, 195, .50) 0%, transparent 40%),
+        radial-gradient(ellipse at 18% 85%, rgba(215, 195, 245, .42) 0%, transparent 38%),
+        radial-gradient(ellipse at 50% 50%, rgba(245, 240, 235, .8) 0%, transparent 60%),
+        #F5F0EB;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { min-height: 100%; scroll-behavior: smooth; }
+    body {
+      min-height: 100%;
+      background: var(--site-bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    body.results-open { padding-bottom: 118px; }
+    h1, h2, h3, h4 {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      letter-spacing: -.03em;
+      line-height: 1.05;
+    }
+    button, input { font: inherit; }
+    a { color: inherit; text-decoration: none; }
+    ::selection { background: var(--blue); color: #fff; }
+
+    .page {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      padding: 22px;
+    }
+    .shell {
+      width: min(1080px, 100%);
+      margin: 0 auto;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 12px 0 28px;
+    }
+    .brand {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+    .brand span:first-child {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--ink);
+      letter-spacing: -.01em;
+    }
+    .brand span:last-child {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      color: rgba(10, 10, 15, .45);
+    }
+    .top-pill {
+      border: 1px solid rgba(10, 10, 15, .12);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, .54);
+      color: rgba(10, 10, 15, .62);
+      font-size: 12px;
+      font-weight: 700;
+      padding: 10px 15px;
+      backdrop-filter: blur(14px);
+      white-space: nowrap;
+    }
+
+    .quiz-card, .results-wrap {
+      background: rgba(255, 255, 255, .68);
+      border: 1px solid rgba(255, 255, 255, .74);
+      border-radius: 28px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(22px);
+    }
+    .quiz-card {
+      overflow: hidden;
+      margin: auto 0;
+    }
+    .progress-area {
+      padding: 22px 22px 0;
+    }
+    .step-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      margin-bottom: 15px;
+    }
+    .step-label {
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      transition: color .2s;
+      white-space: nowrap;
+    }
+    .step-label.active { color: var(--blue); }
+    .progress-track {
+      height: 7px;
+      border-radius: 999px;
+      background: rgba(10, 10, 15, .08);
+      overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%;
+      width: 25%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--blue), #4A9E6A);
+      transition: width .35s ease;
+    }
+
+    .step {
+      display: none;
+      padding: clamp(28px, 5vw, 58px);
+      animation: fadeIn .28s ease both;
+    }
+    .step.active { display: block; }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .step-kicker {
+      color: var(--blue);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .18em;
+      margin-bottom: 14px;
+      text-transform: uppercase;
+    }
+    .step h1 {
+      color: var(--ink);
+      font-size: clamp(40px, 7vw, 72px);
+      font-weight: 900;
+      margin-bottom: 14px;
+    }
+    .step-subtitle {
+      max-width: 650px;
+      color: var(--sub);
+      font-size: clamp(15px, 2vw, 18px);
+      line-height: 1.65;
+      margin-bottom: 30px;
+    }
+
+    .options-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+    .options-grid.compact { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .option {
+      min-height: 138px;
+      border: 1.5px solid rgba(10, 10, 15, .11);
+      border-radius: 20px;
+      background: rgba(255, 255, 255, .58);
+      cursor: pointer;
+      display: flex;
+      gap: 14px;
+      padding: 18px;
+      position: relative;
+      text-align: left;
+      transition: border-color .18s, background .18s, transform .18s, box-shadow .18s;
+    }
+    .option:hover {
+      border-color: rgba(24, 85, 232, .36);
+      background: rgba(255, 255, 255, .82);
+      transform: translateY(-2px);
+      box-shadow: 0 16px 34px rgba(10, 10, 15, .08);
+    }
+    .option.selected {
+      border-color: var(--blue);
+      background: rgba(24, 85, 232, .07);
+      box-shadow: 0 18px 44px rgba(24, 85, 232, .12);
+    }
+    .icon {
+      width: 38px;
+      height: 38px;
+      flex: 0 0 38px;
+      border-radius: 13px;
+      background: rgba(10, 10, 15, .05);
+      color: var(--ink);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .option.selected .icon {
+      background: var(--blue);
+      color: #fff;
+    }
+    .icon svg { width: 20px; height: 20px; stroke-width: 2; }
+    .option-title {
+      color: var(--ink);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 16px;
+      font-weight: 800;
+      letter-spacing: -.02em;
+      line-height: 1.18;
+      padding-right: 22px;
+    }
+    .option-sub {
+      color: var(--sub);
+      font-size: 13px;
+      line-height: 1.5;
+      margin-top: 7px;
+    }
+    .check {
+      position: absolute;
+      right: 15px;
+      top: 15px;
+      width: 22px;
+      height: 22px;
+      border: 1.5px solid rgba(10, 10, 15, .15);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, .65);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      opacity: .9;
+    }
+    .selected .check {
+      background: var(--blue);
+      border-color: var(--blue);
+    }
+    .check svg { width: 13px; height: 13px; opacity: 0; }
+    .selected .check svg { opacity: 1; }
+
+    .actions {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      margin-top: 34px;
+    }
+    .btn {
+      min-height: 52px;
+      border: 1px solid transparent;
+      border-radius: 999px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 14px;
+      font-weight: 800;
+      padding: 0 24px;
+      transition: transform .16s, box-shadow .16s, opacity .16s, background .16s;
+    }
+    .btn svg { width: 18px; height: 18px; stroke-width: 2.3; }
+    .btn:disabled {
+      cursor: not-allowed;
+      opacity: .42;
+      transform: none;
+      box-shadow: none;
+    }
+    .btn-primary {
+      background: var(--ink);
+      color: #fff;
+      box-shadow: 0 16px 36px rgba(10, 10, 15, .18);
+    }
+    .btn-primary:not(:disabled):hover {
+      transform: translateY(-2px);
+      box-shadow: 0 22px 44px rgba(10, 10, 15, .22);
+    }
+    .btn-secondary {
+      background: rgba(255, 255, 255, .54);
+      border-color: rgba(10, 10, 15, .13);
+      color: var(--ink);
+    }
+    .btn-secondary:hover { background: rgba(255, 255, 255, .82); }
+
+    .results-wrap {
+      display: none;
+      margin: auto 0 0;
+      padding: clamp(24px, 4vw, 44px);
+      animation: fadeIn .28s ease both;
+    }
+    .results-wrap.active { display: block; }
+    .results-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 18px;
+      margin-bottom: 26px;
+    }
+    .results-header h1 {
+      color: var(--ink);
+      font-size: clamp(40px, 7vw, 74px);
+      font-weight: 900;
+      margin-bottom: 10px;
+    }
+    .results-header p {
+      color: var(--sub);
+      font-size: 16px;
+      line-height: 1.6;
+    }
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 18px 0 0;
+    }
+    .tag {
+      background: rgba(24, 85, 232, .08);
+      border: 1px solid rgba(24, 85, 232, .18);
+      border-radius: 999px;
+      color: #1746B8;
+      font-size: 12px;
+      font-weight: 800;
+      padding: 8px 12px;
+    }
+    .loading {
+      display: none;
+      min-height: 300px;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 18px;
+      color: var(--sub);
+      font-weight: 700;
+    }
+    .loading.active { display: flex; }
+    .spinner {
+      width: 42px;
+      height: 42px;
+      border: 3px solid rgba(10, 10, 15, .1);
+      border-top-color: var(--blue);
+      border-radius: 999px;
+      animation: spin .8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .result-content { display: none; }
+    .result-content.active { display: block; }
+    .ai-card {
+      background: rgba(255, 255, 255, .72);
+      border: 1px solid rgba(10, 10, 15, .09);
+      border-radius: 22px;
+      color: var(--text);
+      font-size: 15px;
+      line-height: 1.7;
+      padding: 24px;
+      white-space: pre-wrap;
+    }
+    .section-title {
+      color: var(--ink);
+      font-size: 22px;
+      font-weight: 900;
+      margin: 34px 0 14px;
+    }
+    .compound-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+    .compound-card {
+      background: rgba(255, 255, 255, .72);
+      border: 1px solid rgba(10, 10, 15, .09);
+      border-radius: 20px;
+      min-height: 172px;
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .compound-card h3 {
+      color: var(--ink);
+      font-size: 18px;
+      font-weight: 900;
+    }
+    .program {
+      color: var(--sub);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: .08em;
+      line-height: 1.45;
+      text-transform: uppercase;
+    }
+    .shop-link {
+      margin-top: auto;
+      color: var(--blue);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 13px;
+      font-weight: 900;
+    }
+    .cta-row {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin: 18px 0 34px;
+    }
+    .cta-row .btn { width: 100%; }
+    .email-box, .disclaimer-box {
+      background: rgba(255, 255, 255, .58);
+      border: 1px solid rgba(10, 10, 15, .09);
+      border-radius: 22px;
+      padding: 22px;
+    }
+    .email-box h2 {
+      color: var(--ink);
+      font-size: 24px;
+      font-weight: 900;
+      margin-bottom: 8px;
+    }
+    .email-box p {
+      color: var(--sub);
+      font-size: 14px;
+      line-height: 1.55;
+      margin-bottom: 16px;
+    }
+    .email-form {
+      display: flex;
+      gap: 10px;
+    }
+    .email-form input {
+      min-width: 0;
+      flex: 1;
+      border: 1px solid rgba(10, 10, 15, .13);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, .78);
+      color: var(--ink);
+      min-height: 52px;
+      outline: none;
+      padding: 0 18px;
+    }
+    .email-form input:focus { border-color: var(--blue); }
+    .success {
+      display: none;
+      color: var(--green);
+      font-size: 13px;
+      font-weight: 800;
+      margin-top: 12px;
+    }
+    .success.active { display: block; }
+    .disclaimer-box {
+      color: var(--sub);
+      font-size: 12px;
+      line-height: 1.65;
+      margin-top: 18px;
+    }
+    .mobile-cta {
+      display: none;
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 20;
+      padding: 12px 14px calc(12px + env(safe-area-inset-bottom));
+      background: rgba(245, 240, 235, .9);
+      border-top: 1px solid rgba(10, 10, 15, .1);
+      backdrop-filter: blur(18px);
+      gap: 10px;
+    }
+    .footer {
+      width: min(1080px, 100%);
+      margin: 30px auto 0;
+      color: rgba(10, 10, 15, .55);
+      font-size: 12px;
+      line-height: 1.6;
+    }
+    .footer-top {
+      border-top: 1px solid rgba(10, 10, 15, .1);
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      padding-top: 18px;
+      margin-bottom: 10px;
+      font-weight: 800;
+    }
+    .footer-copy { max-width: 950px; }
+
+    @media (max-width: 840px) {
+      .page { padding: 16px; }
+      .topbar { align-items: flex-start; padding-bottom: 20px; }
+      .top-pill { white-space: normal; text-align: right; }
+      .quiz-card, .results-wrap { border-radius: 22px; }
+      .step-row { gap: 5px; }
+      .step-label { font-size: 9px; letter-spacing: .04em; }
+      .step { padding: 28px 18px 20px; }
+      .options-grid, .options-grid.compact, .compound-grid {
+        grid-template-columns: 1fr;
+      }
+      .option { min-height: 126px; }
+      .results-header {
+        flex-direction: column;
+      }
+      .results-header .btn { width: 100%; }
+      .email-form, .actions {
+        flex-direction: column;
+      }
+      .actions .btn { width: 100%; }
+      .cta-row { grid-template-columns: 1fr; }
+      .footer-top { flex-direction: column; }
+      .mobile-cta.active {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+      }
+      .mobile-cta .btn {
+        min-height: 48px;
+        padding: 0 10px;
+        font-size: 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <div class="shell">
+      <header class="topbar">
+        <a class="brand" href="https://www.neopeptideus.com" aria-label="Neo Peptide home">
+          <span>Neo Peptide Research Quiz</span>
+          <span>Compound Reference Matching</span>
+        </a>
+        <div class="top-pill">For laboratory research use only</div>
+      </header>
+
+      <section class="quiz-card" id="quizCard">
+        <div class="progress-area">
+          <div class="step-row" id="stepLabels"></div>
+          <div class="progress-track" aria-hidden="true">
+            <div class="progress-fill" id="progressFill"></div>
+          </div>
+        </div>
+        <div id="steps"></div>
+      </section>
+
+      <section class="results-wrap" id="resultsWrap" aria-live="polite">
+        <div class="results-header">
+          <div>
+            <h1>Your Research Match</h1>
+            <p>Matched to your goals, experience level, and research timeline</p>
+            <div class="tag-row" id="resultTags"></div>
+          </div>
+          <button class="btn btn-secondary" type="button" id="retakeBtn">Retake Quiz</button>
+        </div>
+
+        <div class="loading" id="loadingState">
+          <div class="spinner" aria-hidden="true"></div>
+          <div>Analyzing your research profile...</div>
+        </div>
+
+        <div class="result-content" id="resultContent">
+          <div class="ai-card" id="aiResponse"></div>
+          <h2 class="section-title">Matched Compounds</h2>
+          <div class="compound-grid" id="compoundGrid"></div>
+          <div class="cta-row">
+            <a class="btn btn-primary" href="https://www.neopeptideus.com">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h8.7a2 2 0 0 0 2-1.58l1.65-7.43H5.12"/></svg>
+              Add All to Cart
+            </a>
+            <a class="btn btn-secondary" href="https://www.neopeptideus.com">
+              View Full Catalog
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </a>
+          </div>
+
+          <div class="email-box">
+            <h2>Get research alerts for your matched compounds</h2>
+            <p>We'll notify you when your compounds are back in stock or on sale.</p>
+            <form class="email-form" id="emailForm">
+              <input type="email" placeholder="your@email.com" aria-label="Email address" required>
+              <button class="btn btn-primary" type="submit">Save &amp; Get Alerts</button>
+            </form>
+            <div class="success" id="successMsg">Saved. Research alerts are enabled for this browser session.</div>
+          </div>
+
+          <div class="disclaimer-box">
+            All compounds listed are for laboratory research purposes only and are not intended for human or animal consumption. These compounds are sold as research chemicals for in-vitro and preclinical research applications. No statements here constitute medical advice, treatment recommendations, or instructions for human use. Always consult applicable regulations and institutional guidelines before initiating any laboratory study. Must be 21 or older to purchase.
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <footer class="footer">
+      <div class="footer-top">
+        <div>Neo Peptide Research Quiz</div>
+        <div>For laboratory research use only. Not for human or animal consumption.</div>
+      </div>
+      <div class="footer-copy">
+        No statements on this page are intended to diagnose, treat, cure, or prevent any disease. This quiz provides educational information for laboratory research purposes only and does not provide medical advice, treatment recommendations, or instructions for human or veterinary use. Must be 21 or older to purchase.
+      </div>
+    </footer>
+  </main>
+
+  <div class="mobile-cta" id="mobileCta">
+    <a class="btn btn-primary" href="https://www.neopeptideus.com">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h8.7a2 2 0 0 0 2-1.58l1.65-7.43H5.12"/></svg>
+      Add All to Cart
+    </a>
+    <a class="btn btn-secondary" href="https://www.neopeptideus.com">
+      View Full Catalog
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+    </a>
+  </div>
+
+  <script>
+    const GEMINI_API_KEY = "PASTE_KEY_HERE";
+    const GEMINI_ENDPOINT = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}`;
+    const SHOP_URL = "https://www.neopeptideus.com";
+    const DISCLAIMER = "For Research Use Only. These compounds are intended exclusively for laboratory research and are not for human or veterinary use, diagnosis, treatment, or prevention of disease.";
+
+    const catalog = {
+      "WEIGHT LOSS / GLP PROGRAM": ["Semaglutide", "Tirzepatide", "CJC/Ipamorelin", "BPC-157"],
+      "LONGEVITY PROGRAM": ["NAD+", "Epithalon", "BPC-157", "TB-500"],
+      "HORMONE / GH PROGRAM": ["CJC/Ipamorelin", "Sermorelin", "Ipamorelin", "HGH Fragment 176-191"],
+      "PERFORMANCE & RECOVERY PROGRAM": ["BPC-157", "TB-500", "CJC/Ipamorelin", "Hexarelin"],
+      "SKIN & BEAUTY PROGRAM": ["GHK-Cu", "Epithalon", "BPC-157", "Melanotan II"],
+      "NEURO / MOOD PROGRAM": ["Selank", "Semax", "Dihexa", "NAD+"],
+      "SEXUAL WELLNESS / LIBIDO PROGRAM": ["PT-141 (Bremelanotide)", "Kisspeptin", "CJC/Ipamorelin"],
+      "ESSENTIALS PROGRAM": ["BPC-157", "TB-500", "NAD+", "Sermorelin"]
+    };
+
+    const compoundPrograms = Object.entries(catalog).reduce((map, [program, compounds]) => {
+      compounds.forEach((compound) => {
+        if (!map[compound]) map[compound] = [];
+        map[compound].push(program);
+      });
+      return map;
+    }, {});
+
+    const goalMatches = {
+      "Fat Metabolism": ["Semaglutide", "Tirzepatide", "HGH Fragment 176-191", "CJC/Ipamorelin"],
+      "Tissue Repair": ["BPC-157", "TB-500", "GHK-Cu"],
+      "Appetite Signaling": ["Semaglutide", "Tirzepatide"],
+      "Muscle Growth": ["CJC/Ipamorelin", "Ipamorelin", "Sermorelin", "Hexarelin"],
+      "Anti-Aging / Skin & Collagen Support": ["GHK-Cu", "Epithalon", "NAD+", "BPC-157"],
+      "Cognitive Function": ["Selank", "Semax", "Dihexa", "NAD+"],
+      "Hormone Signaling": ["CJC/Ipamorelin", "Sermorelin", "Ipamorelin", "Kisspeptin", "PT-141 (Bremelanotide)"],
+      "Sleep & Recovery": ["CJC/Ipamorelin", "BPC-157", "TB-500", "NAD+"]
+    };
+
+    const iconSvg = {
+      flame: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M8.5 14.5A3.5 3.5 0 0 0 12 18a3.5 3.5 0 0 0 3.5-3.5c0-1.6-.8-2.7-1.9-3.9C12.5 9.4 11.2 8 11 6c-1.8 1.2-3.5 3.6-3.5 6.2 0 .8.3 1.6 1 2.3Z"/><path d="M12 22a8 8 0 0 0 8-8c0-4.5-3-7.5-6-10-.3 2.5.7 4 1.7 5.1-1.7-.9-3.7-2.9-4.7-6.1C7 5.5 4 9.2 4 14a8 8 0 0 0 8 8Z"/></svg>',
+      repair: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 21s-7-4.4-9-9.6C1.4 7.3 4.3 4 8 4c1.8 0 3.1.9 4 2.1C12.9 4.9 14.2 4 16 4c3.7 0 6.6 3.3 5 7.4C19 16.6 12 21 12 21Z"/><path d="M12 8v8"/><path d="M8 12h8"/></svg>',
+      signal: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="3"/><path d="M12 2v3"/><path d="M12 19v3"/><path d="m4.9 4.9 2.1 2.1"/><path d="m17 17 2.1 2.1"/><path d="M2 12h3"/><path d="M19 12h3"/><path d="m4.9 19.1 2.1-2.1"/><path d="m17 7 2.1-2.1"/></svg>',
+      growth: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 19V5"/><path d="M20 19V5"/><path d="M4 12h16"/><path d="M8 9v6"/><path d="M16 9v6"/></svg>',
+      skin: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 3c3.5 3 6 6 6 10a6 6 0 0 1-12 0c0-4 2.5-7 6-10Z"/><path d="M9 14c1.8 1 4.2 1 6 0"/></svg>',
+      brain: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M8 6.5A3 3 0 0 1 13 4a3 3 0 0 1 5 2.2 3 3 0 0 1 1 5.8 3 3 0 0 1-3 5.2 3 3 0 0 1-5 2.8 3 3 0 0 1-5-2.7 3 3 0 0 1-1-5.8 3 3 0 0 1 3-5Z"/><path d="M12 5v14"/><path d="M8 10h4"/><path d="M12 14h4"/></svg>',
+      hormone: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M6 3v6a6 6 0 0 0 12 0V3"/><path d="M8 3h8"/><path d="M12 15v6"/><path d="M9 21h6"/></svg>',
+      moon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20.9 15.1A8.5 8.5 0 0 1 8.9 3.1 9 9 0 1 0 20.9 15.1Z"/></svg>',
+      level: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 19V5"/><path d="M4 19h16"/><path d="M8 16v-4"/><path d="M12 16V8"/><path d="M16 16v-6"/></svg>',
+      format: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="4" y="4" width="7" height="7" rx="1"/><rect x="13" y="4" width="7" height="7" rx="1"/><rect x="4" y="13" width="7" height="7" rx="1"/><rect x="13" y="13" width="7" height="7" rx="1"/></svg>',
+      timeline: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>'
+    };
+
+    const steps = [
+      {
+        key: "goals",
+        label: "Goals",
+        title: "Research Objectives",
+        subtitle: "Select all study areas relevant to your laboratory research interests.",
+        multi: true,
+        options: [
+          ["Fat Metabolism", "Metabolic rate & lipid oxidation studies", "flame"],
+          ["Tissue Repair", "Wound healing & tissue regeneration studies", "repair"],
+          ["Appetite Signaling", "GLP-1 receptor agonist & satiety pathway research", "signal"],
+          ["Muscle Growth", "Myofibrillar protein synthesis research", "growth"],
+          ["Anti-Aging / Skin & Collagen Support", "Collagen synthesis, skin structure & longevity research", "skin"],
+          ["Cognitive Function", "Neuroprotection, focus & cognitive performance studies", "brain"],
+          ["Hormone Signaling", "Hormonal communication & regulatory pathway research", "hormone"],
+          ["Sleep & Recovery", "Circadian rhythm, sleep quality & recovery research", "moon"]
+        ]
+      },
+      {
+        key: "experience",
+        label: "Experience",
+        title: "Experience Level",
+        subtitle: "This helps us surface appropriate peptide reference data for your background.",
+        multi: false,
+        compact: true,
+        options: [
+          ["Beginner", "New to peptide research, seeking foundational compounds", "level"],
+          ["Intermediate", "Familiar with peptide research literature and standard laboratory techniques", "level"],
+          ["Advanced", "Experienced researcher with extensive compound study history", "level"]
+        ]
+      },
+      {
+        key: "format",
+        label: "Format",
+        title: "Peptides or Stacks?",
+        subtitle: "Compound groupings share related research characteristics for comparative study.",
+        multi: false,
+        compact: true,
+        options: [
+          ["Individual Peptides", "Focused research on single compounds", "format"],
+          ["Research Stacks", "Peptides grouped by related research characteristics", "format"],
+          ["Both", "Show all available compound reference data", "format"]
+        ]
+      },
+      {
+        key: "timeline",
+        label: "Timeline",
+        title: "Research Approach",
+        subtitle: "How do you prefer to structure your laboratory research timeline?",
+        multi: false,
+        compact: true,
+        options: [
+          ["Pilot Study (1-3 months)", "Initial compound evaluation to gather preliminary research data", "timeline"],
+          ["Structured Study (3-6 months)", "Multi-month laboratory study for more consistent research data collection", "timeline"],
+          ["Ongoing Research", "Longer-term compound investigation as part of a sustained research program", "timeline"]
+        ]
+      }
+    ];
+
+    const state = {
+      currentStep: 0,
+      answers: {
+        goals: [],
+        experience: "",
+        format: "",
+        timeline: ""
+      }
+    };
+
+    const stepLabels = document.getElementById("stepLabels");
+    const stepsEl = document.getElementById("steps");
+    const progressFill = document.getElementById("progressFill");
+    const quizCard = document.getElementById("quizCard");
+    const resultsWrap = document.getElementById("resultsWrap");
+    const loadingState = document.getElementById("loadingState");
+    const resultContent = document.getElementById("resultContent");
+    const aiResponse = document.getElementById("aiResponse");
+    const compoundGrid = document.getElementById("compoundGrid");
+    const resultTags = document.getElementById("resultTags");
+    const mobileCta = document.getElementById("mobileCta");
+
+    function init() {
+      stepLabels.innerHTML = steps.map((step, index) => `<div class="step-label ${index === 0 ? "active" : ""}">${index + 1}. ${step.label}</div>`).join("");
+      stepsEl.innerHTML = steps.map(renderStep).join("");
+      bindOptions();
+      updateStep();
+    }
+
+    function renderStep(step, index) {
+      const options = step.options.map(([title, subtitle, icon]) => `
+        <button class="option" type="button" data-step="${index}" data-key="${step.key}" data-value="${escapeHtml(title)}">
+          <span class="icon">${iconSvg[icon]}</span>
+          <span>
+            <span class="option-title">${title}</span>
+            <span class="option-sub">${subtitle}</span>
+          </span>
+          <span class="check" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="m5 12 4 4L19 6"/></svg>
+          </span>
+        </button>
+      `).join("");
+
+      return `
+        <article class="step ${index === 0 ? "active" : ""}" data-step-panel="${index}">
+          <div class="step-kicker">Step ${index + 1} of 4</div>
+          <h1>${step.title}</h1>
+          <p class="step-subtitle">${step.subtitle}</p>
+          <div class="options-grid ${step.compact ? "compact" : ""}">${options}</div>
+          <div class="actions">
+            <button class="btn btn-secondary" type="button" data-back="${index}">Back</button>
+            <button class="btn btn-primary" type="button" data-next="${index}" disabled>Continue</button>
+          </div>
+        </article>
+      `;
+    }
+
+    function bindOptions() {
+      document.querySelectorAll(".option").forEach((option) => {
+        option.addEventListener("click", () => {
+          const stepIndex = Number(option.dataset.step);
+          const step = steps[stepIndex];
+          const value = option.dataset.value;
+
+          if (step.multi) {
+            const set = new Set(state.answers[step.key]);
+            if (set.has(value)) set.delete(value);
+            else set.add(value);
+            state.answers[step.key] = Array.from(set);
+          } else {
+            state.answers[step.key] = value;
+          }
+          updateStep();
+        });
+      });
+
+      document.querySelectorAll("[data-back]").forEach((button) => {
+        button.addEventListener("click", () => {
+          if (state.currentStep > 0) {
+            state.currentStep -= 1;
+            updateStep();
+          }
+        });
+      });
+
+      document.querySelectorAll("[data-next]").forEach((button) => {
+        button.addEventListener("click", () => {
+          if (!isStepComplete(state.currentStep)) return;
+          if (state.currentStep < steps.length - 1) {
+            state.currentStep += 1;
+            updateStep();
+          } else {
+            showResults();
+          }
+        });
+      });
+
+      document.getElementById("retakeBtn").addEventListener("click", resetQuiz);
+      document.getElementById("emailForm").addEventListener("submit", (event) => {
+        event.preventDefault();
+        document.getElementById("successMsg").classList.add("active");
+      });
+    }
+
+    function updateStep() {
+      document.querySelectorAll("[data-step-panel]").forEach((panel, index) => {
+        panel.classList.toggle("active", index === state.currentStep);
+      });
+      document.querySelectorAll(".step-label").forEach((label, index) => {
+        label.classList.toggle("active", index <= state.currentStep);
+      });
+      progressFill.style.width = `${((state.currentStep + 1) / steps.length) * 100}%`;
+
+      document.querySelectorAll(".option").forEach((option) => {
+        const key = option.dataset.key;
+        const value = option.dataset.value;
+        const answer = state.answers[key];
+        const selected = Array.isArray(answer) ? answer.includes(value) : answer === value;
+        option.classList.toggle("selected", selected);
+      });
+
+      document.querySelectorAll("[data-back]").forEach((button) => {
+        button.disabled = state.currentStep === 0;
+      });
+      document.querySelectorAll("[data-next]").forEach((button, index) => {
+        button.disabled = !isStepComplete(index);
+      });
+    }
+
+    function isStepComplete(index) {
+      const step = steps[index];
+      const answer = state.answers[step.key];
+      return Array.isArray(answer) ? answer.length > 0 : Boolean(answer);
+    }
+
+    async function showResults() {
+      quizCard.style.display = "none";
+      resultsWrap.classList.add("active");
+      loadingState.classList.add("active");
+      resultContent.classList.remove("active");
+      document.body.classList.add("results-open");
+      resultTags.innerHTML = state.answers.goals.map((goal) => `<span class="tag">${escapeHtml(goal)}</span>`).join("");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+
+      const fallbackText = buildFallbackResponse();
+      let responseText = fallbackText;
+      if (GEMINI_API_KEY && GEMINI_API_KEY !== "PASTE_KEY_HERE") {
+        try {
+          responseText = await fetchGemini();
+        } catch (error) {
+          responseText = `${fallbackText}\n\nGemini response was unavailable, so this match used local catalog logic.`;
+        }
+      } else {
+        responseText = `${fallbackText}\n\nGemini API key is not configured. Replace PASTE_KEY_HERE to enable live AI matching.`;
+      }
+
+      if (!responseText.includes(DISCLAIMER)) {
+        responseText = `${responseText.trim()}\n\n${DISCLAIMER}`;
+      }
+
+      const matched = deriveMatchedCompounds(responseText);
+      aiResponse.textContent = responseText;
+      renderCompounds(matched);
+      loadingState.classList.remove("active");
+      resultContent.classList.add("active");
+      mobileCta.classList.add("active");
+    }
+
+    async function fetchGemini() {
+      const payload = {
+        systemInstruction: {
+          parts: [{ text: systemPrompt() }]
+        },
+        contents: [{
+          role: "user",
+          parts: [{ text: userPrompt() }]
+        }],
+        generationConfig: {
+          temperature: 0.35,
+          topP: 0.9,
+          maxOutputTokens: 900
+        }
+      };
+
+      const response = await fetch(GEMINI_ENDPOINT, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      });
+
+      if (!response.ok) {
+        throw new Error(`Gemini request failed: ${response.status}`);
+      }
+
+      const data = await response.json();
+      return data.candidates?.[0]?.content?.parts?.map((part) => part.text || "").join("\n").trim() || buildFallbackResponse();
+    }
+
+    function systemPrompt() {
+      return `You are a research compound reference assistant for Neo Peptide USA (neopeptideus.com).
+
+Your role is to help laboratory researchers identify which research compounds are most relevant to their declared study objectives.
+
+STRICT RULES — follow without exception:
+- Use scientific, neutral language only. Never mention health benefits, treatment, cures, or human outcomes.
+- Never say "will help you", "improve your", "boost your", "for your body", or any consumer benefit language.
+- Always frame everything as research, study, investigation, or compound evaluation.
+- Every response must end with this exact disclaimer: "For Research Use Only. These compounds are intended exclusively for laboratory research and are not for human or veterinary use, diagnosis, treatment, or prevention of disease."
+- Only recommend compounds from the provided catalog. Never invent compounds.
+- Adapt technical depth to the researcher's declared experience level (Beginner = simpler language, Advanced = more technical).
+- Keep the response concise: 1 short paragraph of context + bullet list of matched compounds with one-line scientific rationale each.`;
+    }
+
+    function userPrompt() {
+      return `Researcher profile:
+- Research objectives: ${state.answers.goals.join(", ")}
+- Experience level: ${state.answers.experience}
+- Preferred format: ${state.answers.format}
+- Research timeline: ${state.answers.timeline}
+
+Available compound catalog:
+${catalogText()}
+
+Based on this profile, identify the most relevant research compounds from the catalog above. For each compound, provide a one-line scientific rationale tied to the researcher's declared objectives. Then suggest a logical research sequence if timeline allows.`;
+    }
+
+    function catalogText() {
+      return Object.entries(catalog).map(([program, compounds]) => `${program}:\n${compounds.map((compound) => `- ${compound}`).join("\n")}`).join("\n\n");
+    }
+
+    function deriveMatchedCompounds(text) {
+      const mentioned = Object.keys(compoundPrograms).filter((compound) => text.toLowerCase().includes(compound.toLowerCase()));
+      const fallback = staticMatches();
+      return unique([...mentioned, ...fallback]).slice(0, state.answers.format === "Individual Peptides" ? 6 : 8);
+    }
+
+    function staticMatches() {
+      const scores = {};
+      state.answers.goals.forEach((goal) => {
+        (goalMatches[goal] || []).forEach((compound, index) => {
+          scores[compound] = (scores[compound] || 0) + (10 - index);
+        });
+      });
+      return Object.entries(scores).sort((a, b) => b[1] - a[1]).map(([compound]) => compound);
+    }
+
+    function buildFallbackResponse() {
+      const matched = staticMatches().slice(0, 6);
+      const depth = state.answers.experience === "Advanced"
+        ? "The selected objectives indicate a profile suited to comparative compound evaluation across receptor signaling, repair-pathway, and metabolic research endpoints."
+        : "The selected objectives indicate a profile suited to focused compound evaluation using clear laboratory endpoints and controlled study notes.";
+      const bullets = matched.map((compound) => `- ${compound}: Relevant to ${state.answers.goals.join(", ").toLowerCase()} research based on its placement within the Neo Peptide compound catalog.`).join("\n");
+      const sequence = state.answers.timeline.includes("Pilot")
+        ? "A logical sequence is to begin with a narrow pilot comparison, document baseline assay conditions, then expand only after preliminary laboratory observations are consistent."
+        : "A logical sequence is to group compounds by shared research characteristics, evaluate one pathway cluster at a time, and compare observations across defined collection windows.";
+      return `${depth}\n\n${bullets}\n\n${sequence}\n\n${DISCLAIMER}`;
+    }
+
+    function renderCompounds(compounds) {
+      compoundGrid.innerHTML = compounds.map((compound) => `
+        <article class="compound-card">
+          <h3>${escapeHtml(compound)}</h3>
+          <div class="program">${escapeHtml((compoundPrograms[compound] || ["Neo Peptide Catalog"]).join(" / "))}</div>
+          <a class="shop-link" href="${SHOP_URL}">Shop at Neo Peptide</a>
+        </article>
+      `).join("");
+    }
+
+    function resetQuiz() {
+      state.currentStep = 0;
+      state.answers = { goals: [], experience: "", format: "", timeline: "" };
+      quizCard.style.display = "";
+      resultsWrap.classList.remove("active");
+      loadingState.classList.remove("active");
+      resultContent.classList.remove("active");
+      mobileCta.classList.remove("active");
+      document.body.classList.remove("results-open");
+      document.getElementById("successMsg").classList.remove("active");
+      updateStep();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function unique(items) {
+      return Array.from(new Set(items));
+    }
+
+    function escapeHtml(value) {
+      return String(value).replace(/[&<>"']/g, (char) => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#039;"
+      }[char]));
+    }
+
+    init();
+  </script>
+</body>
+</html>
