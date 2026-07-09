@@ -184,9 +184,14 @@
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      border: 1px solid rgba(10, 10, 15, .14);
+      border: 1px solid rgba(255, 255, 255, .72);
       border-radius: 999px;
-      background: rgba(255, 255, 255, .66);
+      background:
+        radial-gradient(ellipse at 16% 18%, rgba(155, 210, 240, .72) 0%, transparent 48%),
+        radial-gradient(ellipse at 88% 12%, rgba(240, 195, 210, .64) 0%, transparent 46%),
+        radial-gradient(ellipse at 78% 88%, rgba(175, 230, 195, .56) 0%, transparent 44%),
+        radial-gradient(ellipse at 24% 90%, rgba(215, 195, 245, .48) 0%, transparent 42%),
+        rgba(255, 255, 255, .68);
       color: var(--ink);
       font-family: 'Plus Jakarta Sans', sans-serif;
       font-size: 13px;
@@ -194,13 +199,14 @@
       margin: -10px 0 26px;
       min-height: 46px;
       padding: 0 18px;
-      transition: background .16s, border-color .16s, color .16s, transform .16s;
+      box-shadow: 0 14px 34px rgba(10, 10, 15, .08);
+      transition: border-color .16s, color .16s, transform .16s, box-shadow .16s;
     }
     .catalog-link:hover {
-      background: rgba(255, 255, 255, .9);
-      border-color: rgba(24, 85, 232, .32);
+      border-color: rgba(255, 255, 255, .92);
       color: var(--blue);
       transform: translateY(-1px);
+      box-shadow: 0 18px 42px rgba(10, 10, 15, .12);
     }
     .catalog-link svg {
       width: 16px;
