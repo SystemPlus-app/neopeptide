@@ -180,6 +180,26 @@
       line-height: 1.65;
       margin-bottom: 30px;
     }
+    .skip-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: rgba(10, 10, 15, .62);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 13px;
+      font-weight: 800;
+      margin: -10px 0 26px;
+      transition: color .16s, transform .16s;
+    }
+    .skip-link:hover {
+      color: var(--blue);
+      transform: translateX(2px);
+    }
+    .skip-link svg {
+      width: 16px;
+      height: 16px;
+      stroke-width: 2.4;
+    }
 
     .options-grid {
       display: grid;
@@ -788,6 +808,7 @@
           <div class="step-kicker">Step ${index + 1} of 4</div>
           <h1>${step.title}</h1>
           <p class="step-subtitle">${step.subtitle}</p>
+          ${index === 0 ? '<a class="skip-link" href="https://www.neopeptideus.com">Skip quiz and visit Neo Peptide <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>' : ''}
           <div class="options-grid ${step.compact ? "compact" : ""}">${options}</div>
           <div class="actions">
             <button class="btn btn-secondary" type="button" data-back="${index}">Back</button>
