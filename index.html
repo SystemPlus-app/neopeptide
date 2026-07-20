@@ -396,9 +396,13 @@
     .cart-empty{display:flex;flex-direction:column;align-items:center;justify-content:center;height:220px;gap:12px;color:var(--muted);font-size:14px}
     .cart-item{display:flex;gap:14px;align-items:center;padding:16px 0;border-bottom:1px solid var(--border)}
     .cart-item-icon{width:48px;height:52px;background:var(--cream);border:1.5px solid var(--border);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
-    .cart-item-info{flex:1}
+    .cart-item-info{flex:1;min-width:0}
     .cart-item-info strong{display:block;font-size:13px;font-weight:700;color:var(--ink);margin-bottom:2px}
     .cart-item-info span{font-size:11px;color:var(--muted)}
+    .cart-qty-control{display:inline-flex;align-items:center;height:30px;border:1.5px solid var(--border);border-radius:8px;overflow:hidden;margin-top:8px;background:#fff}
+    .cart-qty-btn{width:30px;height:30px;border:none;background:#fff;color:var(--ink);font-family:'Plus Jakarta Sans',sans-serif;font-size:17px;font-weight:800;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .15s}
+    .cart-qty-btn:hover{background:var(--cream)}
+    .cart-qty-num{min-width:32px;text-align:center;font-family:'Plus Jakarta Sans',sans-serif;font-size:12px;font-weight:800;color:var(--ink);border-left:1px solid var(--border);border-right:1px solid var(--border);line-height:30px}
     .cart-item-price{font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:800;color:var(--ink)}
     .cart-item-rm{color:var(--muted);cursor:pointer;font-size:14px;padding:4px;background:none;border:none;transition:color .2s}
     .cart-item-rm:hover{color:#DC2626}
@@ -417,6 +421,8 @@
     .cart-total-row strong{font-family:'Plus Jakarta Sans',sans-serif;font-size:22px;font-weight:800;color:var(--ink)}
     .btn-checkout{width:100%;padding:15px;background:var(--ink);color:#fff;font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;font-weight:700;border:none;border-radius:12px;cursor:pointer;transition:background .2s}
     .btn-checkout:hover{background:var(--blue)}
+    .btn-keep-shopping{width:100%;padding:13px;background:#fff;color:var(--ink);font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;font-weight:800;border:1.5px solid var(--border);border-radius:12px;cursor:pointer;transition:border-color .2s,background .2s;margin-top:10px}
+    .btn-keep-shopping:hover{border-color:var(--ink);background:var(--cream)}
     .cart-secure{text-align:center;font-size:11px;color:var(--muted);margin-top:10px}
 
     /* ── MOBILE BAR ── */
@@ -1443,6 +1449,7 @@
       <strong id="cartTotal">$0.00</strong>
     </div>
     <button class="btn-checkout" onclick="goToCheckout()">Proceed to Checkout →</button>
+    <button class="btn-keep-shopping" onclick="continueShopping()">Continue Shopping</button>
     <p class="cart-secure">🔒 Secure · COA Guaranteed · Ships in 48h</p>
   </div>
 </div>
@@ -2276,6 +2283,18 @@ function addToCart(name, price, btn) {
 
 function removeItem(name) { cart = cart.filter(i=>i.name!==name); refreshCart(); }
 
+function removeCartItem(index) {
+  cart.splice(index, 1);
+  refreshCart();
+}
+
+function updateCartQty(index, delta) {
+  if (!cart[index]) return;
+  cart[index].qty = Math.max(0, cart[index].qty + delta);
+  if (cart[index].qty === 0) cart.splice(index, 1);
+  refreshCart();
+}
+
 function refreshCart() {
   const total = cart.reduce((s,i)=>s+i.price*i.qty,0);
   const count = cart.reduce((s,i)=>s+i.qty,0);
@@ -2293,12 +2312,20 @@ function refreshCart() {
     foot.style.display = 'none'; return;
   }
   foot.style.display = '';
-  body.innerHTML = cart.map(i=>`
+  body.innerHTML = cart.map((i,index)=>`
     <div class="cart-item">
       <div class="cart-item-icon">${i.img ? `<img src="${i.img}" style="width:36px;height:40px;object-fit:contain">` : '💊'}</div>
-      <div class="cart-item-info"><strong>${i.name}</strong><span>Qty: ${i.qty}</span></div>
+      <div class="cart-item-info">
+        <strong>${i.name}</strong>
+        <span>Qty: ${i.qty}</span>
+        <div class="cart-qty-control" aria-label="Quantity for ${i.name}">
+          <button class="cart-qty-btn" onclick="updateCartQty(${index},-1)" aria-label="Decrease ${i.name} quantity">−</button>
+          <div class="cart-qty-num">${i.qty}</div>
+          <button class="cart-qty-btn" onclick="updateCartQty(${index},1)" aria-label="Increase ${i.name} quantity">+</button>
+        </div>
+      </div>
       <div class="cart-item-price">$${(i.price*i.qty).toFixed(2)}</div>
-      <button class="cart-item-rm" onclick="removeItem('${i.name.replace(/'/g,"\\'")}')">✕</button>
+      <button class="cart-item-rm" onclick="removeCartItem(${index})" aria-label="Remove ${i.name}">✕</button>
     </div>`).join('');
   const pct = Math.min(total/150,1);
   document.getElementById('shipFill').style.width = (pct*100)+'%';
@@ -2313,6 +2340,7 @@ function refreshCart() {
 
 function openCart()  { document.getElementById('cartOverlay').classList.add('open'); document.getElementById('cartDrawer').classList.add('open'); document.body.style.overflow='hidden'; }
 function closeCart() { document.getElementById('cartOverlay').classList.remove('open'); document.getElementById('cartDrawer').classList.remove('open'); document.body.style.overflow=''; }
+function continueShopping() { closeCart(); }
 
 /* ═══════════════════════════════════════
    BROWSER HISTORY (back/forward)
