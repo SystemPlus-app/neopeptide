@@ -352,8 +352,15 @@
     .zelle-detail{background:#EDF4FF;border:1px solid #B8D0F8;border-radius:12px;padding:16px 18px;display:none;margin-top:12px}
     .zelle-detail.show{display:block}
     .zelle-detail-title{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);margin-bottom:10px}
-    .zelle-detail-row{font-size:13px;color:var(--text);display:flex;gap:6px;margin-bottom:6px;align-items:baseline}
+    .zelle-detail-row{font-size:13px;color:var(--text);display:flex;justify-content:space-between;gap:14px;margin-bottom:8px;align-items:baseline;line-height:1.4}
     .zelle-detail-row strong{font-weight:700;min-width:80px;color:var(--sub);font-size:11px;text-transform:uppercase;letter-spacing:.06em}
+    .zelle-detail-row span{text-align:right;font-weight:700;color:var(--ink);word-break:break-word}
+    .zelle-detail-grid{display:block}
+    .zelle-detail-qr{display:block;width:156px;height:156px;border-radius:12px;background:#fff;border:1px solid rgba(24,85,232,.16);padding:8px;object-fit:contain;margin:18px auto}
+    .zelle-detail-note{font-size:11px;line-height:1.5;color:var(--sub);margin-top:12px}
+    .zelle-detail-alerts{display:flex;flex-direction:column;gap:8px;margin-top:14px}
+    .zelle-detail-alert{font-size:11px;line-height:1.5;color:#5F4218;background:#FFF7ED;border:1px solid #FED7AA;border-radius:10px;padding:10px 12px}
+    .zelle-detail-alert strong{color:#111;font-weight:800}
     .zelle-amount{font-family:'Plus Jakarta Sans',sans-serif;font-size:22px;font-weight:800;color:var(--ink);margin-top:10px}
     .btn-confirm{width:100%;font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:700;padding:16px;border-radius:14px;background:var(--ink);color:#fff;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:background .2s,transform .15s,opacity .3s}
     .btn-confirm:hover:not(:disabled){background:var(--blue);transform:translateY(-1px)}
@@ -1253,7 +1260,7 @@
               </div>
             </div>
             <button class="btn-continue" type="submit">
-              Continue to Review
+              Continue to Payment
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
             </button>
           </form>
@@ -1333,9 +1340,19 @@
             </div>
             <div class="zelle-detail show" id="zelleDetail">
               <div class="zelle-detail-title">Zelle Payment Instructions</div>
-              <div class="zelle-detail-row"><strong>Send to</strong> Support@neopeptideus.com</div>
-              <div class="zelle-detail-row"><strong>Memo</strong> Your order # will be provided</div>
-              <div class="zelle-amount" id="zelleAmount">$0.00</div>
+              <div class="zelle-detail-grid">
+                <div>
+                  <div class="zelle-detail-row"><strong>Send to</strong><span>Support@neopeptideus.com</span></div>
+                  <div class="zelle-detail-row"><strong>Memo</strong><span id="zelleMemo">Your order # will be provided</span></div>
+                  <div class="zelle-detail-row"><strong>Amount</strong><span id="zelleAmount">$0.00</span></div>
+                </div>
+                <img class="zelle-detail-qr" src="fotos/qr%20code.jpg" alt="Zelle QR code">
+              </div>
+              <div class="zelle-detail-note">Please include your order number in the memo and send a screenshot of the payment confirmation.</div>
+              <div class="zelle-detail-alerts">
+                <div class="zelle-detail-alert"><strong>Payment confirmation required:</strong> Your order will only be shipped after the Zelle payment has been confirmed.</div>
+                <div class="zelle-detail-alert"><strong>Zelle memo:</strong> Please do not mention peptides or product names in the Zelle payment note. Use only your order number.</div>
+              </div>
             </div>
 
             <!-- CARD — coming soon -->
@@ -2127,10 +2144,93 @@ function goToCheckout() {
   showView('checkout-1');
 }
 
-function goToReview(e) {
+let _checkoutOrder = null;
+
+function currentOrderTotals() {
+  const subtotal = cart.reduce((s,i)=>s+i.price*i.qty,0);
+  const discountAmt = _coupon ? Math.round(subtotal * _coupon.discount_pct) / 100 : 0;
+  const total = subtotal - discountAmt;
+  const shippingVal = total >= 150 ? 0 : 9.99;
+  const grand = total + shippingVal;
+  return { subtotal, discountAmt, total, shippingVal, grand };
+}
+
+function checkoutCustomerDetails() {
+  const name    = document.getElementById('f-name')?.value.trim()   || '';
+  const email   = document.getElementById('f-email')?.value.trim()  || '';
+  const phone   = document.getElementById('f-phone')?.value.trim()  || '';
+  const street  = document.getElementById('f-street')?.value.trim() || '';
+  const city    = document.getElementById('f-city')?.value.trim()   || '';
+  const state   = document.getElementById('f-state')?.value.trim()  || '';
+  const zip     = document.getElementById('f-zip')?.value.trim()    || '';
+  return { name, email, phone, street, city, state, zip, address: `${street}, ${city}, ${state} ${zip}` };
+}
+
+async function sendPendingOrderEmail(force = false) {
+  const details = checkoutCustomerDetails();
+  const totals = currentOrderTotals();
+  const orderNum = _checkoutOrder?.orderNum || ('NP-' + Date.now().toString().slice(-6));
+  const signature = JSON.stringify({
+    details,
+    items: cart.map(i=>({name:i.name,price:i.price,qty:i.qty})),
+    coupon: _coupon ? { code: _coupon.code, discount_pct: _coupon.discount_pct } : null,
+    totals: {
+      subtotal: totals.subtotal.toFixed(2),
+      shipping: totals.shippingVal > 0 ? totals.shippingVal.toFixed(2) : 'Free',
+      grand: totals.grand.toFixed(2)
+    }
+  });
+  if (_checkoutOrder?.sent && _checkoutOrder.signature === signature && !force) return true;
+
+  const r = await fetch('/api/order', {
+    method: 'POST',
+    headers: {'Content-Type':'application/json'},
+    body: JSON.stringify({
+      customerEmail: details.email,
+      customerName: details.name,
+      items: cart.map(i=>({name:i.name,price:i.price,qty:i.qty})),
+      total: totals.subtotal.toFixed(2),
+      shipping: totals.shippingVal > 0 ? totals.shippingVal.toFixed(2) : 'Free',
+      grand: totals.grand.toFixed(2),
+      orderNum,
+      address: details.address,
+      phone: details.phone,
+      couponCode: _coupon?.code || null,
+      discountPct: _coupon?.discount_pct || null,
+      discountAmt: totals.discountAmt > 0 ? totals.discountAmt.toFixed(2) : null
+    })
+  });
+  const data = await r.json().catch(() => ({}));
+  if (!r.ok) throw new Error(data.error || 'Could not place order.');
+  _checkoutOrder = { orderNum, sent: true, signature };
+  return true;
+}
+
+async function goToReview(e) {
   e.preventDefault();
+  const btn = e.submitter || document.querySelector('#addressForm .btn-continue');
+  const original = btn ? btn.innerHTML : '';
+  if (btn) {
+    btn.disabled = true;
+    btn.innerHTML = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="animation:spin 1s linear infinite"><path d="M21 12a9 9 0 1 1-6.2-8.6"/></svg> Sending order…';
+  }
+  try {
+    await sendPendingOrderEmail();
+  } catch(e) {
+    alert(e.message || 'Could not place order.');
+    if (btn) {
+      btn.disabled = false;
+      btn.innerHTML = original;
+    }
+    return;
+  }
+  if (btn) {
+    btn.disabled = false;
+    btn.innerHTML = original;
+  }
   buildOrderSummary('orderSummary2');
   updateZelleAmount();
+  updateZelleMemo();
   document.getElementById('ack1').checked = false;
   document.getElementById('ack2').checked = false;
   document.getElementById('ackBox1').textContent = '';
@@ -2169,10 +2269,13 @@ function buildOrderSummary(containerId) {
 }
 
 function updateZelleAmount() {
-  const subtotal = cart.reduce((s,i)=>s+i.price*i.qty,0);
-  const discountAmt = _coupon ? Math.round(subtotal * _coupon.discount_pct) / 100 : 0;
-  const shippingVal = (subtotal - discountAmt) >= 150 ? 0 : 9.99;
-  document.getElementById('zelleAmount').textContent = '$' + (subtotal - discountAmt + shippingVal).toFixed(2);
+  const totals = currentOrderTotals();
+  document.getElementById('zelleAmount').textContent = '$' + totals.grand.toFixed(2);
+}
+
+function updateZelleMemo() {
+  const memo = document.getElementById('zelleMemo');
+  if (memo) memo.textContent = _checkoutOrder?.orderNum || 'Your order # will be provided';
 }
 
 function checkAck() {
@@ -2190,42 +2293,22 @@ function selectPayment(method) {
 }
 
 async function confirmOrder() {
-  const subtotal = cart.reduce((s,i)=>s+i.price*i.qty,0);
-  const discountAmt = _coupon ? Math.round(subtotal * _coupon.discount_pct) / 100 : 0;
-  const total = subtotal - discountAmt;
-  const shippingVal = total >= 150 ? 0 : 9.99;
-  const grand = total + shippingVal;
-  const orderNum = 'NP-' + Date.now().toString().slice(-6);
-  const name    = document.getElementById('f-name')?.value   || '';
-  const email   = document.getElementById('f-email')?.value  || '';
-  const phone   = document.getElementById('f-phone')?.value  || '';
-  const street  = document.getElementById('f-street')?.value || '';
-  const city    = document.getElementById('f-city')?.value   || '';
-  const state   = document.getElementById('f-state')?.value  || '';
-  const zip     = document.getElementById('f-zip')?.value    || '';
+  const { discountAmt, shippingVal, grand } = currentOrderTotals();
+  const { name } = checkoutCustomerDetails();
+  const orderNum = _checkoutOrder?.orderNum || ('NP-' + Date.now().toString().slice(-6));
 
   const btn = document.getElementById('btnConfirm');
   btn.disabled = true;
-  btn.innerHTML = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="animation:spin 1s linear infinite"><path d="M21 12a9 9 0 1 1-6.2-8.6"/></svg> Sending…';
+  btn.innerHTML = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="animation:spin 1s linear infinite"><path d="M21 12a9 9 0 1 1-6.2-8.6"/></svg> Finalizing…';
 
   try {
-    await fetch('/api/order', {
-      method: 'POST',
-      headers: {'Content-Type':'application/json'},
-      body: JSON.stringify({
-        customerEmail: email, customerName: name,
-        items: cart.map(i=>({name:i.name,price:i.price,qty:i.qty})),
-        total: subtotal.toFixed(2),
-        shipping: shippingVal > 0 ? shippingVal.toFixed(2) : 'Free',
-        grand: grand.toFixed(2),
-        orderNum,
-        address: `${street}, ${city}, ${state} ${zip}`, phone,
-        couponCode: _coupon?.code || null,
-        discountPct: _coupon?.discount_pct || null,
-        discountAmt: discountAmt > 0 ? discountAmt.toFixed(2) : null
-      })
-    });
-  } catch(e) { /* fail silently — confirmation still shows */ }
+    await sendPendingOrderEmail();
+  } catch(e) {
+    alert(e.message || 'Could not place order.');
+    btn.disabled = false;
+    btn.innerHTML = 'Confirm Payment';
+    return;
+  }
 
   document.getElementById('confirmDetail').innerHTML = `
     <div class="confirm-row"><span>Order #</span><span>${orderNum}</span></div>
@@ -2671,6 +2754,15 @@ async function applyCoupon() {
     fb.textContent = '';
     buildOrderSummary('orderSummary2');
     updateZelleAmount();
+    if (_checkoutOrder?.sent) {
+      try {
+        await sendPendingOrderEmail(true);
+        updateZelleMemo();
+      } catch(e) {
+        fb.className = 'coupon-feedback err';
+        fb.textContent = e.message || 'Could not update order email.';
+      }
+    }
     return;
   }
 
@@ -2687,6 +2779,15 @@ async function applyCoupon() {
     fb.textContent = `✓ ${data.discount_pct}% discount applied!`;
     buildOrderSummary('orderSummary2');
     updateZelleAmount();
+    if (_checkoutOrder?.sent) {
+      try {
+        await sendPendingOrderEmail(true);
+        updateZelleMemo();
+      } catch(e) {
+        fb.className = 'coupon-feedback err';
+        fb.textContent = e.message || 'Could not update order email.';
+      }
+    }
   } catch {
     _coupon = null;
     input.classList.remove('valid');
