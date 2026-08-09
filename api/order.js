@@ -135,8 +135,9 @@ export default async function handler(req, res) {
   const saved = await saveOrder({ customerEmail, customerName, items, total, shipping, grand, orderNum, address, phone, couponCode, discountPct, discountAmt });
   if (!saved.ok) return res.status(500).json({ error: saved.error || 'Could not save order' });
 
-  const KEY = process.env.RESEND_API_KEY;
-  if (!KEY) return res.status(500).json({ error: 'Email service not configured' });
+  const SMTP2GO_KEY = process.env.SMTP2GO_API_KEY;
+  const RESEND_KEY = process.env.RESEND_API_KEY;
+  if (!SMTP2GO_KEY && !RESEND_KEY) return res.status(500).json({ error: 'Email service not configured' });
 
   const origin = req.headers.origin || 'https://neopeptide.vercel.app';
   const tokenData = JSON.stringify({ v: 2, orderNum, email: customerEmail, items: items.map(i => ({ name: i.name, qty: i.qty })) });
@@ -150,14 +151,44 @@ export default async function handler(req, res) {
       <td style="padding:10px 0;border-bottom:1px solid #eee;text-align:right;font-size:14px;font-weight:700">$${(i.price * i.qty).toFixed(2)}</td>
     </tr>`).join('');
 
-  const FROM = process.env.RESEND_FROM || 'Neo Peptide USA <onboarding@resend.dev>';
+  const FROM = SMTP2GO_KEY
+    ? (process.env.SMTP2GO_SENDER || 'Neo Peptide USA <Support@neopeptideus.com>')
+    : (process.env.RESEND_FROM || 'Neo Peptide USA <onboarding@resend.dev>');
   const REPLY_TO = process.env.RESEND_REPLY_TO || process.env.ORDER_REPLY_TO_EMAIL || SUPPORT_EMAIL;
   const STORE_TO = emailList(process.env.ORDER_TO_EMAIL || process.env.CONTACT_TO_EMAIL, DEFAULT_STORE_EMAIL);
 
-  async function send(to, subject, html) {
+  async function sendViaSmtp2go(to, subject, html) {
+    const r = await fetch('https://api.smtp2go.com/v3/email/send', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'X-Smtp2go-Api-Key': SMTP2GO_KEY,
+      },
+      body: JSON.stringify({
+        sender: FROM,
+        to: Array.isArray(to) ? to : [to],
+        subject,
+        html_body: html,
+        text_body: subject,
+        custom_headers: [{ header: 'Reply-To', value: REPLY_TO }],
+      }),
+    });
+    const data = await r.json().catch(() => ({}));
+    const failed = data?.data?.failed || 0;
+    const succeeded = data?.data?.succeeded || 0;
+    if (!r.ok || failed > 0 || succeeded < 1) {
+      console.error('SMTP2GO email failed', { to, subject, status: r.status, data });
+      const failures = Array.isArray(data?.data?.failures) ? data.data.failures.join('; ') : '';
+      throw new Error(failures || data?.data?.error || data?.message || 'SMTP2GO email delivery failed');
+    }
+    return data;
+  }
+
+  async function sendViaResend(to, subject, html) {
     const r = await fetch('https://api.resend.com/emails', {
       method: 'POST',
-      headers: { 'Authorization': `Bearer ${KEY}`, 'Content-Type': 'application/json' },
+      headers: { 'Authorization': `Bearer ${RESEND_KEY}`, 'Content-Type': 'application/json' },
       body: JSON.stringify({ from: FROM, to, subject, html, reply_to: REPLY_TO })
     });
     const data = await r.json().catch(() => ({}));
@@ -166,6 +197,10 @@ export default async function handler(req, res) {
       throw new Error(data?.message || data?.error || 'Email delivery failed');
     }
     return data;
+  }
+
+  async function send(to, subject, html) {
+    return SMTP2GO_KEY ? sendViaSmtp2go(to, subject, html) : sendViaResend(to, subject, html);
   }
 
   try {
