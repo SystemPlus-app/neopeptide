@@ -244,10 +244,20 @@ export default async function handler(req, res) {
       </div>`
     );
   } catch (e) {
-    return res.status(502).json({ error: e.message || 'Could not send order notification email' });
+    console.error('Order saved but notification email failed', {
+      orderNum,
+      customerEmail,
+      storeTo: STORE_TO,
+      error: e.message || e,
+    });
+    return res.status(200).json({
+      success: true,
+      emailSent: false,
+      warning: 'Order was saved, but notification email could not be sent.',
+    });
   }
 
   if (couponCode) await incrementCouponUses(couponCode);
 
-  res.status(200).json({ success: true });
+  res.status(200).json({ success: true, emailSent: true });
 }
