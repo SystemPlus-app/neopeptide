@@ -1,5 +1,95 @@
 const BASE = process.env.SUPABASE_URL;
 const SUPABASE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_ANON_KEY;
+const DEFAULT_STORE_EMAIL = 'Support@neopeptideus.com';
+const SUPPORT_EMAIL = 'Support@neopeptideus.com';
+
+function emailList(value, fallback) {
+  return String(value || fallback || '')
+    .split(',')
+    .map(email => email.trim())
+    .filter(Boolean);
+}
+
+function toNum(v) {
+  const n = parseFloat(v);
+  return Number.isFinite(n) ? n : 0;
+}
+
+function normalized(v) {
+  return String(v || '').trim().toLowerCase().replace(/^np\s*-\s*rt3\b/, 'glp-3 (rt)');
+}
+
+async function validateInventory(items) {
+  if (!BASE || !SUPABASE_KEY) {
+    return { ok: false, error: 'Order database not configured' };
+  }
+  const r = await fetch(`${BASE}/rest/v1/inventory?select=product_name,dose,available,quantity`, {
+    headers: { apikey: SUPABASE_KEY, Authorization: `Bearer ${SUPABASE_KEY}` },
+  });
+  if (!r.ok) return { ok: false, error: 'Could not validate inventory' };
+
+  const rows = await r.json().catch(() => []);
+  if (!Array.isArray(rows)) return { ok: false, error: 'Could not validate inventory' };
+
+  for (const item of items || []) {
+    const itemName = normalized(item?.name);
+    const qty = Math.max(1, parseInt(item?.qty || 1));
+    const sku = rows.find(row => normalized(`${row.product_name} ${row.dose}`) === itemName);
+
+    if (!sku) return { ok: false, error: `${item?.name || 'Item'} is not available for purchase.` };
+    if (sku.available === false || Number(sku.quantity) <= 0) {
+      return { ok: false, error: `${item.name} is out of stock.` };
+    }
+    if (Number(sku.quantity) < qty) {
+      return { ok: false, error: `Only ${sku.quantity} unit(s) of ${item.name} are available.` };
+    }
+  }
+
+  return { ok: true };
+}
+
+async function saveOrder(order) {
+  if (!BASE || !SUPABASE_KEY || !order?.orderNum) {
+    return { ok: false, error: 'Order database not configured' };
+  }
+  try {
+    const payload = {
+      order_num: order.orderNum,
+      status: 'pending',
+      customer_name: order.customerName || '',
+      customer_email: order.customerEmail || '',
+      phone: order.phone || '',
+      address: order.address || '',
+      items: order.items || [],
+      subtotal: toNum(order.total),
+      shipping: order.shipping === 'Free' ? 0 : toNum(order.shipping),
+      discount_pct: order.discountPct ? parseInt(order.discountPct) : null,
+      discount_amt: toNum(order.discountAmt),
+      coupon_code: order.couponCode || null,
+      grand: toNum(order.grand),
+    };
+    const existing = await fetch(`${BASE}/rest/v1/orders?order_num=eq.${encodeURIComponent(order.orderNum)}&select=id&limit=1`, {
+      headers: { apikey: SUPABASE_KEY, Authorization: `Bearer ${SUPABASE_KEY}` },
+    });
+    if (!existing.ok) throw new Error('Could not check existing order');
+    const rows = await existing.json().catch(() => []);
+    const hasOrder = Array.isArray(rows) && rows.length;
+    const saved = await fetch(`${BASE}/rest/v1/orders${hasOrder ? `?id=eq.${rows[0].id}` : ''}`, {
+      method: hasOrder ? 'PATCH' : 'POST',
+      headers: {
+        apikey: SUPABASE_KEY,
+        Authorization: `Bearer ${SUPABASE_KEY}`,
+        'Content-Type': 'application/json',
+        Prefer: 'return=minimal',
+      },
+      body: JSON.stringify(payload),
+    });
+    if (!saved.ok) throw new Error('Could not save order');
+    return { ok: true };
+  } catch (e) {
+    return { ok: false, error: e.message || 'Could not save order' };
+  }
+}
 
 async function incrementCouponUses(code) {
   if (!BASE || !SUPABASE_KEY || !code) return;
@@ -39,6 +129,12 @@ export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
   const { customerEmail, customerName, items, total, shipping, grand, orderNum, address, phone, couponCode, discountPct, discountAmt } = req.body;
+  const inventory = await validateInventory(items);
+  if (!inventory.ok) return res.status(409).json({ error: inventory.error || 'An item is out of stock.' });
+
+  const saved = await saveOrder({ customerEmail, customerName, items, total, shipping, grand, orderNum, address, phone, couponCode, discountPct, discountAmt });
+  if (!saved.ok) return res.status(500).json({ error: saved.error || 'Could not save order' });
+
   const KEY = process.env.RESEND_API_KEY;
   if (!KEY) return res.status(500).json({ error: 'Email service not configured' });
 
@@ -54,20 +150,28 @@ export default async function handler(req, res) {
       <td style="padding:10px 0;border-bottom:1px solid #eee;text-align:right;font-size:14px;font-weight:700">$${(i.price * i.qty).toFixed(2)}</td>
     </tr>`).join('');
 
-  const FROM = process.env.RESEND_FROM || 'Neo Peptide USA <Support@neopeptideus.com>';
+  const FROM = process.env.RESEND_FROM || 'Neo Peptide USA <onboarding@resend.dev>';
+  const REPLY_TO = process.env.RESEND_REPLY_TO || process.env.ORDER_REPLY_TO_EMAIL || SUPPORT_EMAIL;
+  const STORE_TO = emailList(process.env.ORDER_TO_EMAIL || process.env.CONTACT_TO_EMAIL, DEFAULT_STORE_EMAIL);
 
   async function send(to, subject, html) {
     const r = await fetch('https://api.resend.com/emails', {
       method: 'POST',
       headers: { 'Authorization': `Bearer ${KEY}`, 'Content-Type': 'application/json' },
-      body: JSON.stringify({ from: FROM, to, subject, html })
+      body: JSON.stringify({ from: FROM, to, subject, html, reply_to: REPLY_TO })
     });
-    return r.json();
+    const data = await r.json().catch(() => ({}));
+    if (!r.ok) {
+      console.error('Resend email failed', { to, subject, status: r.status, data });
+      throw new Error(data?.message || data?.error || 'Email delivery failed');
+    }
+    return data;
   }
 
-  // ── Email to customer ──────────────────────────────────────────
-  await send(customerEmail, `Order ${orderNum} — Awaiting Payment Confirmation`,
-    `<div style="font-family:sans-serif;max-width:560px;margin:0 auto;padding:32px 24px;color:#111">
+  try {
+    // ── Email to customer ──────────────────────────────────────────
+    await send(customerEmail, `Order ${orderNum} — Awaiting Payment Confirmation`,
+      `<div style="font-family:sans-serif;max-width:560px;margin:0 auto;padding:32px 24px;color:#111">
       <h2 style="font-size:22px;font-weight:800;margin:0 0 6px">Hi ${customerName},</h2>
       <p style="color:#555;margin:0 0 24px;font-size:15px">We received your order. It is <strong>awaiting Zelle payment</strong> to be processed and shipped.</p>
       <div style="background:#f7f7f7;border-radius:14px;padding:24px;margin-bottom:22px">
@@ -102,12 +206,12 @@ export default async function handler(req, res) {
       <p style="color:#888;font-size:12px;line-height:1.6;margin:0">Once payment is confirmed you will receive a confirmation email and your order will ship within 48 hours.<br>Questions? Reply to this email or contact <a href="mailto:Support@neopeptideus.com" style="color:#1855E8">Support@neopeptideus.com</a>.</p>
       <hr style="border:none;border-top:1px solid #eee;margin:22px 0">
       <p style="color:#ccc;font-size:11px;margin:0;line-height:1.6">For research use only. Not for human consumption. © 2025 Neo Peptide USA</p>
-    </div>`
-  );
+      </div>`
+    );
 
-  // ── Email to store ─────────────────────────────────────────────
-  await send('Support@neopeptideus.com', `🛒 New Order ${orderNum} — ${customerName} — $${grand}`,
-    `<div style="font-family:sans-serif;max-width:560px;margin:0 auto;padding:32px 24px;color:#111">
+    // ── Email to store ─────────────────────────────────────────────
+    await send(STORE_TO, `🛒 New Order ${orderNum} — ${customerName} — $${grand}`,
+      `<div style="font-family:sans-serif;max-width:560px;margin:0 auto;padding:32px 24px;color:#111">
       <h2 style="font-size:22px;font-weight:800;margin:0 0 4px">New Order: ${orderNum}</h2>
       <p style="color:#888;font-size:13px;margin:0 0 22px">${new Date().toLocaleString()}</p>
       <div style="background:#f7f7f7;border-radius:12px;padding:18px 22px;margin-bottom:18px">
@@ -137,8 +241,11 @@ export default async function handler(req, res) {
         </a>
       </div>
       <p style="color:#aaa;font-size:12px;text-align:center;margin:0">Clicking the button sends the customer a payment confirmation email and marks the order as confirmed.</p>
-    </div>`
-  );
+      </div>`
+    );
+  } catch (e) {
+    return res.status(502).json({ error: e.message || 'Could not send order notification email' });
+  }
 
   if (couponCode) await incrementCouponUses(couponCode);
 
