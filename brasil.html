@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Neo Peptide Brasil — Catalogo</title>
+  <meta name="description" content="Catalogo Brasil da Neo Peptide com produtos de pesquisa selecionados e precos em reais.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://www.neopeptideus.com/brasil">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Neo Peptide USA">
+  <meta property="og:url" content="https://www.neopeptideus.com/brasil">
+  <meta property="og:title" content="Neo Peptide Brasil — Catalogo">
+  <meta property="og:description" content="Produtos selecionados para o Brasil, com precos em reais.">
+  <meta property="og:image" content="https://www.neopeptideus.com/og-image.jpg">
+  <meta property="og:locale" content="pt_BR">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --cream:#F5F0EB;
+      --cream2:#EDE8E0;
+      --white:#FFFFFF;
+      --ink:#0A0A0F;
+      --text:#1A1A22;
+      --sub:#55555F;
+      --muted:#8A8A98;
+      --border:#DDD8D0;
+      --blue:#1855E8;
+      --green:#2E7D52;
+      --pink:#8C2F58;
+      --red:#3E0606;
+      --site-bg:
+        radial-gradient(ellipse at 8% 22%,rgba(155,210,240,.62) 0%,transparent 44%),
+        radial-gradient(ellipse at 92% 18%,rgba(240,195,210,.55) 0%,transparent 42%),
+        radial-gradient(ellipse at 82% 88%,rgba(175,230,195,.50) 0%,transparent 40%),
+        radial-gradient(ellipse at 18% 85%,rgba(215,195,245,.42) 0%,transparent 38%),
+        radial-gradient(ellipse at 50% 50%,rgba(245,240,235,.8) 0%,transparent 60%),
+        #F5F0EB;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth;overflow-x:hidden}
+    body{background:var(--site-bg);color:var(--text);font-family:'Inter',sans-serif;overflow-x:hidden;-webkit-font-smoothing:antialiased;min-height:100vh}
+    h1,h2,h3{font-family:'Plus Jakarta Sans',sans-serif;line-height:1.05;letter-spacing:-.03em}
+    a{text-decoration:none;color:inherit}
+    img{display:block}
+    .ruo{background:#1a1a1a;color:#fff;text-align:center;font-size:12px;line-height:1.5;padding:8px 16px;letter-spacing:.03em}
+    header{position:sticky;top:0;z-index:100;background:rgba(245,240,235,.9);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border-bottom:1px solid var(--border)}
+    .header-inner{max-width:1200px;margin:0 auto;height:78px;padding:0 clamp(20px,4vw,48px);display:flex;align-items:center;justify-content:space-between;gap:20px}
+    .logo-img{height:64px;width:auto}
+    .nav-link{font-size:13px;font-weight:700;color:var(--sub);transition:color .2s}
+    .nav-link:hover{color:var(--ink)}
+    .hero{max-width:1200px;margin:0 auto;padding:76px clamp(20px,4vw,48px) 48px;display:grid;grid-template-columns:minmax(0,1.05fr) minmax(280px,.95fr);gap:44px;align-items:center}
+    .eyebrow{font-size:11px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--blue);margin-bottom:16px}
+    .hero h1{font-size:clamp(44px,7vw,92px);font-weight:900;color:var(--ink);letter-spacing:-.055em;margin-bottom:18px}
+    .hero-copy{font-size:17px;color:var(--sub);max-width:580px;line-height:1.75;margin-bottom:24px}
+    .hero-trust{display:flex;gap:10px;flex-wrap:wrap}
+    .pill{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.78);border:1.5px solid var(--border);border-radius:100px;padding:9px 14px;font-size:12px;font-weight:800;color:var(--ink)}
+    .hero-visual{position:relative;min-height:380px;display:flex;align-items:center;justify-content:center}
+    .hero-panel{position:absolute;inset:24px 0 0 28px;border-radius:28px;background:linear-gradient(135deg,rgba(255,255,255,.82),rgba(237,232,224,.7));border:1.5px solid rgba(255,255,255,.8);box-shadow:0 24px 70px rgba(0,0,0,.08)}
+    .hero-bottles{position:relative;display:flex;align-items:flex-end;justify-content:center;gap:0;width:100%}
+    .hero-bottles img{width:34%;max-width:168px;object-fit:contain;filter:drop-shadow(0 18px 30px rgba(0,0,0,.18))}
+    .hero-bottles img:nth-child(1){transform:translateX(28px) rotate(-7deg)}
+    .hero-bottles img:nth-child(2){z-index:2;width:39%;max-width:190px}
+    .hero-bottles img:nth-child(3){transform:translateX(-28px) rotate(7deg)}
+    .catalog{max-width:1200px;margin:0 auto;padding:14px clamp(20px,4vw,48px) 74px}
+    .section-head{display:flex;align-items:end;justify-content:space-between;gap:24px;margin-bottom:22px}
+    .section-head h2{font-size:clamp(26px,4vw,44px);font-weight:900;color:var(--ink)}
+    .section-head p{font-size:14px;color:var(--sub);line-height:1.6;max-width:420px}
+    .grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+    .card{background:var(--white);border:1.5px solid var(--border);border-radius:20px;overflow:hidden;display:flex;flex-direction:column;transition:border-color .2s,box-shadow .25s,transform .2s}
+    .card:hover{border-color:rgba(24,85,232,.25);box-shadow:0 10px 36px rgba(0,0,0,.09);transform:translateY(-3px)}
+    .img-wrap{min-height:214px;background:var(--cream);display:flex;align-items:center;justify-content:center;padding:30px 20px 14px}
+    .product-img{width:128px;height:170px;object-fit:contain;filter:drop-shadow(0 12px 22px rgba(0,0,0,.15))}
+    .body{padding:20px;display:flex;flex-direction:column;gap:12px;flex:1}
+    .tag{font-size:9px;font-weight:900;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+    .name{font-family:'Plus Jakarta Sans',sans-serif;font-size:20px;font-weight:900;color:var(--ink);line-height:1.15}
+    .desc{font-size:13px;line-height:1.55;color:var(--sub);min-height:60px}
+    .meta{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:auto;padding-top:14px;border-top:1px solid var(--border)}
+    .dose{font-size:12px;font-weight:800;color:var(--sub)}
+    .price{font-family:'Plus Jakarta Sans',sans-serif;font-size:24px;font-weight:900;color:var(--ink);white-space:nowrap}
+    .cta-band{background:#0A0A0F;color:#fff}
+    .cta-inner{max-width:1200px;margin:0 auto;padding:42px clamp(20px,4vw,48px);display:flex;align-items:center;justify-content:space-between;gap:24px}
+    .cta-inner h2{font-size:clamp(24px,3vw,38px);font-weight:900;margin-bottom:8px}
+    .cta-inner p{color:rgba(255,255,255,.68);font-size:14px;line-height:1.7;max-width:580px}
+    .btn{display:inline-flex;align-items:center;justify-content:center;border-radius:14px;background:#fff;color:#0A0A0F;font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;font-weight:900;padding:15px 22px;white-space:nowrap;transition:transform .15s,background .2s}
+    .btn:hover{transform:translateY(-1px);background:#EDE8E0}
+    footer{padding:38px clamp(20px,4vw,48px);text-align:center}
+    .footer-note{font-size:11px;color:var(--muted);line-height:1.8;max-width:760px;margin:0 auto}
+    @media(max-width:980px){
+      .hero{grid-template-columns:1fr;padding-top:54px}
+      .hero-visual{min-height:310px;order:-1}
+      .grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+    }
+    @media(max-width:620px){
+      .header-inner{height:70px}
+      .logo-img{height:58px}
+      .hero{padding-bottom:36px}
+      .hero h1{font-size:clamp(42px,14vw,62px)}
+      .hero-visual{min-height:260px}
+      .hero-panel{inset:18px 0 0 14px;border-radius:22px}
+      .grid{grid-template-columns:1fr}
+      .section-head{display:block}
+      .section-head p{margin-top:10px}
+      .cta-inner{display:block}
+      .btn{width:100%;margin-top:22px}
+      .desc{min-height:auto}
+    }
+  </style>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-CMW0N5YZVK"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-CMW0N5YZVK');
+  </script>
+</head>
+<body>
+  <div class="ruo">For Research Use Only (RUO) — Produtos fornecidos exclusivamente para pesquisa laboratorial. Nao indicado para uso humano ou veterinario.</div>
+  <header>
+    <div class="header-inner">
+      <a href="/" aria-label="Neo Peptide home">
+        <img class="logo-img" src="fotos/logo/logo transparente.png" alt="Neo Peptide">
+      </a>
+      <a class="nav-link" href="/">Voltar ao site</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div>
+        <p class="eyebrow">Neo Peptide Brasil</p>
+        <h1>Catalogo Brasil.</h1>
+        <p class="hero-copy">Produtos selecionados com valores em reais, organizados em formato de catalogo para consulta rapida.</p>
+        <div class="hero-trust" aria-label="Destaques">
+          <span class="pill">GMP Certified</span>
+          <span class="pill">≥99% Purity</span>
+          <span class="pill">COA Every Batch</span>
+        </div>
+      </div>
+      <div class="hero-visual" aria-hidden="true">
+        <div class="hero-panel"></div>
+        <div class="hero-bottles">
+          <img src="fotos/bottles/produtos%20bottle%20/Tesamorelin.png" alt="">
+          <img src="fotos/bottles/produtos%20bottle%20/NP%20-%20RT3.png" alt="">
+          <img src="fotos/bottles/produtos%20bottle%20/KLOW2.png" alt="">
+        </div>
+      </div>
+    </section>
+
+    <section class="catalog" aria-labelledby="catalog-title">
+      <div class="section-head">
+        <h2 id="catalog-title">Produtos disponiveis</h2>
+        <p>Precos atualizados para o Brasil. As imagens seguem os frascos oficiais usados no catalogo Neo Peptide.</p>
+      </div>
+
+      <div class="grid">
+        <article class="card">
+          <div class="img-wrap">
+            <img class="product-img" src="fotos/bottles/produtos%20bottle%20/Tesamorelin.png" alt="Tesamorelin">
+          </div>
+          <div class="body">
+            <p class="tag">GH Releasing Factor</p>
+            <h3 class="name">Tesamorelin</h3>
+            <p class="desc">Peptideo para pesquisa de sinalizacao GH/IGF-1 e estudos metabolicos laboratoriais.</p>
+            <div class="meta">
+              <span class="dose">Catalogo Brasil</span>
+              <strong class="price">R$1300</strong>
+            </div>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="img-wrap">
+            <img class="product-img" src="fotos/bottles/produtos%20bottle%20/KLOW2.png" alt="Klow">
+          </div>
+          <div class="body">
+            <p class="tag">Recovery / Skin Blend</p>
+            <h3 class="name">Klow</h3>
+            <p class="desc">Blend de pesquisa com BPC-157, GHK-Cu, TB-500 e KPV.</p>
+            <div class="meta">
+              <span class="dose">Catalogo Brasil</span>
+              <strong class="price">R$1300</strong>
+            </div>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="img-wrap">
+            <img class="product-img" src="fotos/bottles/produtos%20bottle%20/NP%20-%20TZ2.png" alt="Tizer">
+          </div>
+          <div class="body">
+            <p class="tag">Dual GIP + GLP-1 Agonist</p>
+            <h3 class="name">Tizer</h3>
+            <p class="desc">Composto de pesquisa voltado a estudos de incretina, GLP-1 e metabolismo.</p>
+            <div class="meta">
+              <span class="dose">Catalogo Brasil</span>
+              <strong class="price">R$1100</strong>
+            </div>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="img-wrap">
+            <img class="product-img" src="fotos/bottles/produtos%20bottle%20/NP%20-%20RT3.png" alt="Reta">
+          </div>
+          <div class="body">
+            <p class="tag">Triple Receptor Agonist</p>
+            <h3 class="name">Reta</h3>
+            <p class="desc">Composto de pesquisa para estudos de agonismo triplo e vias metabolicas.</p>
+            <div class="meta">
+              <span class="dose">Catalogo Brasil</span>
+              <strong class="price">R$1300</strong>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="cta-band">
+      <div class="cta-inner">
+        <div>
+          <h2>Pedidos Brasil</h2>
+          <p>Para disponibilidade, lote e informacoes de envio, fale com a equipe Neo Peptide informando o produto desejado.</p>
+        </div>
+        <a class="btn" href="mailto:neopeptides@outlook.com?subject=Pedido%20Brasil%20-%20Neo%20Peptide">Solicitar pedido</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p class="footer-note">Research Use Only. Os produtos apresentados nesta pagina sao destinados exclusivamente a pesquisa laboratorial e nao se destinam a diagnostico, tratamento, prevencao de doencas ou uso humano/veterinario.</p>
+  </footer>
+</body>
+</html>
