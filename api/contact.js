@@ -1,16 +1,11 @@
 // api/contact.js — Contact widget lead notification
-const RESEND_KEY = process.env.RESEND_API_KEY;
-const FROM       = process.env.RESEND_FROM || 'Neo Peptide USA <Support@neopeptideus.com>';
+import { defaultSender, sendEmail as sendSmtp2goEmail } from './_email.js';
+
+const FROM       = defaultSender();
 const TO         = process.env.CONTACT_TO_EMAIL || 'support@peptideus.com';
 
 async function sendEmail(to, subject, html) {
-  if (!RESEND_KEY) throw new Error('RESEND_API_KEY is not configured');
-  const r = await fetch('https://api.resend.com/emails', {
-    method: 'POST',
-    headers: { Authorization: `Bearer ${RESEND_KEY}`, 'Content-Type': 'application/json' },
-    body: JSON.stringify({ from: FROM, to, subject, html }),
-  });
-  if (!r.ok) throw new Error(await r.text());
+  return sendSmtp2goEmail({ to, subject, html, sender: FROM });
 }
 
 function escapeHtml(str) {

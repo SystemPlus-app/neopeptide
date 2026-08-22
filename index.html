@@ -989,11 +989,11 @@
 
   <!-- PRODUCT LINEUP -->
   <section style="padding:0;margin:0;overflow:hidden;display:block;position:relative">
-    <a href="https://www.instagram.com/neo_peptide_usa?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" rel="noopener" style="display:block;position:relative">
+    <a href="https://www.instagram.com/neo.pep?utm_source=qr" target="_blank" rel="noopener" style="display:block;position:relative">
       <img src="fotos/bottles/D76449DB-F669-4B73-A2BA-D4D3D18BFCD7.png" alt="Neo Peptide Product Lineup" style="width:100%;display:block;object-fit:cover">
       <div style="position:absolute;bottom:32px;left:50%;transform:translateX(-50%);background:rgba(255,255,255,0.15);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.3);border-radius:50px;padding:12px 32px;color:#fff;font-size:15px;font-weight:600;letter-spacing:0.06em;white-space:nowrap;display:flex;align-items:center;gap:10px">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
-        @neo_peptide_usa
+        @neo.pep
       </div>
     </a>
   </section>
@@ -1007,7 +1007,7 @@
         </div>
         <p class="footer-desc">Premium research compounds for laboratory use. GMP certified. Made in the USA.</p>
         <div class="footer-social">
-          <a class="social-btn" href="https://instagram.com/neo_peptides" target="_blank" title="Instagram">
+          <a class="social-btn" href="https://neowellness.blog" target="_blank" rel="noopener" title="Instagram">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
           </a>
           <a class="social-btn" href="mailto:neopeptides@outlook.com" title="Email">
@@ -1034,7 +1034,7 @@
           <li><a href="#">About Us</a></li>
           <li><a href="#">Lab Standards</a></li>
           <li><a href="mailto:neopeptides@outlook.com">Contact</a></li>
-          <li><a href="https://www.instagram.com/neo_peptide_usa?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" rel="noopener">Instagram</a></li>
+          <li><a href="https://neowellness.blog" target="_blank" rel="noopener">Instagram</a></li>
         </ul>
       </div>
       <div class="footer-col">
@@ -1295,6 +1295,7 @@
           <span class="step-label">Review</span>
         </div>
       </div>
+      <div id="emailWarningBox" style="display:none;background:#FFF7ED;border:1px solid #FED7AA;border-radius:12px;padding:14px 18px;margin-bottom:18px;font-size:13px;line-height:1.6;color:#7C2D12"></div>
       <div class="review-layout">
         <div class="review-box">
           <!-- COUPON -->
@@ -1459,7 +1460,7 @@
         <strong>Add Bacteriostatic Water</strong>
         <span>Required for reconstitution · $10</span>
       </div>
-      <button class="cart-upsell-add" onclick="addToCart('Bacteriostatic Water',10,{innerHTML:''})">+ Add</button>
+      <button class="cart-upsell-add" onclick="addToCart('Bacteriostatic Water 10ml',10,this)">+ Add</button>
     </div>
     <div class="cart-total-row">
       <span>Total</span>
@@ -1619,9 +1620,10 @@ const PROGRAMS = {
     bgClass: 'glp1',
     bannerImg: pImg('NP - RT3'),
     products: [
-      { name:'NP - RT3',               sub:'TRIPLE RECEPTOR AGONIST',    img:pImg('NP - RT3'),                 doses:[{l:'10mg',p:80},{l:'15mg',p:125},{l:'20mg',p:155}] },
-      { name:'NP - TZ2',                sub:'DUAL GIP+GLP-1 AGONIST',     img:pImg('NP - TZ2'),                  doses:[{l:'20mg',p:150},{l:'30mg',p:210}] },
-      { name:'AOD 9604',                 sub:'FAT LOSS FRAGMENT',           img:pImg('AOD 9604'),                   doses:[{l:'5mg',p:45}] },
+      { name:'NP - RT3',               sub:'RETATRUTIDE / TRIPLE RECEPTOR AGONIST', img:pImg('NP - RT3'),        doses:[{l:'10mg',p:80},{l:'15mg',p:125},{l:'20mg',p:155},{l:'40mg',p:0,outOfStock:true},{l:'60mg',p:0,outOfStock:true}] },
+      { name:'NP - RT3 5mg + Cagrilintide 5mg', sub:'TRIPLE AGONIST + AMYLIN ANALOGUE', img:pImg('NP - RT3 5mg + Cagrilintide 5mg'), doses:[], price:0, outOfStock:true },
+      { name:'NP - TZ2',               sub:'TIRZEPATIDE / DUAL GIP+GLP-1 AGONIST', img:pImg('NP - TZ2'),          doses:[{l:'20mg',p:150},{l:'30mg',p:210},{l:'40mg',p:0,outOfStock:true},{l:'60mg',p:0,outOfStock:true},{l:'100mg',p:0,outOfStock:true}] },
+      { name:'AOD 9604',               sub:'FAT LOSS FRAGMENT',           img:pImg('AOD 9604'),                   doses:[{l:'5mg',p:45},{l:'10mg',p:0,outOfStock:true}] },
       { name:'Cargrilintide',            sub:'AMYLIN ANALOGUE PEPTIDE',     img:pImg('Cargrilintide'),              doses:[{l:'5mg',p:60}] },
       { name:'5-Amino 1MQ',             sub:'NNMT INHIBITOR',              img:pImg('5-Amino 1MQ'),                doses:[{l:'50mg',p:75}] },
       { name:'SLU-PP-322',              sub:'ERR AGONIST',                 img:pImg('SLU-PP-322'),                 doses:[{l:'5mg',p:70}] },
@@ -1638,8 +1640,8 @@ const PROGRAMS = {
     bannerImg: pImg('NAD+'),
     products: [
       { name:'NAD+',    sub:'CELLULAR ENERGY COENZYME',        img:pImg('NAD+'),   doses:[{l:'500mg',p:80},{l:'1000mg',p:120}] },
-      { name:'SS-31',   sub:'MITOCHONDRIAL PEPTIDE',           img:pImg('SS-31'),  doses:[{l:'10mg',p:49}] },
-      { name:'Mots-C',  sub:'MITOCHONDRIAL DERIVED PEPTIDE',   img:pImg('Mots-C'), doses:[{l:'10mg',p:43}] },
+      { name:'SS-31',   sub:'MITOCHONDRIAL PEPTIDE',           img:pImg('SS-31'),  doses:[{l:'10mg',p:49},{l:'50mg',p:0,outOfStock:true}] },
+      { name:'Mots-C',  sub:'MITOCHONDRIAL DERIVED PEPTIDE',   img:pImg('Mots-C'), doses:[{l:'10mg',p:43},{l:'40mg',p:0,outOfStock:true}] },
       { name:'VIP',     sub:'VASOACTIVE INTESTINAL PEPTIDE',   img:pImg('VIP'),    doses:[{l:'10mg',p:60}] },
       { name:'KPV',     sub:'ANTI-INFLAMMATORY TRIPEPTIDE',    img:pImg('KPV'),    doses:[{l:'10mg',p:65}] },
     ]
@@ -1674,7 +1676,7 @@ const PROGRAMS = {
     bgClass: 'microdose',
     bannerImg: pImg('TB-500 + BPC-157'),
     products: [
-      { name:'TB-500 + BPC-157', sub:'RECOVERY PEPTIDE BLEND',      img:pImg('TB-500 + BPC-157'), doses:[{l:'10mg',p:60}] },
+      { name:'TB-500 + BPC-157', sub:'RECOVERY PEPTIDE BLEND',      img:pImg('TB-500 + BPC-157'), doses:[{l:'10mg + 10mg',p:60}] },
       { name:'TB-500',           sub:'THYMOSIN BETA-4 FRAGMENT',     img:pImg('TB-500'),           doses:[], price:55, outOfStock:true },
       { name:'Glutathione',      sub:'ANTIOXIDANT SUPPORT',          img:pImg('Glutathione atualizado'),    doses:[{l:'1500mg',p:0}] },
     ]
@@ -1707,6 +1709,8 @@ const PROGRAMS = {
       { name:'Selank',   sub:'ANXIOLYTIC PEPTIDE',        img:pImg('Selank'),   doses:[{l:'5mg',p:32.90}] },
       { name:'Pinealon', sub:'NEUROPROTECTIVE PEPTIDE',   img:pImg('Pinealon'), doses:[{l:'10mg',p:50}] },
       { name:'Semax',    sub:'NOOTROPIC PEPTIDE ANALOGUE',img:pImg('Semax'),    doses:[{l:'10mg',p:59}] },
+      { name:'Epithalon', sub:'TELOMERE PEPTIDE',         img:pImg('Epithalon'), doses:[{l:'10mg',p:65},{l:'50mg',p:200}] },
+      { name:'Semax 10mg + Selank 10mg', sub:'NOOTROPIC + ANXIOLYTIC BLEND', img:pImg('Semax 10mg + Selank 10mg'), doses:[], price:0, outOfStock:true },
     ]
   },
   essentials: {
@@ -1719,7 +1723,7 @@ const PROGRAMS = {
     bgClass: 'essentials',
     bannerImg: pImg('Bacteriostatic Water'),
     products: [
-      { name:'Bacteriostatic Water', sub:'RECONSTITUTION SOLUTION', img:pImg('Bacteriostatic Water'), doses:[{l:'10ml',p:10},{l:'30ml',p:20}] },
+      { name:'Bacteriostatic Water', sub:'RECONSTITUTION SOLUTION', img:pImg('Bacteriostatic Water'), doses:[{l:'5ml',p:6},{l:'10ml',p:10},{l:'30ml',p:20}] },
     ]
   },
   sexual: {
@@ -1759,6 +1763,22 @@ document.querySelectorAll('[data-cat]').forEach(el => {
   if (CATEGORY_NAMES[key]) el.textContent = CATEGORY_NAMES[key];
 });
 
+function productPriceText(price) {
+  const n = Number(price);
+  if (!Number.isFinite(n) || n <= 0) return 'Contact';
+  return '$' + formatPrice(n);
+}
+
+function isDoseUnavailable(dose) {
+  return dose && dose.outOfStock === true;
+}
+
+function initialDoseIndex(doses) {
+  if (!Array.isArray(doses) || !doses.length) return -1;
+  const availableIndex = doses.findIndex(d => !isDoseUnavailable(d));
+  return availableIndex >= 0 ? availableIndex : 0;
+}
+
 function renderCatalog() {
   const sections = document.getElementById('catSections');
   sections.innerHTML = '';
@@ -1772,11 +1792,12 @@ function renderCatalog() {
       const idx = globalIdx++;
       _pdmData.push({product: pr, sectionId: prog.id});
       const hasDoses = pr.doses && pr.doses.length > 0;
-      const initPrice = hasDoses ? pr.doses[0].p : pr.price;
+      const activeDoseIndex = initialDoseIndex(pr.doses);
+      const initPrice = hasDoses ? pr.doses[activeDoseIndex].p : pr.price;
       const isOOS = pr.outOfStock || false;
       const hasMulti = hasDoses && pr.doses.length > 1;
-      const priceStr = Number.isInteger(initPrice) ? initPrice : initPrice.toFixed(2);
-      const dosePills = hasDoses ? `<div class="pc2-dose-wrap">${pr.doses.map((d,di)=>`<button class="dose-pill${di===0?' active':''}" data-dose="${d.l}" data-price="${d.p}" onclick="selectDose(this)">${d.l}</button>`).join('')}</div>` : '';
+      const priceStr = productPriceText(initPrice);
+      const dosePills = hasDoses ? `<div class="pc2-dose-wrap">${pr.doses.map((d,di)=>`<button class="dose-pill${di===activeDoseIndex?' active':''}${isDoseUnavailable(d)?' oos-dose':''}" data-dose="${d.l}" data-price="${d.p}" data-local-oos="${isDoseUnavailable(d) ? 'true' : 'false'}" ${isDoseUnavailable(d)?'disabled title="Out of Stock"':''} onclick="selectDose(this)">${d.l}</button>`).join('')}</div>` : '';
       return `<div class="pc2 reveal" data-price="${initPrice}">
         <div class="pc2-top">
           <div class="pc2-name">${pr.name}</div>
@@ -1791,7 +1812,7 @@ function renderCatalog() {
         <div class="pc2-foot">
           <div class="pc2-price-side">
             <div class="pc2-from">${hasMulti ? 'FROM' : 'PRICE'}</div>
-            <div class="pc2-price">$${priceStr}</div>
+            <div class="pc2-price">${priceStr}</div>
           </div>
           <button class="pc2-add-btn" ${isOOS ? 'disabled' : ''} onclick="addToCartPC2(this)">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
@@ -1859,18 +1880,19 @@ function showProgram(id, push = true) {
   grid.innerHTML = p.products.map((pr, i) => {
     _pdmData.push({product: pr, sectionId: id});
     const hasDoses = pr.doses && pr.doses.length > 0;
-    const initPrice = hasDoses ? pr.doses[0].p : pr.price;
+    const activeDoseIndex = initialDoseIndex(pr.doses);
+    const initPrice = hasDoses ? pr.doses[activeDoseIndex].p : pr.price;
     const isOOS = pr.outOfStock || false;
     const hasMulti = hasDoses && pr.doses.length > 1;
 
     const dosePills = hasDoses ? `
       <div class="pc2-dose-wrap">
         ${pr.doses.map((d, di) => `
-          <button class="dose-pill${di===0?' active':''}" data-dose="${d.l}" data-price="${d.p}" onclick="selectDose(this)">${d.l}</button>
+          <button class="dose-pill${di===activeDoseIndex?' active':''}${isDoseUnavailable(d)?' oos-dose':''}" data-dose="${d.l}" data-price="${d.p}" data-local-oos="${isDoseUnavailable(d) ? 'true' : 'false'}" ${isDoseUnavailable(d)?'disabled title="Out of Stock"':''} onclick="selectDose(this)">${d.l}</button>
         `).join('')}
       </div>` : '';
 
-    const priceStr = Number.isInteger(initPrice) ? initPrice : initPrice.toFixed(2);
+    const priceStr = productPriceText(initPrice);
 
     return `
       <div class="pc2 reveal" style="transition-delay:${i*0.06}s" data-price="${initPrice}">
@@ -1887,7 +1909,7 @@ function showProgram(id, push = true) {
         <div class="pc2-foot">
           <div class="pc2-price-side">
             <div class="pc2-from">${hasMulti ? 'FROM' : 'PRICE'}</div>
-            <div class="pc2-price">$${priceStr}</div>
+            <div class="pc2-price">${priceStr}</div>
           </div>
           <button class="pc2-add-btn" ${isOOS ? 'disabled' : ''} onclick="addToCartPC2(this)">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
@@ -1914,7 +1936,7 @@ function selectDose(btn) {
   const price = parseFloat(btn.dataset.price);
   card.dataset.price = price;
   const priceEl = card.querySelector('.pc2-price');
-  priceEl.textContent = '$' + (Number.isInteger(price) ? price : price.toFixed(2));
+  priceEl.textContent = '$' + formatPrice(price);
 }
 
 function addToCartPC2(btn) {
@@ -1922,7 +1944,7 @@ function addToCartPC2(btn) {
   const name = card.querySelector('.pc2-name').textContent;
   const activePill = card.querySelector('.dose-pill.active');
   const dose = activePill ? activePill.dataset.dose : '';
-  const price = parseFloat(card.dataset.price);
+  const price = activePill ? parseFloat(activePill.dataset.price) : parseFloat(card.dataset.price);
   const fullName = dose ? name + ' ' + dose : name;
   addToCart(fullName, price, btn);
 }
@@ -1936,6 +1958,7 @@ let _pdmSlide = 0;
 
 const PRODUCT_DESCS = {
   'NP - RT3':                  'Research-grade triple GLP receptor agonist formulated for in-vitro metabolic, appetite regulation, and weight management studies.',
+  'NP - RT3 5mg + Cagrilintide 5mg': 'Combined triple agonist and amylin analogue label option for incretin, satiety signaling, and metabolic pathway research.',
   'NP - TZ2':                   'Dual GIP and GLP-1 receptor agonist for research into incretin signaling, insulin sensitivity, and metabolic homeostasis.',
   'AOD 9604':                    'C-terminal fragment of hGH engineered for lipid metabolism and adipocyte research without IGF-1 interactions.',
   'Cargrilintide':               'Acylated amylin analogue for research on satiety signaling, gastric motility, and glucose homeostasis.',
@@ -1963,6 +1986,8 @@ const PRODUCT_DESCS = {
   'Selank':                      'Anxiolytic peptide analogue for research on GABA-A modulation, stress response, and cognitive performance.',
   'Pinealon':                    'Tripeptide derived from the pineal gland for research on neuroprotection, circadian rhythm regulation, and cognitive longevity.',
   'Semax':                       'Synthetic ACTH analogue nootropic peptide for research on cognitive enhancement, memory consolidation, and neuroprotection.',
+  'Epithalon':                   'Tetrapeptide compound for research involving cellular aging, telomere-related pathways, and neuroendocrine signaling models.',
+  'Semax 10mg + Selank 10mg':    'Nootropic and anxiolytic peptide blend label option for cognitive, stress-response, and neuro-signaling research models.',
   'Bacteriostatic Water':        '0.9% benzyl alcohol preserved water for peptide reconstitution and research compound preparation.',
   'PT-141':                      'Bremelanotide melanocortin receptor agonist for research on central sexual arousal pathways, libido, and sexual function in both male and female models.',
 };
@@ -1983,9 +2008,10 @@ function openPDM(idx) {
   const prog = PROGRAMS[sectionId];
   const hasDoses = pr.doses && pr.doses.length > 0;
   const hasMulti = hasDoses && pr.doses.length > 1;
-  const initPrice = hasDoses ? pr.doses[0].p : pr.price;
+  const activeDoseIndex = initialDoseIndex(pr.doses);
+  const initPrice = hasDoses ? pr.doses[activeDoseIndex].p : pr.price;
   const isOOS = pr.outOfStock || false;
-  const priceStr = Number.isInteger(initPrice) ? initPrice : initPrice.toFixed(2);
+  const priceStr = productPriceText(initPrice);
   const desc = PRODUCT_DESCS[pr.name] || '';
 
   const coaUrl = _coaMap[_slugify(pr.name)] || null;
@@ -2028,12 +2054,12 @@ function openPDM(idx) {
     ${desc ? `<p class="pdm-desc">${desc}</p>` : ''}
     <div class="pdm-price-row">
       ${hasMulti ? '<span class="pdm-from">FROM</span>' : ''}
-      <div class="pdm-price" id="pdmPrice">$${priceStr}</div>
+      <div class="pdm-price" id="pdmPrice">${priceStr}</div>
     </div>
     ${hasDoses ? `
       <div class="pdm-sec-label">Dosage</div>
       <div class="pdm-dpills">
-        ${pr.doses.map((d,di)=>`<button class="pdm-dpill${di===0?' active':''}" data-dose="${d.l}" data-price="${d.p}" onclick="pdmSelectDose(this)">${d.l}</button>`).join('')}
+        ${pr.doses.map((d,di)=>`<button class="pdm-dpill${di===activeDoseIndex?' active':''}${isDoseUnavailable(d)?' oos-dose':''}" data-dose="${d.l}" data-price="${d.p}" data-local-oos="${isDoseUnavailable(d) ? 'true' : 'false'}" ${isDoseUnavailable(d)?'disabled title="Out of Stock"':''} onclick="pdmSelectDose(this)">${d.l}</button>`).join('')}
       </div>` : ''}
     <div class="pdm-bottom">
       <div class="pdm-qty-row">
@@ -2055,38 +2081,77 @@ function openPDM(idx) {
     </div>`;
 
   const box = document.getElementById('pdmBox');
+  box.dataset.product = pr.name.toLowerCase();
   box.dataset.price = initPrice;
   box.dataset.qty = 1;
   _pdmSlide = 0;
   document.getElementById('pdmOverlay').classList.add('open');
   document.body.style.overflow = 'hidden';
 
-  if (hasDoses && Object.keys(_inv).length) {
-    const pnLower = pr.name.toLowerCase();
-    let firstAvail = null;
-    let allOOS = true;
-    document.querySelectorAll('.pdm-dpill').forEach(pill => {
-      const sku = _inv[pnLower + '|' + (pill.dataset.dose || '').toLowerCase()];
-      if (sku && sku.available === false) {
-        pill.classList.add('oos-dose');
-        pill.disabled = true;
-      } else {
-        allOOS = false;
-        if (!firstAvail) firstAvail = pill;
+  applyInventoryToOpenPDM();
+}
+
+function applyInventoryToOpenPDM() {
+  const box = document.getElementById('pdmBox');
+  if (!box || !document.getElementById('pdmOverlay')?.classList.contains('open')) return;
+  const productName = box.dataset.product;
+  const pills = Array.from(document.querySelectorAll('.pdm-dpill'));
+  if (!productName || !Object.keys(_inv).length) return;
+
+  if (!pills.length) {
+    const sku = Object.entries(_inv).find(([key]) => key.startsWith(productName + '|'))?.[1];
+    if (!sku) return;
+    const price = parseFloat(sku.price);
+    if (Number.isFinite(price) && price > 0) {
+      box.dataset.price = price;
+      const priceEl = document.getElementById('pdmPrice');
+      if (priceEl) priceEl.textContent = '$' + formatPrice(price);
+    }
+    const addBtn = document.querySelector('.pdm-add-btn');
+    if (addBtn && !isSkuUnavailable(sku)) {
+      addBtn.disabled = false;
+      addBtn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>Add to Cart';
+    }
+    return;
+  }
+
+  let firstAvail = null;
+  let allOOS = true;
+  pills.forEach(pill => {
+    const sku = _inv[productName + '|' + (pill.dataset.dose || '').toLowerCase()];
+    const localOOS = pill.dataset.localOos === 'true' && !sku;
+    if (sku && sku.price !== undefined) {
+      const p = parseFloat(sku.price);
+      pill.dataset.price = p;
+      if (pill.classList.contains('active')) {
+        box.dataset.price = p;
+        document.getElementById('pdmPrice').textContent = '$' + formatPrice(p);
       }
-    });
-    const activePill = document.querySelector('.pdm-dpill.active');
-    if (activePill && activePill.classList.contains('oos-dose') && firstAvail) {
-      document.querySelectorAll('.pdm-dpill').forEach(p => p.classList.remove('active'));
-      firstAvail.classList.add('active');
-      const p = parseFloat(firstAvail.dataset.price);
-      box.dataset.price = p;
-      document.getElementById('pdmPrice').textContent = '$' + (Number.isInteger(p) ? p : p.toFixed(2));
     }
-    if (allOOS) {
-      const addBtn = document.querySelector('.pdm-add-btn');
-      if (addBtn) { addBtn.disabled = true; addBtn.innerHTML = 'Out of Stock'; }
+    if (localOOS || isSkuUnavailable(sku)) {
+      pill.classList.add('oos-dose');
+      pill.disabled = true;
+      pill.title = 'Out of Stock';
+    } else {
+      pill.classList.remove('oos-dose');
+      pill.disabled = false;
+      pill.title = '';
+      allOOS = false;
+      if (!firstAvail) firstAvail = pill;
     }
+  });
+
+  const activePill = document.querySelector('.pdm-dpill.active');
+  if (activePill && activePill.classList.contains('oos-dose') && firstAvail) {
+    pills.forEach(p => p.classList.remove('active'));
+    firstAvail.classList.add('active');
+    const p = parseFloat(firstAvail.dataset.price);
+    box.dataset.price = p;
+    document.getElementById('pdmPrice').textContent = '$' + formatPrice(p);
+  }
+  if (allOOS) {
+    const addBtn = document.querySelector('.pdm-add-btn');
+    if (addBtn) { addBtn.disabled = true; addBtn.innerHTML = 'Out of Stock'; }
   }
 }
 
@@ -2108,7 +2173,7 @@ function pdmSelectDose(btn) {
   btn.classList.add('active');
   const price = parseFloat(btn.dataset.price);
   document.getElementById('pdmBox').dataset.price = price;
-  document.getElementById('pdmPrice').textContent = '$' + (Number.isInteger(price) ? price : price.toFixed(2));
+  document.getElementById('pdmPrice').textContent = '$' + formatPrice(price);
 }
 
 function pdmQty(delta) {
@@ -2122,9 +2187,13 @@ function pdmAddCart(name) {
   const box = document.getElementById('pdmBox');
   const activePill = document.querySelector('.pdm-dpill.active');
   const dose = activePill ? activePill.dataset.dose : '';
-  const price = parseFloat(box.dataset.price);
+  const price = activePill ? parseFloat(activePill.dataset.price) : parseFloat(box.dataset.price);
   const qty = parseInt(box.dataset.qty || 1);
   const fullName = dose ? name + ' ' + dose : name;
+  if (!Number.isFinite(price) || price <= 0) {
+    alert('This product price is still loading. Please try again in a moment.');
+    return;
+  }
   const ex = cart.find(i => i.name === fullName);
   if (ex) ex.qty += qty; else cart.push({name: fullName, price, qty, img: getProductImg(name)});
   refreshCart();
@@ -2133,6 +2202,7 @@ function pdmAddCart(name) {
 }
 
 function goToCheckout() {
+  if (!cartIsAvailable()) return;
   if (!localStorage.getItem('np_lead_submitted')) {
     _pendingCheckout = true;
     closeCart();
@@ -2167,6 +2237,8 @@ function checkoutCustomerDetails() {
 }
 
 async function sendPendingOrderEmail(force = false) {
+  if (!cartIsAvailable()) return false;
+
   const details = checkoutCustomerDetails();
   const totals = currentOrderTotals();
   const orderNum = _checkoutOrder?.orderNum || ('NP-' + Date.now().toString().slice(-6));
@@ -2202,17 +2274,18 @@ async function sendPendingOrderEmail(force = false) {
   });
   const data = await r.json().catch(() => ({}));
   if (!r.ok) throw new Error(data.error || 'Could not place order.');
-  _checkoutOrder = { orderNum, sent: true, signature };
+  _checkoutOrder = { orderNum, sent: true, signature, emailWarning: data.emailWarning || null };
   return true;
 }
 
 async function goToReview(e) {
   e.preventDefault();
+  if (!cartIsAvailable()) return;
   const btn = e.submitter || document.querySelector('#addressForm .btn-continue');
   const original = btn ? btn.innerHTML : '';
   if (btn) {
     btn.disabled = true;
-    btn.innerHTML = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="animation:spin 1s linear infinite"><path d="M21 12a9 9 0 1 1-6.2-8.6"/></svg> Sending order…';
+    btn.innerHTML = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="animation:spin 1s linear infinite"><path d="M21 12a9 9 0 1 1-6.2-8.6"/></svg> Creating order…';
   }
   try {
     await sendPendingOrderEmail();
@@ -2229,6 +2302,7 @@ async function goToReview(e) {
     btn.innerHTML = original;
   }
   buildOrderSummary('orderSummary2');
+  showEmailWarning();
   updateZelleAmount();
   updateZelleMemo();
   document.getElementById('ack1').checked = false;
@@ -2237,6 +2311,18 @@ async function goToReview(e) {
   document.getElementById('ackBox2').textContent = '';
   document.getElementById('btnConfirm').disabled = true;
   showView('checkout-2');
+}
+
+// The order is saved even when the confirmation email fails to send, so tell the
+// customer instead of letting them wait for an email that will never arrive.
+function showEmailWarning() {
+  const box = document.getElementById('emailWarningBox');
+  if (!box) return;
+  const warning = _checkoutOrder?.emailWarning;
+  if (!warning) { box.style.display = 'none'; box.textContent = ''; return; }
+  console.warn('Order email warning:', warning);
+  box.innerHTML = `<strong>Your order ${_checkoutOrder.orderNum} was received, but we could not send the confirmation email.</strong><br>Please write down your order number and email <a href="mailto:Support@neopeptideus.com" style="color:#7C2D12">Support@neopeptideus.com</a> so we can confirm it manually.`;
+  box.style.display = 'block';
 }
 
 function buildOrderSummary(containerId) {
@@ -2331,6 +2417,7 @@ async function confirmOrder() {
       <div class="confirm-zelle-alerts">
         <div class="confirm-zelle-alert"><strong>Payment confirmation required:</strong> Your order will only be shipped after the Zelle payment has been confirmed.</div>
         <div class="confirm-zelle-alert"><strong>Zelle memo:</strong> Please do not mention peptides or product names in the Zelle payment note. Use only your order number.</div>
+        ${_checkoutOrder?.emailWarning ? '<div class="confirm-zelle-alert"><strong>Email backup:</strong> Your payment instructions are shown here. Please screenshot this page before leaving.</div>' : ''}
       </div>
     </div>
   `;
@@ -2343,6 +2430,35 @@ async function confirmOrder() {
 ════════════════════════════════════════ */
 let cart = [];
 
+function formatPrice(price) {
+  price = parseFloat(price);
+  if (!Number.isFinite(price)) return '0';
+  return Number.isInteger(price) ? String(price) : price.toFixed(2);
+}
+
+function skuForCartName(name) {
+  const itemName = String(name || '').trim().toLowerCase();
+  return Object.entries(_inv).find(([key]) => {
+    const [product, dose] = key.split('|');
+    return (product + (dose ? ' ' + dose : '')).trim() === itemName;
+  })?.[1] || null;
+}
+
+function isSkuUnavailable(sku, qty = 1) {
+  if (!sku) return false;
+  return sku.available === false || Number(sku.quantity) <= 0 || Number(sku.quantity) < qty;
+}
+
+function cartIsAvailable() {
+  for (const item of cart) {
+    if (isSkuUnavailable(skuForCartName(item.name), item.qty)) {
+      alert(`${item.name} is out of stock.`);
+      return false;
+    }
+  }
+  return true;
+}
+
 function getProductImg(name) {
   for (const prog of Object.values(PROGRAMS)) {
     for (const pr of prog.products) {
@@ -2353,6 +2469,17 @@ function getProductImg(name) {
 }
 
 function addToCart(name, price, btn) {
+  price = parseFloat(price);
+  if (!Number.isFinite(price) || price <= 0) {
+    alert('This product price is still loading. Please try again in a moment.');
+    return;
+  }
+  const sku = skuForCartName(name);
+  const currentQty = cart.find(i=>i.name===name)?.qty || 0;
+  if (isSkuUnavailable(sku, currentQty + 1)) {
+    alert(`${name} is out of stock.`);
+    return;
+  }
   const ex = cart.find(i=>i.name===name);
   if (ex) ex.qty++; else cart.push({name, price, qty:1, img: getProductImg(name)});
   refreshCart();
@@ -2373,7 +2500,12 @@ function removeCartItem(index) {
 
 function updateCartQty(index, delta) {
   if (!cart[index]) return;
-  cart[index].qty = Math.max(0, cart[index].qty + delta);
+  const nextQty = Math.max(0, cart[index].qty + delta);
+  if (delta > 0 && isSkuUnavailable(skuForCartName(cart[index].name), nextQty)) {
+    alert(`${cart[index].name} is out of stock.`);
+    return;
+  }
+  cart[index].qty = nextQty;
   if (cart[index].qty === 0) cart.splice(index, 1);
   refreshCart();
 }
@@ -2416,9 +2548,10 @@ function refreshCart() {
   document.getElementById('shipLbl').innerHTML = total >= 150
     ? '<strong style="color:#16A34A">🎉 Free shipping unlocked!</strong>'
     : `Add <strong>$${(150-total).toFixed(2)}</strong> for free shipping`;
-  const hasBact = cart.some(i=>i.name==='Bacteriostatic Water');
+  const hasBact = cart.some(i=>i.name.startsWith('Bacteriostatic Water'));
   const hasPep  = cart.some(i=>i.name!=='Bacteriostatic Water');
-  document.getElementById('upsellWrap').style.display = (hasPep&&!hasBact)?'':'none';
+  const bactAvailable = !isSkuUnavailable(skuForCartName('Bacteriostatic Water 10ml'), 1);
+  document.getElementById('upsellWrap').style.display = (hasPep&&!hasBact&&bactAvailable)?'':'none';
 }
 
 function openCart()  { document.getElementById('cartOverlay').classList.add('open'); document.getElementById('cartDrawer').classList.add('open'); document.body.style.overflow='hidden'; }
@@ -2821,11 +2954,36 @@ var _inv = {};
     rows.forEach(row => {
       const key = (row.product_name + '|' + row.dose).toLowerCase();
       _inv[key] = { available: row.available, price: row.price, quantity: row.quantity };
+      if (row.product_name === 'GLP-3 (RT)') {
+        _inv[('NP - RT3|' + row.dose).toLowerCase()] = _inv[key];
+      }
+      if (row.product_name === 'GLP-1/GIP') {
+        _inv[('NP - TZ2|' + row.dose).toLowerCase()] = _inv[key];
+      }
     });
+    syncCartPricesFromInventory();
     // Re-apply to any visible grid (race condition fix)
     if (document.querySelector('.pc2')) applyInventoryToGrid();
+    applyInventoryToOpenPDM();
   } catch (_) {}
 })();
+
+function syncCartPricesFromInventory() {
+  let changed = false;
+  cart.forEach(item => {
+    const itemName = item.name.toLowerCase();
+    Object.entries(_inv).forEach(([key, sku]) => {
+      const [product, dose] = key.split('|');
+      const skuName = (product + (dose ? ' ' + dose : '')).toLowerCase();
+      const price = parseFloat(sku.price);
+      if (itemName === skuName && Number.isFinite(price) && price > 0 && item.price !== price) {
+        item.price = price;
+        changed = true;
+      }
+    });
+  });
+  if (changed) refreshCart();
+}
 
 function applyInventoryToGrid() {
   document.querySelectorAll('.pc2').forEach(card => {
@@ -2838,20 +2996,30 @@ function applyInventoryToGrid() {
       const dose = pill.dataset.dose ? pill.dataset.dose.toLowerCase() : '';
       const key  = productName + '|' + dose;
       const sku  = _inv[key];
-      if (!sku) return;
+      if (!sku) {
+        if (pill.dataset.localOos === 'true') {
+          pill.classList.add('oos-dose');
+          pill.disabled = true;
+          pill.title = 'Out of Stock';
+        }
+        return;
+      }
 
       // override price on pill
       if (sku.price !== undefined) {
-        pill.dataset.price = sku.price;
+        const price = parseFloat(sku.price);
+        pill.dataset.price = price;
         if (pill.classList.contains('active')) {
+          card.dataset.price = price;
           const priceEl = card.querySelector('.pc2-price');
-          if (priceEl) priceEl.textContent = '$' + (Number.isInteger(sku.price) ? sku.price : sku.price.toFixed(2));
+          if (priceEl) priceEl.textContent = '$' + formatPrice(price);
         }
       }
 
       // mark OOS dose pill
-      if (sku.available === false) {
+      if (isSkuUnavailable(sku)) {
         pill.classList.add('oos-dose');
+        pill.disabled = true;
         pill.title = 'Out of Stock';
         // if this dose was selected, move to next available
         if (pill.classList.contains('active')) {
@@ -2859,16 +3027,30 @@ function applyInventoryToGrid() {
             .find(p => !p.classList.contains('oos-dose'));
           if (next) next.click(); else markProductOOS(card);
         }
+      } else {
+        pill.classList.remove('oos-dose');
+        pill.disabled = false;
+        pill.title = '';
       }
     });
 
     // if product has no doses (single SKU), check by product name alone
     const hasDoses = card.querySelectorAll('.dose-pill').length > 0;
     if (!hasDoses) {
-      const allOOS = Object.entries(_inv)
-        .filter(([k]) => k.startsWith(productName + '|'))
-        .every(([, v]) => v.available === false);
-      if (allOOS) markProductOOS(card);
+      const skus = Object.entries(_inv).filter(([k]) => k.startsWith(productName + '|'));
+      const firstAvailable = skus.find(([, v]) => !isSkuUnavailable(v));
+      if (firstAvailable) {
+        const sku = firstAvailable[1];
+        const price = parseFloat(sku.price);
+        if (Number.isFinite(price) && price > 0) {
+          card.dataset.price = price;
+          const priceEl = card.querySelector('.pc2-price');
+          if (priceEl) priceEl.textContent = '$' + formatPrice(price);
+        }
+        markProductAvailable(card);
+      } else if (skus.length && skus.every(([, v]) => isSkuUnavailable(v))) {
+        markProductOOS(card);
+      }
     }
 
     // if ALL doses are OOS, mark product
@@ -2888,6 +3070,15 @@ function markProductOOS(card) {
   }
   const btn = card.querySelector('.pc2-add-btn');
   if (btn) { btn.disabled = true; btn.innerHTML = 'OUT OF STOCK'; }
+}
+
+function markProductAvailable(card) {
+  card.querySelector('.pc2-oos')?.remove();
+  const btn = card.querySelector('.pc2-add-btn');
+  if (btn) {
+    btn.disabled = false;
+    btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>ADD TO CART';
+  }
 }
 
 /* ═══════════════════════════════════════

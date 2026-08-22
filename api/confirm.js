@@ -1,23 +1,58 @@
 const BASE = process.env.SUPABASE_URL;
-const KEY  = process.env.SUPABASE_ANON_KEY;
+const KEY  = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_ANON_KEY;
+import { defaultSender, sendEmail } from './_email.js';
+
+function normalized(v) {
+  return String(v || '')
+    .trim()
+    .toLowerCase()
+    .replace(/^np\s*-\s*rt3\b/, 'glp-3 (rt)')
+    .replace(/^np\s*-\s*tz2\b/, 'glp-1/gip')
+    .replace(/^tb-500\s*\+\s*bpc-157\s+10mg\s*\+\s*10mg$/, 'tb-500 + bpc-157 10mg')
+    .replace(/\s+n\/a$/, '');
+}
+
+async function getOrder(orderNum) {
+  if (!BASE || !KEY || !orderNum) return null;
+  try {
+    const r = await fetch(`${BASE}/rest/v1/orders?order_num=eq.${encodeURIComponent(orderNum)}&select=*&limit=1`, {
+      headers: { apikey: KEY, Authorization: `Bearer ${KEY}` },
+    });
+    const rows = await r.json();
+    return Array.isArray(rows) && rows.length ? rows[0] : null;
+  } catch { return null; }
+}
+
+async function markOrderConfirmed(orderNum) {
+  if (!BASE || !KEY || !orderNum) return;
+  try {
+    await fetch(`${BASE}/rest/v1/orders?order_num=eq.${encodeURIComponent(orderNum)}`, {
+      method: 'PATCH',
+      headers: {
+        apikey: KEY,
+        Authorization: `Bearer ${KEY}`,
+        'Content-Type': 'application/json',
+        Prefer: 'return=minimal',
+      },
+      body: JSON.stringify({ status: 'confirmed', confirmed_at: new Date().toISOString() }),
+    });
+  } catch (_) {}
+}
 
 async function decrementInventory(items) {
   if (!BASE || !KEY || !items?.length) return;
   for (const item of items) {
     try {
-      const parts = item.name.trim().split(' ');
-      const dose = parts[parts.length - 1];
-      const productName = parts.slice(0, -1).join(' ');
-      if (!dose || !productName) continue;
-
       const r = await fetch(
-        `${BASE}/rest/v1/inventory?product_name=eq.${encodeURIComponent(productName)}&dose=eq.${encodeURIComponent(dose)}&select=id,quantity,auto_disable`,
+        `${BASE}/rest/v1/inventory?select=id,product_name,dose,quantity,auto_disable`,
         { headers: { apikey: KEY, Authorization: `Bearer ${KEY}` } }
       );
       const rows = await r.json();
       if (!Array.isArray(rows) || !rows.length) continue;
 
-      const row = rows[0];
+      const row = rows.find(r => normalized(`${r.product_name} ${r.dose}`) === normalized(item.name));
+      if (!row) continue;
+
       const newQty = Math.max(0, row.quantity - item.qty);
       const patch = { quantity: newQty, updated_at: new Date().toISOString() };
       if (newQty === 0 && row.auto_disable !== false) patch.available = false;
@@ -55,19 +90,23 @@ export default async function handler(req, res) {
     return res.status(400).send('<p>Invalid or expired confirmation link.</p>');
   }
 
-  // Decrement inventory for each item
-  await decrementInventory(items);
+  const order = await getOrder(orderNum);
+  const wasAlreadyConfirmed = order?.status === 'confirmed';
+  const orderItems = Array.isArray(order?.items) && order.items.length ? order.items : items;
 
-  const KEY_EMAIL = process.env.RESEND_API_KEY;
-  if (KEY_EMAIL && customerEmail) {
-    await fetch('https://api.resend.com/emails', {
-      method: 'POST',
-      headers: { 'Authorization': `Bearer ${KEY_EMAIL}`, 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        from: process.env.RESEND_FROM || 'Neo Peptide USA <orders@neopeptideus.com>',
-        to: customerEmail,
-        subject: `✅ Order ${orderNum} Confirmed — Ships Within 48h`,
-        html: `<div style="font-family:sans-serif;max-width:560px;margin:0 auto;padding:32px 24px;color:#111">
+  if (!wasAlreadyConfirmed) {
+    await markOrderConfirmed(orderNum);
+    // Decrement inventory for each item only once.
+    await decrementInventory(orderItems);
+  }
+
+  const KEY_EMAIL = process.env.SMTP2GO_API_KEY;
+  if (KEY_EMAIL && customerEmail && !wasAlreadyConfirmed) {
+    await sendEmail({
+      sender: defaultSender(),
+      to: customerEmail,
+      subject: `✅ Order ${orderNum} Confirmed — Ships Within 48h`,
+      html: `<div style="font-family:sans-serif;max-width:560px;margin:0 auto;padding:32px 24px;color:#111">
           <div style="background:#DCFCE7;border-radius:14px;padding:28px 24px;text-align:center;margin-bottom:28px">
             <div style="font-size:44px;margin-bottom:10px">✅</div>
             <h2 style="font-size:22px;font-weight:800;color:#15803D;margin:0 0 8px">Payment Confirmed!</h2>
@@ -81,7 +120,6 @@ export default async function handler(req, res) {
           <hr style="border:none;border-top:1px solid #eee;margin:20px 0">
           <p style="color:#ccc;font-size:11px;margin:0;text-align:center;line-height:1.6">For research use only. Not for human consumption. © 2025 Neo Peptide USA</p>
         </div>`
-      })
     });
   }
 

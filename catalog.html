@@ -394,9 +394,20 @@ const COLOR_GROUPS = [
 /* ── CART ── */
 let cart = JSON.parse(localStorage.getItem('np_cart') || '[]');
 
+function formatPrice(price) {
+  price = parseFloat(price);
+  if (!Number.isFinite(price)) return '0';
+  return Number.isInteger(price) ? String(price) : price.toFixed(2);
+}
+
 function saveCart(){ localStorage.setItem('np_cart', JSON.stringify(cart)); }
 
 function addToCart(name, price, img) {
+  price = parseFloat(price);
+  if (!Number.isFinite(price) || price <= 0) {
+    alert('This product price is still loading. Please try again in a moment.');
+    return;
+  }
   const ex = cart.find(i => i.name === name);
   if (ex) ex.qty++;
   else cart.push({ name, price, qty: 1, img });
@@ -470,7 +481,7 @@ function renderGroups(){
             </div>
             ${pr.outOfStock
               ? `<span class="out-of-stock" style="max-width:120px">Out of Stock</span>`
-              : `<button class="btn-add" data-product="${pr.name}" data-dose="${pr.doses[0].l}" onclick="addToCart('${pr.name.replace(/'/g,"\\'")} ${pr.doses[0].l}',${firstPrice},'${pr.img}')">Add</button>`
+              : `<button class="btn-add" data-product="${pr.name}" data-dose="${pr.doses[0].l}" data-price="${firstPrice}" data-img="${pr.img}" onclick="addSingleDoseFromButton(this)">Add</button>`
             }
           </div>`;
       } else {
@@ -512,6 +523,12 @@ function addFromSelect(selectId, name, img){
   addToCart(name + ' ' + label, price, img);
 }
 
+function addSingleDoseFromButton(btn){
+  const name = btn.dataset.product;
+  const dose = btn.dataset.dose;
+  addToCart(name + ' ' + dose, btn.dataset.price, btn.dataset.img || '');
+}
+
 renderGroups();
 renderCart();
 
@@ -526,11 +543,32 @@ var _inv = {};
     if (!Array.isArray(rows)) return;
     rows.forEach(row => {
       const key = (row.product_name + '|' + row.dose).toLowerCase();
-      _inv[key] = { available: row.available };
+      _inv[key] = { available: row.available, price: row.price };
     });
+    syncCartPricesFromInventory();
     applyInventoryToCatalog();
   } catch (_) {}
 })();
+
+function syncCartPricesFromInventory() {
+  let changed = false;
+  cart.forEach(item => {
+    const itemName = item.name.toLowerCase();
+    Object.entries(_inv).forEach(([key, sku]) => {
+      const [product, dose] = key.split('|');
+      const skuName = (product + (dose ? ' ' + dose : '')).toLowerCase();
+      const price = parseFloat(sku.price);
+      if (itemName === skuName && Number.isFinite(price) && price > 0 && item.price !== price) {
+        item.price = price;
+        changed = true;
+      }
+    });
+  });
+  if (changed) {
+    saveCart();
+    renderCart();
+  }
+}
 
 function applyInventoryToCatalog() {
   // multi-dose selects
@@ -542,6 +580,14 @@ function applyInventoryToCatalog() {
     Array.from(sel.options).forEach(opt => {
       const dose = (opt.dataset.dose || opt.dataset.label || '').toLowerCase();
       const sku  = _inv[productName + '|' + dose];
+      if (sku && sku.price !== undefined) {
+        const price = parseFloat(sku.price);
+        if (Number.isFinite(price) && price > 0) {
+          opt.value = price;
+          opt.textContent = opt.dataset.label + ' — $' + formatPrice(price);
+          if (opt.selected) sel.dispatchEvent(new Event('change'));
+        }
+      }
       if (sku && sku.available === false) {
         opt.disabled = true;
         opt.textContent = opt.dataset.label + ' — Out of Stock';
@@ -568,6 +614,14 @@ function applyInventoryToCatalog() {
   document.querySelectorAll('.btn-add[data-product][data-dose]').forEach(btn => {
     const key = (btn.dataset.product + '|' + btn.dataset.dose).toLowerCase();
     const sku = _inv[key];
+    if (sku && sku.price !== undefined) {
+      const price = parseFloat(sku.price);
+      if (Number.isFinite(price) && price > 0) {
+        btn.dataset.price = price;
+        const priceEl = btn.closest('.pc-bottom')?.querySelector('.pc-price');
+        if (priceEl) priceEl.textContent = '$' + formatPrice(price);
+      }
+    }
     if (sku && sku.available === false) {
       const span = document.createElement('span');
       span.className = 'out-of-stock';

@@ -1,5 +1,15 @@
 {
   "rewrites": [
+    {
+      "source": "/",
+      "has": [{ "type": "host", "value": "neowellness.blog" }],
+      "destination": "/neowellness.html"
+    },
+    {
+      "source": "/",
+      "has": [{ "type": "host", "value": "www.neowellness.blog" }],
+      "destination": "/neowellness.html"
+    },
     { "source": "/admin", "destination": "/admin.html" },
     { "source": "/quiz", "destination": "/quiz.html" },
     { "source": "/brasil", "destination": "/brasil.html" }

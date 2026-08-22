@@ -1,7 +1,8 @@
 const BASE = process.env.SUPABASE_URL;
 const SUPABASE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_ANON_KEY;
-const DEFAULT_STORE_EMAIL = 'Support@neopeptideus.com';
-const SUPPORT_EMAIL = 'Support@neopeptideus.com';
+const DEFAULT_STORE_EMAIL = 'support@neopeptideus.com';
+const SUPPORT_EMAIL = 'support@neopeptideus.com';
+import { defaultReplyTo, defaultSender, sendEmail } from './_email.js';
 
 function emailList(value, fallback) {
   return String(value || fallback || '')
@@ -16,7 +17,13 @@ function toNum(v) {
 }
 
 function normalized(v) {
-  return String(v || '').trim().toLowerCase().replace(/^np\s*-\s*rt3\b/, 'glp-3 (rt)');
+  return String(v || '')
+    .trim()
+    .toLowerCase()
+    .replace(/^np\s*-\s*rt3\b/, 'glp-3 (rt)')
+    .replace(/^np\s*-\s*tz2\b/, 'glp-1/gip')
+    .replace(/^tb-500\s*\+\s*bpc-157\s+10mg\s*\+\s*10mg$/, 'tb-500 + bpc-157 10mg')
+    .replace(/\s+n\/a$/, '');
 }
 
 async function validateInventory(items) {
@@ -125,6 +132,24 @@ async function incrementCouponUses(code) {
   } catch (_) {}
 }
 
+async function markOrderEmailFailed(orderNum, error) {
+  if (!BASE || !SUPABASE_KEY || !orderNum) return;
+  try {
+    await fetch(`${BASE}/rest/v1/orders?order_num=eq.${encodeURIComponent(orderNum)}`, {
+      method: 'PATCH',
+      headers: {
+        apikey: SUPABASE_KEY,
+        Authorization: `Bearer ${SUPABASE_KEY}`,
+        'Content-Type': 'application/json',
+        Prefer: 'return=minimal',
+      },
+      body: JSON.stringify({
+        status: 'email_failed',
+      }),
+    });
+  } catch (_) {}
+}
+
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
@@ -135,9 +160,7 @@ export default async function handler(req, res) {
   const saved = await saveOrder({ customerEmail, customerName, items, total, shipping, grand, orderNum, address, phone, couponCode, discountPct, discountAmt });
   if (!saved.ok) return res.status(500).json({ error: saved.error || 'Could not save order' });
 
-  const SMTP2GO_KEY = process.env.SMTP2GO_API_KEY;
-  const RESEND_KEY = process.env.RESEND_API_KEY;
-  if (!SMTP2GO_KEY && !RESEND_KEY) return res.status(500).json({ error: 'Email service not configured' });
+  if (!process.env.SMTP2GO_API_KEY) return res.status(500).json({ error: 'Email service not configured' });
 
   const origin = req.headers.origin || 'https://neopeptide.vercel.app';
   const tokenData = JSON.stringify({ v: 2, orderNum, email: customerEmail, items: items.map(i => ({ name: i.name, qty: i.qty })) });
@@ -151,60 +174,18 @@ export default async function handler(req, res) {
       <td style="padding:10px 0;border-bottom:1px solid #eee;text-align:right;font-size:14px;font-weight:700">$${(i.price * i.qty).toFixed(2)}</td>
     </tr>`).join('');
 
-  const FROM = SMTP2GO_KEY
-    ? (process.env.SMTP2GO_SENDER || 'Neo Peptide USA <Support@neopeptideus.com>')
-    : (process.env.RESEND_FROM || 'Neo Peptide USA <onboarding@resend.dev>');
-  const REPLY_TO = process.env.RESEND_REPLY_TO || process.env.ORDER_REPLY_TO_EMAIL || SUPPORT_EMAIL;
+  const FROM = defaultSender();
+  const REPLY_TO = defaultReplyTo(SUPPORT_EMAIL);
   const STORE_TO = emailList(process.env.ORDER_TO_EMAIL || process.env.CONTACT_TO_EMAIL, DEFAULT_STORE_EMAIL);
 
-  async function sendViaSmtp2go(to, subject, html) {
-    const r = await fetch('https://api.smtp2go.com/v3/email/send', {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'X-Smtp2go-Api-Key': SMTP2GO_KEY,
-      },
-      body: JSON.stringify({
-        sender: FROM,
-        to: Array.isArray(to) ? to : [to],
-        subject,
-        html_body: html,
-        text_body: subject,
-        custom_headers: [{ header: 'Reply-To', value: REPLY_TO }],
-      }),
-    });
-    const data = await r.json().catch(() => ({}));
-    const failed = data?.data?.failed || 0;
-    const succeeded = data?.data?.succeeded || 0;
-    if (!r.ok || failed > 0 || succeeded < 1) {
-      console.error('SMTP2GO email failed', { to, subject, status: r.status, data });
-      const failures = Array.isArray(data?.data?.failures) ? data.data.failures.join('; ') : '';
-      throw new Error(failures || data?.data?.error || data?.message || 'SMTP2GO email delivery failed');
-    }
-    return data;
-  }
-
-  async function sendViaResend(to, subject, html) {
-    const r = await fetch('https://api.resend.com/emails', {
-      method: 'POST',
-      headers: { 'Authorization': `Bearer ${RESEND_KEY}`, 'Content-Type': 'application/json' },
-      body: JSON.stringify({ from: FROM, to, subject, html, reply_to: REPLY_TO })
-    });
-    const data = await r.json().catch(() => ({}));
-    if (!r.ok) {
-      console.error('Resend email failed', { to, subject, status: r.status, data });
-      throw new Error(data?.message || data?.error || 'Email delivery failed');
-    }
-    return data;
-  }
-
   async function send(to, subject, html) {
-    return SMTP2GO_KEY ? sendViaSmtp2go(to, subject, html) : sendViaResend(to, subject, html);
+    return sendEmail({ to, subject, html, sender: FROM, replyTo: REPLY_TO });
   }
 
+  const emailWarnings = [];
+
+  // ── Email to customer ──────────────────────────────────────────
   try {
-    // ── Email to customer ──────────────────────────────────────────
     await send(customerEmail, `Order ${orderNum} — Awaiting Payment Confirmation`,
       `<div style="font-family:sans-serif;max-width:560px;margin:0 auto;padding:32px 24px;color:#111">
       <h2 style="font-size:22px;font-weight:800;margin:0 0 6px">Hi ${customerName},</h2>
@@ -243,8 +224,14 @@ export default async function handler(req, res) {
       <p style="color:#ccc;font-size:11px;margin:0;line-height:1.6">For research use only. Not for human consumption. © 2025 Neo Peptide USA</p>
       </div>`
     );
+  } catch (e) {
+    console.error('Customer order email failed', e);
+    await markOrderEmailFailed(orderNum, e.message || 'Customer email failed');
+    emailWarnings.push(`Customer email: ${e.message || 'failed'}`);
+  }
 
-    // ── Email to store ─────────────────────────────────────────────
+  // ── Email to store ─────────────────────────────────────────────
+  try {
     await send(STORE_TO, `🛒 New Order ${orderNum} — ${customerName} — $${grand}`,
       `<div style="font-family:sans-serif;max-width:560px;margin:0 auto;padding:32px 24px;color:#111">
       <h2 style="font-size:22px;font-weight:800;margin:0 0 4px">New Order: ${orderNum}</h2>
@@ -279,20 +266,11 @@ export default async function handler(req, res) {
       </div>`
     );
   } catch (e) {
-    console.error('Order saved but notification email failed', {
-      orderNum,
-      customerEmail,
-      storeTo: STORE_TO,
-      error: e.message || e,
-    });
-    return res.status(200).json({
-      success: true,
-      emailSent: false,
-      warning: 'Order was saved, but notification email could not be sent.',
-    });
+    console.error('Store order email failed', e);
+    emailWarnings.push(`Store email: ${e.message || 'failed'}`);
   }
 
   if (couponCode) await incrementCouponUses(couponCode);
 
-  res.status(200).json({ success: true, emailSent: true });
+  res.status(200).json({ success: true, emailWarning: emailWarnings.join(' | ') || null });
 }

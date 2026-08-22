@@ -1,8 +1,9 @@
 const BASE        = process.env.SUPABASE_URL;
 const ANON_KEY    = process.env.SUPABASE_ANON_KEY;
 const SERVICE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
-const RESEND_KEY  = process.env.RESEND_API_KEY;
-const FROM        = process.env.RESEND_FROM || 'Neo Peptide USA <Support@neopeptideus.com>';
+import { defaultSender, sendEmail as sendSmtp2goEmail } from './_email.js';
+
+const FROM        = defaultSender();
 
 // Requires a `leads` table in Supabase:
 // CREATE TABLE leads (id bigserial PRIMARY KEY, email text UNIQUE NOT NULL, name text, phone text, code text, created_at timestamptz DEFAULT now());
@@ -13,12 +14,8 @@ function genCode() {
 }
 
 async function sendEmail(to, subject, html) {
-  if (!RESEND_KEY) return;
-  await fetch('https://api.resend.com/emails', {
-    method: 'POST',
-    headers: { Authorization: `Bearer ${RESEND_KEY}`, 'Content-Type': 'application/json' },
-    body: JSON.stringify({ from: FROM, to, subject, html }),
-  });
+  if (!process.env.SMTP2GO_API_KEY) return;
+  await sendSmtp2goEmail({ to, subject, html, sender: FROM });
 }
 
 async function createCoupon(code, dbKey) {

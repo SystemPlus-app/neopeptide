@@ -40,6 +40,11 @@
     .dash-body{max-width:900px;margin:0 auto;padding:40px clamp(16px,4vw,48px) 40px}
     .dash-title{font-size:22px;font-weight:800;color:var(--ink);margin-bottom:4px}
     .dash-sub{font-size:14px;color:var(--muted);margin-bottom:36px}
+    .admin-tabs{display:flex;gap:10px;margin-bottom:28px}
+    .admin-tab{font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;font-weight:800;padding:11px 22px;border-radius:100px;border:1.5px solid var(--border);background:var(--white);color:var(--sub);cursor:pointer}
+    .admin-tab.active{background:var(--ink);border-color:var(--ink);color:#fff}
+    .admin-panel{display:none}
+    .admin-panel.active{display:block}
 
     /* PROGRAM GROUP */
     .prog-group{margin-bottom:32px;background:var(--white);border:1.5px solid var(--border);border-radius:18px;overflow:hidden}
@@ -63,9 +68,11 @@
     .coa-err{font-size:11px;color:#DC2626}
 
     /* SKU ROW */
-    .sku-row{display:grid;grid-template-columns:80px 1fr 1fr 1fr 100px;align-items:center;gap:12px;padding:8px 20px 10px;border-top:1px solid rgba(0,0,0,.04)}
+    .sku-row{display:grid;grid-template-columns:80px 1fr 1fr 1fr 36px;align-items:center;gap:12px;padding:8px 20px 10px;border-top:1px solid rgba(0,0,0,.04)}
     .sku-row.oos-row{background:#FEF9F9}
     .sku-dose{font-family:'Plus Jakarta Sans',sans-serif;font-size:12px;font-weight:700;color:var(--sub);background:var(--cream2);padding:4px 10px;border-radius:100px;text-align:center;width:fit-content}
+    .sku-dose.pending{background:#FFF7ED;color:#9A3412}
+    .sku-new-badge{font-size:9px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:#9A3412;background:#FFEDD5;border:1px solid #FED7AA;border-radius:100px;padding:3px 7px;margin-left:6px;white-space:nowrap}
     .sku-label{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
     .sku-input{width:100%;padding:8px 10px;border:1.5px solid var(--border);border-radius:9px;font-size:13px;font-weight:600;color:var(--ink);font-family:'Inter',sans-serif;background:var(--cream);outline:none;transition:border-color .2s}
     .sku-input:focus{border-color:var(--blue);background:#fff}
@@ -86,6 +93,8 @@
     .auto-off-wrap{display:flex;align-items:center;gap:4px;margin-top:4px;cursor:pointer}
     .auto-off-wrap input{width:12px;height:12px;cursor:pointer;accent-color:var(--blue)}
     .auto-off-txt{font-size:9px;font-weight:600;color:var(--muted);white-space:nowrap}
+    .sku-del-btn{width:28px;height:28px;border-radius:7px;border:1.5px solid #FECACA;background:#FEF2F2;color:#DC2626;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;transition:opacity .15s;flex-shrink:0}
+    .sku-del-btn:hover{opacity:.7}
 
     /* SAVE BAR */
     .save-bar{position:fixed;bottom:0;left:0;right:0;background:var(--white);border-top:1.5px solid var(--border);padding:14px clamp(16px,4vw,48px);display:flex;align-items:center;gap:14px;z-index:20}
@@ -116,8 +125,9 @@
 
     @media(max-width:640px){
       .add-sku-grid{grid-template-columns:1fr}
-      .sku-row{grid-template-columns:70px 1fr 1fr;row-gap:8px}
+      .sku-row{grid-template-columns:70px 1fr 1fr 28px;row-gap:8px}
       .toggle-wrap{grid-column:3;grid-row:1}
+      .sku-del-btn{grid-column:4;grid-row:1}
     }
 
     /* COUPONS */
@@ -148,9 +158,50 @@
     .stats-table .total-col{color:var(--blue)}
     .stats-table tr:hover td{background:var(--cream)}
     .stats-empty{padding:28px 20px;color:var(--muted);font-size:14px;text-align:center}
+    /* SALES */
+    .sales-kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:18px}
+    .sales-kpi{background:var(--white);border:1.5px solid var(--border);border-radius:18px;padding:18px 20px}
+    .sales-kpi-label{font-size:10px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:7px}
+    .sales-kpi-val{font-family:'Plus Jakarta Sans',sans-serif;font-size:26px;font-weight:900;color:var(--ink)}
+    .sales-kpi-sub{font-size:12px;color:var(--muted);margin-top:4px}
+    .sales-tabs{display:flex;gap:8px;margin:0 0 14px;flex-wrap:wrap}
+    .sales-tab{border:1.5px solid var(--border);background:var(--white);color:var(--sub);border-radius:100px;padding:8px 16px;font-size:12px;font-weight:800;font-family:'Plus Jakarta Sans',sans-serif;cursor:pointer}
+    .sales-tab.active{background:var(--ink);border-color:var(--ink);color:#fff}
+    .sales-group{background:var(--white);border:1.5px solid var(--border);border-radius:18px;overflow:hidden;margin-bottom:14px}
+    .sales-group-head{display:flex;justify-content:space-between;gap:12px;padding:14px 18px;background:var(--cream2);border-bottom:1.5px solid var(--border)}
+    .sales-group-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;font-weight:800;color:var(--ink)}
+    .sales-group-total{font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;font-weight:900;color:var(--blue);white-space:nowrap}
+    .sales-order{padding:14px 18px;border-top:1px solid rgba(0,0,0,.05)}
+    .sales-order:first-child{border-top:none}
+    .sales-order-top{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:start;margin-bottom:8px}
+    .sales-order-num{font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;font-weight:900;color:var(--ink)}
+    .sales-status{display:inline-flex;align-items:center;margin-left:8px;padding:3px 8px;border-radius:100px;font-size:9px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;vertical-align:middle}
+    .sales-status.confirmed{background:#DCFCE7;color:#15803D}
+    .sales-status.pending{background:#FEF3C7;color:#B45309}
+    .sales-customer{font-size:12px;color:var(--sub);line-height:1.5;margin-top:2px}
+    .sales-total{font-family:'Plus Jakarta Sans',sans-serif;font-size:16px;font-weight:900;color:var(--ink)}
+    .sales-items{font-size:12px;color:var(--muted);line-height:1.7}
+    .sales-meta{font-size:11px;color:var(--muted);margin-top:8px}
+    .sales-actions{display:flex;justify-content:flex-end;margin-top:10px}
+    .sales-delete{border:1.5px solid #FECACA;background:#FEF2F2;color:var(--red);border-radius:8px;padding:7px 12px;font-size:11px;font-weight:800;font-family:'Plus Jakarta Sans',sans-serif;cursor:pointer}
+    .sales-delete:hover{background:#FEE2E2}
+    .finance-controls{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:16px}
+    .finance-input{height:38px;border:1.5px solid var(--border);border-radius:10px;background:#fff;padding:0 12px;font-family:'Inter',sans-serif;font-size:13px;font-weight:700;color:var(--ink)}
+    .manual-sale{background:var(--white);border:1.5px solid var(--border);border-radius:18px;overflow:hidden;margin-bottom:20px}
+    .manual-sale-head{padding:14px 20px;background:var(--cream2);border-bottom:1.5px solid var(--border);display:flex;justify-content:space-between;cursor:pointer;user-select:none}
+    .manual-sale-body{display:none;padding:20px}
+    .manual-sale-body.open{display:block}
+    .manual-sale-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-bottom:14px;align-items:start}
+    .manual-product-field{grid-column:span 2}
+    .manual-value-field{grid-column:span 2}
+    .manual-sale-total-note{font-size:11px;color:var(--muted);margin:-6px 0 14px}
     @media(max-width:640px){
       .coupon-table-head,.coupon-row{grid-template-columns:1fr 70px 64px 80px 28px}
       .add-coupon-grid{grid-template-columns:1fr}
+      .sales-kpis{grid-template-columns:1fr}
+      .sales-order-top{grid-template-columns:1fr}
+      .manual-sale-grid{grid-template-columns:1fr}
+      .manual-product-field,.manual-value-field{grid-column:auto}
     }
   </style>
   <!-- Google Analytics -->
@@ -188,80 +239,137 @@
     <button class="btn-logout" onclick="logout()">Sign Out</button>
   </header>
   <div class="dash-body">
-    <h2 class="dash-title">Inventory</h2>
-    <p class="dash-sub">Edit price, quantity, and availability per dose. Hit Save to apply to the live site.</p>
-    <div id="inventoryList"><div style="color:var(--muted);font-size:14px;padding:20px 0">Loading…</div></div>
+    <div class="admin-tabs">
+      <button class="admin-tab active" id="tabInventory" onclick="showAdminTab('inventory')">Inventory</button>
+      <button class="admin-tab" id="tabFinance" onclick="showAdminTab('finance')">Finances</button>
+    </div>
 
-    <div class="add-sku-section">
-      <div class="add-sku-header" onclick="toggleAddSku()">
-        <span class="add-sku-title">+ Add New SKU</span>
-        <span id="addSkuChevron" style="font-size:12px;color:var(--muted)">▼</span>
-      </div>
-      <div class="add-sku-body" id="addSkuBody">
-        <div class="add-sku-grid">
-          <div class="add-field" style="grid-column:1/-1">
-            <label>Program</label>
-            <input id="newProgram" placeholder="e.g. HORMONE / GH">
-          </div>
-          <div class="add-field" style="grid-column:1/-1">
-            <label>Product Name</label>
-            <input id="newProduct" placeholder="e.g. Tesamorelin">
-          </div>
-          <div class="add-field">
-            <label>Dose</label>
-            <input id="newDose" placeholder="e.g. 20mg">
-          </div>
-          <div class="add-field">
-            <label>Price ($)</label>
-            <input id="newPrice" type="number" min="0" step="0.01" placeholder="0.00">
-          </div>
+    <div class="admin-panel active" id="panelInventory">
+      <h2 class="dash-title">Inventory</h2>
+      <p class="dash-sub">Edit price, quantity, and availability per dose. Hit Save to apply to the live site.</p>
+      <div id="inventoryList"><div style="color:var(--muted);font-size:14px;padding:20px 0">Loading…</div></div>
+
+      <div class="add-sku-section">
+        <div class="add-sku-header" onclick="toggleAddSku()">
+          <span class="add-sku-title">+ Add New SKU</span>
+          <span id="addSkuChevron" style="font-size:12px;color:var(--muted)">▼</span>
         </div>
-        <button class="btn-add-sku" id="addSkuBtn" onclick="addSku()">Add SKU</button>
-        <span class="add-sku-status" id="addSkuStatus"></span>
-      </div>
-    </div>
-  </div>
-
-    <!-- COUPONS SECTION -->
-    <h2 class="section-title">Coupons</h2>
-    <p class="section-sub">Create and manage discount coupons. Each code gives a % off the subtotal.</p>
-
-    <div class="coupon-table">
-      <div class="coupon-table-head">
-        <span>Code</span>
-        <span>Discount</span>
-        <span style="text-align:center">Uses</span>
-        <span style="text-align:center">Status</span>
-        <span></span>
-      </div>
-      <div id="couponList"><div class="coupon-empty">Loading…</div></div>
-    </div>
-
-    <div class="add-coupon-section">
-      <div class="add-coupon-header" onclick="toggleAddCoupon()">
-        <span class="add-sku-title">+ Add New Coupon</span>
-        <span id="addCouponChevron" style="font-size:12px;color:var(--muted)">▼</span>
-      </div>
-      <div class="add-coupon-body" id="addCouponBody">
-        <div class="add-coupon-grid">
-          <div class="add-field">
-            <label>Code</label>
-            <input id="newCouponCode" placeholder="e.g. PEDRO" oninput="this.value=this.value.toUpperCase()">
+        <div class="add-sku-body" id="addSkuBody">
+          <div class="add-sku-grid">
+            <div class="add-field" style="grid-column:1/-1">
+              <label>Program</label>
+              <input id="newProgram" placeholder="e.g. HORMONE / GH">
+            </div>
+            <div class="add-field" style="grid-column:1/-1">
+              <label>Product Name</label>
+              <input id="newProduct" placeholder="e.g. Tesamorelin">
+            </div>
+            <div class="add-field">
+              <label>Dose</label>
+              <input id="newDose" placeholder="e.g. 20mg">
+            </div>
+            <div class="add-field">
+              <label>Price ($)</label>
+              <input id="newPrice" type="number" min="0" step="0.01" placeholder="0.00">
+            </div>
           </div>
-          <div class="add-field">
-            <label>Discount (%)</label>
-            <input id="newCouponPct" type="number" min="1" max="100" placeholder="e.g. 10">
-          </div>
+          <button class="btn-add-sku" id="addSkuBtn" onclick="addSku()">Add SKU</button>
+          <span class="add-sku-status" id="addSkuStatus"></span>
         </div>
-        <button class="btn-add-sku" id="addCouponBtn" onclick="addCoupon()">Create Coupon</button>
-        <span class="add-sku-status" id="addCouponStatus"></span>
       </div>
+
+      <h2 class="section-title">Coupons</h2>
+      <p class="section-sub">Create and manage discount coupons. Each code gives a % off the subtotal.</p>
+      <div class="coupon-table">
+        <div class="coupon-table-head">
+          <span>Code</span>
+          <span>Discount</span>
+          <span style="text-align:center">Uses</span>
+          <span style="text-align:center">Status</span>
+          <span></span>
+        </div>
+        <div id="couponList"><div class="coupon-empty">Loading…</div></div>
+      </div>
+
+      <div class="add-coupon-section">
+        <div class="add-coupon-header" onclick="toggleAddCoupon()">
+          <span class="add-sku-title">+ Add New Coupon</span>
+          <span id="addCouponChevron" style="font-size:12px;color:var(--muted)">▼</span>
+        </div>
+        <div class="add-coupon-body" id="addCouponBody">
+          <div class="add-coupon-grid">
+            <div class="add-field">
+              <label>Code</label>
+              <input id="newCouponCode" placeholder="e.g. PEDRO" oninput="this.value=this.value.toUpperCase()">
+            </div>
+            <div class="add-field">
+              <label>Discount (%)</label>
+              <input id="newCouponPct" type="number" min="1" max="100" placeholder="e.g. 10">
+            </div>
+          </div>
+          <button class="btn-add-sku" id="addCouponBtn" onclick="addCoupon()">Create Coupon</button>
+          <span class="add-sku-status" id="addCouponStatus"></span>
+        </div>
+      </div>
+
+      <h2 class="section-title">Monthly Usage</h2>
+      <p class="section-sub">How many times each coupon was used per month.</p>
+      <div id="statsWrap"><div class="stats-empty">Loading…</div></div>
     </div>
 
-    <!-- MONTHLY STATS -->
-    <h2 class="section-title">Monthly Usage</h2>
-    <p class="section-sub">How many times each coupon was used per month.</p>
-    <div id="statsWrap"><div class="stats-empty">Loading…</div></div>
+    <div class="admin-panel" id="panelFinance">
+      <h2 class="dash-title">Finances</h2>
+      <p class="dash-sub">Saved customer orders, confirmed Zelle payments, and manual historical sales.</p>
+      <div class="manual-sale">
+        <div class="manual-sale-head" onclick="toggleManualSale()">
+          <span class="add-sku-title">+ Add Previous Sale</span>
+          <span id="manualSaleChevron" style="font-size:12px;color:var(--muted)">▼</span>
+        </div>
+        <div class="manual-sale-body" id="manualSaleBody">
+          <div class="manual-sale-grid">
+            <div class="add-field manual-product-field">
+              <label>Product</label>
+              <select id="manualProduct" onchange="updateManualSaleTotal()"></select>
+            </div>
+            <div class="add-field">
+              <label>Origin</label>
+              <select id="manualSource">
+                <option value="Website">Website</option>
+                <option value="Colab">Colab</option>
+              </select>
+            </div>
+            <div class="add-field">
+              <label>Date</label>
+              <input id="manualDate" type="date">
+            </div>
+            <div class="add-field">
+              <label>Qty</label>
+              <input id="manualQty" type="number" min="1" step="1" value="1" oninput="updateManualSaleTotal()">
+            </div>
+            <div class="add-field">
+              <label>Discount (%)</label>
+              <input id="manualDiscount" type="number" min="0" step="0.01" value="0" oninput="updateManualSaleTotal()">
+            </div>
+            <div class="add-field manual-value-field">
+              <label>Value ($)</label>
+              <input id="manualValue" type="number" min="0" step="0.01" placeholder="0.00" readonly>
+            </div>
+          </div>
+          <div class="manual-sale-total-note" id="manualSaleTotalNote">Total calculated from product price, quantity, and discount.</div>
+          <button class="btn-add-sku" id="manualSaleBtn" onclick="addManualSale()">Add Sale</button>
+          <span class="add-sku-status" id="manualSaleStatus"></span>
+        </div>
+      </div>
+      <div class="finance-controls">
+        <button class="sales-tab" id="salesDayBtn" onclick="setSalesView('day')">Day</button>
+        <button class="sales-tab" id="salesMonthBtn" onclick="setSalesView('month')">Month</button>
+        <button class="sales-tab active" id="salesYearBtn" onclick="setSalesView('year')">Year</button>
+        <input class="finance-input" id="salesDayInput" type="date" onchange="renderSales()" style="display:none">
+        <input class="finance-input" id="salesMonthInput" type="month" onchange="renderSales()" style="display:none">
+        <input class="finance-input" id="salesYearInput" type="number" min="2020" step="1" onchange="renderSales()">
+      </div>
+      <div id="salesWrap"><div class="stats-empty">Loading…</div></div>
+    </div>
   </div>
 
   <div class="save-bar">
@@ -277,9 +385,48 @@
 <script>
   let _token   = null;
   let _rows    = [];   // original rows from DB
-  let _changes = {};   // id → { available?, price?, quantity? }
+  let _changes = {};   // id → { available?, price?, quantity?, auto_disable? }
+  let _orders  = [];
+  let _salesView = 'year';
+
+  const CATALOG_SKUS = [
+    { program:'Weight Loss / GLP', product_name:'GLP-3 (RT)', display_name:'NP - RT3', doses:['10mg','15mg','20mg','40mg','60mg'] },
+    { program:'Weight Loss / GLP', product_name:'NP - RT3 5mg + Cagrilintide 5mg', doses:['N/A'] },
+    { program:'Weight Loss / GLP', product_name:'GLP-1/GIP', display_name:'NP - TZ2', doses:['20mg','30mg','40mg','60mg','100mg'] },
+    { program:'Weight Loss / GLP', product_name:'AOD 9604', doses:['5mg','10mg'] },
+    { program:'Weight Loss / GLP', product_name:'Cargrilintide', doses:['5mg'] },
+    { program:'Weight Loss / GLP', product_name:'5-Amino 1MQ', doses:['50mg'] },
+    { program:'Weight Loss / GLP', product_name:'SLU-PP-322', doses:['5mg'] },
+    { program:'Longevity', product_name:'NAD+', doses:['500mg','1000mg'] },
+    { program:'Longevity', product_name:'SS-31', doses:['10mg','50mg'] },
+    { program:'Longevity', product_name:'Mots-C', doses:['10mg','40mg'] },
+    { program:'Longevity', product_name:'VIP', doses:['10mg'] },
+    { program:'Longevity', product_name:'KPV', doses:['10mg'] },
+    { program:'Hormone / GH', product_name:'Ipamorelin + CJC-1295', doses:['10mg'] },
+    { program:'Hormone / GH', product_name:'Ipamorelin', doses:['5mg'] },
+    { program:'Hormone / GH', product_name:'CJC-1295 No DAC', doses:['5mg'] },
+    { program:'Hormone / GH', product_name:'Tesamorelin', doses:['5mg','10mg','15mg','20mg'] },
+    { program:'Hormone / GH', product_name:'Tesamorelin 12mg + Ipamorelin Blend 6mg', doses:['18mg'] },
+    { program:'Hormone / GH', product_name:'Sermorelin', doses:['5mg'] },
+    { program:'Hormone / GH', product_name:'GHRP-6', doses:['5mg'] },
+    { program:'HORMONE / GH', product_name:'IGF-1LR3', doses:['1mg','0.1mg'] },
+    { program:'Performance & Recovery', product_name:'TB-500 + BPC-157', doses:['10mg','10mg + 10mg'] },
+    { program:'Performance & Recovery', product_name:'TB-500', doses:['N/A'] },
+    { program:'PERFORMANCE & RECOVERY', product_name:'Glutathione', doses:['1500mg'] },
+    { program:'Skin & Beauty', product_name:'Glow Blend', doses:['70mg'] },
+    { program:'Skin & Beauty', product_name:'Klow 80mg', doses:['80mg'] },
+    { program:'Skin & Beauty', product_name:'GHK-Cu', doses:['100mg'] },
+    { program:'Neuro / Mood', product_name:'Selank', doses:['5mg'] },
+    { program:'Neuro / Mood', product_name:'Pinealon', doses:['10mg'] },
+    { program:'Neuro / Mood', product_name:'Semax', doses:['10mg'] },
+    { program:'Neuro / Mood', product_name:'Epithalon', doses:['10mg','50mg'] },
+    { program:'Neuro / Mood', product_name:'Semax 10mg + Selank 10mg', doses:['N/A'] },
+    { program:'Essentials', product_name:'Bacteriostatic Water', doses:['5ml','10ml','30ml'] },
+    { program:'Sexual Wellness / Libido', product_name:'PT-141', doses:['10mg'] },
+  ];
 
   window.addEventListener('DOMContentLoaded', () => {
+    initFinanceDates();
     const t = localStorage.getItem('np_admin_token');
     if (t) { _token = t; showDashboard(); }
     document.getElementById('pwInput').addEventListener('keydown', e => {
@@ -317,7 +464,32 @@
   async function showDashboard() {
     document.getElementById('login-screen').style.display = 'none';
     document.getElementById('dashboard').style.display = 'block';
-    await Promise.all([loadInventory(), loadCoupons(), loadStats()]);
+    await Promise.all([loadInventory(), loadOrders(), loadCoupons(), loadStats()]);
+  }
+
+  function showAdminTab(tab) {
+    document.getElementById('panelInventory').classList.toggle('active', tab === 'inventory');
+    document.getElementById('panelFinance').classList.toggle('active', tab === 'finance');
+    document.getElementById('tabInventory').classList.toggle('active', tab === 'inventory');
+    document.getElementById('tabFinance').classList.toggle('active', tab === 'finance');
+    document.querySelector('.save-bar').style.display = tab === 'inventory' ? 'flex' : 'none';
+  }
+
+  function initFinanceDates() {
+    const now = new Date();
+    const yyyy = now.getFullYear();
+    const mm = String(now.getMonth() + 1).padStart(2, '0');
+    const dd = String(now.getDate()).padStart(2, '0');
+    const day = `${yyyy}-${mm}-${dd}`;
+    const month = `${yyyy}-${mm}`;
+    const dayInput = document.getElementById('salesDayInput');
+    const monthInput = document.getElementById('salesMonthInput');
+    const yearInput = document.getElementById('salesYearInput');
+    const manualDate = document.getElementById('manualDate');
+    if (dayInput) dayInput.value = day;
+    if (monthInput) monthInput.value = month;
+    if (yearInput) yearInput.value = yyyy;
+    if (manualDate) manualDate.value = day;
   }
 
   async function loadInventory() {
@@ -326,9 +498,10 @@
       const r = await fetch('/api/inventory');
       const data = await r.json();
       if (!Array.isArray(data)) throw new Error();
-      _rows = data;
+      _rows = mergeCatalogInventory(data);
       _changes = {};
       renderList(_rows);
+      populateManualProducts();
     } catch {
       document.getElementById('inventoryList').innerHTML =
         '<div style="color:var(--red);font-size:14px;padding:20px 0">Failed to load inventory. Check Supabase configuration.</div>';
@@ -339,13 +512,54 @@
     return name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
   }
 
+  function rowKey(product, dose) {
+    return `${String(product || '').trim().toLowerCase()}|${String(dose || '').trim().toLowerCase()}`;
+  }
+
+  function displayNameFor(product) {
+    const spec = CATALOG_SKUS.find(p => p.product_name === product);
+    return spec?.display_name || product;
+  }
+
+  function mergeCatalogInventory(rows) {
+    const merged = rows.map(row => ({
+      ...row,
+      display_name: displayNameFor(row.product_name),
+      isCatalogMissing: false,
+    }));
+    const existing = new Set(merged.map(row => rowKey(row.product_name, row.dose)));
+
+    CATALOG_SKUS.forEach(spec => {
+      spec.doses.forEach(dose => {
+        const key = rowKey(spec.product_name, dose);
+        if (existing.has(key)) return;
+        merged.push({
+          id: `new:${slugify(spec.product_name)}:${slugify(dose)}`,
+          program: spec.program,
+          product_name: spec.product_name,
+          display_name: spec.display_name || spec.product_name,
+          dose,
+          price: 0,
+          quantity: 0,
+          available: false,
+          auto_disable: true,
+          isCatalogMissing: true,
+        });
+        existing.add(key);
+      });
+    });
+
+    return merged;
+  }
+
   function renderList(rows) {
     // group by program → product
     const progs = {};
     rows.forEach(r => {
       if (!progs[r.program]) progs[r.program] = {};
-      if (!progs[r.program][r.product_name]) progs[r.program][r.product_name] = [];
-      progs[r.program][r.product_name].push(r);
+      const name = r.display_name || r.product_name;
+      if (!progs[r.program][name]) progs[r.program][name] = [];
+      progs[r.program][name].push(r);
     });
 
     const html = Object.entries(progs).map(([prog, products]) => `
@@ -378,7 +592,7 @@
             </div>
             ${skus.map(sku => `
               <div class="sku-row${sku.available ? '' : ' oos-row'}" id="skurow-${sku.id}">
-                <div><span class="sku-dose">${sku.dose}</span></div>
+                <div><span class="sku-dose${sku.isCatalogMissing ? ' pending' : ''}">${sku.dose}</span>${sku.isCatalogMissing ? '<span class="sku-new-badge">New</span>' : ''}</div>
                 <div>
                   <div class="sku-label">Price</div>
                   <div class="price-wrap">
@@ -413,6 +627,8 @@
                     <span class="auto-off-txt">Auto off at 0</span>
                   </label>
                 </div>
+                <button class="sku-del-btn" title="Delete this dose"
+                  onclick="deleteSku(${sku.id}, '${esc(prodName)}', '${esc(sku.dose)}')">✕</button>
               </div>
             `).join('')}
           </div>`;
@@ -504,10 +720,10 @@
   }
 
   function onFieldChange(input) {
-    const id    = parseInt(input.dataset.id);
+    const id    = input.dataset.id;
     const field = input.dataset.field;
     const val   = field === 'price' ? parseFloat(input.value) : parseInt(input.value);
-    const orig  = _rows.find(r => r.id === id);
+    const orig  = _rows.find(r => String(r.id) === id);
     if (!orig) return;
 
     if (!_changes[id]) _changes[id] = {};
@@ -524,9 +740,9 @@
   }
 
   function onToggle(checkbox) {
-    const id      = parseInt(checkbox.dataset.id);
+    const id      = checkbox.dataset.id;
     const checked = checkbox.checked;
-    const orig    = _rows.find(r => r.id === id);
+    const orig    = _rows.find(r => String(r.id) === id);
     if (!orig) return;
 
     if (!_changes[id]) _changes[id] = {};
@@ -547,9 +763,9 @@
   }
 
   function onAutoDisable(checkbox) {
-    const id      = parseInt(checkbox.dataset.id);
+    const id      = checkbox.dataset.id;
     const checked = checkbox.checked;
-    const orig    = _rows.find(r => r.id === id);
+    const orig    = _rows.find(r => String(r.id) === id);
     if (!orig) return;
     if (!_changes[id]) _changes[id] = {};
     const origVal = orig.auto_disable !== false;
@@ -582,16 +798,12 @@
     const entries = Object.entries(_changes);
     try {
       await Promise.all(entries.map(([id, patch]) =>
-        fetch('/api/inventory', {
-          method: 'PUT',
-          headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${_token}` },
-          body: JSON.stringify({ id: parseInt(id), ...patch }),
-        }).then(r => { if (!r.ok) throw new Error('Failed id=' + id); })
+        saveSkuChange(id, patch)
       ));
 
       // commit to local state
       entries.forEach(([id, patch]) => {
-        const row = _rows.find(r => r.id === parseInt(id));
+        const row = _rows.find(r => String(r.id) === id);
         if (row) Object.assign(row, patch);
         // remove changed highlights
         Object.keys(patch).forEach(field => {
@@ -613,6 +825,33 @@
       status.style.color = 'var(--red)';
       updateSaveBar();
     } finally { setLoading(false); }
+  }
+
+  async function saveSkuChange(id, patch) {
+    const row = _rows.find(r => String(r.id) === id);
+    if (!row) throw new Error('Missing row id=' + id);
+    const isNew = row.isCatalogMissing || String(id).startsWith('new:');
+    const payload = isNew
+      ? {
+          program: row.program,
+          product_name: row.product_name,
+          dose: row.dose,
+          price: patch.price !== undefined ? patch.price : row.price,
+          quantity: patch.quantity !== undefined ? patch.quantity : row.quantity,
+          available: patch.available !== undefined ? patch.available : row.available,
+          auto_disable: patch.auto_disable !== undefined ? patch.auto_disable : row.auto_disable,
+        }
+      : { id: parseInt(id), ...patch };
+
+    const r = await fetch('/api/inventory', {
+      method: isNew ? 'POST' : 'PUT',
+      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${_token}` },
+      body: JSON.stringify(payload),
+    });
+    if (!r.ok) {
+      const d = await r.json().catch(() => ({}));
+      throw new Error(d.error || 'Failed id=' + id);
+    }
   }
 
   function setLoading(on) {
@@ -671,6 +910,21 @@
     } finally { btn.disabled = false; }
   }
 
+  async function deleteSku(id, productName, dose) {
+    if (!confirm(`Delete "${productName} — ${dose}"? This cannot be undone.`)) return;
+    try {
+      const r = await fetch('/api/inventory', {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${_token}` },
+        body: JSON.stringify({ id }),
+      });
+      if (!r.ok) throw new Error('Could not delete SKU.');
+      await loadInventory();
+    } catch(e) {
+      alert(e.message || 'Could not delete SKU.');
+    }
+  }
+
   /* ── MONTHLY STATS ───────────────────────────────── */
   async function loadStats() {
     const wrap = document.getElementById('statsWrap');
@@ -708,6 +962,282 @@
           </tbody>
         </table>`;
     } catch { wrap.innerHTML = '<div class="stats-empty">Failed to load stats.</div>'; }
+  }
+
+  /* ── SALES ─────────────────────────────────────── */
+  function esc(v) {
+    return String(v ?? '').replace(/[&<>"']/g, ch => ({
+      '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;',
+    }[ch]));
+  }
+
+  function money(v) {
+    const n = parseFloat(v);
+    return '$' + (Number.isFinite(n) ? n : 0).toFixed(2);
+  }
+
+  function getOrderSource(order) {
+    const itemSource = Array.isArray(order.items) ? order.items.find(i => i.source)?.source : '';
+    return order.source || itemSource || 'Website';
+  }
+
+  function orderDate(order) {
+    return new Date(order.confirmed_at || order.created_at);
+  }
+
+  function isConfirmed(order) {
+    return order.status === 'confirmed';
+  }
+
+  function confirmedOnly(rows) {
+    return rows.filter(isConfirmed);
+  }
+
+  function productBreakdown(rows) {
+    const products = {};
+    confirmedOnly(rows).forEach(order => {
+      (Array.isArray(order.items) ? order.items : []).forEach(item => {
+        const name = String(item.name || '').trim() || 'Unknown Product';
+        const qty = parseInt(item.qty || 1) || 1;
+        const price = parseFloat(item.price) || 0;
+        if (!products[name]) products[name] = { qty: 0, revenue: 0 };
+        products[name].qty += qty;
+        products[name].revenue += price * qty;
+      });
+    });
+    return Object.entries(products)
+      .map(([name, data]) => ({ name, ...data }))
+      .sort((a, b) => b.revenue - a.revenue || a.name.localeCompare(b.name));
+  }
+
+  function keyFor(order, view) {
+    const d = orderDate(order);
+    const y = d.getFullYear();
+    const m = String(d.getMonth() + 1).padStart(2, '0');
+    const day = String(d.getDate()).padStart(2, '0');
+    if (view === 'year') return String(y);
+    if (view === 'month') return `${y}-${m}`;
+    return `${y}-${m}-${day}`;
+  }
+
+  function labelFor(key, view) {
+    if (view === 'year') return key;
+    if (view === 'month') {
+      const [y, m] = key.split('-');
+      return new Date(parseInt(y), parseInt(m) - 1, 1).toLocaleString('en-US', { month: 'long', year: 'numeric' });
+    }
+    const [y, m, d] = key.split('-');
+    return new Date(parseInt(y), parseInt(m) - 1, parseInt(d)).toLocaleDateString('en-US', {
+      weekday: 'short', month: 'short', day: 'numeric', year: 'numeric',
+    });
+  }
+
+  function sameDay(a, b) {
+    return a.getFullYear() === b.getFullYear() && a.getMonth() === b.getMonth() && a.getDate() === b.getDate();
+  }
+
+  async function loadOrders() {
+    const wrap = document.getElementById('salesWrap');
+    try {
+      const r = await fetch('/api/orders', { headers: { Authorization: `Bearer ${_token}` } });
+      const data = await r.json();
+      if (!r.ok) throw new Error(data.error || 'Could not load sales.');
+      _orders = Array.isArray(data.orders) ? data.orders : [];
+      renderSales();
+    } catch(e) {
+      wrap.innerHTML = `<div class="stats-empty">${esc(e.message)}<br><br><code style="font-size:12px">Create the orders table in Supabase if it does not exist.</code></div>`;
+    }
+  }
+
+  function setSalesView(view) {
+    _salesView = view;
+    document.getElementById('salesDayBtn').classList.toggle('active', view === 'day');
+    document.getElementById('salesMonthBtn').classList.toggle('active', view === 'month');
+    document.getElementById('salesYearBtn').classList.toggle('active', view === 'year');
+    document.getElementById('salesDayInput').style.display = view === 'day' ? '' : 'none';
+    document.getElementById('salesMonthInput').style.display = view === 'month' ? '' : 'none';
+    document.getElementById('salesYearInput').style.display = view === 'year' ? '' : 'none';
+    renderSales();
+  }
+
+  function renderSales() {
+    const wrap = document.getElementById('salesWrap');
+    const now = new Date();
+    const sum = rows => rows.reduce((s, o) => s + (parseFloat(o.grand) || 0), 0);
+    const selectedDay = document.getElementById('salesDayInput')?.value;
+    const selectedMonth = document.getElementById('salesMonthInput')?.value;
+    const selectedYear = document.getElementById('salesYearInput')?.value || String(now.getFullYear());
+    const todayOrders = _orders.filter(o => selectedDay ? keyFor(o, 'day') === selectedDay : sameDay(orderDate(o), now));
+    const monthOrders = _orders.filter(o => selectedMonth ? keyFor(o, 'month') === selectedMonth : (() => {
+      const d = orderDate(o);
+      return d.getFullYear() === now.getFullYear() && d.getMonth() === now.getMonth();
+    })());
+    const yearOrders = _orders.filter(o => keyFor(o, 'year') === String(selectedYear));
+    const activeOrders = _salesView === 'year' ? yearOrders : (_salesView === 'month' ? monthOrders : todayOrders);
+    const activeTotal = sum(confirmedOnly(activeOrders));
+    const currentMonthProducts = productBreakdown(monthOrders);
+
+    if (!_orders.length) {
+      wrap.innerHTML = `
+        <div class="sales-kpis">
+          <div class="sales-kpi"><div class="sales-kpi-label">Selected Day</div><div class="sales-kpi-val">$0.00</div><div class="sales-kpi-sub">0 orders</div></div>
+          <div class="sales-kpi"><div class="sales-kpi-label">Selected Month</div><div class="sales-kpi-val">$0.00</div><div class="sales-kpi-sub">0 orders</div></div>
+          <div class="sales-kpi"><div class="sales-kpi-label">Selected Year</div><div class="sales-kpi-val">$0.00</div><div class="sales-kpi-sub">0 orders</div></div>
+        </div>
+        <div class="stats-empty">No saved customer orders yet.</div>`;
+      return;
+    }
+
+    const groups = {};
+    activeOrders.forEach(order => {
+      const groupView = _salesView === 'year' ? 'month' : 'day';
+      const key = keyFor(order, groupView);
+      if (!groups[key]) groups[key] = [];
+      groups[key].push(order);
+    });
+    const groupKeys = Object.keys(groups).sort().reverse();
+
+    wrap.innerHTML = `
+      <div class="sales-kpis">
+        <div class="sales-kpi"><div class="sales-kpi-label">Selected Day</div><div class="sales-kpi-val">${money(sum(confirmedOnly(todayOrders)))}</div><div class="sales-kpi-sub">${confirmedOnly(todayOrders).length} confirmed · ${todayOrders.length} saved</div></div>
+        <div class="sales-kpi"><div class="sales-kpi-label">Selected Month</div><div class="sales-kpi-val">${money(sum(confirmedOnly(monthOrders)))}</div><div class="sales-kpi-sub">${confirmedOnly(monthOrders).length} confirmed · ${monthOrders.length} saved</div></div>
+        <div class="sales-kpi"><div class="sales-kpi-label">Selected Year</div><div class="sales-kpi-val">${money(sum(confirmedOnly(yearOrders)))}</div><div class="sales-kpi-sub">${confirmedOnly(yearOrders).length} confirmed · ${yearOrders.length} saved</div></div>
+      </div>
+      <div class="sales-kpi" style="margin-bottom:14px">
+        <div class="sales-kpi-label">${_salesView === 'year' ? 'Year Revenue' : (_salesView === 'month' ? 'Month Revenue' : 'Day Revenue')}</div>
+        <div class="sales-kpi-val">${money(activeTotal)}</div>
+        <div class="sales-kpi-sub">${confirmedOnly(activeOrders).length} confirmed · ${activeOrders.length} saved order${activeOrders.length === 1 ? '' : 's'} in this selection</div>
+      </div>
+      <div class="sales-kpi" style="margin-bottom:14px">
+        <div class="sales-kpi-label">Products Sold This Month</div>
+        <div class="sales-kpi-sub">
+          ${currentMonthProducts.length
+            ? currentMonthProducts.map(p => `${esc(p.name)} × ${p.qty} · ${money(p.revenue)}`).join('<br>')
+            : 'No confirmed products sold in the selected month.'}
+        </div>
+      </div>
+      ${groupKeys.length ? groupKeys.map(key => {
+        const rows = groups[key];
+        const total = sum(confirmedOnly(rows));
+        const groupView = _salesView === 'year' ? 'month' : 'day';
+        return `<div class="sales-group">
+          <div class="sales-group-head">
+            <div class="sales-group-title">${labelFor(key, groupView)} · ${rows.length} order${rows.length === 1 ? '' : 's'}</div>
+            <div class="sales-group-total">${money(total)}</div>
+          </div>
+          ${rows.map(o => {
+            const items = (o.items || []).map(i => `${esc(i.name)} × ${esc(i.qty)}`).join(', ');
+            const dt = orderDate(o).toLocaleString('en-US', { dateStyle: 'medium', timeStyle: 'short' });
+            const source = getOrderSource(o);
+            return `<div class="sales-order">
+              <div class="sales-order-top">
+                <div>
+                  <div class="sales-order-num">${esc(o.order_num)}<span class="sales-status ${isConfirmed(o) ? 'confirmed' : 'pending'}">${isConfirmed(o) ? 'Confirmed' : 'Pending'}</span></div>
+                  <div class="sales-customer">${esc(o.customer_name)} · ${esc(o.customer_email)}<br>${esc(o.phone || '')}</div>
+                </div>
+                <div class="sales-total">${money(o.grand)}</div>
+              </div>
+              <div class="sales-items">${items || 'No item detail'}</div>
+              <div class="sales-meta">${esc(dt)} · ${esc(source)}${!isConfirmed(o) ? ' · Awaiting payment confirmation' : ''}${o.discount_pct ? ` · Discount ${esc(o.discount_pct)}%` : ''}${o.coupon_code ? ` · Coupon ${esc(o.coupon_code)}` : ''}${o.address ? ` · ${esc(o.address)}` : ''}</div>
+              <div class="sales-actions">
+                <button class="sales-delete" onclick="deleteOrder(${o.id}, '${esc(o.order_num)}')">Delete</button>
+              </div>
+            </div>`;
+          }).join('')}
+        </div>`;
+      }).join('') : '<div class="stats-empty">No saved orders for this selection.</div>'}`;
+  }
+
+  async function deleteOrder(id, orderNum) {
+    if (!confirm(`Delete order ${orderNum}? This removes the saved customer order from admin.`)) return;
+    try {
+      const r = await fetch('/api/orders', {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${_token}` },
+        body: JSON.stringify({ id }),
+      });
+      if (!r.ok) throw new Error('Could not delete order.');
+      _orders = _orders.filter(o => o.id !== id);
+      renderSales();
+    } catch(e) {
+      alert(e.message || 'Could not delete order.');
+    }
+  }
+
+  function populateManualProducts() {
+    const sel = document.getElementById('manualProduct');
+    if (!sel) return;
+    const products = _rows
+      .filter(r => !r.isCatalogMissing)
+      .map(r => ({ name: `${r.product_name} ${r.dose}`.trim(), price: Number(r.price) || 0 }))
+      .sort((a, b) => a.name.localeCompare(b.name));
+    sel.innerHTML = products.length
+      ? products.map(p => `<option value="${esc(p.name)}" data-price="${p.price}">${esc(p.name)} - ${money(p.price)}</option>`).join('')
+      : '<option value="">No products loaded</option>';
+    updateManualSaleTotal();
+  }
+
+  function updateManualSaleTotal() {
+    const sel = document.getElementById('manualProduct');
+    const valueInput = document.getElementById('manualValue');
+    const note = document.getElementById('manualSaleTotalNote');
+    if (!sel || !valueInput) return;
+    const unitPrice = parseFloat(sel.selectedOptions?.[0]?.dataset.price || '0');
+    const qty = Math.max(1, parseInt(document.getElementById('manualQty')?.value || '1') || 1);
+    const discountPct = Math.max(0, parseFloat(document.getElementById('manualDiscount')?.value || '0') || 0);
+    const subtotal = unitPrice * qty;
+    const discountAmt = Math.round(subtotal * discountPct) / 100;
+    const total = Math.max(0, subtotal - discountAmt);
+    valueInput.value = total.toFixed(2);
+    if (note) note.textContent = `${money(unitPrice)} x ${qty} - ${discountPct}% discount = ${money(total)}`;
+  }
+
+  function toggleManualSale() {
+    const body = document.getElementById('manualSaleBody');
+    const chevron = document.getElementById('manualSaleChevron');
+    const open = body.classList.toggle('open');
+    chevron.textContent = open ? '▲' : '▼';
+  }
+
+  async function addManualSale() {
+    const product = document.getElementById('manualProduct').value;
+    const unitPrice = parseFloat(document.getElementById('manualProduct').selectedOptions?.[0]?.dataset.price || '0');
+    const source = document.getElementById('manualSource').value;
+    const saleDate = document.getElementById('manualDate').value;
+    const value = parseFloat(document.getElementById('manualValue').value);
+    const qty = parseInt(document.getElementById('manualQty').value || '1');
+    const discountPct = Math.max(0, parseFloat(document.getElementById('manualDiscount').value || '0') || 0);
+    const status = document.getElementById('manualSaleStatus');
+    const btn = document.getElementById('manualSaleBtn');
+    if (!product || !saleDate || !Number.isFinite(unitPrice) || unitPrice <= 0 || !Number.isFinite(value) || value < 0) {
+      status.textContent = 'Choose product, date, and a valid value.';
+      status.style.color = 'var(--red)';
+      return;
+    }
+    btn.disabled = true;
+    status.textContent = 'Adding…';
+    status.style.color = 'var(--muted)';
+    try {
+      const r = await fetch('/api/orders', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${_token}` },
+        body: JSON.stringify({ product_name: product, sale_date: saleDate, value, qty, unit_price: unitPrice, source, discount_pct: discountPct }),
+      });
+      const data = await r.json().catch(() => ({}));
+      if (!r.ok) throw new Error(data.error || 'Could not add sale.');
+      status.textContent = '✓ Sale added';
+      status.style.color = 'var(--green)';
+      document.getElementById('manualDiscount').value = '0';
+      document.getElementById('manualQty').value = '1';
+      updateManualSaleTotal();
+      await loadOrders();
+      setTimeout(() => { status.textContent = ''; }, 2500);
+    } catch(e) {
+      status.textContent = '✗ ' + e.message;
+      status.style.color = 'var(--red)';
+    } finally {
+      btn.disabled = false;
+    }
   }
 
   /* ── COUPONS ─────────────────────────────────────── */
