@@ -2728,7 +2728,7 @@ async function submitLeadForm(e) {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ name, phone, email }),
     });
-    const data = await r.json();
+    const data = await r.json().catch(() => ({}));
     if (!r.ok) throw new Error(data.error || 'Could not create coupon');
     localStorage.setItem('np_lead_submitted', '1');
     document.getElementById('leadForm').style.display = 'none';
@@ -2751,10 +2751,10 @@ async function submitLeadForm(e) {
         showView('checkout-1');
       }, 2500);
     }
-  } catch (_) {
+  } catch (e) {
     btn.disabled = false;
     btn.textContent = 'Send My Coupon →';
-    alert('We could not create your coupon right now. Please try again.');
+    alert(e.message || 'We could not create your coupon right now. Please try again.');
   }
 }
 
@@ -2904,8 +2904,8 @@ async function applyCoupon() {
   fb.textContent = 'Checking…';
   try {
     const r = await fetch('/api/coupons?code=' + encodeURIComponent(code));
-    if (!r.ok) throw new Error();
-    const data = await r.json();
+    const data = await r.json().catch(() => ({}));
+    if (!r.ok) throw new Error(data.error || data.message || `Coupon request failed (${r.status})`);
     _coupon = { code: data.code, discount_pct: data.discount_pct };
     input.classList.add('valid');
     fb.className = 'coupon-feedback ok';
@@ -2921,11 +2921,11 @@ async function applyCoupon() {
         fb.textContent = e.message || 'Could not update order email.';
       }
     }
-  } catch {
+  } catch (e) {
     _coupon = null;
     input.classList.remove('valid');
     fb.className = 'coupon-feedback err';
-    fb.textContent = 'Invalid or inactive coupon.';
+    fb.textContent = e.message || 'Could not validate coupon.';
   } finally {
     btn.disabled = false;
   }

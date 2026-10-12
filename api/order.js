@@ -101,34 +101,26 @@ async function saveOrder(order) {
 async function incrementCouponUses(code) {
   if (!BASE || !SUPABASE_KEY || !code) return;
   try {
-    // increment total counter
-    const r = await fetch(`${BASE}/rest/v1/coupons?code=eq.${encodeURIComponent(code)}&select=id,uses`, {
-      headers: { apikey: SUPABASE_KEY, Authorization: `Bearer ${SUPABASE_KEY}` },
+    // Consume atomically: only an active, unused coupon can be changed.
+    const r = await fetch(`${BASE}/rest/v1/coupons?code=eq.${encodeURIComponent(code)}&active=is.true&uses=eq.0`, {
+      method: 'PATCH',
+      headers: {
+        apikey: SUPABASE_KEY, Authorization: `Bearer ${SUPABASE_KEY}`,
+        'Content-Type': 'application/json', Prefer: 'return=representation',
+      },
+      body: JSON.stringify({ uses: 1, active: false }),
     });
-    const rows = await r.json();
-    if (Array.isArray(rows) && rows.length) {
-      const newUses = (rows[0].uses || 0) + 1;
-      const patch = { uses: newUses };
-      // deactivate after first use so coupon can only be used once
-      if (newUses >= 1) patch.active = false;
-      await fetch(`${BASE}/rest/v1/coupons?id=eq.${rows[0].id}`, {
-        method: 'PATCH',
+    const rows = await r.json().catch(() => []);
+    if (r.ok && Array.isArray(rows) && rows.length) {
+      await fetch(`${BASE}/rest/v1/coupon_uses`, {
+        method: 'POST',
         headers: {
           apikey: SUPABASE_KEY, Authorization: `Bearer ${SUPABASE_KEY}`,
           'Content-Type': 'application/json', Prefer: 'return=minimal',
         },
-        body: JSON.stringify(patch),
+        body: JSON.stringify({ code: code.toUpperCase() }),
       });
     }
-    // log individual use for monthly reporting
-    await fetch(`${BASE}/rest/v1/coupon_uses`, {
-      method: 'POST',
-      headers: {
-        apikey: SUPABASE_KEY, Authorization: `Bearer ${SUPABASE_KEY}`,
-        'Content-Type': 'application/json', Prefer: 'return=minimal',
-      },
-      body: JSON.stringify({ code: code.toUpperCase() }),
-    });
   } catch (_) {}
 }
 

@@ -32,6 +32,15 @@ async function createCoupon(code, dbKey) {
   if (!r.ok) throw new Error(await r.text());
 }
 
+async function couponHasBeenUsed(code, dbKey) {
+  const r = await fetch(`${BASE}/rest/v1/coupon_uses?code=eq.${encodeURIComponent(code)}&select=code&limit=1`, {
+    headers: { apikey: dbKey, Authorization: `Bearer ${dbKey}` },
+  });
+  if (!r.ok) return false;
+  const rows = await r.json().catch(() => []);
+  return Array.isArray(rows) && rows.length > 0;
+}
+
 export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST,OPTIONS');
@@ -61,7 +70,9 @@ export default async function handler(req, res) {
             { headers: { apikey: dbKey, Authorization: `Bearer ${dbKey}` } }
           );
           const coupons = couponCheck.ok ? await couponCheck.json() : [];
-          if (Array.isArray(coupons) && coupons.length === 0) await createCoupon(existingCode, dbKey);
+          if (Array.isArray(coupons) && coupons.length === 0 && !(await couponHasBeenUsed(existingCode, dbKey))) {
+            await createCoupon(existingCode, dbKey);
+          }
         }
         return res.status(200).json({ ok: true, duplicate: true, code: existingCode });
       }
